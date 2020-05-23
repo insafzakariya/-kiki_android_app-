@@ -87,7 +87,7 @@ public class NotificationReceiver extends FirebaseMessagingService {
             notificationBuilder.setStyle(
                     new NotificationCompat.BigPictureStyle()
                             .bigPicture(bitmap)
-                            .bigLargeIcon(bitmap)
+                            .bigLargeIcon(null)
             ).setLargeIcon(bitmap);
         }
 
