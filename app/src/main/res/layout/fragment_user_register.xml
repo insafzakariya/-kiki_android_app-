@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:bind="http://schemas.android.com/apk/res/android">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/linearLayout2"
+        android:background="@color/colorRegistrationBackgroud"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+            android:id="@+id/textView27"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:text="@string/register_now"
+            android:textSize="@dimen/_16sdp"
+            android:textColor="@color/md_white_1000"
+            app:layout_constraintBottom_toTopOf="@+id/enter_email_textview"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+            android:id="@+id/enter_email_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="42dp"
+            android:padding="@dimen/_5sdp"
+            android:text="@string/username"
+            android:textColor="@color/md_white_1000"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintBottom_toTopOf="@+id/email_layout"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <RelativeLayout
+            android:id="@+id/email_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="42dp"
+            android:gravity="center"
+            android:layout_marginStart="42dp"
+            android:background="@drawable/rounded_background_mobile_number"
+            app:layout_constraintBottom_toTopOf="@+id/password_textview"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/email_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hintAnimationEnabled="false"
+                    app:hintEnabled="false">
+
+                    <lk.mobilevisions.kiki.audio.util.KikiMediumEditText
+                        android:id="@+id/username_edittext"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:hint="@string/type_username"
+                        android:inputType="textEmailAddress"
+                        android:padding="@dimen/_10sdp"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:textColor="@color/md_white_1000"
+                        android:textSize="@dimen/_12sdp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+        </RelativeLayout>
+
+
+
+
+
+        <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+            android:id="@+id/password_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="42dp"
+            android:padding="@dimen/_5sdp"
+            android:text="@string/password"
+            android:textColor="@color/md_white_1000"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintBottom_toTopOf="@+id/password_layout"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <RelativeLayout
+            android:id="@+id/password_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="42dp"
+            android:layout_marginStart="42dp"
+            android:gravity="center"
+            android:background="@drawable/rounded_background_mobile_number"
+            app:layout_constraintBottom_toTopOf="@+id/confirm_password_textview"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/password_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:passwordToggleEnabled="true"
+                    app:hintAnimationEnabled="false"
+                    app:hintEnabled="false">
+
+                    <lk.mobilevisions.kiki.audio.util.KikiMediumEditText
+                        android:id="@+id/password_edittext"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:hint="@string/enter_password"
+                        android:inputType="textPassword"
+                        android:padding="@dimen/_10sdp"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:textColor="@color/md_white_1000"
+                        android:textSize="@dimen/_12sdp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+        </RelativeLayout>
+
+
+
+        <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+            android:id="@+id/confirm_password_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="42dp"
+            android:padding="@dimen/_5sdp"
+            android:text="@string/confirm_password"
+            android:textColor="@color/md_white_1000"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintBottom_toTopOf="@+id/confirm_password_layout"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+        <RelativeLayout
+            android:id="@+id/confirm_password_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="42dp"
+            android:layout_marginStart="42dp"
+            android:gravity="center"
+            android:background="@drawable/rounded_background_mobile_number"
+            app:layout_constraintBottom_toTopOf="@+id/sign_up_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/confirm_password_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:passwordToggleEnabled="true"
+                    app:hintAnimationEnabled="false"
+                    app:hintEnabled="false">
+
+                    <lk.mobilevisions.kiki.audio.util.KikiMediumEditText
+                        android:id="@+id/confirm_password_edittext"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:hint="@string/type_password_again"
+                        android:inputType="textPassword"
+                        android:padding="@dimen/_10sdp"
+                        android:singleLine="true"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:textColor="@color/md_white_1000"
+                        android:textSize="@dimen/_12sdp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+        </RelativeLayout>
+
+
+
+        <RelativeLayout
+            android:id="@+id/sign_up_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_12sdp"
+            android:layout_marginEnd="42dp"
+            android:layout_marginStart="42dp"
+            android:gravity="center"
+            android:background="@drawable/rounded_login_button1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/login_with_email_textview"
+            app:layout_constraintStart_toStartOf="parent">
+
+
+                <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+                    android:id="@+id/sign_up_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:padding="@dimen/_10sdp"
+                    android:text="@string/sign_up_text"
+                    android:textColor="@color/md_white_1000"
+                    android:textSize="@dimen/_14sdp" />
+
+
+
+        </RelativeLayout>
+
+        <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+            android:id="@+id/login_with_email_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:padding="@dimen/_5sdp"
+            android:text="@string/login_with_email"
+            android:textColor="@color/md_white_1000"
+            android:textSize="@dimen/_14sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView31"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/textView27"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_app_logo" />
+
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_arrow_back" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/navPackages"
+            android:icon="@drawable/ic_video_navigation_packages"
+            android:title="@string/menu_activate_packages" />
+
+        <item
+            android:id="@+id/navChannels"
+            android:icon="@drawable/ic_nav_channels"
+            android:title="@string/menu_channels"/>
+
+        <item
+            android:id="@+id/navSettings"
+            android:icon="@drawable/ic_nav_settings"
+            android:title="Settings" />
+
+        <item
+            android:id="@+id/navUpdateProfile"
+            android:icon="@drawable/ic_nav_update_profile"
+            android:title="Profile" />
+
+        <item
+            android:id="@+id/navNotifications"
+            android:icon="@drawable/ic_nav_notifications"
+            android:title="@string/menu_notifications" />
+        <item
+            android:id="@+id/navMessages"
+            android:icon="@drawable/ic_nav_messages"
+            android:title="@string/menu_messages"
+            android:visible="false"/>
+        <item
+            android:id="@+id/navPrograms"
+            android:icon="@drawable/ic_nav_my_programs"
+            android:title="@string/menu_my_programs"
+            android:visible="false"/>
+
+        <item
+            android:id="@+id/navHistory"
+            android:icon="@drawable/ic_nav_history"
+            android:title="@string/menu_history"
+            android:visible="false"/>
+        <item
+            android:id="@+id/navWatchLater"
+            android:icon="@drawable/ic_nav_watch_later"
+            android:title="@string/menu_watch_later"
+            android:visible="false"/>
+
+        <item
+            android:id="@+id/navFAQ"
+            android:icon="@drawable/ic_nav_information"
+            android:title="FAQ"
+            android:visible="false"/>
+
+<!--        <item-->
+<!--            android:id="@+id/navContact"-->
+<!--            android:icon="@drawable/ic_nav_contact"-->
+<!--            android:title="Contact Us"-->
+<!--            android:visible="true"/>-->
+
+        <item
+            android:id="@+id/navFacebookPage"
+            android:icon="@drawable/ic_nav_facebook"
+            android:title="Go to FB Page" />
+
+        <item
+            android:id="@+id/navUserAgreement"
+            android:icon="@drawable/ic_nav_agreement"
+            android:title="User Agreement" />
+
+        <item
+            android:id="@+id/navLogout"
+            android:icon="@drawable/ic_nav_logout"
+            android:title="@string/menu_logout" />
+    </group>
+</menu>

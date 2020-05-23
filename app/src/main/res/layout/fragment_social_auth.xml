@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:bind="http://schemas.android.com/apk/res/android" >
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:background="@color/colorRegistrationBackgroud"
+        android:layout_height="match_parent">
+
+
+
+
+        <RelativeLayout
+            android:id="@+id/facebook_login_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/rounded_backgroud_facebook_login"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/gmail_login_layout"
+            >
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true">
+
+                <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+                    android:id="@+id/facebook_login_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_10sdp"
+                    android:layout_toRightOf="@+id/facebook_icon_imageview"
+                    android:textSize="@dimen/_12sdp"
+                    android:text="@string/facebook_login"
+                    android:textColor="@color/md_white_1000" />
+
+                <ImageView
+                    android:id="@+id/facebook_icon_imageview"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_facebook" />
+
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/gmail_login_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="32dp"
+            android:background="@drawable/rounded_background_gmail_login"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="50dp"
+            app:layout_constraintBottom_toTopOf="@+id/dont_have_gmail_textview"
+            app:layout_constraintStart_toStartOf="parent"
+            >
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true">
+
+                <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+                    android:id="@+id/gmail_login_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_10sdp"
+                    android:layout_toRightOf="@+id/gmail_icon_imageview"
+                    android:textSize="@dimen/_12sdp"
+                    android:text="@string/facebook_login"
+                    android:textColor="@color/md_white_1000" />
+
+                <ImageView
+                    android:id="@+id/gmail_icon_imageview"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_gmail" />
+
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+        <lk.mobilevisions.kiki.audio.util.KikiAudioMediumTextView
+            android:id="@+id/dont_have_gmail_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:text="@string/dont_have_gmail"
+            android:textColor="@color/md_white_1000"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintBottom_toTopOf="@+id/login_with_email_textview"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+        <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+            android:id="@+id/login_with_email_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:padding="@dimen/_5sdp"
+            android:text="@string/login_with_email"
+            android:textColor="@color/md_white_1000"
+            android:textSize="@dimen/_14sdp"
+            app:layout_constraintBottom_toTopOf="@+id/or_textview"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+        <lk.mobilevisions.kiki.audio.util.KikiAudioMediumTextView
+            android:id="@+id/or_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:text="@string/or"
+            android:textSize="@dimen/_11sdp"
+            android:textColor="@color/md_white_1000"
+            app:layout_constraintBottom_toTopOf="@+id/create_account_textview"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+            android:id="@+id/create_account_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:padding="@dimen/_5sdp"
+            android:text="@string/create_account"
+            android:textColor="@color/md_white_1000"
+            android:textSize="@dimen/_14sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView31"
+            android:layout_width="@dimen/_110sdp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="48dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="48dp"
+            app:layout_constraintBottom_toTopOf="@+id/facebook_login_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            app:srcCompat="@drawable/ic_app_logo" />
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_arrow_back" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

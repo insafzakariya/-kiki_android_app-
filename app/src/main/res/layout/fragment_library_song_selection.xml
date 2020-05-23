@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:bind="http://schemas.android.com/apk/res/android" >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/librarySelectionLinearLayout"
+        android:background="#1A1A1A"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:id="@+id/buttons_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp">
+
+                <ImageView
+                    android:id="@+id/back_imageview"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    app:srcCompat="@drawable/ic_back" />
+
+                <lk.mobilevisions.kiki.audio.util.KikiAudioMediumTextView
+                    android:id="@+id/confirm_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_6sdp"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    android:layout_alignParentEnd="true"
+                    android:text="Confirm"
+                    android:textColor="#FFFFFF"
+                    android:textSize="@dimen/_10sdp"
+                    android:background="@drawable/viewall_background"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/search_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/buttons_layout"
+                    android:layout_marginTop="@dimen/_2sdp">
+
+                <SearchView
+                    android:id="@+id/search_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_32sdp"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:layout_marginEnd="@dimen/_12sdp"
+                    android:background="@drawable/music_search_bar"
+                    android:textSize="@dimen/_10sdp"
+                    android:iconifiedByDefault="false"
+                    android:queryHint="Search by songs, playlists and artists"
+                    android:searchIcon="@drawable/ic_search">
+                </SearchView>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:id="@+id/library_playlist_layout"
+                    android:visibility="visible"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/search_view">
+
+                    <LinearLayout
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?android:selectableItemBackground"
+                        android:orientation="vertical"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:visibility="visible"
+                        android:paddingBottom="5dp"
+                        android:paddingRight="5dp"
+                        android:paddingLeft="5dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginTop="@dimen/_6sdp">
+
+                            <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+                                android:id="@+id/tvTitle3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center_vertical"
+                                android:text="Add Songs From Playlist"
+                                android:textColor="@color/see_all"
+                                android:textSize="@dimen/_15sdp" />
+
+                            <TextView
+                                android:id="@+id/seeAllPlaylist"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center_vertical"
+                                android:background="@drawable/viewall_background"
+                                android:text="@string/view_all"
+                                android:textColor="@color/see_all"
+                                android:textSize="@dimen/_8sdp" />
+
+                        </RelativeLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/library_playlist_recycleview"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_gravity="center_vertical"
+                            android:orientation="horizontal" />
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:id="@+id/library_songs_layout"
+                    android:visibility="visible"
+                    android:layout_below="@+id/library_playlist_layout"
+                    android:layout_height="wrap_content">
+
+
+                    <LinearLayout
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?android:selectableItemBackground"
+                        android:orientation="vertical"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:visibility="visible"
+                        android:paddingBottom="5dp"
+                        android:paddingRight="5dp"
+                        android:paddingLeft="5dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="16dp"
+                            >
+
+
+                            <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+                                android:id="@+id/tvTitle5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center_vertical"
+                                android:text="Add Songs"
+                                android:textColor="@color/see_all"
+                                android:textSize="@dimen/_15sdp"
+                                />
+
+                            <TextView
+                                android:id="@+id/seeAllSongs"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center_vertical"
+                                android:background="@drawable/viewall_background"
+                                android:text="@string/view_all"
+                                android:textColor="@color/see_all"
+                                android:textSize="@dimen/_8sdp" />
+
+                        </RelativeLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/library_songs_recyclerview"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_gravity="center_vertical"
+                            android:orientation="horizontal" />
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:id="@+id/library_artist_layout"
+                    android:layout_below="@+id/library_songs_layout"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?android:selectableItemBackground"
+                        android:orientation="vertical"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:visibility="visible"
+                        android:paddingBottom="5dp"
+                        android:paddingRight="5dp"
+                        android:paddingLeft="5dp">
+
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="16dp"
+                            >
+
+                            <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+                                android:id="@+id/tvTitle0"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentTop="true"
+                                android:layout_gravity="center_vertical"
+                                android:text="Add Songs From Artists"
+                                android:textColor="@color/text_color"
+                                android:textSize="@dimen/_15sdp" />
+
+                            <TextView
+                                android:id="@+id/seeAllArtists"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center_vertical"
+                                android:background="@drawable/viewall_background"
+                                android:text="@string/view_all"
+                                android:textColor="@color/see_all"
+                                android:textSize="@dimen/_8sdp" />
+
+                        </RelativeLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/library_artist_recyclerview"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_gravity="center_vertical"
+                            android:orientation="horizontal" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/search_layout"
+                    android:layout_width="match_parent"
+                    android:layout_below="@id/search_view"
+                    android:layout_height="@dimen/_490sdp"
+                    android:visibility="gone"
+                    android:background="@color/customBlack1">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/search_songs_recyclerview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="5dp" />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+        </ScrollView>
+
+
+        <FrameLayout
+            android:id="@+id/frame_container_song_selection"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="visible">
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/frame_container_artist_selection"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="visible">
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/frame_container_playlist_selection"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="visible">
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/library_container_playlist_toDetail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="visible">
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/library_container_artist_toDetail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="visible">
+
+        </FrameLayout>
+
+
+
+
+        <com.wang.avi.AVLoadingIndicatorView
+            android:id="@+id/aviProgress"
+            android:visibility="visible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:indicatorName="BallSpinFadeLoaderIndicator"
+            app:indicatorColor="@color/md_grey_400"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+
+
+
+

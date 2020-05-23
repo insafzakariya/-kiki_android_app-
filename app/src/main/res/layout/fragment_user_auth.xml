@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:bind="http://schemas.android.com/apk/res/android" >
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/dimen.4.x"
+        android:paddingRight="@dimen/dimen.4.x"
+        tools:context=".ui.auth.UserAuthFragment">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textViewAuthMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/dimen.4.x"
+                android:text="@string/enter_login"
+                android:textAlignment="center"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="36sp"
+                android:textStyle="normal" />
+
+
+            <TextView
+                android:id="@+id/textViewLoginSignIn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:paddingTop="@dimen/dimen.2.x"
+                android:visibility="gone"
+                android:text=""
+                android:textAlignment="center"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textStyle="bold" />
+
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stretchColumns="0">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_marginLeft="8dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/username_label" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <EditText
+                        android:id="@+id/editTextUsername"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rounded_edit_text"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:textColor="@color/colorBlack"
+                        android:inputType="text"
+                        android:maxLines="1" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_marginTop="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/password_label" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <EditText
+                        android:id="@+id/editTextPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPassword"
+                        android:background="@drawable/rounded_edit_text"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:textColor="@color/colorBlack"
+                        android:maxLines="1" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/tableRowConfirmPassLabel"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_marginTop="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/confirm_password" />
+
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/tableRowConfirmPass"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:maxLines="1"
+                    android:visibility="gone">
+
+                    <EditText
+                        android:id="@+id/editTextConfirmPass"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPassword"
+                        android:background="@drawable/rounded_edit_text"
+                        android:textColor="@color/colorBlack"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:maxLines="1" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/tableRowNameLabel"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_marginTop="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/name_label" />
+
+                </TableRow>
+                <TableRow
+                    android:id="@+id/tableRowName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:maxLines="1"
+                    android:visibility="gone">
+
+
+                    <EditText
+                        android:id="@+id/editTextName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rounded_edit_text"
+                        android:textColor="@color/colorBlack"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:inputType="text"
+                        android:maxLines="1" />
+
+                </TableRow>
+
+            </TableLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/dimen.6.x"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal">
+
+                <Button
+                    android:id="@+id/textViewRegister"
+                    style="@style/LoginButtonStyle2"
+                    android:layout_marginTop="@dimen/dimen.2.x"
+                    android:layout_weight="1"
+                    android:text="@string/create_an_account"
+                    android:textAppearance="@style/TextAppearance.AppCompat"/>
+
+                <Button
+                    android:id="@+id/buttonAuth"
+                    style="@style/LoginButtonStyle1"
+                    android:layout_marginTop="@dimen/dimen.2.x"
+                    android:layout_weight="1"
+                    android:text="@string/login"
+                    android:textAppearance="@style/TextAppearance.AppCompat"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</layout>
+
+
+
+

@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:bind="http://schemas.android.com/apk/res/android">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/linearLayout5"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/newUiBackground">
+
+
+        <RelativeLayout
+            android:id="@+id/welcome_layout"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/customBlack1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent">
+
+
+
+            <lk.mobilevisions.kiki.audio.util.KikiAudioMediumTextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Listen To Your Favorites"
+                android:textColor="#FFFFFF"
+                android:textSize="@dimen/_12sdp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/you_might_layout"
+            android:layout_width="0dp"
+            android:visibility="visible"
+            android:layout_height="?attr/actionBarSize"
+            android:background="#333333"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <RelativeLayout
+                    android:id="@+id/next_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/next_imageview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        android:foregroundTint="#FFFFFF"
+                        app:srcCompat="@drawable/audio_next" />
+
+                    <ImageView
+                        android:id="@+id/next_grayout_imageview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        android:foregroundTint="#FFFFFF"
+                        android:visibility="gone"
+                        app:srcCompat="@drawable/ic_audio_bottom_view_next_grayout" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/play_pause_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginTop="8dp"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:foregroundTint="#FFFFFF"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/next_layout"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/play_pause_imageview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:foregroundGravity="center"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        android:foregroundTint="#FFFFFF" />
+
+                    <ImageView
+                        android:id="@+id/reply_imageview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:foregroundGravity="center"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        app:srcCompat="@drawable/audio_reply_balck"
+                        android:visibility="gone"
+                        android:foregroundTint="#FFFFFF"
+                        />
+
+                    <com.wang.avi.AVLoadingIndicatorView
+                        android:id="@+id/aviProgress"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:foregroundGravity="center"
+                        android:visibility="gone"
+                        app:indicatorColor="@color/md_grey_400"
+                        app:indicatorName="BallSpinFadeLoaderIndicator" />
+
+
+                </RelativeLayout>
+
+
+<RelativeLayout
+    android:id="@+id/previous_image_layout"
+    android:layout_width="wrap_content"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toStartOf="@+id/play_pause_layout"
+    app:layout_constraintTop_toTopOf="parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/previous_imageview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="8dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:foregroundTint="#FFFFFF"
+        app:srcCompat="@drawable/audio_previous" />
+
+    <ImageView
+        android:id="@+id/previous_grayout_imageview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="8dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:foregroundTint="#FFFFFF"
+        android:visibility="gone"
+        app:srcCompat="@drawable/ic_audio_bottom_view_previous_grayout" />
+
+
+</RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/expandView"
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_18sdp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/back_imageview"
+                        android:layout_width="@dimen/_18sdp"
+                        android:layout_height="@dimen/_18sdp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        android:foregroundTint="#434343"
+                        app:srcCompat="@drawable/ic_maximize_player" />
+
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/loadingView"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/expandView"
+                    app:layout_constraintTop_toTopOf="parent">
+
+
+
+                    <com.joooonho.SelectableRoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/image_art_view_bottom"
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/program"
+                        app:sriv_left_bottom_corner_radius="4dip"
+                        app:sriv_left_top_corner_radius="4dip"
+                        app:sriv_right_bottom_corner_radius="4dip"
+                        app:sriv_right_top_corner_radius="4dip" />
+
+
+
+                </RelativeLayout>
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/loadingView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/loadingView">
+
+                    <!--<lk.mobilevisions.kiki.audio.widgets.LineProgress-->
+                    <!--android:id="@+id/lineProgress"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="3dp"-->
+                    <!--android:layout_alignParentTop="true" />-->
+
+                    <ProgressBar
+                        android:id="@+id/song_progress_normal"
+                        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top"
+                        android:layout_marginEnd="8dp"
+                        android:maxHeight="5dp"
+                        android:progress="0"
+                        android:progressTint="#74E6F6"
+                        android:thumbTint="#74E6F6" />
+
+
+                </LinearLayout>
+
+
+                <lk.mobilevisions.kiki.audio.util.KikiAudioMediumTextView
+                    android:id="@+id/audio_title_textview"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="8dp"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13sp"
+                    app:layout_constraintEnd_toStartOf="@+id/previous_image_layout"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@+id/loadingView"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+                    android:id="@+id/audio_des_textview"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="4dp"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColor="@color/done_text_color_dark_disabled"
+                    android:textSize="11sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/previous_image_layout"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@+id/loadingView"
+                    app:layout_constraintTop_toBottomOf="@+id/audio_title_textview"
+                    app:layout_constraintVertical_bias="1.0" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </RelativeLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>
+
+
+
+

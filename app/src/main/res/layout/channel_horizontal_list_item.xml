@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    >
+
+    <RelativeLayout
+        android:id="@+id/relativeLayoutRoot"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+
+            <com.joooonho.SelectableRoundedImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/image"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/ic_havana"
+                android:scaleType="centerCrop"
+                app:sriv_left_top_corner_radius="12dip"
+                app:sriv_right_top_corner_radius="12dip"
+                app:sriv_left_bottom_corner_radius="12dip"
+                app:sriv_right_bottom_corner_radius="12dip"
+                />
+
+
+            <lk.mobilevisions.kiki.audio.util.KikiAudioMediumTextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:text="Havana"
+                android:textColor="@color/text_color"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/image" />
+
+            <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:text="Camila Cabello"
+                android:textColor="@color/done_text_color_dark_disabled"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

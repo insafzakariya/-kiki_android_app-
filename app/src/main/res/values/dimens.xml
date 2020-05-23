@@ -1,0 +1,45 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_horizontal_margin_iiner">9dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="dimen.0.25.x">2dp</dimen>
+    <dimen name="dimen.0.50.x">4dp</dimen>
+    <dimen name="dimen.1.x">8dp</dimen>
+    <dimen name="dimen.2.x">16dp</dimen>
+    <dimen name="dimen.3.x">24dp</dimen>
+    <dimen name="dimen.4.x">32dp</dimen>
+    <dimen name="dimen.5.x">40dp</dimen>
+    <dimen name="dimen.6.x">48dp</dimen>
+    <dimen name="dimen.7.x">56dp</dimen>
+    <dimen name="dimen.8.x">64dp</dimen>
+    <dimen name="dimen.9.x">72dp</dimen>
+    <dimen name="dimen.10.x">80dp</dimen>
+    <dimen name="dimen.11.x">88dp</dimen>
+    <dimen name="dimen.12.x">96dp</dimen>
+    <dimen name="dimen.13.x">104dp</dimen>
+    <dimen name="dimen.14.x">112dp</dimen>
+    <dimen name="dimen.15.x">120dp</dimen>
+    <dimen name="dimen.16.x">128dp</dimen>
+    <dimen name="dimen.17.x">136dp</dimen>
+    <dimen name="dimen.18.x">144dp</dimen>
+    <dimen name="dimen.19.x">152dp</dimen>
+    <dimen name="dimen.20.x">160dp</dimen>
+    <dimen name="dimen.21.x">172dp</dimen>
+    <dimen name="dimen.22.x">184dp</dimen>
+    <dimen name="dimen.23.x">196dp</dimen>
+    <dimen name="dimen.24.x">208dp</dimen>
+    <dimen name="dimen.25.x">220dp</dimen>
+    <dimen name="fab_margin">208dp</dimen>
+    <dimen name="ms__padding_left">10dp</dimen>
+    <dimen name="ms__padding_top">12dp</dimen>
+    <dimen name="ms__item_height">48dp</dimen>
+    <dimen name="ms__popup_padding_left">15dp</dimen>
+    <dimen name="ms__popup_padding_top">12dp</dimen>
+    <dimen name="text_size_default">24sp</dimen>
+    <dimen name="flag_default_padding_right">1dp</dimen>
+    <dimen name="flag_default_padding">0dp</dimen>
+    <dimen name="design_navigation_icon_size" tools:override="true">@dimen/_20sdp</dimen>
+    <dimen tools:override="true" name="design_navigation_icon_padding">@dimen/_20sdp</dimen>
+
+</resources>

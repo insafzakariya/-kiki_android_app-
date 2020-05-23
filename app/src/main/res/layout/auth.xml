@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:bind="http://schemas.android.com/apk/res/android" >
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/linearLayout2"
+        android:background="@color/loginColorBlack"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+            android:id="@+id/login_with_email_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:padding="@dimen/_5sdp"
+            android:text="@string/enter_phone_number"
+            android:textColor="@color/md_white_1000"
+            android:textSize="@dimen/_14sdp"
+            app:layout_constraintBottom_toTopOf="@+id/mobile_number_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+
+        <RelativeLayout
+            android:id="@+id/mobile_number_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="32dp"
+            android:background="@drawable/rounded_background_mobile_number"
+            app:layout_constraintBottom_toTopOf="@+id/buttonBirthday"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true">
+
+                <lk.mobilevisions.kiki.ui.widgets.countryselect.IntlPhoneInput
+                    android:layout_width="wrap_content"
+                    app:textSize="16sp"
+                    android:layout_height="@dimen/dimen.6.x"
+                    android:id="@+id/editTextMobileNumber">
+
+                </lk.mobilevisions.kiki.ui.widgets.countryselect.IntlPhoneInput>
+
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+
+
+
+
+        <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+            android:id="@+id/select_dob_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:padding="@dimen/_5sdp"
+            android:text="@string/select_dob"
+            android:textColor="@color/md_white_1000"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintBottom_toBottomOf="@+id/buttonBirthday"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.136"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/buttonBirthday" />
+
+
+        <Button
+            android:id="@+id/buttonBirthday"
+            android:layout_width="@dimen/_90sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/rounded_background_mobile_number"
+            android:text="-"
+            app:layout_constraintBottom_toTopOf="@+id/spinnerGender"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+        <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+            android:id="@+id/select_gender_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:padding="@dimen/_5sdp"
+            android:text="@string/select_gender"
+            android:textColor="@color/md_white_1000"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintBottom_toBottomOf="@+id/spinnerGender"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.134"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/spinnerGender" />
+
+        <Spinner
+            android:id="@+id/spinnerGender"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen.6.x"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="8dp"
+            android:entries="@array/gender"
+            app:layout_constraintBottom_toTopOf="@+id/spinnerLanguage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/select_gender_textview"></Spinner>
+
+        <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+            android:id="@+id/select_language_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:padding="@dimen/_5sdp"
+            android:text="@string/select_language"
+            android:textColor="@color/md_white_1000"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintBottom_toBottomOf="@+id/spinnerLanguage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.132"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/spinnerLanguage" />
+
+        <Spinner
+            android:id="@+id/spinnerLanguage"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen.6.x"
+            android:layout_marginBottom="28dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="8dp"
+            android:entries="@array/language"
+            app:layout_constraintBottom_toTopOf="@+id/confirm_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/select_language_textview">
+
+        </Spinner>
+
+
+
+        <RelativeLayout
+            android:id="@+id/confirm_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginBottom="40dp"
+            android:background="@drawable/rounded_login_button1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            >
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true">
+
+                <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+                    android:id="@+id/confirm_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:padding="@dimen/_8sdp"
+                    android:textSize="@dimen/_14sdp"
+                    android:text="@string/confirm"
+                    android:textColor="@color/md_white_1000" />
+
+
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+
+
+        <!--<lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView-->
+            <!--android:id="@+id/create_account_textview"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginBottom="40dp"-->
+            <!--android:layout_marginEnd="8dp"-->
+            <!--android:layout_marginStart="8dp"-->
+            <!--android:text="@string/create_account"-->
+            <!--android:textColor="@color/md_white_1000"-->
+            <!--android:textSize="@dimen/_14sdp"-->
+            <!--app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintStart_toStartOf="parent" />-->
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/toolbar"
+            android:background="@color/backgroundColor"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+
+
+            <ImageView
+                android:id="@+id/logo_imageview"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_kiki_logo" />
+
+            <!--<ImageView-->
+                <!--android:id="@+id/search_imageview"-->
+                <!--android:layout_width="@dimen/_20sdp"-->
+                <!--android:layout_height="@dimen/_20sdp"-->
+                <!--android:layout_marginBottom="8dp"-->
+                <!--android:layout_marginEnd="16dp"-->
+                <!--android:layout_marginTop="8dp"-->
+                <!--android:tint="#5B5B5B"-->
+                <!--app:layout_constraintBottom_toBottomOf="parent"-->
+                <!--app:layout_constraintEnd_toEndOf="parent"-->
+                <!--app:layout_constraintTop_toTopOf="parent"-->
+                <!--app:srcCompat="@drawable/ic_search" />-->
+
+            <ImageView
+                android:id="@+id/notification_imageview"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="8dp"
+                android:tint="#5B5B5B"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_notification_toolbar" />
+
+            <TextView
+                android:id="@+id/notication_count_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="32dp"
+                android:text=""
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/_10sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/notification_imageview"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <ImageView
+                android:id="@+id/navigation_imageview"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:tint="#5B5B5B"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_navigation_icon" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
+
+
+

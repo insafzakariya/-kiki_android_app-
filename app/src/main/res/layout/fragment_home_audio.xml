@@ -1,0 +1,629 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:bind="http://schemas.android.com/apk/res/android" >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/linearLayout2"
+        android:background="#1A1A1A"
+        android:layout_marginBottom="?actionBarSize"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:id="@+id/daily_mix_layout"
+                    android:padding="@dimen/_1sdp"
+                    android:layout_below="@+id/artist_layout"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?android:selectableItemBackground"
+                        android:orientation="vertical"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:visibility="visible"
+                        android:paddingBottom="1dp"
+                        android:paddingRight="5dp"
+                        android:paddingLeft="5dp">
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="16dp"
+                        >
+
+                        <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+                            android:id="@+id/tvTitle0"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_gravity="center_vertical"
+                            android:text="@string/latest_playlist"
+                            android:textColor="@color/text_color"
+                            android:textSize="@dimen/_15sdp" />
+
+                        <TextView
+                            android:id="@+id/seeAllLatestPlaylist"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/viewall_background"
+                            android:text="@string/view_all"
+                            android:textColor="@color/see_all"
+                            android:textSize="@dimen/_8sdp" />
+
+                    </RelativeLayout>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/daily_mix_recyclerview"
+                            android:layout_width="match_parent"
+                            android:layout_height="190dp"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_gravity="center_vertical"
+                            android:orientation="horizontal" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:id="@+id/recently_played_layout"
+                    android:layout_below="@+id/daily_mix_layout"
+                    android:visibility="gone"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?android:selectableItemBackground"
+                        android:orientation="vertical"
+                        android:padding="5dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="16dp"
+                            >
+
+                            <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+                                android:id="@+id/tvTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center_vertical"
+                                android:text="@string/recently_played"
+                                android:textColor="@color/text_color"
+                                android:textSize="20sp"
+                                />
+
+                            <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+                                android:id="@+id/seeAllRecentlyPlayed"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center_vertical"
+                                android:background="@drawable/viewall_background"
+                                android:text="@string/view_all"
+                                android:textColor="@color/see_all"
+                                android:textSize="17sp" />
+
+                        </RelativeLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recently_played_recyclerview"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_gravity="center_vertical"
+                            android:orientation="horizontal" />
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:id="@+id/you_might_like_layout"
+                    android:visibility="gone"
+                    android:layout_below="@+id/radio_channel_layout"
+                    android:layout_height="wrap_content">
+
+
+
+                    <LinearLayout
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?android:selectableItemBackground"
+                        android:orientation="vertical"
+                        android:paddingTop="30dp"
+                        android:visibility="visible"
+                        android:paddingBottom="5dp"
+                        android:paddingRight="5dp"
+                        android:paddingLeft="5dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="16dp"
+                            >
+
+
+                            <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+                                android:id="@+id/tvTitle1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center_vertical"
+                                android:text="@string/popular_artists"
+                                android:textColor="@color/see_all"
+                                android:textSize="@dimen/_15sdp"
+                                />
+
+                            <TextView
+                                android:id="@+id/seeAllYouMightLike"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center_vertical"
+                                android:background="@drawable/viewall_background"
+                                android:text="@string/view_all"
+                                android:textColor="@color/see_all"
+                                android:textSize="10sp" />
+
+                        </RelativeLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/you_might_recyclerview"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_gravity="center_vertical"
+                            android:orientation="horizontal" />
+                    </LinearLayout>
+
+
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:id="@+id/artist_layout"
+                    android:visibility="gone"
+                    android:padding="@dimen/_1sdp"
+                    android:layout_below="@+id/radio_channel_layout"
+                    android:layout_height="wrap_content">
+
+
+
+                    <LinearLayout
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?android:selectableItemBackground"
+                        android:orientation="vertical"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:visibility="visible"
+                        android:paddingBottom="1dp"
+                        android:paddingRight="5dp"
+                        android:paddingLeft="5dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="16dp"
+                            >
+
+
+                            <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+                                android:id="@+id/tvTitle5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center_vertical"
+                                android:text="@string/popular_artists"
+                                android:textColor="@color/see_all"
+                                android:textSize="@dimen/_15sdp"
+                                />
+
+                            <TextView
+                                android:id="@+id/seeAllArtists"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center_vertical"
+                                android:background="@drawable/viewall_background"
+                                android:text="@string/view_all"
+                                android:textColor="@color/see_all"
+                                android:textSize="@dimen/_8sdp" />
+
+                        </RelativeLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/artist_recyclerview"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_gravity="center_vertical"
+                            android:orientation="horizontal" />
+                    </LinearLayout>
+
+
+
+                </RelativeLayout>
+
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:id="@+id/popular_songs_layout"
+                    android:visibility="gone"
+                    android:padding="@dimen/_1sdp"
+                    android:layout_height="wrap_content">
+
+
+
+                    <LinearLayout
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?android:selectableItemBackground"
+                        android:orientation="vertical"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:visibility="visible"
+                        android:paddingBottom="1dp"
+                        android:paddingRight="5dp"
+                        android:paddingLeft="5dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="16dp"
+                            >
+
+
+                            <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+                                android:id="@+id/tvTitle2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center_vertical"
+                                android:text="@string/popular_songs"
+                                android:textColor="@color/see_all"
+                                android:textSize="@dimen/_15sdp"
+                                />
+
+                            <TextView
+                                android:id="@+id/seeAllPopularSongs"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center_vertical"
+                                android:background="@drawable/viewall_background"
+                                android:text="@string/view_all"
+                                android:textColor="@color/see_all"
+                                android:textSize="@dimen/_8sdp" />
+
+                        </RelativeLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/popular_songs_recycleview"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_gravity="center_vertical"
+                            android:orientation="horizontal" />
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:id="@+id/latest_songs_layout"
+                    android:visibility="visible"
+                    android:padding="@dimen/_1sdp"
+                    android:layout_below="@+id/popular_songs_layout"
+                    android:layout_height="wrap_content">
+
+
+
+                    <LinearLayout
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?android:selectableItemBackground"
+                        android:orientation="vertical"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:visibility="visible"
+                        android:paddingBottom="1dp"
+                        android:paddingRight="5dp"
+                        android:paddingLeft="5dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="16dp"
+                            >
+
+
+                            <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+                                android:id="@+id/tvTitle3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center_vertical"
+                                android:text="@string/latest_songs"
+                                android:textColor="@color/see_all"
+                                android:textSize="@dimen/_15sdp"
+                                />
+
+                            <TextView
+                                android:id="@+id/seeAllLatestSongs"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center_vertical"
+                                android:background="@drawable/viewall_background"
+                                android:text="@string/view_all"
+                                android:textColor="@color/see_all"
+                                android:textSize="@dimen/_8sdp" />
+
+                        </RelativeLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/latest_songs_recycleview"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_gravity="center_vertical"
+                            android:orientation="horizontal" />
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:id="@+id/radio_channel_layout"
+                    android:visibility="gone"
+                    android:padding="@dimen/_1sdp"
+                    android:layout_below="@+id/latest_songs_layout"
+                    android:layout_height="wrap_content">
+
+
+
+                    <LinearLayout
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?android:selectableItemBackground"
+                        android:orientation="vertical"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:visibility="visible"
+                        android:paddingBottom="1dp"
+                        android:paddingRight="5dp"
+                        android:paddingLeft="5dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="16dp"
+                            >
+
+
+                            <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+                                android:id="@+id/tvTitle4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center_vertical"
+                                android:text="@string/radio_channel"
+                                android:textColor="@color/see_all"
+                                android:textSize="@dimen/_15sdp"
+                                />
+
+                            <!--<lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView-->
+                                <!--android:id="@+id/seeAllRadioChannel"-->
+                                <!--android:layout_width="wrap_content"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:layout_alignParentEnd="true"-->
+                                <!--android:layout_centerVertical="true"-->
+                                <!--android:layout_gravity="center_vertical"-->
+                                <!--android:text="@string/see_all"-->
+                                <!--android:textColor="@color/see_all"-->
+                                <!--android:textSize="17sp" />-->
+
+                        </RelativeLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/radio_channel_recycleview"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_gravity="center_vertical"
+                            android:orientation="horizontal" />
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+        </ScrollView>
+
+        <FrameLayout
+            android:id="@+id/frame_container_recently_played"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="visible">
+
+        </FrameLayout>
+        <FrameLayout
+            android:id="@+id/frame_container_you_might_like"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="visible">
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/frame_container_popular_songs"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="visible">
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/frame_container_latest_songs"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="visible">
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/frame_container_radio_channel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="visible">
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/frame_container_artists"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="visible">
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/frame_container_latest_playlist"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="visible">
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/frame_container_artist_detail_playlist"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="visible">
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/frame_container_home_playlist_detail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="visible">
+
+        </FrameLayout>
+
+
+
+
+
+        <com.wang.avi.AVLoadingIndicatorView
+            android:id="@+id/aviProgress"
+            android:visibility="visible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:indicatorName="BallSpinFadeLoaderIndicator"
+            app:indicatorColor="@color/md_grey_400"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+
+
+
+

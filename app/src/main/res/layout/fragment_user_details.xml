@@ -1,0 +1,483 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:bind="http://schemas.android.com/apk/res/android">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:background="@color/loginColorBlack"
+        android:layout_height="match_parent"
+        >
+
+        <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+            android:id="@+id/update_profile_details_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:text="@string/update_profile_details"
+            android:textColor="@color/md_white_1000"
+            android:textSize="@dimen/_13sdp"
+            app:layout_constraintBottom_toTopOf="@+id/change_setting_textview"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <lk.mobilevisions.kiki.audio.util.KikiAudioMediumTextView
+            android:id="@+id/change_setting_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:text="@string/change_later_in_settings"
+            android:textColor="@color/md_white_1000"
+            android:textSize="@dimen/_11sdp"
+            app:layout_constraintBottom_toTopOf="@+id/language_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <lk.mobilevisions.kiki.audio.util.KikiAudioMediumTextView
+            android:id="@+id/language_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="42dp"
+            android:text="Language"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:textColor="@color/md_white_1000"
+            android:textSize="@dimen/_11sdp"
+            app:layout_constraintBottom_toTopOf="@+id/sinhala_layout"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <RelativeLayout
+            android:id="@+id/sinhala_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="42dp"
+            android:layout_marginStart="42dp"
+            android:background="@drawable/rounded_corner_inactive"
+            app:layout_constraintBottom_toTopOf="@+id/tamil_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:gravity="center">
+
+                <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+                    android:id="@+id/sinhala_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:padding="@dimen/_2sdp"
+                    android:text="@string/sinhala"
+                    android:textColor="@color/md_white_1000"
+                    android:textSize="@dimen/_14sdp" />
+
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/tamil_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="42dp"
+            android:layout_marginStart="42dp"
+            android:background="@drawable/rounded_corner_inactive"
+            app:layout_constraintBottom_toTopOf="@+id/english_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:gravity="center">
+
+                <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+                    android:id="@+id/tamil_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:padding="@dimen/_2sdp"
+                    android:text="@string/tamil"
+                    android:textColor="@color/md_white_1000"
+                    android:textSize="@dimen/_14sdp" />
+
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/english_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginEnd="42dp"
+            android:layout_marginStart="42dp"
+            android:background="@drawable/rounded_corner_white_background"
+            app:layout_constraintBottom_toTopOf="@+id/dob_text_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:gravity="center">
+
+                <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+                    android:id="@+id/english_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:padding="@dimen/_2sdp"
+                    android:text="@string/english"
+                    android:textColor="@color/md_black_1000"
+                    android:textSize="@dimen/_14sdp" />
+
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+
+        <lk.mobilevisions.kiki.audio.util.KikiAudioMediumTextView
+            android:id="@+id/dob_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="42dp"
+            android:text="Date of Birth"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:textColor="@color/md_white_1000"
+            android:textSize="@dimen/_11sdp"
+            app:layout_constraintBottom_toTopOf="@+id/dob_layout"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+        <LinearLayout
+            android:id="@+id/dob_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginEnd="42dp"
+            android:layout_marginStart="42dp"
+            android:orientation="horizontal"
+            android:weightSum="90"
+            app:layout_constraintBottom_toTopOf="@+id/gender_text_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+
+            <LinearLayout
+                android:id="@+id/year_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="@drawable/rounded_corner_white_background"
+                android:layout_marginRight="@dimen/_1sdp"
+                android:layout_weight="30"
+                android:gravity="center">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center">
+
+                        <lk.mobilevisions.kiki.ui.widgets.MaterialSpinner
+                            android:id="@+id/year_spinner"
+                            android:layout_width="match_parent"
+                            android:layout_margin="@dimen/_1sdp"
+                            app:ms_hint="year"
+                            app:ms_popup_padding_bottom="@dimen/_10sdp"
+                            app:ms_text_color="@color/md_black_1000"
+                            app:ms_hint_color="@color/md_black_1000"
+                            app:ms_background_color="@color/md_white_1000"
+                            android:layout_height="wrap_content"/>
+
+                        <!--<Spinner-->
+                            <!--android:id="@+id/year_spinner"-->
+                            <!--android:layout_margin="@dimen/_1sdp"-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="wrap_content"/>-->
+
+
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/month_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/_1sdp"
+                android:layout_marginRight="@dimen/_1sdp"
+                android:layout_weight="30"
+                android:background="@drawable/rounded_corner_inactive"
+                android:gravity="center">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:gravity="center"
+                        android:layout_height="wrap_content">
+
+                        <lk.mobilevisions.kiki.ui.widgets.MaterialSpinner
+                            android:id="@+id/month_spinner"
+                            android:layout_width="match_parent"
+                            app:ms_hint="month"
+                            android:layout_margin="@dimen/_1sdp"
+                            app:ms_popup_padding_bottom="@dimen/_10sdp"
+                            app:ms_hint_color="@color/male_female_text_color"
+                            app:ms_background_color="#4D4D4D"
+                            android:layout_height="wrap_content"/>
+
+
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/day_lauout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/_1sdp"
+                android:layout_weight="30"
+                android:background="@drawable/rounded_corner_inactive"
+                android:gravity="center">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:gravity="center"
+                        android:layout_height="wrap_content">
+                        <lk.mobilevisions.kiki.ui.widgets.MaterialSpinner
+                            android:id="@+id/day_spinner"
+                            android:layout_width="match_parent"
+                            app:ms_hint="day"
+                            android:layout_margin="@dimen/_1sdp"
+                            app:ms_popup_padding_bottom="@dimen/_10sdp"
+                            app:ms_hint_color="@color/male_female_text_color"
+                            app:ms_background_color="#4D4D4D"
+                            android:layout_height="wrap_content"/>
+
+
+
+
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <lk.mobilevisions.kiki.audio.util.KikiAudioMediumTextView
+            android:id="@+id/gender_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="42dp"
+            android:text="Gender"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:textColor="@color/md_white_1000"
+            android:textSize="@dimen/_11sdp"
+            app:layout_constraintBottom_toTopOf="@+id/gender_layout"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+
+        <LinearLayout
+            android:id="@+id/gender_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="42dp"
+            android:layout_marginStart="42dp"
+            android:orientation="horizontal"
+            android:weightSum="100"
+            app:layout_constraintBottom_toTopOf="@+id/confirm_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+
+            <LinearLayout
+                android:id="@+id/male_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/_2sdp"
+                android:layout_weight="50"
+                android:background="@drawable/rounded_corner_white_background"
+                android:gravity="center">
+
+                <RelativeLayout
+                    android:id="@+id/male_inner_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center">
+
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_toLeftOf="@+id/male_textview"
+                            android:src="@drawable/ic_gender_male" />
+
+                        <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+                            android:id="@+id/male_textview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:gravity="center"
+                            android:padding="@dimen/_2sdp"
+                            android:text="@string/male"
+                            android:textColor="@color/md_black_1000"
+                            android:textSize="@dimen/_12sdp" />
+
+
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/female_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/_2sdp"
+                android:layout_weight="50"
+                android:background="@drawable/rounded_corner_inactive"
+                android:gravity="center">
+
+                <RelativeLayout
+                    android:id="@+id/female_inner_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_toLeftOf="@+id/female_textview"
+                            android:src="@drawable/ic_gender_female" />
+
+
+                        <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+                            android:id="@+id/female_textview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:gravity="center"
+                            android:padding="@dimen/_2sdp"
+                            android:text="@string/female"
+                            android:textColor="@color/male_female_text_color"
+                            android:textSize="@dimen/_12sdp" />
+
+
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/confirm_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginBottom="32dp"
+            android:layout_marginEnd="42dp"
+            android:layout_marginStart="42dp"
+            android:background="@drawable/rounded_login_button1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:gravity="center">
+
+                <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+                    android:id="@+id/confirm_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:padding="@dimen/_2sdp"
+                    android:text="@string/confirm"
+                    android:textColor="@color/md_white_1000"
+                    android:textSize="@dimen/_14sdp" />
+
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

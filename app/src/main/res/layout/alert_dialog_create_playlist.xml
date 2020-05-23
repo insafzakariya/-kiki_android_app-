@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:background="#FAFAFA">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_14sdp"
+        android:layout_marginLeft="@dimen/_18sdp"
+        android:layout_marginRight="@dimen/_18sdp"
+
+        android:layout_marginTop="@dimen/_18sdp">
+
+        <RelativeLayout
+            android:id="@+id/layout1"
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content">
+
+            <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="8sp"
+                android:padding="@dimen/_2sdp"
+                android:text="Create Playlist"
+                android:textColor="#de000000"
+                android:textSize="@dimen/_20sdp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout1"
+            android:layout_marginTop="@dimen/_8sdp">
+
+            <lk.mobilevisions.kiki.audio.util.KikiAudioMediumTextView
+                android:id="@+id/greeting_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="5sp"
+                android:text="Please enter the playlost which you want to create."
+                android:textColor="#8a000000"
+                android:textSize="@dimen/_14sdp" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout3"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/layout2"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/layout_inner1"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="10">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="5">
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/input_layout_first_name"
+                            android:layout_width="match_parent"
+                            app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout"
+                            android:textColorHint="#61000000"
+                            android:layout_height="wrap_content">
+
+                            <EditText
+                                android:id="@+id/input_first_name"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:singleLine="true"
+                                android:textSize="@dimen/_14sdp"
+                                android:maxLength="20"
+                                android:fontFamily="@font/proxima_nova_regular"
+                                android:inputType="textCapSentences"
+                                android:textColorHint="#61000000"
+                                android:textColor="#de404040"
+                                android:lineSpacingExtra="8sp"
+                                android:hint="Enter the Name " />
+                        </com.google.android.material.textfield.TextInputLayout>                    </LinearLayout>
+
+                </LinearLayout>
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/layout4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout3"
+            android:visibility="visible"
+            android:layout_marginTop="@dimen/_17sdp">
+
+
+            <lk.mobilevisions.kiki.audio.util.KikiAudioMediumTextView
+                android:id="@+id/create_button_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:gravity="center_horizontal"
+                android:letterSpacing="0.04"
+                android:padding="@dimen/_2sdp"
+                android:text="CREATE"
+                android:textColor="@color/see_all"
+                android:textSize="@dimen/_15sdp" />
+
+            <lk.mobilevisions.kiki.audio.util.KikiAudioMediumTextView
+                android:id="@+id/cancel_button_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/_23sdp"
+                android:layout_toLeftOf="@+id/create_button_text_view"
+                android:gravity="center_horizontal"
+                android:letterSpacing="0.04"
+                android:fontFamily="@font/futuranext_medium"
+                android:padding="@dimen/_2sdp"
+                android:text="CANCEL"
+                android:textColor="#FF0100"
+                android:textSize="@dimen/_15sdp" />
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

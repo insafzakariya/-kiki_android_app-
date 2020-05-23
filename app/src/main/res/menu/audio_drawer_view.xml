@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <!--<item-->
+            <!--android:id="@+id/navGuide"-->
+            <!--android:padding="@dimen/_5sdp"-->
+            <!--android:icon="@drawable/ic_video_navigation_guide"-->
+            <!--android:title="@string/menu_guide"/>-->
+
+        <item
+            android:id="@+id/navPackages"
+            android:padding="@dimen/_5sdp"
+            android:icon="@drawable/ic_video_navigation_packages"
+            android:title="@string/menu_activate_packages" />
+
+
+        <item
+            android:id="@+id/navSettings"
+            android:padding="@dimen/_5sdp"
+            android:icon="@drawable/ic_video_navigation_settings"
+            android:title="Settings" />
+
+        <item
+            android:id="@+id/navContact"
+            android:padding="@dimen/_5sdp"
+            android:icon="@drawable/ic_video_navigation_contact_support"
+            android:title="@string/menu_contact_support"
+            android:visible="true"/>
+
+
+        <item
+            android:id="@+id/navLogout"
+            android:padding="@dimen/_5sdp"
+            android:icon="@drawable/ic_video_navigation_logout"
+            android:title="@string/menu_logout" />
+    </group>
+</menu>

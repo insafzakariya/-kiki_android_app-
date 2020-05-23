@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/navPackages"
+            android:icon="@drawable/ic_video_navigation_packages"
+            android:title="@string/menu_activate_packages" />
+
+
+        <item
+            android:id="@+id/navSettings"
+            android:icon="@drawable/ic_video_navigation_settings"
+            android:title="Settings" />
+
+        <item
+            android:id="@+id/navContact"
+            android:icon="@drawable/ic_video_navigation_contact_support"
+            android:title="@string/menu_contact_support" />
+
+        <item
+            android:id="@+id/navChild"
+            android:icon="@drawable/ic_video_navigation_child_care"
+            android:title="@string/menu_chile_mode"
+            />
+
+        <item
+            android:id="@+id/navLogout"
+            android:icon="@drawable/ic_video_navigation_logout"
+            android:title="@string/menu_logout" />
+    </group>
+</menu>

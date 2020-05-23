@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:bind="http://schemas.android.com/apk/res/android" >
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <!--<ImageView-->
+            <!--android:id="@+id/imageView7"-->
+            <!--android:layout_width="20dp"-->
+            <!--android:layout_height="20dp"-->
+            <!--android:layout_marginEnd="16dp"-->
+            <!--android:layout_marginTop="16dp"-->
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintTop_toTopOf="parent"-->
+            <!--app:srcCompat="@drawable/ic_songs_play" />-->
+
+        <!--<lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView-->
+            <!--android:id="@+id/textView11"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginEnd="8dp"-->
+            <!--android:layout_marginTop="16dp"-->
+            <!--android:text="Play All"-->
+            <!--android:textColor="@color/text_color"-->
+            <!--android:textSize="14sp"-->
+            <!--app:layout_constraintEnd_toStartOf="@+id/imageView7"-->
+            <!--app:layout_constraintTop_toTopOf="parent" />-->
+
+        <lk.mobilevisions.kiki.audio.widgets.AnimatedExpandableListView
+            android:id="@+id/songs_recyclerview"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="?attr/actionBarSize"
+            android:layout_marginTop="8dp"
+            android:animateLayoutChanges="true"
+            android:childDivider="#00000000"
+            android:divider="#1A1A1A"
+            android:dividerHeight="5dp"
+            android:groupIndicator="@null"
+            android:paddingBottom="@dimen/_5sdp"
+            android:paddingLeft="@dimen/_5sdp"
+            android:paddingRight="@dimen/_5sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <lk.mobilevisions.kiki.audio.util.KikiAudioMediumTextView
+            android:id="@+id/no_playlist_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            android:text="No Playlists Available"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <com.wang.avi.AVLoadingIndicatorView
+            android:id="@+id/aviProgress"
+            android:visibility="visible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:indicatorName="BallSpinFadeLoaderIndicator"
+            app:indicatorColor="@color/md_grey_400"/>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

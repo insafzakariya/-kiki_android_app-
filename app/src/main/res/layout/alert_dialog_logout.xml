@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:background="@color/md_grey_1000">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_14sdp"
+        android:layout_marginLeft="@dimen/_18sdp"
+        android:layout_marginRight="@dimen/_18sdp"
+
+        android:layout_marginTop="@dimen/_18sdp">
+
+        <RelativeLayout
+            android:id="@+id/layout1"
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content">
+
+            <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="8sp"
+                android:padding="@dimen/_2sdp"
+                android:text="@string/logout"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/_20sdp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout1"
+            android:layout_marginTop="@dimen/_8sdp">
+
+            <lk.mobilevisions.kiki.audio.util.KikiAudioMediumTextView
+                android:id="@+id/greeting_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="5sp"
+                android:text="@string/logout_text"
+                android:textColor="@color/md_grey_1100"
+                android:textSize="@dimen/_14sdp" />
+
+
+        </RelativeLayout>
+
+
+
+        <RelativeLayout
+            android:id="@+id/layout4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout2"
+            android:visibility="visible"
+            android:layout_marginTop="@dimen/_17sdp">
+
+
+            <lk.mobilevisions.kiki.audio.util.KikiAudioMediumTextView
+                android:id="@+id/yes_button_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:gravity="center_horizontal"
+                android:letterSpacing="0.04"
+                android:padding="@dimen/_2sdp"
+                android:text="YES"
+                android:textColor="@color/newUiBrand"
+                android:textSize="@dimen/_15sdp" />
+
+            <lk.mobilevisions.kiki.audio.util.KikiAudioMediumTextView
+                android:id="@+id/cancel_button_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/_23sdp"
+                android:layout_toLeftOf="@+id/yes_button_text_view"
+                android:gravity="center_horizontal"
+                android:letterSpacing="0.04"
+                android:fontFamily="@font/futuranext_medium"
+                android:padding="@dimen/_2sdp"
+                android:text="CANCEL"
+                android:textColor="#FF0100"
+                android:textSize="@dimen/_15sdp" />
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

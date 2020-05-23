@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:bind="http://schemas.android.com/apk/res/android" >
+
+    <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:fitsSystemWindows="true"
+        android:elevation="4dp"
+        android:minHeight="?attr/actionBarSize"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+
+        <com.wang.avi.AVLoadingIndicatorView
+            android:id="@+id/aviProgressToolbar"
+            android:visibility="gone"
+            android:layout_gravity="right"
+            android:layout_marginTop="@dimen/dimen.1.x"
+            android:layout_marginRight="@dimen/dimen.1.x"
+            android:layout_width="@dimen/dimen.5.x"
+            android:layout_height="@dimen/dimen.5.x"
+            app:indicatorName="BallZigZagIndicator"
+            app:indicatorColor="@color/colorWhite"/>
+
+    </androidx.appcompat.widget.Toolbar>
+</layout>
+
+
+
+
+
+
+

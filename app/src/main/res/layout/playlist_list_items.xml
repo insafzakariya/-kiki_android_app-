@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:id="@+id/playlistListLayout">
+
+    <RelativeLayout
+        android:id="@+id/playlist_list_relative"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/contstrain_playlistlist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.joooonho.SelectableRoundedImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/playlist_image"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_marginStart="@dimen/_7sdp"
+                android:src="@drawable/ic_havana"
+                android:scaleType="centerCrop"
+                app:sriv_left_top_corner_radius="5dip"
+                app:sriv_right_top_corner_radius="5dip"
+                app:sriv_left_bottom_corner_radius="5dip"
+                app:sriv_right_bottom_corner_radius="5dip"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/view_line2"/>
+
+
+            <lk.mobilevisions.kiki.audio.util.KikiAudioMediumTextView
+                android:id="@+id/textView_head"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:text="Havana"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/_12sdp"
+                android:gravity="center"
+                android:singleLine="true"
+                app:layout_constraintStart_toEndOf="@+id/playlist_image"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+                android:id="@+id/artist_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:text="Camila Cabello"
+                android:gravity="center"
+                android:visibility="visible"
+                android:singleLine="true"
+                android:textColor="#FFFFFF"
+                android:textSize="@dimen/_10sdp"
+                app:layout_constraintStart_toEndOf="@id/playlist_image"
+                app:layout_constraintTop_toBottomOf="@+id/textView_head"/>
+
+            <TextView
+                android:id="@+id/song_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:textColor="@color/md_grey_600"
+                android:gravity="center"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                app:layout_constraintStart_toEndOf="@id/playlist_image"
+                app:layout_constraintTop_toBottomOf="@id/artist_text"/>
+
+                        <TextView
+                            android:id="@+id/date_playlist"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2020"
+                            android:textColor="@color/md_grey_600"
+                            android:gravity="center"
+                            android:layout_marginStart="@dimen/_25sdp"
+                            android:layout_marginTop="@dimen/_12sdp"
+                            app:layout_constraintStart_toEndOf="@id/song_count"
+                            app:layout_constraintTop_toBottomOf="@+id/artist_text"/>
+
+            <TextView
+                android:id="@+id/addPlaylist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/viewall_background"
+                android:drawableStart="@drawable/ic_plus_music"
+                android:text="@string/add"
+                android:paddingEnd="@dimen/_10sdp"
+                android:textColor="@color/see_all"
+                android:textSize="@dimen/_16sdp"
+                style="@style/Smaller_Drawable"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+            <View
+                android:id="@+id/view_line2"
+                android:layout_width="0dp"
+                android:background="@color/md_grey_600"
+                android:layout_marginTop="@dimen/_11sdp"
+                android:layout_height="1dp"
+                android:layout_marginStart="@dimen/_7sdp"
+                android:layout_marginEnd="@dimen/_7sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/playlist_image">
+            </View>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

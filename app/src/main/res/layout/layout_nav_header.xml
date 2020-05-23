@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen.12.x"
+        android:background="?attr/colorPrimary"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        android:padding="@dimen/dimen.2.x"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+
+        <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+            android:id="@+id/textViewWelcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:text="Welcome"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@android:color/white" />
+
+        <ImageView
+            android:layout_width="@dimen/dimen.10.x"
+            android:layout_height="@dimen/dimen.11.x"
+            android:layout_alignParentRight="true"
+            android:scaleType="fitEnd"
+            android:id="@+id/logoImage"
+            android:src="@drawable/header_logo"/>
+
+
+    </RelativeLayout>

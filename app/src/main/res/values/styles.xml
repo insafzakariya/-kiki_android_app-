@@ -1,0 +1,195 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+
+    <attr format="reference" name="windowBackground"/>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowDisablePreview">true</item>
+        <item name="android:popupMenuStyle">@style/PopupMenuStyle</item>
+        <item name="android:windowContentTransitions" tools:targetApi="lollipop">true</item>
+
+        <!-- specify enter and exit transitions -->
+        <item name="android:windowEnterTransition">@transition/explode</item>
+        <item name="android:windowExitTransition">@transition/explode</item>
+
+        <!-- specify shared element transitions -->
+        <item name="android:windowSharedElementEnterTransition" tools:targetApi="lollipop">
+            @transition/change_image_transform</item>
+        <item name="android:windowSharedElementExitTransition" tools:targetApi="lollipop">
+            @transition/change_image_transform</item>
+    </style>
+
+    <style name="AppThemeNoActionBar" parent="Theme.AppCompat.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowDisablePreview">true</item>
+    </style>
+
+    <style name="AppThemeFullScreen" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowDisablePreview">true</item>
+    </style>
+
+    <style name="PopupMenuStyle" parent="Base.Widget.AppCompat.PopupMenu">
+        <item name="android:popupBackground">@android:color/background_light</item>
+    </style>
+
+    <style name="AppButton">
+        <item name="android:background">@drawable/loginbutton</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+    </style>
+
+    <style name="LoginButton" parent="AppButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+
+    <style name="LoginButtonStyle1">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:background">@drawable/rounded_login_button1</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="LoginButtonStyle2">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:background">@drawable/rounded_login_button2</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="BirthdayButtonRegister" parent="AppButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_gravity">left</item>
+    </style>
+
+    <style name="RegisterButtonBirthDay" parent="AppButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">48dp</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="CustomButtonTheme" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">#b2dfdb</item>
+        <item name="colorButtonNormal">#009688</item>
+    </style>
+
+    <style name="TabLayoutStyle" parent="Widget.Design.TabLayout">
+
+        <item name="tabIndicatorColor">#707070</item>
+        <item name="tabIndicatorHeight">3dp</item>
+        <item name="tabTextAppearance">@style/TabTextAppearance</item>
+        <item name="tabSelectedTextColor">#707070</item>
+        <item name="tabTextColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="TabLayoutStyleNew" parent="Widget.Design.TabLayout">
+
+        <item name="tabIndicatorColor">#707070</item>
+        <item name="tabIndicatorHeight">3dp</item>
+        <item name="tabBackground">@drawable/tab_background</item>
+        <item name="tabTextAppearance">@style/TabTextAppearance</item>
+        <item name="tabSelectedTextColor">#707070</item>
+        <item name="tabTextColor">#42000000</item>
+    </style>
+    <style name="TabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColor">#42000000</item>
+        <item name="textAllCaps">false</item>
+    </style>
+    <style name="TextAppearence.App.TextInputLayout" parent="@android:style/TextAppearance">
+        <item name="android:textColor">#61000000</item>
+        <item name="android:textSize">@dimen/_10sdp</item>
+        <item name="colorControlNormal">#1e000000</item>
+        <item name="colorControlActivated">#03a1b4</item>
+        <item name="colorControlHighlight">#03a1b4</item>
+    </style>
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="NavigationView" >
+        <item name="android:textSize">@dimen/_15sdp</item>
+        <item name="fontFamily">@font/futuranext_book</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="listPreferredItemPaddingLeft">@dimen/_20sdp</item>
+        <item name="listPreferredItemHeightSmall">@dimen/_40sdp</item>
+    </style>
+    <style name="NavigationViewAudio" >
+        <item name="android:textSize">@dimen/_15sdp</item>
+        <item name="fontFamily">@font/futuranext_book</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="listPreferredItemPaddingLeft">@dimen/_20sdp</item>
+        <item name="listPreferredItemHeightSmall">@dimen/_40sdp</item>
+    </style>
+
+    <style name="SwitchCompatStyle" >
+        <item name="android:thumb">@drawable/switch_thumb</item>
+        <item name="trackTint">@color/switch_color</item>
+    </style>
+    <style name="MySeekBar" parent="Widget.AppCompat.SeekBar">
+        <item name="android:progressBackgroundTint">#B6AFAD</item>
+        <item name="android:progressTint">@color/colorPrimary</item>
+        <item name="android:colorControlActivated">@color/colorWhite</item>
+    </style>
+
+    <style name="Spinner" parent="Widget.AppCompat.Light.DropDownItem.Spinner">
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingEnd">0dp</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:backgroundTint">@color/transparent</item>
+        <item name="android:textSize">@dimen/_14sdp</item>
+    </style>
+
+    <style name="Smaller_Drawable">
+        <item name="android:textSize">@dimen/_15sdp</item>
+        <item name="android:scaleX">0.6</item>
+        <item name="android:scaleY">0.6</item>
+    </style>
+
+    <style name="Medium_Drawable">
+        <item name="android:textSize">@dimen/_20sdp</item>
+        <item name="android:scaleX">0.7</item>
+        <item name="android:scaleY">0.7</item>
+    </style>
+
+    <style name="Large_Drawable">
+        <item name="android:textSize">@dimen/_30sdp</item>
+        <item name="android:scaleX">2.0</item>
+        <item name="android:scaleY">2.0</item>
+    </style>
+
+    <style name="Detail_Drawable">
+        <item name="android:textSize">@dimen/_16sdp</item>
+        <item name="android:scaleX">0.7</item>
+        <item name="android:scaleY">0.7</item>
+    </style>
+
+
+
+    <!--<style name="Base.Widget.Design.TabLayout" parent="android:Widget">-->
+        <!--<item name="tabBackground">@drawable/tab_background</item>-->
+        <!--<item name="tabIndicatorColor">#ff00ff</item>-->
+        <!--<item name="tabIndicatorHeight">2dp</item>-->
+    <!--</style>-->
+
+</resources>

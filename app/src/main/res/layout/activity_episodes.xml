@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+        android:id="@+id/drawerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.main.MainActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/includedToolbar"
+                layout="@layout/layout_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+            <LinearLayout
+                android:id="@+id/activity_episodes"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/customBlack1"
+                android:orientation="vertical"
+                tools:context="lk.mobilevisions.kiki.ui.channels.EpisodesActivity">
+
+                <FrameLayout
+                    android:id="@+id/frameLayoutPlayer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color600"
+                    android:elevation="3dp"
+                    android:transitionName="playerTransition">
+
+                </FrameLayout>
+
+
+                <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:background="@drawable/draw_border"-->
+                    <!--android:elevation="3dp"-->
+                    <!--android:orientation="vertical">-->
+
+                    <!--<LinearLayout-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="100dp"-->
+                        <!--android:orientation="horizontal">-->
+
+                        <!--<android.support.v7.widget.AppCompatImageView-->
+                            <!--android:id="@+id/imageViewProgramImage"-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:layout_weight="1"-->
+                            <!--android:paddingTop="@dimen/dimen.1.x"-->
+                            <!--app:srcCompat="@drawable/program" />-->
+
+                        <!--<RelativeLayout-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:layout_weight="1"-->
+                            <!--android:paddingLeft="@dimen/dimen.0.50.x">-->
+
+                            <!--&lt;!&ndash;<LinearLayout&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:layout_alignParentBottom="true"&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:layout_alignParentLeft="true"&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:paddingBottom="@dimen/dimen.0.50.x"&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:paddingRight="@dimen/dimen.2.x"&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:orientation="horizontal">&ndash;&gt;-->
+
+
+                            <!--&lt;!&ndash;<LinearLayout&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:orientation="vertical"&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:id="@+id/layoutSubscribeButton"&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:gravity="center"&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:layout_weight="1">&ndash;&gt;-->
+
+                            <!--&lt;!&ndash;<android.support.v7.widget.AppCompatImageButton&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:id="@+id/imageButtonSubscribe"&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:layout_width="@dimen/dimen.3.x"&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:layout_height="@dimen/dimen.3.x"&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:background="@null"&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:tint="@color/colorPrimary"&ndash;&gt;-->
+                            <!--&lt;!&ndash;app:srcCompat="@drawable/ic_no_subscribe" />&ndash;&gt;-->
+
+                            <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:textAppearance="?android:attr/textAppearanceSmall"&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:textSize="10sp"&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:textColor="@color/colorPrimary"&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:id="@+id/textViewSubscribe"&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:text="Subscribe"/>&ndash;&gt;-->
+
+                            <!--&lt;!&ndash;</LinearLayout>&ndash;&gt;-->
+
+
+                            <!--&lt;!&ndash;<LinearLayout&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:orientation="vertical"&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:id="@+id/layoutSortView"&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:gravity="center"&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:layout_weight="1">&ndash;&gt;-->
+
+                            <!--&lt;!&ndash;<android.support.v7.widget.AppCompatImageButton&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:layout_width="@dimen/dimen.3.x"&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:layout_height="@dimen/dimen.3.x"&ndash;&gt;-->
+                            <!--&lt;!&ndash;app:srcCompat="@drawable/ic_sort_down"&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:tint="@color/colorPrimary"&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:background="@null"&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:id="@+id/imageSortView" />&ndash;&gt;-->
+
+                            <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:textAppearance="?android:attr/textAppearanceSmall"&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:textSize="10sp"&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:textColor="@color/colorPrimary"&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:id="@+id/textViewSortView"&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:text="Sort"/>&ndash;&gt;-->
+
+                            <!--&lt;!&ndash;</LinearLayout>&ndash;&gt;-->
+
+
+                            <!--&lt;!&ndash;</LinearLayout>&ndash;&gt;-->
+
+                            <!--<TextView-->
+                                <!--android:id="@+id/textViewVideoName"-->
+                                <!--android:layout_width="match_parent"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:layout_alignParentLeft="true"-->
+                                <!--android:layout_alignParentStart="true"-->
+                                <!--android:layout_alignParentTop="true"-->
+                                <!--android:layout_marginRight="@dimen/dimen.1.x"-->
+                                <!--android:gravity="center"-->
+                                <!--android:lines="2"-->
+                                <!--android:text="[Video Name]"-->
+                                <!--android:textStyle="bold"></TextView>-->
+
+                        <!--</RelativeLayout>-->
+
+                    <!--</LinearLayout>-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/textViewProgramDescription"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:padding="@dimen/dimen.1.x"-->
+                        <!--android:text=""-->
+                        <!--android:textAlignment="center"-->
+                        <!--android:textColor="@color/colorPrimary" />-->
+
+                <!--</LinearLayout>-->
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="61dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constant_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp">
+
+                        <TextView
+                            android:id="@+id/program_title_textview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="8dp"
+                            android:text="TextView"
+                            android:textColor="#EEEEEE"
+                            android:textSize="18sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.52" />
+
+
+                        <RelativeLayout
+                            android:id="@+id/play_all_layout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@drawable/video_play_all_background"
+                            android:gravity="center"
+                            android:paddingBottom="2dp"
+                            android:paddingLeft="8dp"
+                            android:paddingRight="8dp"
+                            android:paddingTop="2dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/program_title_textview"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.52">
+
+                            <TextView
+                                android:id="@+id/textView_play"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center|start"
+                                android:text="Play All"
+                                android:textColor="@color/colorWhite" />
+
+                            <ImageView
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_toRightOf="@+id/textView_play"
+                                android:gravity="center|start"
+                                android:src="@drawable/ic_play" />
+
+
+                        </RelativeLayout>
+
+
+                        <androidx.appcompat.widget.AppCompatImageButton
+                            android:id="@+id/imageSortView"
+                            android:layout_width="@dimen/dimen.3.x"
+                            android:layout_height="@dimen/dimen.3.x"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginTop="12dp"
+                            android:background="@null"
+                            android:tint="@color/colorPrimary"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/ic_sort_up" />
+
+                        <TextView
+                            android:id="@+id/textViewSortView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sort"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="10sp"
+                            app:layout_constraintEnd_toEndOf="@+id/imageSortView"
+                            app:layout_constraintStart_toStartOf="@+id/imageSortView"
+                            app:layout_constraintTop_toBottomOf="@+id/imageSortView" />
+
+                        <androidx.appcompat.widget.AppCompatImageButton
+                            android:id="@+id/imageButtonSubscribe"
+                            android:layout_width="@dimen/dimen.3.x"
+                            android:layout_height="@dimen/dimen.3.x"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="12dp"
+                            android:background="@null"
+                            android:tint="@color/colorPrimary"
+                            app:layout_constraintEnd_toStartOf="@+id/imageSortView"
+                            app:layout_constraintHorizontal_bias="0.856"
+                            app:layout_constraintStart_toEndOf="@+id/play_all_layout"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/ic_no_subscribe" />
+
+                        <TextView
+                            android:id="@+id/textViewSubscribe"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Subscribe"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="10sp"
+                            app:layout_constraintEnd_toEndOf="@+id/imageButtonSubscribe"
+                            app:layout_constraintStart_toStartOf="@+id/imageButtonSubscribe"
+                            app:layout_constraintTop_toBottomOf="@+id/imageButtonSubscribe" />
+
+                        <!--<LinearLayout-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_alignParentBottom="true"-->
+                        <!--android:layout_alignParentLeft="true"-->
+                        <!--app:layout_constraintLeft_toRightOf="@+id/play_all_layout"-->
+                        <!--android:paddingBottom="@dimen/dimen.0.50.x"-->
+                        <!--android:paddingRight="@dimen/dimen.2.x"-->
+                        <!--android:orientation="horizontal">-->
+
+
+                        <!--<LinearLayout-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:orientation="vertical"-->
+                        <!--android:id="@+id/layoutSubscribeButton"-->
+                        <!--android:gravity="center"-->
+                        <!--android:layout_weight="1">-->
+
+                        <!--<android.support.v7.widget.AppCompatImageButton-->
+                        <!--android:id="@+id/imageButtonSubscribe"-->
+                        <!--android:layout_width="@dimen/dimen.3.x"-->
+                        <!--android:layout_height="@dimen/dimen.3.x"-->
+                        <!--android:background="@null"-->
+                        <!--android:tint="@color/colorPrimary"-->
+                        <!--app:srcCompat="@drawable/ic_no_subscribe" />-->
+
+                        <!--<TextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:textAppearance="?android:attr/textAppearanceSmall"-->
+                        <!--android:textSize="10sp"-->
+                        <!--android:textColor="@color/colorPrimary"-->
+                        <!--android:id="@+id/textViewSubscribe"-->
+                        <!--android:text="Subscribe"/>-->
+
+                        <!--</LinearLayout>-->
+
+
+                        <!--<LinearLayout-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:orientation="vertical"-->
+                        <!--android:id="@+id/layoutSortView"-->
+                        <!--android:gravity="center"-->
+                        <!--android:layout_weight="1">-->
+
+                        <!--<android.support.v7.widget.AppCompatImageButton-->
+                        <!--android:layout_width="@dimen/dimen.3.x"-->
+                        <!--android:layout_height="@dimen/dimen.3.x"-->
+                        <!--app:srcCompat="@drawable/ic_sort_down"-->
+                        <!--android:tint="@color/colorPrimary"-->
+                        <!--android:background="@null"-->
+                        <!--android:id="@+id/imageSortView" />-->
+
+                        <!--<TextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:textAppearance="?android:attr/textAppearanceSmall"-->
+                        <!--android:textSize="10sp"-->
+                        <!--android:textColor="@color/colorPrimary"-->
+                        <!--android:id="@+id/textViewSortView"-->
+                        <!--android:text="Sort"/>-->
+
+                        <!--</LinearLayout>-->
+
+
+                        <!--</LinearLayout>-->
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/constant_layout"
+                        android:background="@drawable/line_divider"></View>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycleViewEpisodes"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scrollbars="none"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/TextViewEmptyVideos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:text="No Programs Available"
+                        android:visibility="gone" />
+
+                    <com.wang.avi.AVLoadingIndicatorView
+                        android:id="@+id/aviProgress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="@dimen/dimen.5.x"
+                        android:visibility="visible"
+                        app:indicatorColor="@color/colorPrimary"
+                        app:indicatorName="BallSpinFadeLoaderIndicator" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </androidx.drawerlayout.widget.DrawerLayout>
+</layout>
+
+

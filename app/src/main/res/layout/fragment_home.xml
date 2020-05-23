@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:bind="http://schemas.android.com/apk/res/android" >
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="lk.mobilevisions.kiki.ui.main.home.HomeFragment">
+
+
+        <FrameLayout
+            android:id="@+id/frameLayoutPlayer"
+            android:transitionName="playerTransition"
+            android:layout_width="match_parent"
+            android:elevation="3dp"
+            android:background="@color/color600"
+            android:layout_height="wrap_content">
+
+        </FrameLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color700"
+            android:elevation="3dp"
+            android:padding="@dimen/dimen.1.x">
+
+            <TextView
+                android:id="@+id/textViewCurrentVideoTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:paddingLeft="@dimen/dimen.1.x"
+                android:textStyle="bold"
+                android:textColor="@color/colorWhite" />
+
+            <TextView
+                android:id="@+id/textViewDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="3, September 2016"
+                android:layout_toLeftOf="@+id/buttonCalendar"
+                android:paddingRight="@dimen/dimen.1.x"
+                android:textColor="@color/colorWhite" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/buttonCalendar"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentRight="true"
+                android:background="@color/color700"
+                app:srcCompat="@drawable/ic_calendar_range" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycleViewPrograms"
+                android:scrollbars="vertical"
+                android:visibility="gone"
+                android:background="@color/recycleViewBackground"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+
+
+            <TextView
+                android:id="@+id/TextViewEmptyVideos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:visibility="gone"
+                android:text="No Programs Available" />
+
+            <com.wang.avi.AVLoadingIndicatorView
+                android:id="@+id/aviProgress"
+                android:visibility="visible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="@dimen/dimen.5.x"
+                app:indicatorName="BallSpinFadeLoaderIndicator"
+                app:indicatorColor="@color/colorPrimary"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+</layout>
+
+
+

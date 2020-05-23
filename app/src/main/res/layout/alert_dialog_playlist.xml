@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:background="#FAFAFA">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_14sdp"
+        android:layout_marginLeft="@dimen/_18sdp"
+        android:layout_marginRight="@dimen/_18sdp"
+
+        android:layout_marginTop="@dimen/_18sdp">
+
+        <RelativeLayout
+            android:id="@+id/layout1"
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content">
+
+            <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="8sp"
+                android:padding="@dimen/_2sdp"
+                android:text="Select Playlist"
+                android:textColor="#de000000"
+                android:textSize="@dimen/_20sdp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout1"
+            android:layout_marginTop="@dimen/_8sdp">
+
+            <lk.mobilevisions.kiki.audio.util.KikiAudioMediumTextView
+                android:id="@+id/greeting_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="5sp"
+                android:text="Please select a playlist below which you want to add the song"
+                android:textColor="#8a000000"
+                android:textSize="@dimen/_12sdp" />
+
+
+        </RelativeLayout>
+
+
+
+        <RelativeLayout
+            android:id="@+id/layout3"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_200sdp"
+            android:layout_below="@+id/layout2"
+            android:visibility="visible"
+            android:layout_marginTop="@dimen/_17sdp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/mRecyerID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
+
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout3"
+            android:visibility="visible"
+            android:layout_marginTop="@dimen/_17sdp">
+
+            <lk.mobilevisions.kiki.audio.util.KikiAudioMediumTextView
+                android:id="@+id/cancel_button_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:gravity="center_horizontal"
+                android:letterSpacing="0.04"
+                android:padding="@dimen/_2sdp"
+                android:text="CANCEL"
+                android:textColor="#FF0100"
+                android:textSize="@dimen/_15sdp" />
+
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/aviProgress"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:indicatorName="BallSpinFadeLoaderIndicator"
+        app:indicatorColor="@color/see_all"/>
+
+
+
+</RelativeLayout>

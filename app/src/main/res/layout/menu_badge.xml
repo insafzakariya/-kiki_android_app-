@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="?android:attr/actionButtonStyle"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:focusable="true"
+    android:id="@+id/menuBadgeRoot"
+    android:gravity="center">
+
+    <ImageView
+        android:id="@+id/menu_badge_icon"
+        android:tint="@color/colorWhite"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/menu_badge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="@dimen/dimen.1.x"
+        android:textColor="@android:color/white"
+        android:textAlignment="center"
+        android:background="@drawable/menu_badge_circle"
+        android:textSize="12sp" />
+</FrameLayout>

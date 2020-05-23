@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:bind="http://schemas.android.com/apk/res/android" >
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1A1A1A"
+    android:clickable="true"
+    android:id="@+id/artist_detail_view">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/back_imageview"
+            android:layout_width="@dimen/_18sdp"
+            android:layout_height="@dimen/_18sdp"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            app:srcCompat="@drawable/ic_back" />
+
+    <RelativeLayout
+        android:id="@+id/genre_artist_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <com.joooonho.SelectableRoundedImageView
+            android:id="@+id/artist_image_main"
+        android:layout_width="@dimen/_90sdp"
+        android:layout_height="@dimen/_90sdp"
+        android:src="@drawable/program"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:scaleType="centerCrop"
+        app:sriv_left_top_corner_radius="100dip"
+        app:sriv_right_top_corner_radius="100dip"
+        app:sriv_left_bottom_corner_radius="100dip"
+        app:sriv_right_bottom_corner_radius="100dip"/>
+
+    </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/artist_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:layout_below="@id/genre_artist_image"
+            android:gravity="center">
+
+        <TextView
+            android:id="@+id/artist_detail_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:singleLine="true"
+            android:text="Artist Name"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/_13sdp"
+            android:gravity="center"
+             android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_20sdp"/>
+
+        </RelativeLayout>
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/artist_descrip"
+            android:layout_below="@id/artist_detail">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_centerInParent="true">
+
+        <TextView
+            android:id="@+id/albums_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0 albums"
+            android:textSize="@dimen/_10sdp"
+            android:textColor="@color/md_grey_600"
+            android:gravity="center"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            />
+
+
+        <TextView
+            android:id="@+id/soungCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0 Songs"
+            android:textColor="@color/md_grey_600"
+            android:textSize="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/_5sdp"/>
+
+        </LinearLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/add_artist_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:layout_below="@id/artist_descrip"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/addArtist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/viewall_background"
+                android:text="@string/add"
+                android:paddingEnd="@dimen/_10sdp"
+                android:drawableStart="@drawable/ic_plus_music"
+                android:gravity="center"
+                android:textColor="@color/see_all"
+                android:textSize="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                style="@style/Smaller_Drawable"/>
+
+        </RelativeLayout>
+
+    
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:id="@+id/artist_detail_album_layout"
+        android:layout_below="@+id/artist_descrip"
+        android:visibility="gone"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:selectableItemBackground"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="16dp"
+                >
+
+                <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+                    android:id="@+id/artistTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:text="Albums"
+                    android:textColor="@color/text_color"
+                    android:textSize="20sp"
+                    />
+
+                <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+                    android:id="@+id/seeAllAlbums"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/viewall_background"
+                    android:text="@string/view_all"
+                    android:textColor="@color/see_all"
+                    android:textSize="10sp" />
+
+            </RelativeLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/artist_detail_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_vertical"
+                android:orientation="horizontal" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:id="@+id/artist_detail_songs_layout"
+            android:layout_below="@+id/artist_detail_album_layout"
+            android:visibility="visible"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_height="wrap_content">
+
+
+
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:selectableItemBackground"
+                android:orientation="vertical"
+                android:paddingTop="30dp"
+                android:visibility="visible"
+                android:paddingBottom="5dp"
+                android:paddingRight="5dp"
+                android:paddingLeft="5dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="16dp"
+                    >
+
+
+                    <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+                        android:id="@+id/artistTitle1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
+                        android:text="Songs"
+                        android:textColor="@color/see_all"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/seeAllArtistSongs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/viewall_background"
+                        android:text="@string/view_all"
+                        android:textColor="@color/see_all"
+                        android:textSize="10sp" />
+
+                </RelativeLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/artist_detail_songs_recycleview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="horizontal" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/artist_container_song_to_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="visible">
+
+    </FrameLayout>
+
+
+    <FrameLayout
+        android:id="@+id/artist_container_detail_songs"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="visible">
+
+    </FrameLayout>
+
+
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/aviProgress"
+        android:visibility="visible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:indicatorName="BallSpinFadeLoaderIndicator"
+        app:indicatorColor="@color/md_grey_400"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

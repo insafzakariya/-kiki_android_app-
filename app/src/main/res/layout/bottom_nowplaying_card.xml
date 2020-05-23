@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/topContainer"
+    android:layout_width="wrap_content"
+    android:layout_height="52dp"
+    android:layout_gravity="top"
+    >
+
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="wrap_content"
+        android:layout_height="52dp"
+        android:layout_gravity="top">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/you_might_layout"
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:background="@drawable/youmightlike_backround"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+
+                    <ImageView
+                        android:id="@+id/imageButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="24dp"
+                        android:layout_marginTop="8dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:foregroundTint="#434343"
+                        android:clickable="true"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/audio_next" />
+
+                    <ImageView
+                        android:id="@+id/imageView4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="24dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:foregroundTint="#434343"
+                        android:clickable="true"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/imageButton"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/audio_play_black" />
+
+                    <ImageView
+                        android:id="@+id/imageView5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="24dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:foregroundTint="#434343"
+                        android:clickable="true"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/imageView4"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/audio_previous" />
+
+                    <com.joooonho.SelectableRoundedImageView
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/imageView6"
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:scaleType="centerCrop"
+                        app:sriv_left_top_corner_radius="5dip"
+                        app:sriv_right_top_corner_radius="5dip"
+                        app:sriv_left_bottom_corner_radius="5dip"
+                        app:sriv_right_bottom_corner_radius="5dip"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:src="@drawable/ic_havana" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_toRightOf="@id/imageView6"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/imageView6"
+                        android:layout_height="wrap_content">
+                        <ProgressBar
+                            android:id="@+id/song_progress_normal"
+                            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="top"
+                            android:layout_marginEnd="8dp"
+                            android:maxHeight="5dp"
+                            android:progress="30"
+                            android:progressTint="#74E6F6"
+                            android:thumbTint="#74E6F6"
+                            />
+
+
+                    </LinearLayout>
+
+
+                    <lk.mobilevisions.kiki.audio.util.KikiAudioMediumTextView
+                        android:id="@+id/textView8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Havana"
+                        android:textColor="@color/text_color"
+                        android:textSize="13sp"
+                        app:layout_constraintStart_toEndOf="@+id/imageView6"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+                        android:id="@+id/textView9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="4dp"
+                        android:text="Camila Cabello"
+                        android:textColor="@color/done_text_color_dark_disabled"
+                        android:textSize="11sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/imageView6"
+                        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+            </RelativeLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    </RelativeLayout>
+</RelativeLayout>

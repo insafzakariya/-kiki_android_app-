@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:bind="http://schemas.android.com/apk/res/android"
+    >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:clickable="true"
+        android:layout_height="match_parent"
+        android:background="#1A1A1A">
+
+        <lk.mobilevisions.kiki.audio.util.KikiAudioMediumTextView
+            android:id="@+id/confirm_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_6sdp"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:text="Confirm"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/_10sdp"
+            android:background="@drawable/viewall_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/cancel_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:text="Cancel"
+            android:textSize="@dimen/_12sdp"
+            android:textColor="@color/md_red_500"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/custom_playlist_image"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:background="@color/md_grey_800"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_image_camera"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/view_line"
+            app:layout_constraintTop_toBottomOf="@id/confirm_text" />
+
+        <EditText
+            android:id="@+id/edit_playlist_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:hint="New Playlist"
+            android:gravity="center"
+            android:textColorHint="@color/md_grey_600"
+            android:textColor="#FFFFFF"
+            android:maxLength="15"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/custom_playlist_image"/>
+
+        <lk.mobilevisions.kiki.audio.util.KikiAudioMediumTextView
+            android:id="@+id/edit_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/_12sdp"
+            android:text="(edit)"
+            app:layout_constraintStart_toEndOf="@id/edit_playlist_name"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/custom_playlist_image"/>
+
+        <View
+            android:id="@+id/view_line"
+            android:layout_width="0dp"
+            android:background="#98999b"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_14sdp"
+            android:layout_marginEnd="@dimen/_14sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_playlist_name"
+            android:layout_height="1dp">
+        </View>
+
+        <TextView
+            android:id="@+id/addSongs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/viewall_background"
+            android:drawableStart="@drawable/ic_plus_music"
+            android:text="Add Songs "
+            android:textColor="@color/see_all"
+            android:textSize="@dimen/_18sdp"
+            style="@style/Smaller_Drawable"
+            app:layout_constraintTop_toBottomOf="@id/view_line"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="@dimen/_6sdp" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/addedSongsRecycle"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_7sdp"
+            android:layout_marginEnd="@dimen/_7sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/addSongs"
+            >
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+
+
+        <FrameLayout
+            android:id="@+id/playlist_creation_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="visible">
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/playlist_created_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="visible">
+
+        </FrameLayout>
+
+
+        <com.wang.avi.AVLoadingIndicatorView
+            android:id="@+id/aviPlaylist"
+            android:visibility="visible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:indicatorName="BallSpinFadeLoaderIndicator"
+            app:indicatorColor="@color/md_grey_400"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

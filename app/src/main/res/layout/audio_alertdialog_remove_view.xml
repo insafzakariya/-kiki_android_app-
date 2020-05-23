@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#1A1A1A"
+    android:layout_marginStart="@dimen/_60sdp"
+    android:layout_marginEnd="@dimen/_60sdp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp">
+
+        <RelativeLayout
+            android:id="@+id/layout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp">
+
+            <lk.mobilevisions.kiki.audio.util.KikiAudioMediumTextView
+                android:id="@+id/add_song_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/_12sdp"
+                android:text="Do you want to remove this from library?"
+                android:textColor="@color/md_white_1000"
+                android:textSize="@dimen/_14sdp"
+                android:layout_marginBottom="@dimen/_4sdp"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_below="@+id/layout1"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_15sdp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_centerInParent="true">
+
+            <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+                android:id="@+id/yesTextview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:lineSpacingExtra="5sp"
+                android:text="Yes"
+                android:paddingStart="@dimen/_25sdp"
+                android:paddingEnd="@dimen/_25sdp"
+                android:paddingTop="@dimen/_4sdp"
+                android:paddingBottom="@dimen/_4sdp"
+                android:textColor="@color/md_white_1000"
+                android:textSize="@dimen/_12sdp"
+                android:background="@drawable/genre_background"
+                android:layout_marginEnd="@dimen/_12sdp"/>
+
+            <lk.mobilevisions.kiki.audio.util.KikiAudioMediumTextView
+                android:id="@+id/noTextview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:lineSpacingExtra="5sp"
+                android:text="No"
+                android:background="@drawable/genre_background"
+                android:backgroundTint="@color/colorPrimary"
+                android:textColor="@color/md_white_1000"
+                android:textSize="@dimen/_12sdp"
+                android:paddingStart="@dimen/_27sdp"
+                android:paddingEnd="@dimen/_27sdp"
+                android:paddingTop="@dimen/_4sdp"
+                android:paddingBottom="@dimen/_4sdp"
+                android:layout_marginStart="@dimen/_12sdp"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

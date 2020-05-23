@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:bind="http://schemas.android.com/apk/res/android" >
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/drawerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/customBlack1"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/includedToolbar"
+                layout="@layout/layout_video_toolbar"
+                android:elevation="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <include
+                android:id="@+id/includedToggle"
+                layout="@layout/layout_video_audio_toggle"
+                android:elevation="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <include
+                android:id="@+id/include_video_dashboard"
+                layout="@layout/layout_video_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/navigationView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:fitsSystemWindows="true"
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:background="@color/colorRegistrationBackgroud"
+                android:paddingRight="@dimen/dimen.2.x"
+                android:paddingLeft="@dimen/dimen.2.x"
+                android:paddingTop="@dimen/dimen.2.x"
+                android:elevation="4dp"
+                android:id="@+id/relativeLayout">
+
+
+                <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+                    android:id="@+id/welcome_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_8sdp"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginTop="32dp"
+                    android:text="Welcome"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/_18sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/video_logo_imageview"
+                    />
+
+                <ImageView
+                    android:id="@+id/video_logo_imageview"
+                    android:layout_width="@dimen/_80sdp"
+                    android:layout_height="@dimen/_80sdp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginTop="16dp"
+                    android:src="@drawable/ic_app_logo"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <RelativeLayout
+                    android:id="@+id/sub_layout"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/welcome_textview"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/sub_image"
+                        android:layout_width="23dp"
+                        android:paddingTop="@dimen/_4sdp"
+                        android:layout_height="23dp"
+                        android:src="@drawable/ic_video_navigation_packages"/>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/sub_image"
+                        android:textSize="@dimen/_15sdp"
+                        android:paddingLeft="@dimen/_20sdp"
+                        android:textColor="@color/colorWhite"
+                        android:text="@string/menu_activate_packages"
+                        android:fontFamily="@font/futuranext_book"/>
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/settings_layout"
+                    android:layout_width="match_parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/sub_layout"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp">
+
+                    <ImageView
+                        android:id="@+id/settings_image"
+                        android:layout_width="23dp"
+                        android:layout_height="23dp"
+                        android:src="@drawable/ic_video_navigation_settings"/>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/settings_image"
+                        android:paddingLeft="@dimen/_20sdp"
+                        android:textSize="@dimen/_15sdp"
+                        android:textColor="@color/colorWhite"
+                        android:text="@string/settings"
+                        android:fontFamily="@font/futuranext_book"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/contact_layout"
+                    android:layout_width="match_parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/settings_layout"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp">
+
+                    <ImageView
+                        android:id="@+id/contact_image"
+                        android:layout_width="23dp"
+                        android:layout_height="23dp"
+                        android:src="@drawable/ic_video_navigation_contact_support"/>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/contact_image"
+                        android:paddingLeft="@dimen/_20sdp"
+                        android:textSize="@dimen/_15sdp"
+                        android:textColor="@color/colorWhite"
+                        android:text="@string/menu_contact_support"
+                        android:fontFamily="@font/futuranext_book"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/child_layout"
+                    android:layout_width="match_parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/contact_layout"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp">
+
+                    <ImageView
+                        android:id="@+id/child_image"
+                        android:layout_width="23dp"
+                        android:layout_height="23dp"
+                        android:src="@drawable/ic_video_navigation_child_care"/>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/child_image"
+                        android:paddingLeft="@dimen/_20sdp"
+                        android:textSize="@dimen/_15sdp"
+                        android:textColor="@color/colorWhite"
+                        android:text="@string/menu_chile_mode"
+                        android:fontFamily="@font/futuranext_book"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/logout_layout"
+                    android:layout_width="match_parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/child_layout"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp">
+
+                    <ImageView
+                        android:id="@+id/logout_image"
+                        android:layout_width="23dp"
+                        android:layout_height="23dp"
+                        android:src="@drawable/ic_video_navigation_logout"/>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/logout_image"
+                        android:paddingLeft="@dimen/_20sdp"
+                        android:textSize="@dimen/_15sdp"
+                        android:textColor="@color/colorWhite"
+                        android:text="@string/menu_logout"
+                        android:fontFamily="@font/futuranext_book"/>
+
+                </RelativeLayout>
+
+
+
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!--<include-->
+                <!--android:id="@+id/include_video_dashboard_navigation_menu"-->
+                <!--layout="@layout/layout_navigation_header_video"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent" />-->
+
+        </com.google.android.material.navigation.NavigationView>
+
+        <!--<android.support.design.widget.NavigationView-->
+            <!--app:headerLayout="@layout/layout_navigation_header_video"-->
+            <!--android:id="@+id/navigationView"-->
+            <!--android:layout_width="@dimen/_200sdp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_gravity="start"-->
+            <!--android:theme="@style/NavigationView"-->
+            <!--app:itemTextColor="@color/colorWhite"-->
+            <!--app:itemIconTint="@color/navigationMenuIconColor"-->
+            <!--android:background="@color/backgroundColor"-->
+            <!--app:menu="@menu/video_drawer_view" />-->
+
+
+
+
+
+
+    </androidx.drawerlayout.widget.DrawerLayout>
+</layout>
+
+
+
+

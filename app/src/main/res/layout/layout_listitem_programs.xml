@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:elevation="1dp"
+    android:background="@color/colorWhite"
+    android:padding="@dimen/dimen.0.50.x"
+    android:layout_margin="@dimen/dimen.0.25.x">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        app:srcCompat="@drawable/program"
+        android:id="@+id/imageViewProgramImage"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingLeft="@dimen/dimen.0.50.x">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:paddingBottom="@dimen/dimen.0.50.x"
+            android:paddingRight="@dimen/dimen.2.x"
+            android:orientation="horizontal">
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:background="@null"
+                android:id="@+id/layoutEpisodesButton"
+                android:layout_weight="1">
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/imageButtonEpisodesList"
+                    android:layout_width="@dimen/dimen.5.x"
+                    android:layout_height="@dimen/dimen.5.x"
+                    app:srcCompat="@drawable/ic_programs"
+                    android:background="@null"
+                    android:tint="@color/colorPrimary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10sp"
+                    android:textColor="@color/colorPrimary"
+                    android:text="Episodes"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/layoutSubscribeButton"
+                android:gravity="center"
+                android:layout_weight="1">
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:layout_width="@dimen/dimen.5.x"
+                    android:layout_height="@dimen/dimen.5.x"
+                    app:srcCompat="@drawable/ic_no_subscribe"
+                    android:background="@null"
+                    android:tint="@color/colorPrimary"
+                    android:id="@+id/imageButtonSubscribe" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textSize="10sp"
+                    android:textColor="@color/colorPrimary"
+                    android:id="@+id/textViewSubscribe"
+                    android:text="Subscribe"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textViewVideoName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="[Video Name]"
+            android:lines="2"
+            android:textStyle="bold"
+            android:layout_marginRight="@dimen/dimen.1.x"
+            android:gravity="center"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
+        </TextView>
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageViewPlaying"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:tint="@color/colorPrimary"
+            app:srcCompat="@drawable/ic_now_playing"/>
+
+
+    </RelativeLayout>
+
+</LinearLayout>

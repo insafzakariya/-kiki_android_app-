@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_40sdp">
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_centerHorizontal="true">
+
+        <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+            android:id="@+id/gmail_login_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_2sdp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:layout_toRightOf="@+id/gmail_icon_imageview"
+            android:textSize="@dimen/_11sdp"
+            android:lineSpacingExtra="8sp"
+            android:singleLine="true"
+            android:text="Home"
+            android:textColor="#5B5B5B" />
+
+        <ImageView
+            android:id="@+id/gmail_icon_imageview"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_video_home_unselected" />
+
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

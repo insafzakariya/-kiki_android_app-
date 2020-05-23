@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "638746862442",
+    "firebase_url": "https://kiki-be55a.firebaseio.com",
+    "project_id": "kiki-be55a",
+    "storage_bucket": "kiki-be55a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:638746862442:android:640ddeffaf2ff660",
+        "android_client_info": {
+          "package_name": "lk.mobilevisions.kiki"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "638746862442-6fkek8085atabto9tad7ggeto1lqh3sn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "lk.mobilevisions.kiki",
+            "certificate_hash": "5d2fe75ba20c6a0d248dfa24ecd135f3759e8c66"
+          }
+        },
+        {
+          "client_id": "638746862442-vdj7ek6fshn1em1loc4aheg8f95ho1q8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBI5zsYNndgYDj3A37lWVJ-4c-x1Cv9Ec"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "638746862442-vdj7ek6fshn1em1loc4aheg8f95ho1q8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

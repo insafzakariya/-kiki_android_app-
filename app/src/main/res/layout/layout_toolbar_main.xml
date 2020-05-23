@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:bind="http://schemas.android.com/apk/res/android" >
+
+    <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:fitsSystemWindows="true"
+        android:minHeight="?attr/actionBarSize"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+
+            <com.polyak.iconswitch.IconSwitch
+                android:id="@+id/icon_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="16dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="16dp"
+                android:layout_toRightOf="@+id/pro_pic_imageview"
+                app:isw_active_tint_icon_left="#4CAF50"
+                app:isw_active_tint_icon_right="#4CAF50"
+
+                app:isw_background_color="#263237"
+                app:isw_default_selection="left"
+                app:isw_icon_left="@drawable/ic_video_selected"
+                app:isw_icon_right="@drawable/ic_audio_selected"
+                app:isw_icon_size="@dimen/dimen.1.x"
+                app:isw_inactive_tint_icon_left="#fff"
+                app:isw_inactive_tint_icon_right="#fff"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageView30"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/icon_switch"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_kiki_logo" />
+
+            <TextView
+                android:id="@+id/textView26"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text=""
+                android:textSize="@dimen/_17sdp"
+                android:textColor="@color/md_white_1000"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView30"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+
+
+    </androidx.appcompat.widget.Toolbar>
+
+</layout>
+
+
+

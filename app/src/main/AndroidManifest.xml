@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="lk.mobilevisions.kiki">
+
+    <uses-sdk tools:overrideLibrary="de.Maxr1998.trackselectorlib" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- Samsung -->
+    <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
+    <uses-permission android:name="com.sec.android.provider.badge.permission.READ" />
+    <uses-permission android:name="com.sec.android.provider.badge.permission.WRITE" /> <!-- Sony -->
+    <uses-permission android:name="com.sonyericsson.home.permission.BROADCAST_BADGE" /> <!-- HTC -->
+    <uses-permission android:name="com.htc.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="com.htc.launcher.permission.UPDATE_SHORTCUT" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+
+    <application
+        android:name=".app.Application"
+        android:allowBackup="false"
+        android:configChanges="orientation"
+        android:icon="@mipmap/ic_launcher"
+        android:screenOrientation="portrait"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
+        tools:replace="android:allowBackup">
+<!--        <meta-data-->
+<!--            android:name="com.google.android.actions"-->
+<!--            android:resource="@xml/ApplicationInsights" />-->
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity android:name=".ui.base.BaseActivity" />
+        <activity
+            android:name=".ui.auth.LanguageSelectionActivity"
+            android:configChanges="orientation"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeFullScreen"
+            android:windowSoftInputMode="adjustResize"></activity>
+        <activity
+            android:name=".ui.auth.LoginActivity"
+            android:configChanges="orientation"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeFullScreen"
+            android:windowSoftInputMode="stateHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="susilamobile.tv"
+                    android:path="/oauth"
+                    android:scheme="http" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.main.MainActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label=""
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.main.fullscreen.FullScreenActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppThemeFullScreen" />
+        <activity
+            android:name=".video.activity.SubscriptionAlertActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppThemeFullScreen" />
+        <activity
+            android:name=".ui.main.fullscreen.FullScreenEpisodesActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/title_activity_full_screen"
+            android:launchMode="singleTop"
+            android:theme="@style/AppThemeFullScreen" />
+        <activity
+            android:name=".ui.splash.SplashActivity"
+            android:configChanges="orientation"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeFullScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity> <!-- <activity -->
+        <!-- android:name=".audio.activity.AudioDashboardActivity" -->
+        <!-- android:configChanges="orientation" -->
+        <!-- android:label="@string/app_name" -->
+        <!-- android:launchMode="singleTask" -->
+        <!-- android:screenOrientation="portrait" -->
+        <!-- android:theme="@style/AppThemeFullScreen"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.MAIN" /> -->
+        <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+        <!-- </intent-filter> -->
+        <!-- </activity> -->
+        <activity
+            android:name=".audio.activity.AudioDashboardActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="file" />
+                <data android:mimeType="audio/*" />
+                <data android:mimeType="application/ogg" />
+                <data android:mimeType="application/x-ogg" />
+                <data android:mimeType="application/itunes" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="http" />
+                <data android:mimeType="audio/*" />
+                <data android:mimeType="application/ogg" />
+                <data android:mimeType="application/x-ogg" />
+                <data android:mimeType="application/itunes" />
+            </intent-filter>
+            <intent-filter android:priority="-1">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="content" />
+                <data android:mimeType="audio/*" />
+                <data android:mimeType="application/ogg" />
+                <data android:mimeType="application/x-ogg" />
+                <data android:mimeType="application/itunes" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".audio.activity.AudioPlayerActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".ui.packages.MyPackagesActivity"
+            android:label="@string/title_activity_my_packages"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".ui.error.ErrorActivity" />
+        <activity
+            android:name=".ui.packages.MySubscribePackagesActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="subscriptions.kiki.lk"
+                    android:scheme="app" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".audio.activity.AudioPackagesActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="subscriptions.kiki.lk"
+                    android:scheme="app" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.navigation.UpdateUserActivity"
+            android:label="Profile"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+
+        <service
+            android:name=".modules.notifications.NotificationReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name=".ui.notifications.NotificationsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".audio.activity.AudioNotificationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.episodes.EpisodesActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="Episodes"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".video.activity.VideoEpisodeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.packages.PaymentActivity"
+            android:label="Payments"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".audio.activity.AudioPaymentActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".video.activity.ContactActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".audio.activity.AudioContactActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.channels.ChannelsActivity"
+            android:label=""
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".video.activity.VideoDashboardActivity"
+            android:label=""
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.subscribed.SubscriptionActivity"
+            android:label="All Subscribed Programs"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.settings.SettingsActivity"
+            android:label="Settings"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".video.activity.VideoSettingsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".audio.activity.AudioSettingsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".video.activity.VideoChildModeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".video.activity.VideoProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".audio.activity.AudioProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.auth.EditMobileNumberActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.chromecast.ExpandedControlsActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.channels.ChannelsActivity" />
+        </activity> <!-- <meta-data -->
+        <!-- android:name="com.google.android.gms.cast.framework.OPTIONS_PROVIDER_CLASS_NAME" -->
+        <!-- android:value="lk.mobilevisions.kiki.CastOptionsProvider" /> -->
+        <service
+            android:name=".audio.player.AudioStreamingService"
+            android:enabled="true"
+            android:exported="true" />
+        <service android:name="com.uxcam.service.HttpPostService" />
+
+        <receiver android:name=".audio.player.AudioStreamingReceiver">
+            <intent-filter>
+                <action android:name="lk.mobilevisions.kiki.close" />
+                <action android:name="lk.mobilevisions.kiki.pause" />
+                <action android:name="lk.mobilevisions.kiki.next" />
+                <action android:name="lk.mobilevisions.kiki.play" />
+                <action android:name="lk.mobilevisions.kiki.previous" />
+                <action android:name="android.intent.action.MEDIA_BUTTON" />
+                <action android:name="android.media.AUDIO_BECOMING_NOISY" />
+            </intent-filter>
+        </receiver>
+
+        <meta-data
+            android:name="firebase_crashlytics_collection_enabled"
+            android:value="false" />
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="df4f6a9d4343554d3f798d7a771e03c47c1b836d" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@mipmap/ic_launcher" />
+        <!--
+ Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. See README(https://goo.gl/6BKBk7) for more.
+        -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
+        <meta-data
+            android:name="com.microsoft.applicationinsights.instrumentationKey"
+            android:value="2237c85c-b8ff-467f-82c3-04675efa9188" />
+    </application>
+
+</manifest>

@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:bind="http://schemas.android.com/apk/res/android" >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/linearLayout2"
+        android:background="#1A1A1A"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/back_imageview"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    app:srcCompat="@drawable/ic_back" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:id="@+id/genre_songs_layout"
+                    android:visibility="visible"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?android:selectableItemBackground"
+                        android:orientation="vertical"
+                        android:paddingTop="30dp"
+                        android:visibility="visible"
+                        android:paddingBottom="5dp"
+                        android:paddingRight="5dp"
+                        android:paddingLeft="5dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginTop="@dimen/_6sdp"
+                            >
+
+                            <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+                                android:id="@+id/tvTitle3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center_vertical"
+                                android:text="@string/songs"
+                                android:textColor="@color/see_all"
+                                android:textSize="20sp" />
+
+                            <TextView
+                                android:id="@+id/seeAllGenreSongs"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center_vertical"
+                                android:background="@drawable/viewall_background"
+                                android:text="@string/view_all"
+                                android:textColor="@color/see_all"
+                                android:textSize="10sp" />
+
+                        </RelativeLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/genre_songs_recycleview"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_gravity="center_vertical"
+                            android:orientation="horizontal" />
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:id="@+id/genre_artist_layout"
+                    android:visibility="visible"
+                    android:layout_below="@+id/genre_songs_layout"
+                    android:layout_height="wrap_content">
+
+
+                    <LinearLayout
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?android:selectableItemBackground"
+                        android:orientation="vertical"
+                        android:paddingTop="@dimen/_8sdp"
+                        android:visibility="visible"
+                        android:paddingBottom="5dp"
+                        android:paddingRight="5dp"
+                        android:paddingLeft="5dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="16dp"
+                            >
+
+
+                            <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+                                android:id="@+id/tvTitle5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center_vertical"
+                                android:text="@string/artists"
+                                android:textColor="@color/see_all"
+                                android:textSize="20sp"
+                                />
+
+                            <TextView
+                                android:id="@+id/seeAllGenreArtists"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center_vertical"
+                                android:background="@drawable/viewall_background"
+                                android:text="@string/view_all"
+                                android:textColor="@color/see_all"
+                                android:textSize="10sp" />
+
+                        </RelativeLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/genre_artist_recyclerview"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_gravity="center_vertical"
+                            android:orientation="horizontal" />
+                    </LinearLayout>
+
+
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:id="@+id/genre_playlist_layout"
+                    android:padding="5dp"
+                    android:layout_below="@+id/genre_artist_layout"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?android:selectableItemBackground"
+                        android:orientation="vertical"
+                        android:paddingTop="@dimen/_8sdp"
+                        android:visibility="visible"
+                        android:paddingBottom="5dp"
+                        android:paddingRight="5dp"
+                        android:paddingLeft="5dp">
+
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="16dp"
+                            android:paddingBottom="@dimen/_5sdp"
+                            >
+
+                            <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+                                android:id="@+id/tvTitle0"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentTop="true"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginTop="0dp"
+                                android:text="@string/playlist"
+                                android:textColor="@color/text_color"
+                                android:textSize="20sp" />
+
+                            <TextView
+                                android:id="@+id/seeAllGenrePlaylist"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center_vertical"
+                                android:background="@drawable/viewall_background"
+                                android:text="@string/view_all"
+                                android:textColor="@color/see_all"
+                                android:textSize="10sp" />
+
+                        </RelativeLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/genre_playlist_recyclerview"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_gravity="center_vertical"
+                            android:orientation="horizontal" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+        </ScrollView>
+
+
+        <FrameLayout
+            android:id="@+id/frame_container_genrewise_songs"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="visible">
+
+        </FrameLayout>
+
+
+        <FrameLayout
+            android:id="@+id/frame_container_artists_genre"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="visible">
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/frame_container_playlist_genre"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="visible">
+
+        </FrameLayout>
+
+
+        <FrameLayout
+            android:id="@+id/frame_container_artists_genre_detail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="visible">
+
+        </FrameLayout>
+
+
+
+        <com.wang.avi.AVLoadingIndicatorView
+            android:id="@+id/aviProgress"
+            android:visibility="visible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:indicatorName="BallSpinFadeLoaderIndicator"
+            app:indicatorColor="@color/md_grey_400"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+
+
+
+

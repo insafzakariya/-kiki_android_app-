@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:bind="http://schemas.android.com/apk/res/android">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/loginColorBlack"
+        tools:context=".ui.auth.LoginActivity">
+
+
+        <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/buttonBack"-->
+            <!--android:layout_marginTop="@dimen/dimen.2.x"-->
+            <!--android:layout_marginLeft="@dimen/dimen.1.x"-->
+            <!--android:background="@null"-->
+            <!--android:textColor="@color/md_white_1000"-->
+            <!--android:text="&lt; Back"/>-->
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen.2.x"
+            android:src="@drawable/ic_arrow_back"
+            android:layout_marginLeft="@dimen/dimen.2.x"
+            android:background="@null"/>
+
+        <!--<ImageView-->
+            <!--android:id="@+id/logoImage"-->
+            <!--android:layout_width="@dimen/_120sdp"-->
+            <!--android:layout_height="@dimen/_120sdp"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:layout_marginTop="@dimen/_80sdp"-->
+            <!--android:src="@drawable/header_logo" />-->
+
+        <!--<ImageView-->
+            <!--android:id="@+id/imageViewLogin"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_height="match_parent" />-->
+
+        <lk.mobilevisions.kiki.ui.auth.NoSwipeViewPager
+            android:id="@+id/pagerLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:paddingBottom="@dimen/dimen.2.x" />
+
+    </RelativeLayout>
+</layout>
+
+
+

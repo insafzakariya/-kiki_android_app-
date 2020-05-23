@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:gravity="center_vertical">
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="match_parent"
+        android:id="@+id/intl_phone_edit__country"
+        android:dropDownWidth="350dp"
+        android:background="@android:color/transparent"/>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/email_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:hintAnimationEnabled="false"
+        app:hintEnabled="false">
+
+        <lk.mobilevisions.kiki.audio.util.KikiBoldEditText
+            android:id="@+id/intl_phone_edit__phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLength="11"
+            android:singleLine="true"
+            android:imeOptions="actionDone"
+            android:background="@null"
+            android:textColor="@color/md_white_1000"
+            android:digits="01234 56789"
+            android:inputType="number"
+            android:textSize="@dimen/_14sdp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+    <!--<android.support.v7.widget.AppCompatEditText-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/intl_phone_edit__phone"-->
+        <!--android:textSize="@dimen/text_size_default"-->
+        <!--android:maxLength="13"-->
+        <!--android:singleLine="true"-->
+        <!--android:imeOptions="actionDone"-->
+        <!--android:background="@null"-->
+        <!--android:digits="01234 56789"-->
+        <!--android:inputType="number" />-->
+
+</LinearLayout>

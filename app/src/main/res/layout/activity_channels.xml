@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:bind="http://schemas.android.com/apk/res/android" >
+
+    <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/drawerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/customBlack1"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/includedToolbar"
+                layout="@layout/layout_toolbar_main"
+                android:elevation="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.daimajia.slider.library.SliderLayout
+                android:id="@+id/imageSlider"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:paddingTop="@dimen/dimen.2.x"
+                android:layout_height="match_parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycleViewChannels"
+                    android:scrollbars="none"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+                <TextView
+                    android:id="@+id/TextViewEmptyChannels"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:visibility="gone"
+                    android:text="No Channels Available" />
+
+                <com.wang.avi.AVLoadingIndicatorView
+                    android:id="@+id/aviProgress"
+                    android:visibility="visible"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="@dimen/dimen.5.x"
+                    app:indicatorName="BallSpinFadeLoaderIndicator"
+                    app:indicatorColor="@color/colorPrimary"/>
+
+            </RelativeLayout>
+
+            <!--<fragment-->
+            <!--android:id="@+id/castMiniController"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:visibility="gone"-->
+            <!--class="com.google.android.gms.cast.framework.media.widget.MiniControllerFragment"/>-->
+
+        </LinearLayout>
+
+        <com.google.android.material.navigation.NavigationView
+            app:headerLayout="@layout/layout_nav_header"
+            android:id="@+id/navigationView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            app:itemIconTint="#5B5B5B"
+            android:background="@android:color/white"
+            app:menu="@menu/drawer_view" />
+
+
+
+
+    </androidx.drawerlayout.widget.DrawerLayout>
+</layout>
+
+
+
+

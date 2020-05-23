@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:bind="http://schemas.android.com/apk/res/android" >
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/includedToolbar"
+            layout="@layout/layout_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+        <fragment
+            android:name="lk.mobilevisions.kiki.ui.subscribed.AllSubscribedVideosFragment"
+            android:layout_width="match_parent"
+            android:id="@+id/fragmentAllSubscribedVideos"
+            android:tag="AllSubscribedVideos"
+            android:layout_height="match_parent">
+
+        </fragment>
+
+    </LinearLayout>
+</layout>
+
+
+
+

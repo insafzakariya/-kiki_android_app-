@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:text=""
+        android:layout_width="@dimen/dimen.6.x"
+        android:layout_height="match_parent"
+        android:background="@null"
+        android:visibility="gone"
+        android:id="@+id/buttonMenuActionPackage"
+        android:textSize="8sp"/>
+
+</LinearLayout>

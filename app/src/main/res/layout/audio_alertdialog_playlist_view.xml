@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#1A1A1A">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp">
+
+        <RelativeLayout
+            android:id="@+id/layout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp">
+
+            <lk.mobilevisions.kiki.audio.util.KikiAudioMediumTextView
+                android:id="@+id/add_to_playlist_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/_12sdp"
+                android:text="@string/add_to_playlist_2"
+                android:textColor="@color/md_white_1000"
+                android:textSize="@dimen/_14sdp"
+                android:layout_marginBottom="@dimen/_8sdp"/>
+
+            <ImageView
+                android:id="@+id/cancel_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_close_white"
+                android:layout_marginEnd="@dimen/_10sdp"/>
+
+            <View
+                android:id="@+id/view_line3"
+                android:layout_below="@+id/add_to_playlist_text"
+                android:layout_width="match_parent"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:background="@color/md_grey_600"
+                android:layout_height="1dp">
+            </View>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout1"
+            android:layout_marginTop="@dimen/_8sdp">
+
+ <androidx.recyclerview.widget.RecyclerView
+     android:id="@+id/addSongToPlaylistRecycle"
+     android:layout_width="match_parent"
+     android:layout_height="@dimen/_200sdp"
+     android:layout_gravity="center_vertical"
+     android:orientation="horizontal"
+     android:layout_marginStart="@dimen/_2sdp"
+     android:layout_marginEnd="@dimen/_2sdp">
+
+ </androidx.recyclerview.widget.RecyclerView>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

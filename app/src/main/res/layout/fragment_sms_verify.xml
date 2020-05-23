@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:bind="http://schemas.android.com/apk/res/android" >
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/dimen.4.x"
+        android:paddingRight="@dimen/dimen.4.x"
+        tools:context=".ui.auth.SMSVerifyFragment">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textViewAuthMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Please enter your SMS verification code"
+                android:textAlignment="center"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textStyle="bold" />
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stretchColumns="1">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="@dimen/dimen.12.x"
+                        android:layout_height="wrap_content"
+                        android:text="Code K:" />
+
+                    <EditText
+                        android:id="@+id/editTextSMSVerification"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dimen.6.x"
+                        android:inputType="number"
+                        android:maxLength="4"
+                        android:maxLines="1">
+
+                    </EditText>
+
+                </TableRow>
+
+            </TableLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/dimen.2.x">
+
+                <Button
+                    android:id="@+id/buttonViewTV"
+                    style="@style/LoginButton"
+                    android:layout_width="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:text="@string/view_tv" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+</layout>
+
+

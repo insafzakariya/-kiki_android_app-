@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:bind="http://schemas.android.com/apk/res/android" >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/linearLayout2"
+        android:background="@color/colorRegistrationBackgroud"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+            android:id="@+id/enter_phone_number_textview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:padding="@dimen/_5sdp"
+            android:text="@string/enter_phone_number"
+            android:textColor="@color/md_white_1000"
+            android:textSize="@dimen/_14sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.427" />
+
+        <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+            android:id="@+id/reset_password_textview"
+            android:layout_width="255dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:gravity="center"
+            android:padding="@dimen/_5sdp"
+            android:text="@string/reset_confirmation_code"
+            android:textColor="@color/md_white_1000"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintBottom_toTopOf="@+id/mobile_number_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/enter_phone_number_textview"
+            app:layout_constraintVertical_bias="0.0" />
+
+
+        <RelativeLayout
+            android:id="@+id/mobile_number_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="42dp"
+            android:layout_marginTop="72dp"
+            android:layout_marginEnd="42dp"
+            android:background="@drawable/rounded_background_mobile_number"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/enter_phone_number_textview">
+
+
+            <lk.mobilevisions.kiki.ui.widgets.countryselect.IntlPhoneInput
+                android:id="@+id/editTextMobileNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_10sdp"
+                android:singleLine="true"
+                android:textColor="@color/md_white_1000"
+                app:textSize="@dimen/_16sdp">
+
+            </lk.mobilevisions.kiki.ui.widgets.countryselect.IntlPhoneInput>
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/confirm_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="42dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="42dp"
+            android:background="@drawable/rounded_login_button1"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mobile_number_layout">
+
+
+            <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+                android:id="@+id/confirm_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:padding="@dimen/_10sdp"
+                android:singleLine="true"
+                android:text="@string/mobile_number_confirm"
+                android:textColor="@color/md_white_1000"
+                android:textSize="@dimen/_14sdp" />
+
+
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/imageView32"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="200dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/enter_phone_number_textview"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.783"
+            app:srcCompat="@drawable/ic_app_logo" />
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_arrow_back" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

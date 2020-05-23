@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:bind="http://schemas.android.com/apk/res/android" >
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycleViewPrograms"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/recycleViewBackground"
+            android:scrollbars="vertical"
+            android:visibility="gone" />
+
+
+        <TextView
+            android:id="@+id/TextViewEmptyVideos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:textAlignment="center"
+            android:text="No subscribed programs available. Please subscribe to your favorite programs from Mobile TV."
+            android:visibility="gone" />
+
+        <com.wang.avi.AVLoadingIndicatorView
+            android:id="@+id/aviProgress"
+            app:indicatorColor="@color/colorPrimary"
+            app:indicatorName="BallSpinFadeLoaderIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/dimen.5.x"
+            android:visibility="visible" />
+
+    </RelativeLayout>
+</layout>
+
+
+
+
