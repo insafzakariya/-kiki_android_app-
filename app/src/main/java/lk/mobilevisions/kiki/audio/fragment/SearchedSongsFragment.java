@@ -1,69 +1,58 @@
 package lk.mobilevisions.kiki.audio.fragment;
 
-import androidx.databinding.DataBindingUtil;
-
 import android.app.AlertDialog;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Rect;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.github.ybq.endless.Endless;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import lk.mobilevisions.kiki.R;
 import lk.mobilevisions.kiki.app.Application;
 import lk.mobilevisions.kiki.app.Utils;
-
 import lk.mobilevisions.kiki.audio.activity.AudioDashboardActivity;
-
-import lk.mobilevisions.kiki.audio.activity.AudioPaymentActivity;
 import lk.mobilevisions.kiki.audio.adapter.AddSongToPlaylistDialogAdapter;
-import lk.mobilevisions.kiki.audio.adapter.YouMightAlsoLikeAdapter;
-import lk.mobilevisions.kiki.audio.model.PlaylistModel;
+import lk.mobilevisions.kiki.audio.adapter.GenreWiseSongsAdapter;
 import lk.mobilevisions.kiki.audio.model.dto.PlayList;
 import lk.mobilevisions.kiki.audio.model.dto.Song;
-
-
-import lk.mobilevisions.kiki.audio.util.SpacesItemDecoration;
-import lk.mobilevisions.kiki.databinding.FragmentYouMightAlsoLikeBinding;
+import lk.mobilevisions.kiki.databinding.FragmentGenreWiseSongsBinding;
 import lk.mobilevisions.kiki.modules.api.APIListener;
 import lk.mobilevisions.kiki.modules.tv.TvManager;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
-public class YouMightAlsoLikeFragment extends Fragment implements YouMightAlsoLikeAdapter.OnYouMightLikeItemClickListener , AddSongToPlaylistDialogAdapter.OnPlaylistDialogItemClickListener {
+public class SearchedSongsFragment extends Fragment implements GenreWiseSongsAdapter.OnYouMightLikeItemClickListener , AddSongToPlaylistDialogAdapter.OnPlaylistDialogItemClickListener {
     @Inject
     TvManager tvManager;
 
 
-    FragmentYouMightAlsoLikeBinding binding;
+    FragmentGenreWiseSongsBinding binding;
 
-    YouMightAlsoLikeAdapter mAdapter;
-    AddSongToPlaylistDialogAdapter addSongToPlaylistDialogAdapter;
-    List<Song> youMightAlsoLikeList = new ArrayList<>();
-    List<Integer> songId = new ArrayList<>();
+    GenreWiseSongsAdapter mAdapter;
+    List<Song> genreSongsList = new ArrayList<>();
     private Animation animShow, animHide;
     LinearLayoutManager channelsLayoutManager;
-    Context mContext;
-    private int playlistId;
+    private Endless endless;
+
+    int playlistID;
+    List<Integer> songId = new ArrayList<>();
     private AlertDialog alertDialog;
 
-    public YouMightAlsoLikeFragment() {
+    public SearchedSongsFragment() {
         // Required empty public constructor
     }
 
@@ -77,83 +66,108 @@ public class YouMightAlsoLikeFragment extends Fragment implements YouMightAlsoLi
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_you_might_also_like, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_genre_wise_songs, container, false);
         ((Application) getActivity().getApplication()).getInjector().inject(this);
 
+        String searchKey = getArguments().getString("searchKey");
 
-        channelsLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL,false);
-        binding.youMightRecyclerview.setLayoutManager(channelsLayoutManager);
-        mAdapter = new YouMightAlsoLikeAdapter(getActivity(), youMightAlsoLikeList, YouMightAlsoLikeFragment.this);
-        binding.youMightRecyclerview.setHasFixedSize(true);
-        binding.youMightRecyclerview.setItemViewCacheSize(50);
-        binding.youMightRecyclerview.setDrawingCacheEnabled(true);
-        binding.youMightRecyclerview.setAdapter(mAdapter);
-        getYouMightLikeSongs();
+        channelsLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        binding.genreWiseRecyclerview.setLayoutManager(channelsLayoutManager);
+        mAdapter = new GenreWiseSongsAdapter(getActivity(), genreSongsList, SearchedSongsFragment.this);
+        binding.genreWiseRecyclerview.setHasFixedSize(true);
+        binding.genreWiseRecyclerview.setItemViewCacheSize(50);
+        binding.genreWiseRecyclerview.setDrawingCacheEnabled(true);
+
+        View loadingView = View.inflate(getActivity(), R.layout.layout_loading, null);
+        loadingView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        endless = Endless.applyTo(binding.genreWiseRecyclerview,
+                loadingView
+        );
+        endless.setAdapter(mAdapter);
+        endless.setLoadMoreListener(new Endless.LoadMoreListener() {
+            @Override
+            public void onLoadMore(int page) {
+                binding.spinKit.setVisibility(View.VISIBLE);
+                getGenreSongs(page, searchKey);
+
+            }
+        });
+        binding.genreWiseRecyclerview.setAdapter(mAdapter);
+        getGenreSongs(0, searchKey);
 
         binding.backImageview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AudioDashboardActivity hhh = (AudioDashboardActivity) getActivity();
                 hhh.onBackPressed();
+
             }
         });
-
-
 
         return binding.getRoot();
 
     }
 
-
-    private void getYouMightLikeSongs() {
-
-
-        tvManager.getPopularSongs( 0,250,new APIListener<List<Song>>() {
+    private void getGenreSongs(final int page, final String genre) {
+        int arraySize = Utils.SharedPrefUtil.getIntFromSharedPref(getActivity(),
+                genre, 0);
+        int offset;
+        if (page == 0) {
+            offset = 0;
+        } else {
+            offset = arraySize;
+        }
+        tvManager.getSearchSongsbyType(offset, 10, genre, new APIListener<List<Song>>() {
             @Override
-            public void onSuccess(List<Song> result, List<Object> params) {
-                youMightAlsoLikeList = result;
-                binding.youMightRecyclerview.setAdapter(new YouMightAlsoLikeAdapter(getContext(),
-                        youMightAlsoLikeList, YouMightAlsoLikeFragment.this));
-                if (result.size() <= 0) {
-                    binding.youMightRecyclerview.setVisibility(View.GONE);
-                    binding.aviProgress.setVisibility(View.GONE);
-
+            public void onSuccess(List<Song> songs, List<Object> params) {
+                System.out.println("sjhdbcdhscbh " + songs.size());
+                System.out.println("sjhdbcdhscbh 0000" + songs.size());
+                genreSongsList.addAll(songs);
+                if (page == 0) {
+                    mAdapter.setData(songs);
                 } else {
+                    mAdapter.addData(songs);
+                    endless.loadMoreComplete();
+                    binding.spinKit.setVisibility(View.GONE);
 
-                    binding.youMightRecyclerview.setVisibility(View.VISIBLE);
-                    binding.aviProgress.setVisibility(View.GONE);
                 }
+                if (songs.size() > 10) {
+                    endless.setLoadMoreAvailable(false);
+                }
+
+                binding.spinKit.setVisibility(View.GONE);
+                binding.aviProgress.setVisibility(View.GONE);
+
+
+                Utils.SharedPrefUtil.saveIntToSharedPref(getActivity(),
+                        genre, genreSongsList.size());
 
             }
 
             @Override
             public void onFailure(Throwable t) {
+                binding.spinKit.setVisibility(View.GONE);
 
-                Utils.Error.onServiceCallFail(getContext(), t);
             }
         });
-
-
     }
-
 
     @Override
     public void onYouMightLikeItemClick(Song song, int position, List<Song> songs) {
-        AudioDashboardActivity hhh = (AudioDashboardActivity) getActivity();
-        hhh.youAlsoLikeFragmentSongClickedEvent(song, position, songs);
 
+        AudioDashboardActivity hhh = (AudioDashboardActivity) getActivity();
+        hhh.genreSongFragmentSongClickedEvent(song, position, songs);
 
     }
 
     @Override
     public void onAddSongsItemClick(Song song) {
-            songId.add(song.getId());
-            addToLibraryDialog(song);
+
+        songId.add(song.getId());
+        addToLibraryDialog(song);
     }
 
-
     private void addToLibraryDialog(Song song) {
-
         LayoutInflater myLayout = LayoutInflater.from(getActivity());
         final View dialogView = myLayout.inflate(R.layout.audio_alertdialog_view, null);
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
@@ -162,7 +176,6 @@ public class YouMightAlsoLikeFragment extends Fragment implements YouMightAlsoLi
         final AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.setCanceledOnTouchOutside(true);
         alertDialog.show();
-
 
         TextView songTitle = (TextView) alertDialog.findViewById(R.id.add_song_title);
         songTitle.setText(song.getName());
@@ -184,7 +197,6 @@ public class YouMightAlsoLikeFragment extends Fragment implements YouMightAlsoLi
             public void onClick(View v) {
                 alertDialog.dismiss();
                 getPlaylists();
-//                alertDialog.dismiss();
 
             }
         });
@@ -198,23 +210,22 @@ public class YouMightAlsoLikeFragment extends Fragment implements YouMightAlsoLi
 
     }
 
- private void addDataToLibrary(Song song){
+    private void addDataToLibrary(Song song) {
 
+        tvManager.addDataToLibraryHash("S", songId, new APIListener<Void>() {
+            @Override
+            public void onSuccess(Void result, List<Object> params) {
 
-    tvManager.addDataToLibraryHash("S",songId, new APIListener<Void>() {
-        @Override
-        public void onSuccess(Void result, List<Object> params) {
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.added_to_library), Toast.LENGTH_SHORT).show();
+            }
 
-            Toast.makeText(getApplicationContext(), getResources().getString(R.string.added_to_library), Toast.LENGTH_SHORT).show();
-        }
+            @Override
+            public void onFailure(Throwable t) {
+                Utils.Error.onServiceCallFail(getActivity(), t);
+            }
+        });
 
-        @Override
-        public void onFailure(Throwable t) {
-            Utils.Error.onServiceCallFail(getActivity(), t);
-        }
-    });
-
-}
+    }
 
     private void addToLibraryPlaylistDialog(List<PlayList> playLists) {
 
@@ -230,7 +241,7 @@ public class YouMightAlsoLikeFragment extends Fragment implements YouMightAlsoLi
         RecyclerView recyclerView = (RecyclerView) alertDialog.findViewById(R.id.addSongToPlaylistRecycle);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        AddSongToPlaylistDialogAdapter adapter = new AddSongToPlaylistDialogAdapter(getActivity(),playLists,YouMightAlsoLikeFragment.this);
+        AddSongToPlaylistDialogAdapter adapter = new AddSongToPlaylistDialogAdapter(getActivity(), playLists, SearchedSongsFragment.this);
         recyclerView.setAdapter(adapter);
 
         TextView songTitle = (TextView) alertDialog.findViewById(R.id.add_to_playlist_text);
@@ -240,6 +251,7 @@ public class YouMightAlsoLikeFragment extends Fragment implements YouMightAlsoLi
 
             public void onClick(View v) {
                 alertDialog.dismiss();
+
             }
         });
 
@@ -267,14 +279,12 @@ public class YouMightAlsoLikeFragment extends Fragment implements YouMightAlsoLi
 
     @Override
     public void onPlaylistDialogItemClick(PlayList song, int position, List<PlayList> songs) {
-
-        playlistId = song.getId();
-        addSongToPlaylist(playlistId,songId);
+        playlistID = song.getId();
+        addSongToPlaylist(playlistID, songId);
         alertDialog.dismiss();
-
     }
 
-    private void addSongToPlaylist(int playlistId, List<Integer> songIdList ) {
+    private void addSongToPlaylist(int playlistId, List<Integer> songIdList) {
 
         tvManager.addSongsToPlaylist(playlistId, songIdList, new APIListener<Void>() {
             @Override
@@ -303,29 +313,8 @@ public class YouMightAlsoLikeFragment extends Fragment implements YouMightAlsoLi
             this.spacing = spacing;
             this.includeEdge = includeEdge;
         }
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-            int position = parent.getChildAdapterPosition(view); // item position
-            int column = position % spanCount; // item column
-
-            if (includeEdge) {
-                outRect.left = spacing - column * spacing / spanCount; // spacing - column * ((1f / spanCount) * spacing)
-                outRect.right = (column + 1) * spacing / spanCount; // (column + 1) * ((1f / spanCount) * spacing)
-
-                if (position < spanCount) { // top edge
-                    outRect.top = spacing;
-                }
-                outRect.bottom = spacing; // item bottom
-            } else  {
-                outRect.left = column * spacing / spanCount; // column * ((1f / spanCount) * spacing)
-                outRect.right = spacing - (column + 1) * spacing / spanCount; // spacing - (column + 1) * ((1f /    spanCount) * spacing)
-                if (position >= spanCount) {
-                    outRect.top = spacing; // item top
-                }
-            }
-        }
     }
 
-
 }
+
+

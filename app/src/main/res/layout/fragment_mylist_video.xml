@@ -58,7 +58,7 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="24dp"
             android:layout_marginStart="24dp"
-            android:text="No subscribed programs available. Please subscribe to your favorite programs from Mobile TV."
+            android:text="@string/no_subscribed_programs"
             android:textAlignment="center"
             android:textColor="@color/colorWhite"
             android:visibility="gone"

@@ -1,6 +1,5 @@
 package lk.mobilevisions.kiki.audio.fragment;
 
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +9,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import javax.inject.Inject;
 
@@ -23,31 +21,30 @@ import lk.mobilevisions.kiki.app.Application;
 import lk.mobilevisions.kiki.app.Utils;
 import lk.mobilevisions.kiki.audio.activity.AudioDashboardActivity;
 import lk.mobilevisions.kiki.audio.adapter.LatestPlaylistAdapter;
-import lk.mobilevisions.kiki.audio.model.dto.DailyMix;
 import lk.mobilevisions.kiki.audio.model.dto.PlayList;
-import lk.mobilevisions.kiki.databinding.FragmentLatestPlaylistBinding;
+import lk.mobilevisions.kiki.databinding.FragmentGenreWisePlaylistBinding;
 import lk.mobilevisions.kiki.modules.api.APIListener;
 import lk.mobilevisions.kiki.modules.tv.TvManager;
 
-public class LatestPlaylistFragment extends Fragment implements LatestPlaylistAdapter.OnLatestPlaylistItemClickListener {
+public class SearchedPlaylistFragment extends Fragment implements LatestPlaylistAdapter.OnLatestPlaylistItemClickListener {
     @Inject
     TvManager tvManager;
 
 
-    FragmentLatestPlaylistBinding binding;
-
+    FragmentGenreWisePlaylistBinding binding;
     LatestPlaylistAdapter mAdapter;
-    List<PlayList> latestPlaylistList = new ArrayList<>();
+    List<PlayList> playlistArrayList = new ArrayList<>();
     private Animation animShow, animHide;
     LinearLayoutManager channelsLayoutManager;
-    private int lastRandomNumber;
+    String searchKey;
 
-    public LatestPlaylistFragment() {
+    public SearchedPlaylistFragment() {
         // Required empty public constructor
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
     }
 
@@ -56,30 +53,22 @@ public class LatestPlaylistFragment extends Fragment implements LatestPlaylistAd
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_latest_playlist, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_genre_wise_playlist, container, false);
         ((Application) getActivity().getApplication()).getInjector().inject(this);
 
 
-//        AudioDashboardActivity audioDashboardActivity = (AudioDashboardActivity) getActivity();
-//        audioDashboardActivity.changeToolbarName("Recently Played");
+        searchKey = getArguments().getString("searchKey");
 
-
-//            binding.youMightRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-//            binding.youMightRecyclerview.addItemDecoration(new SpacesItemDecoration(15));
-//            binding.youMightRecyclerview.setHasFixedSize(true);
-//            binding.youMightRecyclerview.setNestedScrollingEnabled(false);
-
-
-
+        System.out.println("Check artist 1414141414 " + searchKey);
 
         channelsLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL,false);
-        binding.latestPlaylistRecyclerview.setLayoutManager(channelsLayoutManager);
-        mAdapter = new LatestPlaylistAdapter(getActivity(), latestPlaylistList, LatestPlaylistFragment.this);
-        binding.latestPlaylistRecyclerview.setHasFixedSize(true);
-        binding.latestPlaylistRecyclerview.setItemViewCacheSize(50);
-        binding.latestPlaylistRecyclerview.setDrawingCacheEnabled(true);
-        binding.latestPlaylistRecyclerview.setAdapter(mAdapter);
-        getYouMightLikeSongs();
+        binding.genrePlaylistRecyclerview.setLayoutManager(channelsLayoutManager);
+        mAdapter = new LatestPlaylistAdapter(getActivity(), playlistArrayList, SearchedPlaylistFragment.this);
+        binding.genrePlaylistRecyclerview.setHasFixedSize(true);
+        binding.genrePlaylistRecyclerview.setItemViewCacheSize(1000);
+        binding.genrePlaylistRecyclerview.setDrawingCacheEnabled(true);
+        binding.genrePlaylistRecyclerview.setAdapter(mAdapter);
+        setDataToPlaylists();
 
         binding.backImageview.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,21 +83,23 @@ public class LatestPlaylistFragment extends Fragment implements LatestPlaylistAd
     }
 
 
-    private void getYouMightLikeSongs() {
+    private void setDataToPlaylists() {
 
-        tvManager.getDailyMixNew(0,250,new APIListener<List<PlayList>>() {
+        tvManager.getSearchPlaylistbyType(searchKey,0,50, new APIListener<List<PlayList>>() {
             @Override
             public void onSuccess(List<PlayList> result, List<Object> params) {
-                latestPlaylistList = result;
-                binding.latestPlaylistRecyclerview.setAdapter(new LatestPlaylistAdapter(getContext(),
-                        latestPlaylistList, LatestPlaylistFragment.this));
+                System.out.println("skdsdfsdd " + result.size());
+                System.out.println("skdsdfsdd " + searchKey);
+                playlistArrayList = result;
+                binding.genrePlaylistRecyclerview.setAdapter(new LatestPlaylistAdapter(getContext(),
+                        playlistArrayList, SearchedPlaylistFragment.this));
                 if (result.size() <= 0) {
-                    binding.latestPlaylistRecyclerview.setVisibility(View.GONE);
+                    binding.genrePlaylistRecyclerview.setVisibility(View.GONE);
                     binding.aviProgress.setVisibility(View.GONE);
 
                 } else {
 
-                    binding.latestPlaylistRecyclerview.setVisibility(View.VISIBLE);
+                    binding.genrePlaylistRecyclerview.setVisibility(View.VISIBLE);
                     binding.aviProgress.setVisibility(View.GONE);
                 }
 
@@ -144,35 +135,20 @@ public class LatestPlaylistFragment extends Fragment implements LatestPlaylistAd
     }
 
 
-    private int generateRandomIndex(int size) {
-        while (true) {
-            Random random = new Random();
-            int randomNumber = random.nextInt(3);
-            if (randomNumber != lastRandomNumber) {
-                lastRandomNumber = randomNumber;
-                return randomNumber;
-            }
-        }
-    }
-
     @Override
     public void onLatestPlaylistItemClick(PlayList song, int position, List<PlayList> songs) {
-
         Bundle bundle=new Bundle();
         bundle.putInt("playlistID", song.getId());
-        System.out.println("ssdffjfnjffjfjfj" + song.getId());
         bundle.putString("playlistName", song.getName());
         bundle.putString("songCount", song.getSongCount());
-        System.out.println("song count " + song.getSongCount());
         bundle.putString("playlistImage", song.getImage());
         bundle.putString("playlistYear", song.getDate());
         PlaylistDetailFragment playlistDetailFragment = new PlaylistDetailFragment();
         playlistDetailFragment.setArguments(bundle);
         getFragmentManager().beginTransaction()
-                .replace(R.id.latest_playlist_detail_container, playlistDetailFragment, "Home Playlist Detail")
+                .replace(R.id.search_playlist_detail_container, playlistDetailFragment, "searchedPlaylistDetail")
                 .addToBackStack(null)
                 .commit();
-
     }
 
     @Override
@@ -181,13 +157,6 @@ public class LatestPlaylistFragment extends Fragment implements LatestPlaylistAd
         addPlaylistToLibrary(playlistID);
     }
 
-
-//    @Override
-//    public void onLatestPlaylistItemClick(DailyMix song, int position, List<DailyMix> songs) {
-//        AudioDashboardActivity hhh = (AudioDashboardActivity) getActivity();
-//        hhh.dailymixSongs(songs);
-//
-//    }
 
     class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
 
@@ -201,27 +170,6 @@ public class LatestPlaylistFragment extends Fragment implements LatestPlaylistAd
             this.includeEdge = includeEdge;
         }
 
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-            int position = parent.getChildAdapterPosition(view); // item position
-            int column = position % spanCount; // item column
-
-            if (includeEdge) {
-                outRect.left = spacing - column * spacing / spanCount; // spacing - column * ((1f / spanCount) * spacing)
-                outRect.right = (column + 1) * spacing / spanCount; // (column + 1) * ((1f / spanCount) * spacing)
-
-                if (position < spanCount) { // top edge
-                    outRect.top = spacing;
-                }
-                outRect.bottom = spacing; // item bottom
-            } else  {
-                outRect.left = column * spacing / spanCount; // column * ((1f / spanCount) * spacing)
-                outRect.right = spacing - (column + 1) * spacing / spanCount; // spacing - (column + 1) * ((1f /    spanCount) * spacing)
-                if (position >= spanCount) {
-                    outRect.top = spacing; // item top
-                }
-            }
-        }
     }
 
 

@@ -81,7 +81,7 @@ public class VideoChildModeActivity extends AppCompatActivity   {
         if (kidsModePassword != null && !"".equals(kidsModePassword)) {
             new MaterialDialog.Builder(VideoChildModeActivity.this)
                     .title(R.string.app_name)
-                    .content("Please enter password to deactivate Child Mode")
+                    .content(R.string.child_mode_deact_pass)
                     .inputRangeRes(4, 10, R.color.red)
                     .inputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)
                     .negativeText(getString(R.string.cancel))
@@ -96,7 +96,7 @@ public class VideoChildModeActivity extends AppCompatActivity   {
                         public void onInput(MaterialDialog dialog, CharSequence input) {
                             if (kidsModePassword.equals(input.toString())) {
                                 Utils.SharedPrefUtil.saveStringToSharedPref(VideoChildModeActivity.this, "kids_mode_password", "");
-                                Utils.Dialog.createOKDialog(VideoChildModeActivity.this, "Child's mode is deactivated!", new MaterialDialog.SingleButtonCallback() {
+                                Utils.Dialog.createOKDialog(VideoChildModeActivity.this, getResources().getString(R.string.child_mode_deact), new MaterialDialog.SingleButtonCallback() {
                                     @Override
                                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
 
@@ -126,7 +126,7 @@ public class VideoChildModeActivity extends AppCompatActivity   {
         } else {
             new MaterialDialog.Builder(VideoChildModeActivity.this)
                     .title(R.string.app_name)
-                    .content("Please enter password to activate Child Mode")
+                    .content(R.string.child_mode_act_pass)
                     .inputRangeRes(4, 10, R.color.red)
                     .inputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)
                     .negativeText(getString(R.string.cancel))
@@ -141,7 +141,7 @@ public class VideoChildModeActivity extends AppCompatActivity   {
                         public void onInput(MaterialDialog dialog, CharSequence input) {
 
                             Utils.SharedPrefUtil.saveStringToSharedPref(VideoChildModeActivity.this, "kids_mode_password", input.toString());
-                            Utils.Dialog.createOKDialog(VideoChildModeActivity.this, "Child's mode is activated!", new MaterialDialog.SingleButtonCallback() {
+                            Utils.Dialog.createOKDialog(VideoChildModeActivity.this, getResources().getString(R.string.child_mode_act), new MaterialDialog.SingleButtonCallback() {
                                 @Override
                                 public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
 

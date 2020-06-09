@@ -58,6 +58,11 @@
     <string name="menu_activate_packages">Subscription</string>
     <string name="menu_contact_support">Contact Support</string>
     <string name="menu_chile_mode">Child Mode</string>
+    <string name="child_mode_act">Child mode is activated</string>
+    <string name="child_mode_deact">Child mode is deactivated</string>
+    <string name="child_mode_act_pass">Please enter password to activate child mode</string>
+    <string name="child_mode_deact_pass">Please enter password to deactivate child mode</string>
+    <string name="no_subscribed_programs">No subscribed programs available. Please subscribe to your favorite programs from Mobile TV.</string>
     <string name="menu_channels">Channels</string>
     <string name="menu_guide">Guide</string>
     <string name="menu_library">Library</string>
@@ -116,6 +121,7 @@
 
     <string name="type_password">Type your password</string>
     <string name="enter_username">Type your username</string>
+    <string name="create_an_account_login">Create an account</string>
 
     <string name="username">Username</string>
 
@@ -176,6 +182,11 @@
     <string name="added_to_playlist">Added to play list</string>
     <string name="no_playlist_found">No play list found</string>
     <string name="added_to_library">Added to library</string>
+    <string name="listen_to_fav">listen to your favorites</string>
+    <string name="yes">Yes</string>
+    <string name="remove_this_from_library">Do you want to remove this from library?</string>
+    <string name="music_confirm">Confirm</string>
+    <string name="music_edit">Edit</string>
 
     <string name="play_2">Play</string>
     <string name="play_random">Play Random</string>

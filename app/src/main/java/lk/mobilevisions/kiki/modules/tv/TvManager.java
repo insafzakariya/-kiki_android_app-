@@ -17,6 +17,7 @@ import lk.mobilevisions.kiki.audio.model.dto.AudioProgram;
 import lk.mobilevisions.kiki.audio.model.dto.DailyMix;
 import lk.mobilevisions.kiki.audio.model.dto.Genre;
 import lk.mobilevisions.kiki.audio.model.dto.PlayList;
+import lk.mobilevisions.kiki.audio.model.dto.SearchResponse;
 import lk.mobilevisions.kiki.audio.model.dto.Song;
 import lk.mobilevisions.kiki.modules.api.dto.Channel;
 import lk.mobilevisions.kiki.modules.api.dto.Content;
@@ -233,6 +234,52 @@ public class TvManager {
 
             @Override
             public void onFailure(Call<PlayList> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void getSongWithID(int songID, final APIListener<Song> listener) {
+        api.getSongWithID(Utils.Auth.getBasicAuthToken(application), Utils.Auth.getBearerToken(application), songID ).enqueue(new Callback<Song>() {
+            @Override
+            public void onResponse(Call<Song> call, Response<Song> response) {
+
+                System.out.println("checking getAllAudioChannel 3333  " + response.code());
+
+                switch (response.code()) {
+                    case 200:
+                        if (response.body() != null) {
+                            listener.onSuccess(response.body(), null);
+                        } else {
+                            listener.onFailure(new InvalidResponseException());
+                        }
+                        break;
+                    case 401:
+                        try {
+                            listener.onFailure(Utils.Error.
+                                    getServerError(application, response,
+                                            AuthenticationFailedWithAccessTokenException.class));
+                        } catch (ErrorResponseException e) {
+                            listener.onFailure(e);
+                        }
+                        break;
+                    case 400:
+                        try {
+                            listener.onFailure(Utils.Error.
+                                    getServerError(application, response,
+                                            ApplicationException.class));
+                        } catch (ErrorResponseException e) {
+                            listener.onFailure(e);
+                        }
+                        break;
+                    default:
+                        listener.onFailure(new RemoteServerException());
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Song> call, Throwable t) {
 
             }
         });
@@ -2091,6 +2138,185 @@ public class TvManager {
             }
         });
     }
+
+    public void getSearchedAll(final String text, final APIListener<SearchResponse> listener) {
+        api.getSearchedAll(Utils.Auth.getBasicAuthToken(application), Utils.Auth.getBearerToken(application), text ).enqueue(new Callback<SearchResponse>() {
+            @Override
+            public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
+
+                System.out.println("checking getAllAudioChannels 3333  " + response.code());
+
+                switch (response.code()) {
+                    case 200:
+                        if (response.body() != null) {
+                            listener.onSuccess(response.body(), null);
+                        } else {
+                            listener.onFailure(new InvalidResponseException());
+                        }
+                        break;
+                    case 401:
+                        try {
+                            listener.onFailure(Utils.Error.
+                                    getServerError(application, response,
+                                            AuthenticationFailedWithAccessTokenException.class));
+                        } catch (ErrorResponseException e) {
+                            listener.onFailure(e);
+                        }
+                        break;
+                    case 400:
+                        try {
+                            listener.onFailure(Utils.Error.
+                                    getServerError(application, response,
+                                            ApplicationException.class));
+                        } catch (ErrorResponseException e) {
+                            listener.onFailure(e);
+                        }
+                        break;
+                    default:
+                        listener.onFailure(new RemoteServerException());
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SearchResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void getSearchSongsbyType(int offset, int limit, final String text, final APIListener<List<Song>> listener) {
+        api.getSearchSongsbyType(Utils.Auth.getBasicAuthToken(application), Utils.Auth.getBearerToken(application), text, offset,limit, "song").enqueue(new Callback<List<Song>>() {
+            @Override
+            public void onResponse(Call<List<Song>> call, Response<List<Song>> response) {
+                switch (response.code()) {
+                    case 200:
+                        if (response.body() != null) {
+                            listener.onSuccess(response.body(), null);
+                        } else {
+                            listener.onFailure(new InvalidResponseException());
+                        }
+                        break;
+                    case 401:
+                        try {
+                            listener.onFailure(Utils.Error.
+                                    getServerError(application, response,
+                                            AuthenticationFailedWithAccessTokenException.class));
+                        } catch (ErrorResponseException e) {
+                            listener.onFailure(e);
+                        }
+                        break;
+                    case 400:
+                        try {
+                            listener.onFailure(Utils.Error.
+                                    getServerError(application, response,
+                                            ApplicationException.class));
+                        } catch (ErrorResponseException e) {
+                            listener.onFailure(e);
+                        }
+                        break;
+                    default:
+                        listener.onFailure(new RemoteServerException());
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Song>> call, Throwable t) {
+                listener.onFailure(new RemoteServerException());
+            }
+        });
+    }
+
+    public void getSearchArtistbyType(final String text,int offset, int limit, final APIListener<List<Artist>> listener) {
+        api.getSearchArtistbyType(Utils.Auth.getBasicAuthToken(application), Utils.Auth.getBearerToken(application), text, offset,limit, "artist").enqueue(new Callback<List<Artist>>() {
+            @Override
+            public void onResponse(Call<List<Artist>> call, Response<List<Artist>> response) {
+                switch (response.code()) {
+                    case 200:
+                        if (response.body() != null) {
+                            listener.onSuccess(response.body(), null);
+                        } else {
+                            listener.onFailure(new InvalidResponseException());
+                        }
+                        break;
+                    case 401:
+                        try {
+                            listener.onFailure(Utils.Error.
+                                    getServerError(application, response,
+                                            AuthenticationFailedWithAccessTokenException.class));
+                        } catch (ErrorResponseException e) {
+                            listener.onFailure(e);
+                        }
+                        break;
+                    case 400:
+                        try {
+                            listener.onFailure(Utils.Error.
+                                    getServerError(application, response,
+                                            ApplicationException.class));
+                        } catch (ErrorResponseException e) {
+                            listener.onFailure(e);
+                        }
+                        break;
+                    default:
+                        listener.onFailure(new RemoteServerException());
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Artist>> call, Throwable t) {
+                listener.onFailure(new RemoteServerException());
+            }
+        });
+    }
+
+    public void getSearchPlaylistbyType(String text, int offset, int limit, final APIListener<List<PlayList>> listener) {
+        api.getSearchPlaylistbyType(Utils.Auth.getBasicAuthToken(application), Utils.Auth.getBearerToken(application), text, offset,limit, "playlist").enqueue(new Callback<List<PlayList>>() {
+            @Override
+            public void onResponse(Call<List<PlayList>> call, Response<List<PlayList>> response) {
+                switch (response.code()) {
+                    case 200:
+                        if (response.body() != null) {
+                            System.out.println("skdcbsjhdadasda 2222" + response.body());
+                            listener.onSuccess(response.body(), null);
+                        } else {
+                            System.out.println("skdcbsjhdadasda 3333" );
+                            listener.onFailure(new InvalidResponseException());
+                        }
+                        break;
+                    case 401:
+                        try {
+                            listener.onFailure(Utils.Error.
+                                    getServerError(application, response,
+                                            AuthenticationFailedWithAccessTokenException.class));
+                        } catch (ErrorResponseException e) {
+                            listener.onFailure(e);
+                        }
+                        break;
+                    case 400:
+                        try {
+                            listener.onFailure(Utils.Error.
+                                    getServerError(application, response,
+                                            ApplicationException.class));
+                        } catch (ErrorResponseException e) {
+                            listener.onFailure(e);
+                        }
+                        break;
+                    default:
+                        listener.onFailure(new RemoteServerException());
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<PlayList>> call, Throwable t) {
+                System.out.println("skdcbsjhdadasda 11111" );
+                listener.onFailure(new RemoteServerException());
+            }
+        });
+    }
+
 
     public void getAllSongs(int offset, int limit, final APIListener<List<Song>> listener) {
         api.getAllSongs(Utils.Auth.getBasicAuthToken(application), Utils.Auth.getBearerToken(application), offset, limit).enqueue(new Callback<List<Song>>() {

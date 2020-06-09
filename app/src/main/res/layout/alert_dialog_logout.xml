@@ -71,7 +71,7 @@
                 android:gravity="center_horizontal"
                 android:letterSpacing="0.04"
                 android:padding="@dimen/_2sdp"
-                android:text="YES"
+                android:text="@string/yes"
                 android:textColor="@color/newUiBrand"
                 android:textSize="@dimen/_15sdp" />
 
@@ -85,7 +85,7 @@
                 android:letterSpacing="0.04"
                 android:fontFamily="@font/futuranext_medium"
                 android:padding="@dimen/_2sdp"
-                android:text="CANCEL"
+                android:text="@string/cancel"
                 android:textColor="#FF0100"
                 android:textSize="@dimen/_15sdp" />
 

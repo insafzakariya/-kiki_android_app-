@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_6sdp"
             android:layout_marginTop="@dimen/_6sdp"
-            android:text="Confirm"
+            android:text="@string/music_confirm"
             android:textColor="#FFFFFF"
             android:textSize="@dimen/_10sdp"
             android:background="@drawable/viewall_background"

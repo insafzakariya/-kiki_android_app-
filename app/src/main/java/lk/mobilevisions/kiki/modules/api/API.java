@@ -14,6 +14,7 @@ import lk.mobilevisions.kiki.audio.model.dto.AudioProgram;
 import lk.mobilevisions.kiki.audio.model.dto.DailyMix;
 import lk.mobilevisions.kiki.audio.model.dto.Genre;
 import lk.mobilevisions.kiki.audio.model.dto.PlayList;
+import lk.mobilevisions.kiki.audio.model.dto.SearchResponse;
 import lk.mobilevisions.kiki.audio.model.dto.Song;
 import lk.mobilevisions.kiki.modules.api.dto.AuthUser;
 import lk.mobilevisions.kiki.modules.api.dto.Channel;
@@ -92,6 +93,11 @@ public interface API {
                                  @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
                                    @Path("id") int playlistID,
                                    @Query("g") boolean g);
+
+    @GET("audio/songsbyid")
+    Call<Song> getSongWithID(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
+                                     @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
+                                     @Query("song_id") int songID);
 
     @GET("content/programs")
     Call<List<Program>> getChannelTrailers(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
@@ -449,6 +455,35 @@ public interface API {
                                       @Path("text") String text,
                                       @Query("offset") int offset,
                                       @Query("limit") int limit);
+
+    @GET("audio/search-all")
+    Call<SearchResponse> getSearchedAll(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
+                                              @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
+                                              @Query("query_text") String text);
+
+    @GET("audio/search-by-type")
+    Call<List<Song>> getSearchSongsbyType(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
+                                      @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
+                                      @Query("query_text") String text,
+                                          @Query("offset") int offset,
+                                      @Query("limit") int limit,
+                                      @Query("type") String type);
+
+    @GET("audio/search-by-type")
+    Call<List<Artist>> getSearchArtistbyType(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
+                                          @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
+                                          @Query("query_text") String text,
+                                             @Query("offset") int offset,
+                                          @Query("limit") int limit,
+                                          @Query("type") String type);
+
+    @GET("audio/search-by-type")
+    Call<List<PlayList>> getSearchPlaylistbyType(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
+                                             @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
+                                             @Query("query_text") String text,
+                                                 @Query("offset") int offset,
+                                             @Query("limit") int limit,
+                                             @Query("type") String type);
 
     @GET("audio/playlist")
     Call<List<DailyMix>> getAllDailymix(@Header(HEADER_AUTHORIZATION) String basicAuthToken,

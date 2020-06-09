@@ -1,13 +1,6 @@
 package lk.mobilevisions.kiki.audio.fragment;
 
-import android.content.Context;
-import androidx.databinding.DataBindingUtil;
-
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,24 +8,25 @@ import android.view.animation.Animation;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import lk.mobilevisions.kiki.R;
 import lk.mobilevisions.kiki.app.Application;
 import lk.mobilevisions.kiki.app.Utils;
 import lk.mobilevisions.kiki.audio.activity.AudioDashboardActivity;
 import lk.mobilevisions.kiki.audio.adapter.ArtistListAdapter;
 import lk.mobilevisions.kiki.audio.model.dto.Artist;
-import lk.mobilevisions.kiki.audio.model.dto.Song;
 import lk.mobilevisions.kiki.audio.util.SpacesItemDecoration;
 import lk.mobilevisions.kiki.databinding.FragmentArtistListBinding;
 import lk.mobilevisions.kiki.modules.api.APIListener;
 import lk.mobilevisions.kiki.modules.tv.TvManager;
 
-public class ArtistListFragment extends Fragment implements ArtistListAdapter.OnArtistListItemActionListener {
+public class SearchedArtistFragment extends Fragment implements ArtistListAdapter.OnArtistListItemActionListener {
     @Inject
     TvManager tvManager;
 
@@ -42,7 +36,7 @@ public class ArtistListFragment extends Fragment implements ArtistListAdapter.On
     ArtistListAdapter artistListAdapter;
     LinearLayoutManager channelsLayoutManager;
 
-    public ArtistListFragment() {
+    public SearchedArtistFragment() {
         // Required empty public constructor
     }
 
@@ -59,17 +53,18 @@ public class ArtistListFragment extends Fragment implements ArtistListAdapter.On
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_artist_list, container, false);
         ((Application) getActivity().getApplication()).getInjector().inject(this);
 
+        String searchKey = getArguments().getString("searchKey");
 
         channelsLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL,false);
         binding.artistListRecycle.setLayoutManager(channelsLayoutManager);
-        artistListAdapter = new ArtistListAdapter(getActivity(), artistsArrayList,ArtistListFragment.this);
+        artistListAdapter = new ArtistListAdapter(getActivity(), artistsArrayList,SearchedArtistFragment.this);
         binding.artistListRecycle.setHasFixedSize(true);
         binding.artistListRecycle.setItemViewCacheSize(50);
         binding.artistListRecycle.setDrawingCacheEnabled(true);
         binding.artistListRecycle.setAdapter(artistListAdapter);
 
         setupArtistList();
-        setDatatoArtistList();
+        setDatatoArtistList(searchKey);
 
         binding.backImageview.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,9 +90,9 @@ public class ArtistListFragment extends Fragment implements ArtistListAdapter.On
     }
 
 
-    private void setDatatoArtistList() {
+    private void setDatatoArtistList(String searchKey) {
 
-        tvManager.getPopularArtists( new APIListener<List<Artist>>() {
+        tvManager.getSearchArtistbyType(searchKey,0,50, new APIListener<List<Artist>>() {
             @Override
             public void onSuccess(List<Artist> result, List<Object> params) {
                 if (result.size() == 0) {
@@ -106,7 +101,7 @@ public class ArtistListFragment extends Fragment implements ArtistListAdapter.On
                 } else {
                     binding.artistListRecycle.setVisibility(View.VISIBLE);
                     artistsArrayList = result;
-                    artistListAdapter = new ArtistListAdapter(getActivity(), artistsArrayList,ArtistListFragment.this);
+                    artistListAdapter = new ArtistListAdapter(getActivity(), artistsArrayList,SearchedArtistFragment.this);
                     binding.artistListRecycle.setAdapter(artistListAdapter);
                 }
                 binding.aviProgress.setVisibility(View.GONE);
@@ -128,7 +123,7 @@ public class ArtistListFragment extends Fragment implements ArtistListAdapter.On
             @Override
             public void onSuccess(Void result, List<Object> params) {
 
-                Toast.makeText(getActivity(), getResources().getString(R.string.added_to_library), Toast.LENGTH_SHORT ).show();
+                Toast.makeText(getActivity(), "Added to library.", Toast.LENGTH_SHORT ).show();
             }
 
             @Override
@@ -155,7 +150,7 @@ public class ArtistListFragment extends Fragment implements ArtistListAdapter.On
         ArtistDetailFragment artistDetailFragment = new ArtistDetailFragment();
         artistDetailFragment.setArguments(bundle);
         getFragmentManager().beginTransaction()
-                .replace(R.id.home_artist_list_to_detail_container, artistDetailFragment, "Home Artist Detail")
+                .replace(R.id.library_artist_searchToDetail, artistDetailFragment, "SearchedArtistDetail")
                 .addToBackStack(null)
                 .commit();
 

@@ -82,17 +82,17 @@
                 android:orientation="horizontal"
                 android:layout_centerInParent="true">
 
-        <TextView
-            android:id="@+id/albums_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0 albums"
-            android:textSize="@dimen/_10sdp"
-            android:textColor="@color/md_grey_600"
-            android:gravity="center"
-            android:layout_marginEnd="@dimen/_5sdp"
-            android:layout_marginTop="@dimen/_5sdp"
-            />
+<!--        <TextView-->
+<!--            android:id="@+id/albums_text"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="0 albums"-->
+<!--            android:textSize="@dimen/_10sdp"-->
+<!--            android:textColor="@color/md_grey_600"-->
+<!--            android:gravity="center"-->
+<!--            android:layout_marginEnd="@dimen/_5sdp"-->
+<!--            android:layout_marginTop="@dimen/_5sdp"-->
+<!--            />-->
 
 
         <TextView

@@ -28,7 +28,7 @@
                 app:sriv_left_bottom_corner_radius="5dip"
                 app:sriv_right_bottom_corner_radius="10dip"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginStart="@dimen/_7sdp"
                 app:layout_constraintBottom_toTopOf="@+id/view_line2"/>
 
 
@@ -92,7 +92,8 @@
                 android:layout_gravity="center"
                 android:background="@drawable/viewall_background"
                 android:drawableStart="@drawable/ic_plus_music"
-                android:text="Add "
+                android:text="@string/add"
+                android:paddingEnd="@dimen/_8sdp"
                 android:textColor="@color/see_all"
                 android:textSize="@dimen/_16sdp"
                 style="@style/Smaller_Drawable"
@@ -123,8 +124,8 @@
                 android:background="@color/md_grey_600"
                 android:layout_marginTop="@dimen/_11sdp"
                 android:layout_height="1dp"
-                android:layout_marginStart="@dimen/_12sdp"
-                android:layout_marginEnd="@dimen/_12sdp"
+                android:layout_marginStart="@dimen/_7sdp"
+                android:layout_marginEnd="@dimen/_7sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/song_thumb_imageview">

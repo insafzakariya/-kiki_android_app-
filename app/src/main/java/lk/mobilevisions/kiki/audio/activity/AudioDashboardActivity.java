@@ -6,7 +6,9 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+
 import androidx.databinding.DataBindingUtil;
+
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -15,19 +17,24 @@ import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.speech.RecognizerIntent;
+
 import androidx.annotation.Nullable;
 
 import com.google.android.material.tabs.TabLayout;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.core.content.ContextCompat;
+
 import android.support.v4.media.session.PlaybackStateCompat;
+
 import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.format.DateUtils;
@@ -48,6 +55,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.microsoft.appcenter.AppCenter;
 import com.microsoft.appcenter.analytics.Analytics;
 import com.microsoft.appcenter.crashes.Crashes;
@@ -77,25 +85,34 @@ import lk.mobilevisions.kiki.app.Application;
 import lk.mobilevisions.kiki.app.Constants;
 import lk.mobilevisions.kiki.app.Utils;
 import lk.mobilevisions.kiki.audio.adapter.AddSongToPlaylistDialogAdapter;
+import lk.mobilevisions.kiki.audio.adapter.ArtistListAdapter;
 import lk.mobilevisions.kiki.audio.adapter.ArtistsVerticalAdapter;
+import lk.mobilevisions.kiki.audio.adapter.LatestPlaylistAdapter;
 import lk.mobilevisions.kiki.audio.adapter.PlaylistDialogAdapter;
 import lk.mobilevisions.kiki.audio.adapter.PopularSongsVerticalAdapter;
 import lk.mobilevisions.kiki.audio.adapter.RecentlyPlayedVerticalAdapter;
 import lk.mobilevisions.kiki.audio.adapter.SongsAdapter;
 import lk.mobilevisions.kiki.audio.adapter.YouAlsoMightLikeVerticalAdapter;
+import lk.mobilevisions.kiki.audio.event.SearchNavigationEvent;
 import lk.mobilevisions.kiki.audio.event.UserNavigateBackEvent;
+import lk.mobilevisions.kiki.audio.fragment.ArtistDetailFragment;
 import lk.mobilevisions.kiki.audio.fragment.AudioHomeFragment;
 import lk.mobilevisions.kiki.audio.fragment.AudioSongsFragment;
 import lk.mobilevisions.kiki.audio.fragment.BrowseAllSongsFrangment;
 import lk.mobilevisions.kiki.audio.fragment.ComingSoonFragment;
 import lk.mobilevisions.kiki.audio.fragment.LibraryFragment;
+import lk.mobilevisions.kiki.audio.fragment.PlaylistDetailFragment;
 import lk.mobilevisions.kiki.audio.fragment.PlaylistFragment;
 import lk.mobilevisions.kiki.audio.fragment.ProgrammesFragment;
 import lk.mobilevisions.kiki.audio.fragment.RecentlyPlayedFragment;
+import lk.mobilevisions.kiki.audio.fragment.SearchedArtistFragment;
+import lk.mobilevisions.kiki.audio.fragment.SearchedPlaylistFragment;
+import lk.mobilevisions.kiki.audio.fragment.SearchedSongsFragment;
 import lk.mobilevisions.kiki.audio.model.PlaylistModel;
 import lk.mobilevisions.kiki.audio.model.dto.Artist;
 import lk.mobilevisions.kiki.audio.model.dto.Genre;
 import lk.mobilevisions.kiki.audio.model.dto.PlayList;
+import lk.mobilevisions.kiki.audio.model.dto.SearchResponse;
 import lk.mobilevisions.kiki.audio.model.dto.Song;
 import lk.mobilevisions.kiki.audio.player.AudioStreamingManager;
 import lk.mobilevisions.kiki.audio.player.CurrentSessionCallback;
@@ -120,7 +137,8 @@ import lk.mobilevisions.kiki.video.activity.VideoChildModeActivity;
 import lk.mobilevisions.kiki.video.activity.VideoDashboardActivity;
 import timber.log.Timber;
 
-public class AudioDashboardActivity extends BaseActivity implements CurrentSessionCallback, Slider.OnValueChangedListener, RecentlyPlayedVerticalAdapter.RecentlyPlayedItemActionListener, YouAlsoMightLikeVerticalAdapter.OnYouMightAlsoLikeItemActionListener, PopularSongsVerticalAdapter.OnPopularSongsItemActionListener, DiscreteScrollView.OnItemChangedListener, View.OnClickListener, PlaylistDialogAdapter.OnAudioPlaylistItemClickListener, SongsAdapter.OnAudioSongsItemClickListener, ArtistsVerticalAdapter.OnArtistsItemActionListener , AddSongToPlaylistDialogAdapter.OnPlaylistDialogItemClickListener {
+
+public class AudioDashboardActivity extends BaseActivity implements CurrentSessionCallback, Slider.OnValueChangedListener, RecentlyPlayedVerticalAdapter.RecentlyPlayedItemActionListener, YouAlsoMightLikeVerticalAdapter.OnYouMightAlsoLikeItemActionListener, PopularSongsVerticalAdapter.OnPopularSongsItemActionListener, DiscreteScrollView.OnItemChangedListener, View.OnClickListener, PlaylistDialogAdapter.OnAudioPlaylistItemClickListener, SongsAdapter.OnAudioSongsItemClickListener, ArtistsVerticalAdapter.OnArtistsItemActionListener, AddSongToPlaylistDialogAdapter.OnPlaylistDialogItemClickListener, ArtistListAdapter.OnArtistListItemActionListener, LatestPlaylistAdapter.OnLatestPlaylistItemClickListener {
 
 
     ActivityDashboadNewBinding binding;
@@ -166,6 +184,7 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
     private AlertDialog alertDialog;
     private int playlistId;
     List<Integer> songId = new ArrayList<>();
+    String searchKeyWord;
 
     private static final int VOICE_RECOGNITION_REQUEST_CODE = 1023;
     int songDuration;
@@ -175,8 +194,14 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
     AlertDialog selectPlaylistAlertDialog;
     final ArrayList<Integer> songIdsToCreatePlaylist = new ArrayList<>();
     SongsAdapter mAdapter;
+    ArtistListAdapter artistListAdapter;
+    LatestPlaylistAdapter playlistAdapter;
     LinearLayoutManager songsLayoutManager;
     List<Song> searchedSongsList = new ArrayList<>();
+    List<Artist> artistsArrayList = new ArrayList<>();
+    List<Artist> nArtistsArrayList = new ArrayList<>();
+    List<PlayList> playListArrayList = new ArrayList<>();
+    List<PlayList> nPlayListArrayList = new ArrayList<>();
     @Inject
     NotificationManager notificationManager;
     @Inject
@@ -294,6 +319,7 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
         changeNavigtionItemFont();
 
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+
         songsLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         binding.includeDashboard.searchSongsRecyclerview.setLayoutManager(songsLayoutManager);
         binding.includeDashboard.searchSongsRecyclerview.setHasFixedSize(true);
@@ -301,6 +327,23 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
         binding.includeDashboard.searchSongsRecyclerview.setDrawingCacheEnabled(true);
         mAdapter = new SongsAdapter(this, this);
         binding.includeDashboard.searchSongsRecyclerview.setAdapter(mAdapter);
+
+        songsLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        binding.includeDashboard.searchArtistRecyclerview.setLayoutManager(songsLayoutManager);
+        binding.includeDashboard.searchArtistRecyclerview.setHasFixedSize(true);
+        binding.includeDashboard.searchArtistRecyclerview.setItemViewCacheSize(1000);
+        binding.includeDashboard.searchArtistRecyclerview.setDrawingCacheEnabled(true);
+        artistListAdapter = new ArtistListAdapter(this,artistsArrayList,this);
+        binding.includeDashboard.searchArtistRecyclerview.setAdapter(artistListAdapter);
+
+        songsLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        binding.includeDashboard.searchPlaylistRecyclerview.setLayoutManager(songsLayoutManager);
+        binding.includeDashboard.searchPlaylistRecyclerview.setHasFixedSize(true);
+        binding.includeDashboard.searchPlaylistRecyclerview.setItemViewCacheSize(1000);
+        binding.includeDashboard.searchPlaylistRecyclerview.setDrawingCacheEnabled(true);
+        playlistAdapter = new LatestPlaylistAdapter(this,playListArrayList,this);
+        binding.includeDashboard.searchPlaylistRecyclerview.setAdapter(playlistAdapter);
+
         addPlaylistLayout = (RelativeLayout) findViewById(R.id.add_play_list_layout);
         cancelTextview = (TextView) findViewById(R.id.textView13);
         drawerImageView = (ImageView) findViewById(R.id.pro_pic_imageview);
@@ -401,6 +444,35 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
                 });
             }
         });
+        binding.includeDashboard.seeAllSongs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Application.BUS.post(new SearchNavigationEvent(searchKeyWord,"seeAllSongs"));
+                binding.includeDashboard.searchLayout.setVisibility(View.GONE);
+                binding.includeDashboard.searchview.setVisibility(View.GONE);
+
+            }
+        });
+        binding.includeDashboard.seeAllArtists.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Application.BUS.post(new SearchNavigationEvent(searchKeyWord,"seeAllArtists"));
+                binding.includeDashboard.searchLayout.setVisibility(View.GONE);
+                binding.includeDashboard.searchview.setVisibility(View.GONE);
+
+            }
+        });
+        binding.includeDashboard.seeAllPlaylists.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Application.BUS.post(new SearchNavigationEvent(searchKeyWord,"seeAllPlaylists"));
+                binding.includeDashboard.searchLayout.setVisibility(View.GONE);
+                binding.includeDashboard.searchview.setVisibility(View.GONE);
+
+
+            }
+        });
+
         binding.includeDashboard.createPlaylistButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -554,6 +626,8 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
 
             @Override
             public void onSearch(String string) {
+                searchKeyWord = string;
+                System.out.println("sjldsdjksdd " + searchKeyWord);
                 System.out.println("dnbdfbfhfhfn " + string);
                 searchSongs(string);
 
@@ -731,23 +805,97 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
     private void searchSongs(String text) {
         binding.includeDashboard.aviProgress.setVisibility(View.VISIBLE);
         binding.includeDashboard.noSongsTextView.setVisibility(View.GONE);
-        tvManager.getSearchedSongs(0, 200, text, new APIListener<List<Song>>() {
+        tvManager.getSearchedAll(text, new APIListener<SearchResponse>() {
             @Override
-            public void onSuccess(List<Song> songs, List<Object> params) {
+            public void onSuccess(SearchResponse response, List<Object> params) {
                 System.out.println("dhdhdhdhdhdh 000  ");
                 binding.includeDashboard.aviProgress.setVisibility(View.GONE);
                 binding.includeDashboard.searchLayout.setVisibility(View.VISIBLE);
                 searchedSongsList.clear();
-                if (songs.size() > 0) {
-                    binding.includeDashboard.searchSongsRecyclerview.setVisibility(View.VISIBLE);
-                    binding.includeDashboard.noSongsTextView.setVisibility(View.GONE);
+                if (response.getSongList().size() > 0) {
+                    binding.includeDashboard.searchSongsLayout.setVisibility(View.VISIBLE);
                 } else {
-                    binding.includeDashboard.searchSongsRecyclerview.setVisibility(View.GONE);
-                    binding.includeDashboard.noSongsTextView.setVisibility(View.VISIBLE);
+                    binding.includeDashboard.searchSongsLayout.setVisibility(View.GONE);
                 }
-                searchedSongsList.addAll(songs);
-                mAdapter.setData(songs);
-                System.out.println("dhdhFFdhdhdhdh 111  " + songs.size());
+                if (response.getSongList() !=null && response.getSongList().size() >=3){
+                for(int i = 0; i < 3; i++){
+                    searchedSongsList.add(response.getSongList().get(i));
+                   }
+                } else {
+                    if (response.getSongList() !=null && response.getSongList().size() <= 3){
+                        for(int i = 0; i < response.getSongList().size() ; i++){
+                            searchedSongsList.add(response.getSongList().get(i));
+                        }
+                    }
+                }
+                if (response.getSongList() != null && response.getSongList().size() <= 3){
+                    binding.includeDashboard.seeAllSongs.setVisibility(View.GONE);
+                } else {
+                    binding.includeDashboard.seeAllSongs.setVisibility(View.VISIBLE);
+                }
+
+//                searchedSongsList.addAll(response.getSongList());
+                mAdapter.setData(searchedSongsList);
+
+                nArtistsArrayList.clear();
+                artistsArrayList.clear();
+                if (response.getArtistList().size() > 0) {
+                    binding.includeDashboard.searchArtistLayout.setVisibility(View.VISIBLE);
+                } else {
+                    binding.includeDashboard.searchArtistLayout.setVisibility(View.GONE);
+                }
+                if (response.getArtistList() !=null && response.getArtistList().size() >= 3) {
+                    for (int i = 0; i < 3 ; i++) {
+                        nArtistsArrayList.add(response.getArtistList().get(i));
+                    }
+                } else {
+                    if (response.getArtistList() !=null && response.getArtistList().size() <= 3){
+                        for(int i = 0; i < response.getArtistList().size() ; i++){
+                            nArtistsArrayList.add(response.getArtistList().get(i));
+                            System.out.println("shdbhdcvh " + searchedSongsList.size());
+                        }
+                    }
+                }
+                if (response.getArtistList() != null && response.getArtistList().size() <= 3){
+                    binding.includeDashboard.seeAllArtists.setVisibility(View.GONE);
+                } else {
+                    binding.includeDashboard.seeAllArtists.setVisibility(View.VISIBLE);
+                }
+
+                artistListAdapter.setList(nArtistsArrayList);
+
+                nPlayListArrayList.clear();
+                playListArrayList.clear();
+                if (response.getPlaylistList().size() > 0) {
+                    binding.includeDashboard.searchPlaylistLayout.setVisibility(View.VISIBLE);
+                } else {
+                    binding.includeDashboard.searchPlaylistLayout.setVisibility(View.GONE);
+                }
+                if (response.getPlaylistList() !=null && response.getPlaylistList().size() >= 3) {
+                    for (int i = 0; i < 3 ; i++) {
+                        nPlayListArrayList.add(response.getPlaylistList().get(i));
+                    }
+                } else {
+                    if (response.getPlaylistList() !=null && response.getPlaylistList().size() <= 3){
+                        for(int i = 0; i < response.getPlaylistList().size() ; i++){
+                            nPlayListArrayList.add(response.getPlaylistList().get(i));
+                            System.out.println("shdbhdcvh " + searchedSongsList.size());
+                        }
+                    }
+                }
+                if (response.getPlaylistList() != null && response.getPlaylistList().size() <= 3){
+                    binding.includeDashboard.seeAllPlaylists.setVisibility(View.GONE);
+                } else {
+                    binding.includeDashboard.seeAllPlaylists.setVisibility(View.VISIBLE);
+                }
+
+                playlistAdapter.setList(nPlayListArrayList);
+
+                if (response.getSongList().size() == 0 && response.getArtistList().size() == 0 && response.getPlaylistList().size() == 0){
+                    binding.includeDashboard.noSongsTextView.setVisibility(View.VISIBLE);
+                } else {
+                    binding.includeDashboard.noSongsTextView.setVisibility(View.GONE);
+                }
             }
 
             @Override
@@ -755,8 +903,102 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
                 binding.includeDashboard.aviProgress.setVisibility(View.GONE);
                 System.out.println("dhdhdhdhdhdh 222  " + t.toString());
 
-            }
-        });
+            }});
+//        tvManager.getSearchArtistbyType( text, new APIListener<List<Artist>>() {
+//            @Override
+//            public void onSuccess(List<Artist> artists, List<Object> params) {
+//                System.out.println("dhdhdhdhdhdh 000  ");
+//                binding.includeDashboard.aviProgress.setVisibility(View.GONE);
+//                binding.includeDashboard.searchLayout.setVisibility(View.VISIBLE);
+//                artistsArrayList.clear();
+//                if (artists.size() > 0) {
+//                    binding.includeDashboard.searchArtistLayout.setVisibility(View.VISIBLE);
+//                    binding.includeDashboard.noSongsTextView.setVisibility(View.GONE);
+//                } else {
+//                    binding.includeDashboard.searchArtistLayout.setVisibility(View.GONE);
+//                    binding.includeDashboard.noSongsTextView.setVisibility(View.VISIBLE);
+//                }
+//                artistListAdapter.setList(artists);
+//            }
+//
+//            @Override
+//            public void onFailure(Throwable t) {
+//                binding.includeDashboard.aviProgress.setVisibility(View.GONE);
+//                System.out.println("dhdhdhdhdhdh 222  " + t.toString());
+//
+//            }
+//        });
+//        tvManager.getSearchPlaylistbyType( text, new APIListener<List<PlayList>>() {
+//            @Override
+//            public void onSuccess(List<PlayList> playLists, List<Object> params) {
+//                System.out.println("dhdhdhdhdhdh 000  ");
+//                binding.includeDashboard.aviProgress.setVisibility(View.GONE);
+//                binding.includeDashboard.searchLayout.setVisibility(View.VISIBLE);
+//                playListArrayList.clear();
+//                if (playLists.size() > 0) {
+//                    binding.includeDashboard.searchPlaylistLayout.setVisibility(View.VISIBLE);
+//                    binding.includeDashboard.noSongsTextView.setVisibility(View.GONE);
+//                } else {
+//                    binding.includeDashboard.searchPlaylistLayout.setVisibility(View.GONE);
+//                    binding.includeDashboard.noSongsTextView.setVisibility(View.VISIBLE);
+//                }
+//                playlistAdapter.setList(playLists);
+//            }
+//
+//            @Override
+//            public void onFailure(Throwable t) {
+//                binding.includeDashboard.aviProgress.setVisibility(View.GONE);
+//                System.out.println("dhdhdhdhdhdh 222  " + t.toString());
+//
+//            }
+//        });
+    }
+
+    @Override
+    public void onArtistListItemClick(Artist artist, int position, List<Artist> artistList) {
+        System.out.println("sjkdcadcadc 1111");
+        Bundle bundle=new Bundle();
+        bundle.putInt("artistID", artist.getId());
+        System.out.println("sjkdcadcadc 2222" + artist.getId());
+        bundle.putString("artistName", artist.getName());
+        bundle.putString("artistImage", artist.getImage());
+        bundle.putString("songCount", artist.getSongsCount());
+
+        ArtistDetailFragment artistDetailFragment = new ArtistDetailFragment();
+        artistDetailFragment.setArguments(bundle);
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frame_container_search_toArtist, artistDetailFragment, "Search to nArtistDetail")
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onAddArtistItemClick(Artist artist) {
+
+    }
+
+    @Override
+    public void onLatestPlaylistItemClick(PlayList playList, int position, List<PlayList> songs) {
+
+        Bundle bundle=new Bundle();
+        bundle.putInt("playlistID", playList.getId());
+        bundle.putString("playlistName", playList.getName());
+        bundle.putString("songCount", playList.getSongCount());
+        bundle.putString("playlistImage", playList.getImage());
+        bundle.putString("playlistYear", playList.getDate());
+
+        PlaylistDetailFragment playlistDetailFragment = new PlaylistDetailFragment();
+        playlistDetailFragment.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frame_container_search_toPlaylist, playlistDetailFragment, "Search to nPlaylistDetail")
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onAddPlaylistItemClick(PlayList song) {
+
     }
 
 //    private MaterialDialog createProgressDialog() {
@@ -1345,7 +1587,7 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
         for (Fragment fragment : getSupportFragmentManager().getFragments()) {
             if (fragment.getTag() != null) {
                 if (fragment.getTag().equals("you might like") || fragment.getTag().equals("popular songs") || fragment.getTag().equals("latest songs")
-                        || fragment.getTag().equals("Artists")|| fragment.getTag().equals("Home Artist Detail") || fragment.getTag().equals("Home Playlist Detail")
+                        || fragment.getTag().equals("Artists") || fragment.getTag().equals("Home Artist Detail") || fragment.getTag().equals("Home Playlist Detail")
                         || fragment.getTag().equals("Home to ArtistDetail") || fragment.getTag().equals("Home to PlaylistDetail")) {
                     super.onBackPressed();
                 }
@@ -1357,23 +1599,48 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
     public void onBackPressed() {
         Application.BUS.post(new UserNavigateBackEvent());
         if (binding.includeDashboard.searchview.isSearching()) {
-            binding.includeDashboard.searchview.closeSearch();
+
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            SearchedSongsFragment searchedSongsFragment = (SearchedSongsFragment) fragmentManager.findFragmentByTag("Search to ViewAllSongs");
+            SearchedArtistFragment searchedArtistFragment = (SearchedArtistFragment) fragmentManager.findFragmentByTag("Search to ViewAllArtists");
+            SearchedPlaylistFragment searchedPlaylistFragment = (SearchedPlaylistFragment) fragmentManager.findFragmentByTag("Search to ViewAllPlaylists");
+            ArtistDetailFragment artistDetailFragment = (ArtistDetailFragment) fragmentManager.findFragmentByTag("Search to nArtistDetail");
+            ArtistDetailFragment nArtistDetailFragment = (ArtistDetailFragment) fragmentManager.findFragmentByTag("SearchedArtistDetail");
+            PlaylistDetailFragment playlistDetailFragment = (PlaylistDetailFragment) fragmentManager.findFragmentByTag("Search to nPlaylistDetail");
+            PlaylistDetailFragment sPlaylistDetailFragment = (PlaylistDetailFragment) fragmentManager.findFragmentByTag("searchedPlaylistDetail");
+
+            if (searchedSongsFragment != null && searchedSongsFragment.isVisible() || searchedArtistFragment != null && searchedArtistFragment.isVisible()
+                    || searchedPlaylistFragment != null && searchedPlaylistFragment.isVisible() || artistDetailFragment != null && artistDetailFragment.isVisible()
+                    || playlistDetailFragment != null && playlistDetailFragment.isVisible() || sPlaylistDetailFragment != null && sPlaylistDetailFragment.isVisible()
+                    || nArtistDetailFragment != null && nArtistDetailFragment.isVisible()) {
+                binding.includeDashboard.searchview.setVisibility(View.VISIBLE);
+                binding.includeDashboard.searchLayout.setVisibility(View.VISIBLE);
+                fragmentManager.popBackStack();
+
+            } else {
+                binding.includeDashboard.searchview.closeSearch();
+            }
+
+
         } else {
             if (isExpand) {
+
                 binding.slidingLayout.setPanelState(SlidingUpPanelLayoutOne.PanelState.COLLAPSED);
             } else if (addPlaylistLayout.getVisibility() == View.VISIBLE) {
+
                 addPlaylistLayout.startAnimation(animHide);
                 addPlaylistLayout.setVisibility(View.GONE);
             } else if (addPlaylistLayout.getVisibility() == View.VISIBLE) {
+
                 addPlaylistLayout.startAnimation(animShow);
                 addPlaylistLayout.setVisibility(View.VISIBLE);
             } else {
+
                 FragmentManager fragmentManager = getSupportFragmentManager();
 
                 RecentlyPlayedFragment recentlyPlayedFragment = (RecentlyPlayedFragment) fragmentManager.findFragmentByTag("recently played");
                 ProgrammesFragment programmesFragment = (ProgrammesFragment) fragmentManager.findFragmentByTag("programes");
                 if (recentlyPlayedFragment != null && recentlyPlayedFragment.isVisible()) {
-
                     fragmentManager.popBackStack();
                     titleTextview.setText("Home");
                 } else if (programmesFragment != null && programmesFragment.isVisible()) {
@@ -1381,6 +1648,7 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
                     titleTextview.setText("Channel");
                 } else {
                     System.out.println("rfjrjffiorfjiorfjiof 2222 ");
+
                     super.onBackPressed();
                 }
 
@@ -1515,7 +1783,7 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
         Song currentSong = streamingManager.getCurrentAudio();
         if (currentSong != null) {
             String curntSongId = String.valueOf(currentSong.getId());
-            analyticsManager.sendActionAnalytics(9,16, action, currentSongTime, new APIListener() {
+            analyticsManager.sendActionAnalytics(9, 16, action, currentSongTime, new APIListener() {
                 @Override
                 public void onSuccess(Object result, List params) {
 //                    System.out.println("sdkbvhasaassdhbv " + currentSongTime);
@@ -1535,7 +1803,7 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
         Song currentSong = streamingManager.getCurrentAudio();
         if (currentSong != null) {
             String curntSongId = String.valueOf(currentSong.getId());
-            analyticsManager.publishActionAnalytics(curntSongId ,action ,currentSongTime, new APIListener() {
+            analyticsManager.publishActionAnalytics(curntSongId, action, currentSongTime, new APIListener() {
                 @Override
                 public void onSuccess(Object result, List params) {
                     System.out.println("sdhgadhbsschadbc " + action);
@@ -1644,27 +1912,27 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
         binding.includeSlidingPanelChildtwo.songPicker.smoothScrollToPosition(songPosition);
         showSongInfo(currentAudio);
 
-if(currentAudio.getUrl()!=null && currentAudio.getUrl().contains("radio")){
-    binding.includeSlidingPanelChildtwo.audioProgressControl.setVisibility(View.GONE);
-    binding.includeSlidingPanelChildtwo.threeDots.setVisibility(View.GONE);
-    binding.includeSlidingPanelChildtwo.audioForwardImageview.setVisibility(View.GONE);
-    binding.includeSlidingPanelChildtwo.audioRewindImageview.setVisibility(View.GONE);
-    binding.includeSlidingPanelChildtwo.audioRepeatImageview.setVisibility(View.GONE);
-    binding.includeSlidingPanelChildtwo.audioReplyImageview.setVisibility(View.GONE);
-    binding.includeSlidingPanelChildtwo.audioSuffleImageview.setVisibility(View.GONE);
-    binding.includeSlidingPanelChildtwo.songDurationTextview.setVisibility(View.GONE);
-    binding.includeSlidingPanelChildtwo.songPositionTextview.setVisibility(View.GONE);
-} else {
-    binding.includeSlidingPanelChildtwo.audioProgressControl.setVisibility(View.VISIBLE);
-    binding.includeSlidingPanelChildtwo.threeDots.setVisibility(View.VISIBLE);
-    binding.includeSlidingPanelChildtwo.audioForwardImageview.setVisibility(View.VISIBLE);
-    binding.includeSlidingPanelChildtwo.audioRewindImageview.setVisibility(View.VISIBLE);
-    binding.includeSlidingPanelChildtwo.audioRepeatImageview.setVisibility(View.VISIBLE);
+        if (currentAudio.getUrl() != null && currentAudio.getUrl().contains("radio")) {
+            binding.includeSlidingPanelChildtwo.audioProgressControl.setVisibility(View.GONE);
+            binding.includeSlidingPanelChildtwo.threeDots.setVisibility(View.GONE);
+            binding.includeSlidingPanelChildtwo.audioForwardImageview.setVisibility(View.GONE);
+            binding.includeSlidingPanelChildtwo.audioRewindImageview.setVisibility(View.GONE);
+            binding.includeSlidingPanelChildtwo.audioRepeatImageview.setVisibility(View.GONE);
+            binding.includeSlidingPanelChildtwo.audioReplyImageview.setVisibility(View.GONE);
+            binding.includeSlidingPanelChildtwo.audioSuffleImageview.setVisibility(View.GONE);
+            binding.includeSlidingPanelChildtwo.songDurationTextview.setVisibility(View.GONE);
+            binding.includeSlidingPanelChildtwo.songPositionTextview.setVisibility(View.GONE);
+        } else {
+            binding.includeSlidingPanelChildtwo.audioProgressControl.setVisibility(View.VISIBLE);
+            binding.includeSlidingPanelChildtwo.threeDots.setVisibility(View.VISIBLE);
+            binding.includeSlidingPanelChildtwo.audioForwardImageview.setVisibility(View.VISIBLE);
+            binding.includeSlidingPanelChildtwo.audioRewindImageview.setVisibility(View.VISIBLE);
+            binding.includeSlidingPanelChildtwo.audioRepeatImageview.setVisibility(View.VISIBLE);
 //    binding.includeSlidingPanelChildtwo.audioReplyImageview.setVisibility(View.VISIBLE);
-    binding.includeSlidingPanelChildtwo.audioSuffleImageview.setVisibility(View.VISIBLE);
-    binding.includeSlidingPanelChildtwo.songDurationTextview.setVisibility(View.VISIBLE);
-    binding.includeSlidingPanelChildtwo.songPositionTextview.setVisibility(View.VISIBLE);
-}
+            binding.includeSlidingPanelChildtwo.audioSuffleImageview.setVisibility(View.VISIBLE);
+            binding.includeSlidingPanelChildtwo.songDurationTextview.setVisibility(View.VISIBLE);
+            binding.includeSlidingPanelChildtwo.songPositionTextview.setVisibility(View.VISIBLE);
+        }
 
         if (listOfSongs.size() == 1) {
             binding.includeSlidingPanelChildtwo.audioForwardImageview.setBackgroundResource(R.drawable.audio_forward_inactive);
@@ -1750,6 +2018,7 @@ if(currentAudio.getUrl()!=null && currentAudio.getUrl().contains("radio")){
         listOfSongs = songs;
         streamingManager.setMediaList(listOfSongs);
     }
+
     public void genreSongFragmentSongClickedEvent(Song song, int position, List<Song> songs) {
         shouldBottomPlayerPlay = false;
         itemEventClicked = true;
@@ -1761,6 +2030,39 @@ if(currentAudio.getUrl()!=null && currentAudio.getUrl().contains("radio")){
         }
         listOfSongs = songs;
         streamingManager.setMediaList(listOfSongs);
+    }
+
+    public void setNotifcationSong(Song song, int position, List<Song> songs) {
+        listOfSongs = new ArrayList<Song>();
+        songPosition = 0;
+        if (listOfSongs.size() <= 0) {
+            listOfSongs.add(song);
+            songAdapter = new SongAdapter(listOfSongs, null);
+            binding.includeSlidingPanelChildtwo.songPicker.setAdapter(songAdapter);
+        }
+        streamingManager.setMediaList(listOfSongs);
+        binding.slidingLayout.setEnabled(true);
+        binding.slidingLayout.setClickable(true);
+        binding.slidingLayout.setPanelState(SlidingUpPanelLayoutOne.PanelState.EXPANDED);
+        binding.includeSlidingPanelChildtwo.aviProgress.setVisibility(View.GONE);
+        binding.includeSlidingPanelChildtwo.audioPlayPauseImageview.setBackgroundResource(R.drawable.audio_play);
+        binding.includeSlidingPanelChildtwo.audioForwardImageview.setBackgroundResource(R.drawable.audio_forward_inactive);
+        binding.includeSlidingPanelChildtwo.audioRewindImageview.setBackgroundResource(R.drawable.audio_rewind_inactive);
+//        binding.includeSlidingPanelChildtwo.audioRewindImageview.setVisibility(View.VISIBLE);
+//        binding.includeSlidingPanelChildtwo.audioForwardImageview.setVisibility(View.VISIBLE);
+//        binding.includeSlidingPanelChildtwo.audioPlayPauseImageview.setVisibility(View.VISIBLE);
+
+
+//        shouldBottomPlayerPlay = false;
+//        itemEventClicked = true;
+//        listOfSongs = new ArrayList<Song>();
+//        songPosition = position;
+//        if (listOfSongs.size() <= 0) {
+//            songAdapter = new SongAdapter(songs, null);
+//            binding.includeSlidingPanelChildtwo.songPicker.setAdapter(songAdapter);
+//        }
+//        listOfSongs = songs;
+//        streamingManager.setMediaList(listOfSongs);
     }
 //    public void browseAllClickedEvent(Genre genre, int position, List<Genre> genres) {
 //        shouldBottomPlayerPlay = false;
@@ -2057,9 +2359,10 @@ if(currentAudio.getUrl()!=null && currentAudio.getUrl().contains("radio")){
         });
 
     }
-    private void addDataToLibrary(Song song){
 
-        tvManager.addDataToLibraryHash("S",songId, new APIListener<Void>() {
+    private void addDataToLibrary(Song song) {
+
+        tvManager.addDataToLibraryHash("S", songId, new APIListener<Void>() {
             @Override
             public void onSuccess(Void result, List<Object> params) {
 
@@ -2089,7 +2392,7 @@ if(currentAudio.getUrl()!=null && currentAudio.getUrl().contains("radio")){
         RecyclerView recyclerView = (RecyclerView) alertDialog.findViewById(R.id.addSongToPlaylistRecycle);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        AddSongToPlaylistDialogAdapter adapter = new AddSongToPlaylistDialogAdapter(this,playLists, (AddSongToPlaylistDialogAdapter.OnPlaylistDialogItemClickListener) AudioDashboardActivity.this);
+        AddSongToPlaylistDialogAdapter adapter = new AddSongToPlaylistDialogAdapter(this, playLists, (AddSongToPlaylistDialogAdapter.OnPlaylistDialogItemClickListener) AudioDashboardActivity.this);
         recyclerView.setAdapter(adapter);
 
         TextView songTitle = (TextView) alertDialog.findViewById(R.id.add_to_playlist_text);
@@ -2129,12 +2432,12 @@ if(currentAudio.getUrl()!=null && currentAudio.getUrl().contains("radio")){
     public void onPlaylistDialogItemClick(PlayList playList, int position, List<PlayList> songs) {
 
         playlistId = playList.getId();
-        addSongToPlaylist(playlistId,songId);
+        addSongToPlaylist(playlistId, songId);
         alertDialog.dismiss();
 
     }
 
-    private void addSongToPlaylist(int playlistId, List<Integer> songIdList ) {
+    private void addSongToPlaylist(int playlistId, List<Integer> songIdList) {
 
         tvManager.addSongsToPlaylist(playlistId, songIdList, new APIListener<Void>() {
             @Override
@@ -2290,11 +2593,11 @@ if(currentAudio.getUrl()!=null && currentAudio.getUrl().contains("radio")){
             @Override
             public void onSuccess(List<Song> songs, List<Object> params) {
                 System.out.println("rfjfjfjfjfjfj 222 " + songs.size());
-                if(songs.size()>0){
+                if (songs.size() > 0) {
                     if (songAdapter != null) {
                         listOfSongs.addAll(songs);
                         streamingManager.setMediaList(listOfSongs);
-                        songAdapter.notifyItemRangeInserted(offset,songs.size());
+                        songAdapter.notifyItemRangeInserted(offset, songs.size());
                     }
 
                 }
@@ -2314,11 +2617,11 @@ if(currentAudio.getUrl()!=null && currentAudio.getUrl().contains("radio")){
         tvManager.getGenreSongs(offset, 8, genre, new APIListener<List<Song>>() {
             @Override
             public void onSuccess(List<Song> songs, List<Object> params) {
-                if(songs.size()>0){
+                if (songs.size() > 0) {
                     if (songAdapter != null) {
                         listOfSongs.addAll(songs);
                         streamingManager.setMediaList(listOfSongs);
-                        songAdapter.notifyItemRangeInserted(offset,songs.size());
+                        songAdapter.notifyItemRangeInserted(offset, songs.size());
                     }
 
                 }
@@ -2336,9 +2639,7 @@ if(currentAudio.getUrl()!=null && currentAudio.getUrl().contains("radio")){
     public void onArtistsPlayAction(Artist artist, int position, List<Artist> artistList) {
 
 
-
     }
-
 
     public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder> {
 
@@ -2385,7 +2686,6 @@ if(currentAudio.getUrl()!=null && currentAudio.getUrl().contains("radio")){
                     e.printStackTrace();
                 }
             }
-
 
 
         }

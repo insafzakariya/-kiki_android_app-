@@ -28,9 +28,17 @@
     <string name="subscribe_to_watch">නැරඹීමට - සබ්ස්ක්‍රයිබ් කරන්න</string>
     <string name="subscribe_to_listen">සවන්දීමට - සබ්ස්ක්‍රයිබ් කරන්න</string>
     <string name="subscribe_greetings">Kiki වෙතින් පමණක් ලබා ගත හැකි දේ සඳහා ප්‍රවේශය විවෘත කරගැනීමට කරුණාකර පැකේජයක් සක්‍රිය කරගන්න</string>
-    <string name="subscribe_now">දැන් සබ්ස්ක්‍රයිබ් කරන්න</string>
+    <string name="subscribe_now">සබ්ස්ක්‍රයිබ් කරන්න</string>
     <string name="go_back">ආපසු යන්න</string>
-    <string name="cancel">අවලංගු කිරීම</string>
+    <string name="cancel">අවලංගු කරන්න</string>
+    <string name="child_mode_act">දරුවන්ට අදාල වැඩසටහන් සක්‍රීය විය</string>
+    <string name="child_mode_deact">දරුවන්ට අදාල වැඩසටහන් අක්‍රීය විය</string>
+    <string name="child_mode_act_pass">දරුවන්ට අදාල වැඩසටහන් ක්‍රියාත්මක කිරීමට මුරපදය යොදන්න</string>
+    <string name="child_mode_deact_pass">දරුවන්ට අදාල වැඩසටහන් අක්‍රීය කිරීමට මුරපදය යොදන්න</string>
+    <string name="no_subscribed_programs">No subscribed programs available. Please subscribe to your favorite programs from Mobile TV.</string>
+    <string name="create_an_account_login">ගිණුමක් සකසන්න</string>
+
+
     //Error messages
     <string name="email_cannot_be_empty">Email හිස් විය නොහැක</string>
     <string name="username_and_password_cannot_be_empty">පරිශීලක නාමය සහ මුරපදය හිස් විය නොහැක.</string>
@@ -44,20 +52,20 @@
     <string name="user_already_registerd">මේ නාමය දැනටමත් ලියාපදිංචි කර ඇත.</string>
     <string name="invalid_mobile_number">අවලංගු දුරකථන අංකයක්. කරුණාකර වලංගු දුරකථන අංකයක් ඇතුලත් කරන්න.</string>
     <string name="network_problem_message">අන්තර්ජාලයට සම්බන්ධවිය නොහැක. කරුණාකර ඔබේ අන්තර්ජාල සබඳතාව පිරික්ෂා කරන්න.</string>
-    <string name="forgot_password">මුරපදය අමතක කරන්න?</string>
+    <string name="forgot_password">මුරපදය අමතකද?</string>
 
     //Music
     <string name="popular_songs">ජනප්‍රිය ගීත</string>
     <string name="latest_songs">අලුත්ම ගීත</string>
     <string name="radio_channel">රේඩියෝ චැනල්</string>
     <string name="popular_artists">ජනප්‍රිය ගායකයෝ</string>
-    <string name="latest_playlist">අලුත්ම ගීත එකතු</string>
+    <string name="latest_playlist">නවතම ගීත එකතු</string>
     <string name="view_all">සියල්ල බලන්න</string>
     <string name="home">ප්‍රධාන පිටුව</string>
     <string name="browse">සොයන්න</string>
     <string name="library">මගේ එකතුව</string>
     <string name="add">එකතු කරන්න</string>
-    <string name="genre_wise">ගීත ශානර</string>
+    <string name="genre_wise">ගීත වර්ගය</string>
     <string name="artist_wise">ගායක ගායිකාවන්</string>
     <string name="song">ගීතය</string>
     <string name="songs">ගීතය</string>
@@ -66,14 +74,19 @@
     <string name="playlists">ගීත එකතු</string>
     <string name="playlist">ගීත එකතු</string>
     <string name="your_playlist">ඔබේ ගීත එකතු</string>
-    <string name="add_to_library">මගේ එකතුවට එකතු කරන්න</string>
-    <string name="add_to_playlist">ගීත එකතුවට එකතු කරන්න ></string>
-    <string name="add_to_playlist_2">ගීත එකතුවට එකතු කරන්න</string>
-    <string name="kiki_playlist">කිකී ගීත එකතුව</string>
+    <string name="add_to_library">මගේ එකතුවට එක් කරන්න</string>
+    <string name="add_to_playlist">ගීත එකතුවට එක් කරන්න ></string>
+    <string name="add_to_playlist_2">ගීත එකතුවට එක් කරන්න</string>
+    <string name="kiki_playlist">Kiki ගීත එකතුව</string>
     <string name="genre">ගීත ශානර</string>
-    <string name="added_to_playlist">ගීත ගොනුවට එකතු කරන ලදී</string>
-    <string name="no_playlist_found">ගීත එකතුවක් සොයාගැනීමට නැත</string>
+    <string name="added_to_playlist">ගීත එකතුවට එකතු කරන ලදී</string>
+    <string name="no_playlist_found">ගීත එකතුවක් සොයාගැනීමට නොමැත</string>
     <string name="added_to_library">මගේ එකතුවට එකතු කරන ලදී</string>
     <string name="play_2">වාදනය</string>
+    <string name="listen_to_fav">ප්‍රියතම ගීත ශ්‍රවණය කරන්න</string>
+    <string name="yes">ඔව්</string>
+    <string name="remove_this_from_library">මෙය ඔබේ එකතුවෙන් ඉවත් කළ යුතු ද?</string>
+    <string name="music_confirm">සනාථ කරන්න</string>
+    <string name="music_edit">සංස්කරණය කරන්න</string>
 
 </resources>

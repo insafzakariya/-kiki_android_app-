@@ -23,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingStart="@dimen/_12sdp"
-                android:text="Do you want to remove this from library?"
+                android:text="@string/remove_this_from_library"
                 android:textColor="@color/md_white_1000"
                 android:textSize="@dimen/_14sdp"
                 android:layout_marginBottom="@dimen/_4sdp"/>
@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:lineSpacingExtra="5sp"
-                android:text="Yes"
+                android:text="@string/yes"
                 android:paddingStart="@dimen/_25sdp"
                 android:paddingEnd="@dimen/_25sdp"
                 android:paddingTop="@dimen/_4sdp"

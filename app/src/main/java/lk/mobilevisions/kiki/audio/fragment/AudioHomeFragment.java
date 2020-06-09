@@ -40,6 +40,7 @@ import lk.mobilevisions.kiki.audio.adapter.PopularSongsVerticalAdapter;
 import lk.mobilevisions.kiki.audio.adapter.RadioChannelVerticalAdapter;
 import lk.mobilevisions.kiki.audio.adapter.RecentlyPlayedVerticalAdapter;
 import lk.mobilevisions.kiki.audio.adapter.YouAlsoMightLikeVerticalAdapter;
+import lk.mobilevisions.kiki.audio.event.SearchNavigationEvent;
 import lk.mobilevisions.kiki.audio.event.UserNavigateBackEvent;
 import lk.mobilevisions.kiki.audio.model.dto.Artist;
 import lk.mobilevisions.kiki.audio.model.dto.DailyMix;
@@ -124,7 +125,7 @@ public class AudioHomeFragment extends Fragment implements DailyMixAdapter.Daily
         setDataToRadioChannel();
         setDataToArtists();
 
-//        Application.BUS.register(this);
+        Application.BUS.register(this);
 
         binding.seeAllRecentlyPlayed.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -237,9 +238,7 @@ public class AudioHomeFragment extends Fragment implements DailyMixAdapter.Daily
                                 .replace(R.id.frame_container_home_playlist_detail, playlistDetailFragment, "Notify to PlaylistDetail")
                                 .addToBackStack(null)
                                 .commit();
-
                     }
-
                     @Override
                     public void onFailure(Throwable t) {
                         Utils.Error.onServiceCallFail(getActivity(), t);
@@ -263,6 +262,26 @@ public class AudioHomeFragment extends Fragment implements DailyMixAdapter.Daily
                                 .replace(R.id.frame_container_artist_detail_playlist, artistDetailFragment, "Notify to ArtistDetail")
                                 .addToBackStack(null)
                                 .commit();
+                    }
+
+                    @Override
+                    public void onFailure(Throwable t) {
+                        Utils.Error.onServiceCallFail(getActivity(), t);
+                    }
+                });
+
+            }else if (programType.equals("1") && contentType.equals("songid")){
+
+                tvManager.getSongWithID(contentId, new APIListener <Song>() {
+                    @Override
+                    public void onSuccess(Song song, List<Object> params) {
+
+                        System.out.println("sjnfsjkbfv 1111" + song.getId());
+                        List<Song> songsList = new ArrayList<>();
+                        songsList.add(song);
+
+                        AudioDashboardActivity hhh = (AudioDashboardActivity) getActivity();
+                        hhh.setNotifcationSong(song , 0,songsList);
 
                     }
 
@@ -273,6 +292,7 @@ public class AudioHomeFragment extends Fragment implements DailyMixAdapter.Daily
                 });
 
             }
+
         }
 
 
@@ -677,7 +697,11 @@ public class AudioHomeFragment extends Fragment implements DailyMixAdapter.Daily
 
 
                         } else {
-                            subscriptionDialog();
+                            try {
+                                subscriptionDialog();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
 
                         }
 
@@ -740,11 +764,50 @@ public class AudioHomeFragment extends Fragment implements DailyMixAdapter.Daily
                 .commit();
 
     }
-//    @Subscribe
-//    public void onUserNavigateBack(UserNavigateBackEvent event) {
-//
-//        checkSubscription();
-//        setDataToLatestSongs();
-//        setDataToPopularSongs();
-//    }
+    @Subscribe
+    public void onSearchNavigateEvent(SearchNavigationEvent event) {
+
+        String searchKeyWord = event.getmSearchKey();
+        String searchType = event.getMtype();
+
+        if (searchType.equals("seeAllSongs")) {
+
+            Bundle bundle = new Bundle();
+            bundle.putString("searchKey", searchKeyWord);
+            System.out.println("ksjhbsdjhkb " + searchKeyWord);
+
+            SearchedSongsFragment searchedSongsFragment = new SearchedSongsFragment();
+            searchedSongsFragment.setArguments(bundle);
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.frame_container_search_toSeeAllSongs, searchedSongsFragment, "Search to ViewAllSongs")
+                    .addToBackStack(null)
+                    .commit();
+        }
+        if (searchType.equals("seeAllArtists")) {
+
+            Bundle bundle=new Bundle();
+            bundle.putString("searchKey", searchKeyWord);
+
+            SearchedArtistFragment searchedArtistFragment = new SearchedArtistFragment();
+            searchedArtistFragment.setArguments(bundle);
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.frame_container_search_toSeeAllArtist, searchedArtistFragment, "Search to ViewAllArtists")
+                    .addToBackStack(null)
+                    .commit();
+        }
+        if (searchType.equals("seeAllPlaylists")) {
+
+            Bundle bundle=new Bundle();
+            bundle.putString("searchKey", searchKeyWord);
+            System.out.println("sdjkbfsdjhbv " + searchKeyWord);
+            SearchedPlaylistFragment searchedPlaylistFragment = new SearchedPlaylistFragment();
+            searchedPlaylistFragment.setArguments(bundle);
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.frame_container_search_toSeeAllPlaylist, searchedPlaylistFragment, "Search to ViewAllPlaylists")
+                    .addToBackStack(null)
+                    .commit();
+        }
+
+
+    }
     }
