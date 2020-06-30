@@ -67,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:lineSpacingExtra="5sp"
-                android:text="No"
+                android:text="@string/no"
                 android:background="@drawable/genre_background"
                 android:backgroundTint="@color/colorPrimary"
                 android:textColor="@color/md_white_1000"

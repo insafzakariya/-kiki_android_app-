@@ -65,7 +65,7 @@ public class YouAlsoMightLikeVerticalAdapter extends
         final Song current = youMightAlsoLikeList.get(pos);
 
         holder.titleTextView.setText(current.getName());
-        holder.descriptionTextView.setText(current.getDescription());
+        holder.descriptionTextView.setText(current.getArtistName());
         try {
             Picasso.with(context).load(URLDecoder.decode(current.getImage(), "UTF-8"))
                     .placeholder(R.drawable.program)

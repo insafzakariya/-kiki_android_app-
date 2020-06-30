@@ -203,7 +203,7 @@ public class AudioHomeFragment extends Fragment implements DailyMixAdapter.Daily
         popularSongsVerticalAdapter.setOnPopularSongsItemActionListener(popularSongsItemActionListener);
         latestSongsVerticalAdapter = LatestSongsVerticalAdapter.getInstance(context);
         latestSongsVerticalAdapter.setLatestSongsrActionListener(latestSongsItemActionListener);
-            radioChannelVerticalAdapter = RadioChannelVerticalAdapter.getInstance(context);
+        radioChannelVerticalAdapter = RadioChannelVerticalAdapter.getInstance(context);
         radioChannelVerticalAdapter.setRadioChannelItemActionListener(radioChannelItemActionListener);
 
 

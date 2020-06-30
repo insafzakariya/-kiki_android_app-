@@ -213,7 +213,7 @@ private void searchSongs(String text) {
     System.out.println("searchsize 222 " + text);
     binding.aviProgress.setVisibility(View.VISIBLE);
 //    binding.noSongsTextView.setVisibility(View.GONE);
-    tvManager.getSearchedSongs(0, 100, text, new APIListener<List<Song>>() {
+    tvManager.getSearchSongsbyType(0, 100, text, new APIListener<List<Song>>() {
         @Override
         public void onSuccess(List<Song> result, List<Object> params) {
 //            searchSongsList.clear();

@@ -77,7 +77,7 @@
     <string name="add_to_library">මගේ එකතුවට එක් කරන්න</string>
     <string name="add_to_playlist">ගීත එකතුවට එක් කරන්න ></string>
     <string name="add_to_playlist_2">ගීත එකතුවට එක් කරන්න</string>
-    <string name="kiki_playlist">Kiki ගීත එකතුව</string>
+    <string name="kiki_playlist">කිකී ගීත එකතුව</string>
     <string name="genre">ගීත ශානර</string>
     <string name="added_to_playlist">ගීත එකතුවට එකතු කරන ලදී</string>
     <string name="no_playlist_found">ගීත එකතුවක් සොයාගැනීමට නොමැත</string>
@@ -85,8 +85,10 @@
     <string name="play_2">වාදනය</string>
     <string name="listen_to_fav">ප්‍රියතම ගීත ශ්‍රවණය කරන්න</string>
     <string name="yes">ඔව්</string>
+    <string name="no">නැත</string>
     <string name="remove_this_from_library">මෙය ඔබේ එකතුවෙන් ඉවත් කළ යුතු ද?</string>
     <string name="music_confirm">සනාථ කරන්න</string>
     <string name="music_edit">සංස්කරණය කරන්න</string>
+    <string name="no_search_found">සෙවුම් ප්‍රතිපලයක් සොයා ගැනීමට නැත.</string>
 
 </resources>

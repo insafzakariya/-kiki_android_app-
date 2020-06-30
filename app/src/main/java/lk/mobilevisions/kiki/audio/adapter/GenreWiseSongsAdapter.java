@@ -67,7 +67,7 @@ public class GenreWiseSongsAdapter extends
 
         final Song current = mArrayList.get(pos);
         holder.songTitleTextview.setText(current.getName());
-        holder.descriptionTextView.setText(current.getDescription());
+        holder.descriptionTextView.setText(current.getArtistName());
         holder.songDuration.setText(NavigationUtils.convertMinutesToFormat(current.getDuration()));
 
         try {

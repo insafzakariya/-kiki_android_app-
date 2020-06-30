@@ -24,7 +24,7 @@
 
 
 
-                    <View
+                    <RelativeLayout
                         android:id="@+id/view_search_tint"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -32,11 +32,33 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginTop="@dimen/_38sdp"
                         android:visibility="gone"
-                        app:layout_constraintTop_toBottomOf="@+id/searchview"
-                        android:background="#88000000"
+                        android:background="#000000"
                         android:alpha="0.0"
-                        android:layerType="hardware"/>
+                        android:layerType="hardware">
+
+                        <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+                            android:id="@+id/searchSug"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_gravity="center_vertical"
+                            android:text="Recent search"
+                            android:textColor="@color/md_white_1000"
+                            android:textSize="@dimen/_15sdp"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:layout_marginTop="@dimen/_5sdp"/>
+
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recent_search_recyclerview"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/searchSug"
+                            android:layout_marginTop="@dimen/_3sdp"/>
+
+                    </RelativeLayout>
 
 
                         <lk.mobilevisions.kiki.audio.widgets.PersistentSearchView
@@ -46,18 +68,17 @@
                             android:layout_alignParentLeft="true"
                             android:layout_alignParentTop="true"
                             android:elevation="6dp"
-                            android:background="@color/md_black_999"
                             android:visibility="gone"
                             app:persistentSV_displayMode="menuItem"
-                            app:persistentSV_searchTextColor="#DE000000"
-                            app:persistentSV_editTextColor="#DE000000"
-                            app:persistentSV_editHintText="Search"
-                            app:cardBackgroundColor="#ffffff"
+                            app:persistentSV_searchTextColor="@color/md_black_1000"
+                            app:persistentSV_editTextColor="@color/md_black_1000"
+                            app:persistentSV_editHintText="Search by songs, playlists and artists"
+                            app:cardBackgroundColor="@color/md_black_1000"
                             app:persistentSV_homeButtonMode="arrow"
-                            app:persistentSV_editHintTextColor="#61000000"
+                            app:persistentSV_editHintTextColor="@color/md_black_1000"
                             app:persistentSV_searchCardElevation="4dp"
                             app:layout_constraintTop_toBottomOf="@+id/toolbar"
-                            app:persistentSV_homeButtonColor="#000000"
+                            app:persistentSV_homeButtonColor="@color/md_black_1000"
                             app:persistentSV_customToolbarHeight="56dp"/>
 
 
@@ -133,6 +154,7 @@
                         android:id="@+id/searchSongsLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:visibility="gone"
                         android:layout_marginBottom="@dimen/_7sdp">
 
                         <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
@@ -175,6 +197,7 @@
                             android:layout_below="@id/searchSongsLayout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:visibility="gone"
                             android:layout_marginBottom="@dimen/_7sdp">
 
                             <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
@@ -217,6 +240,7 @@
                             android:layout_below="@id/searchArtistLayout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:visibility="gone"
                             android:layout_marginBottom="@dimen/_2sdp">
 
                             <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
@@ -266,7 +290,7 @@
                             android:visibility="gone"
                             android:layout_centerInParent="true"
                             android:layout_marginTop="8dp"
-                            android:text="No Songs Available"
+                            android:text="@string/no_search_found"
                             android:textColor="@color/md_white_1000"/>
 
                     </RelativeLayout>

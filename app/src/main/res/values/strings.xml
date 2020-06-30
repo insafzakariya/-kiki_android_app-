@@ -184,9 +184,11 @@
     <string name="added_to_library">Added to library</string>
     <string name="listen_to_fav">listen to your favorites</string>
     <string name="yes">Yes</string>
+    <string name="no">No</string>
     <string name="remove_this_from_library">Do you want to remove this from library?</string>
     <string name="music_confirm">Confirm</string>
     <string name="music_edit">Edit</string>
+    <string name="no_search_found">No search results found.</string>
 
     <string name="play_2">Play</string>
     <string name="play_random">Play Random</string>

@@ -91,6 +91,7 @@ import lk.mobilevisions.kiki.audio.adapter.LatestPlaylistAdapter;
 import lk.mobilevisions.kiki.audio.adapter.PlaylistDialogAdapter;
 import lk.mobilevisions.kiki.audio.adapter.PopularSongsVerticalAdapter;
 import lk.mobilevisions.kiki.audio.adapter.RecentlyPlayedVerticalAdapter;
+import lk.mobilevisions.kiki.audio.adapter.SearchSuggestionAdapter;
 import lk.mobilevisions.kiki.audio.adapter.SongsAdapter;
 import lk.mobilevisions.kiki.audio.adapter.YouAlsoMightLikeVerticalAdapter;
 import lk.mobilevisions.kiki.audio.event.SearchNavigationEvent;
@@ -137,8 +138,11 @@ import lk.mobilevisions.kiki.video.activity.VideoChildModeActivity;
 import lk.mobilevisions.kiki.video.activity.VideoDashboardActivity;
 import timber.log.Timber;
 
+import static com.androidquery.util.AQUtility.getContext;
 
-public class AudioDashboardActivity extends BaseActivity implements CurrentSessionCallback, Slider.OnValueChangedListener, RecentlyPlayedVerticalAdapter.RecentlyPlayedItemActionListener, YouAlsoMightLikeVerticalAdapter.OnYouMightAlsoLikeItemActionListener, PopularSongsVerticalAdapter.OnPopularSongsItemActionListener, DiscreteScrollView.OnItemChangedListener, View.OnClickListener, PlaylistDialogAdapter.OnAudioPlaylistItemClickListener, SongsAdapter.OnAudioSongsItemClickListener, ArtistsVerticalAdapter.OnArtistsItemActionListener, AddSongToPlaylistDialogAdapter.OnPlaylistDialogItemClickListener, ArtistListAdapter.OnArtistListItemActionListener, LatestPlaylistAdapter.OnLatestPlaylistItemClickListener {
+
+public class AudioDashboardActivity extends BaseActivity implements CurrentSessionCallback, Slider.OnValueChangedListener, RecentlyPlayedVerticalAdapter.RecentlyPlayedItemActionListener, YouAlsoMightLikeVerticalAdapter.OnYouMightAlsoLikeItemActionListener, PopularSongsVerticalAdapter.OnPopularSongsItemActionListener, DiscreteScrollView.OnItemChangedListener, View.OnClickListener, PlaylistDialogAdapter.OnAudioPlaylistItemClickListener, SongsAdapter.OnAudioSongsItemClickListener, ArtistsVerticalAdapter.OnArtistsItemActionListener, AddSongToPlaylistDialogAdapter.OnPlaylistDialogItemClickListener, ArtistListAdapter.OnArtistListItemActionListener, LatestPlaylistAdapter.OnLatestPlaylistItemClickListener,
+        SearchSuggestionAdapter.OnSearchSugTextviewItemClickListener {
 
 
     ActivityDashboadNewBinding binding;
@@ -202,6 +206,8 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
     List<Artist> nArtistsArrayList = new ArrayList<>();
     List<PlayList> playListArrayList = new ArrayList<>();
     List<PlayList> nPlayListArrayList = new ArrayList<>();
+    List<String> searchSugList = new ArrayList<>();
+    SearchSuggestionAdapter searchSuggestionAdapter;
     @Inject
     NotificationManager notificationManager;
     @Inject
@@ -343,6 +349,16 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
         binding.includeDashboard.searchPlaylistRecyclerview.setDrawingCacheEnabled(true);
         playlistAdapter = new LatestPlaylistAdapter(this,playListArrayList,this);
         binding.includeDashboard.searchPlaylistRecyclerview.setAdapter(playlistAdapter);
+
+        songsLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        binding.includeDashboard.recentSearchRecyclerview.setLayoutManager(songsLayoutManager);
+        binding.includeDashboard.recentSearchRecyclerview.setHasFixedSize(true);
+        binding.includeDashboard.recentSearchRecyclerview.setItemViewCacheSize(1000);
+        binding.includeDashboard.recentSearchRecyclerview.setDrawingCacheEnabled(true);
+        searchSuggestionAdapter = new SearchSuggestionAdapter(this,searchSugList,this);
+        binding.includeDashboard.recentSearchRecyclerview.setAdapter(searchSuggestionAdapter);
+
+
 
         addPlaylistLayout = (RelativeLayout) findViewById(R.id.add_play_list_layout);
         cancelTextview = (TextView) findViewById(R.id.textView13);
@@ -578,6 +594,7 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
             public void onSearchEditOpened() {
                 //Use this to tint the screen
                 binding.includeDashboard.viewSearchTint.setVisibility(View.VISIBLE);
+                getSearchSuggestions();
                 binding.includeDashboard.viewSearchTint
                         .animate()
                         .alpha(1.0f)
@@ -629,7 +646,7 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
                 searchKeyWord = string;
                 System.out.println("sjldsdjksdd " + searchKeyWord);
                 System.out.println("dnbdfbfhfhfn " + string);
-                searchSongs(string);
+                searchSongs(searchKeyWord);
 
             }
 
@@ -904,55 +921,39 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
                 System.out.println("dhdhdhdhdhdh 222  " + t.toString());
 
             }});
-//        tvManager.getSearchArtistbyType( text, new APIListener<List<Artist>>() {
-//            @Override
-//            public void onSuccess(List<Artist> artists, List<Object> params) {
-//                System.out.println("dhdhdhdhdhdh 000  ");
-//                binding.includeDashboard.aviProgress.setVisibility(View.GONE);
-//                binding.includeDashboard.searchLayout.setVisibility(View.VISIBLE);
-//                artistsArrayList.clear();
-//                if (artists.size() > 0) {
-//                    binding.includeDashboard.searchArtistLayout.setVisibility(View.VISIBLE);
-//                    binding.includeDashboard.noSongsTextView.setVisibility(View.GONE);
-//                } else {
-//                    binding.includeDashboard.searchArtistLayout.setVisibility(View.GONE);
-//                    binding.includeDashboard.noSongsTextView.setVisibility(View.VISIBLE);
-//                }
-//                artistListAdapter.setList(artists);
-//            }
-//
-//            @Override
-//            public void onFailure(Throwable t) {
-//                binding.includeDashboard.aviProgress.setVisibility(View.GONE);
-//                System.out.println("dhdhdhdhdhdh 222  " + t.toString());
-//
-//            }
-//        });
-//        tvManager.getSearchPlaylistbyType( text, new APIListener<List<PlayList>>() {
-//            @Override
-//            public void onSuccess(List<PlayList> playLists, List<Object> params) {
-//                System.out.println("dhdhdhdhdhdh 000  ");
-//                binding.includeDashboard.aviProgress.setVisibility(View.GONE);
-//                binding.includeDashboard.searchLayout.setVisibility(View.VISIBLE);
-//                playListArrayList.clear();
-//                if (playLists.size() > 0) {
-//                    binding.includeDashboard.searchPlaylistLayout.setVisibility(View.VISIBLE);
-//                    binding.includeDashboard.noSongsTextView.setVisibility(View.GONE);
-//                } else {
-//                    binding.includeDashboard.searchPlaylistLayout.setVisibility(View.GONE);
-//                    binding.includeDashboard.noSongsTextView.setVisibility(View.VISIBLE);
-//                }
-//                playlistAdapter.setList(playLists);
-//            }
-//
-//            @Override
-//            public void onFailure(Throwable t) {
-//                binding.includeDashboard.aviProgress.setVisibility(View.GONE);
-//                System.out.println("dhdhdhdhdhdh 222  " + t.toString());
-//
-//            }
-//        });
     }
+
+    private void getSearchSuggestions() {
+
+
+        tvManager.getSearchSuggestions( new APIListener<List<String>>() {
+            @Override
+            public void onSuccess(List<String> result, List<Object> params) {
+                searchSugList = result;
+                binding.includeDashboard.recentSearchRecyclerview.setAdapter(new SearchSuggestionAdapter(getContext(),
+                        searchSugList, AudioDashboardActivity.this));
+                if (result.size() <= 0) {
+                    binding.includeDashboard.recentSearchRecyclerview.setVisibility(View.GONE);
+                    binding.includeDashboard.aviProgress.setVisibility(View.GONE);
+
+                } else {
+
+                    binding.includeDashboard.recentSearchRecyclerview.setVisibility(View.VISIBLE);
+                    binding.includeDashboard.aviProgress.setVisibility(View.GONE);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
+                Utils.Error.onServiceCallFail(getContext(), t);
+            }
+        });
+
+
+    }
+
 
     @Override
     public void onArtistListItemClick(Artist artist, int position, List<Artist> artistList) {
@@ -2639,6 +2640,13 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
     public void onArtistsPlayAction(Artist artist, int position, List<Artist> artistList) {
 
 
+    }
+
+    @Override
+    public void onSearchSugTextviewItemClick(String string, int position, List<String> songs) {
+            searchKeyWord = string;
+            searchSongs(searchKeyWord);
+            binding.includeDashboard.viewSearchTint.setVisibility(View.GONE);
     }
 
     public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder> {

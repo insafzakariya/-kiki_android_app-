@@ -71,12 +71,14 @@ public class LibrarySongsListAdapter extends
         if(Application.getInstance().getSongsAddedToPlaylist().contains(current.getId())){
             holder.addedSongText.setVisibility(View.VISIBLE);
 
+        }else if(current.isAvailable()){
+            holder.addedSongText.setVisibility(View.VISIBLE);
         }else{
             holder.addedSongText.setVisibility(View.GONE);
         }
 
         holder.songTitleTextview.setText(current.getName());
-        holder.descriptionTextView.setText(current.getDescription());
+        holder.descriptionTextView.setText(current.getArtistName());
         holder.songDuration.setText(NavigationUtils.convertMinutesToFormat(current.getDuration()));
 
         try {

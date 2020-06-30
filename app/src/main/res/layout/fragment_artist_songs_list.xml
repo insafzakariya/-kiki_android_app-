@@ -18,7 +18,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginStart="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_5sdp"
-            android:text="Artist"
+            android:text="@string/artist"
             android:textColor="#FFFFFF"
             android:textSize="@dimen/_14sdp"
             app:layout_constraintStart_toStartOf="parent"

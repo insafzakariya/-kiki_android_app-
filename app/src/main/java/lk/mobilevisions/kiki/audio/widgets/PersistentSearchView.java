@@ -511,13 +511,13 @@ public class PersistentSearchView extends RevealViewGroup {
     private void showMicButton() {
         micStateChanged(true);
         mMicButton.setImageDrawable(
-                ResourcesCompat.getDrawable(getResources(), org.cryse.widget.persistentsearch.R.drawable.ic_action_mic_black, null));
+                ResourcesCompat.getDrawable(getResources(), R.drawable.ic_action_mic_black, null));
     }
 
     private void showClearButton() {
         micStateChanged(false);
         mMicButton.setImageDrawable(
-                ResourcesCompat.getDrawable(getResources(), org.cryse.widget.persistentsearch.R.drawable.ic_action_clear_black, null));
+                ResourcesCompat.getDrawable(getResources(), R.drawable.ic_action_mic_black, null));
     }
     private void showhomeButton() {
         micStateChanged(false);

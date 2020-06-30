@@ -58,6 +58,7 @@ public class LibraryHomePlaylistDetailFragment extends Fragment implements Playl
     String playlistName;
     String playlistImage;
     String updatedImage;
+    String songCount;
 
     public LibraryHomePlaylistDetailFragment() {
         // Required empty public constructor
@@ -107,7 +108,7 @@ public class LibraryHomePlaylistDetailFragment extends Fragment implements Playl
 
         playlistID = getArguments().getInt("playlistID");
         playlistName = getArguments().getString("playlistName");
-        String songCount = getArguments().getString("songCount");
+        songCount = getArguments().getString("songCount");
         playlistImage = getArguments().getString("playlistImage");
         String playlistYear = getArguments().getString("playlistYear");
 
@@ -195,6 +196,7 @@ public class LibraryHomePlaylistDetailFragment extends Fragment implements Playl
 
                 binding.playlistDetailName.setText(playList.getName());
                 updatedImage = playList.getImage();
+                binding.songCount.setText(playList.getSongCount() + " songs");
 
                 if (updatedImage != null) {
                     try {

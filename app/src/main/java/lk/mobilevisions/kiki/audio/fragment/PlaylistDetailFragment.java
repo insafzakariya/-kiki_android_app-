@@ -329,7 +329,8 @@ public class PlaylistDetailFragment extends Fragment implements PlaylistDetailAd
             @Override
             public void onSuccess(Void result, List<Object> params) {
 
-                Toast.makeText(getActivity(), "Added to library.", Toast.LENGTH_SHORT ).show();
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.added_to_library), Toast.LENGTH_SHORT).show();
+
             }
 
             @Override

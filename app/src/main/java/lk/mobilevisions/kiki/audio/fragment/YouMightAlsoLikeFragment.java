@@ -163,7 +163,6 @@ public class YouMightAlsoLikeFragment extends Fragment implements YouMightAlsoLi
         alertDialog.setCanceledOnTouchOutside(true);
         alertDialog.show();
 
-
         TextView songTitle = (TextView) alertDialog.findViewById(R.id.add_song_title);
         songTitle.setText(song.getName());
         TextView addToLibrary = (TextView) alertDialog.findViewById(R.id.add_to_library);

@@ -79,7 +79,7 @@ public class LibraryPlaylistSongAdapter extends
 
 
         holder.songTitleTextview.setText(current.getName());
-        holder.artistTextView.setText(current.getDescription());
+        holder.artistTextView.setText(current.getArtistName());
 
         try {
             Picasso.with(mContext).load(URLDecoder.decode(current.getImage(), "UTF-8")).fit().centerCrop()

@@ -26,6 +26,9 @@ public class Song {
     @SerializedName("duration")
     @Expose
     private String duration;
+    @SerializedName("availableInPlaylist")
+    @Expose
+    private boolean isAvailable;
 
     public String getArtistName() {
         return artistName;
@@ -35,7 +38,7 @@ public class Song {
         this.artistName = artistName;
     }
 
-    @SerializedName("artistName")
+    @SerializedName("artist")
     @Expose
     private String artistName;
     @SerializedName("blocked")
@@ -107,7 +110,15 @@ public class Song {
         this.blocked = blocked;
     }
 
-//    public int getPlayState() {
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(boolean available) {
+        isAvailable = available;
+    }
+
+    //    public int getPlayState() {
 //        return playState;
 //    }
 //

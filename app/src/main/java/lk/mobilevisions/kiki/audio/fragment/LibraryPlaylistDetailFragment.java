@@ -137,7 +137,6 @@ public class LibraryPlaylistDetailFragment extends Fragment implements LibraryPl
 
     private void setDataToPlaylistSongs(int playlistID) {
 
-
         tvManager.getSongsOfDailymix(playlistID,  new APIListener<List<Song>>() {
             @Override
             public void onSuccess(List<Song> result, List<Object> params) {
@@ -262,7 +261,7 @@ public class LibraryPlaylistDetailFragment extends Fragment implements LibraryPl
         String sessionId = null;
         if(Application.getInstance().getSessionId()!=null){
             sessionId = Application.getInstance().getSessionId();
-            System.out.println("playlistcheck 22222 ");
+            System.out.println("playlistcheck 2253434222 " + sessionId);
         }else{
             sessionId = UUID.randomUUID().toString();
             Application.getInstance().addSessionId(sessionId);

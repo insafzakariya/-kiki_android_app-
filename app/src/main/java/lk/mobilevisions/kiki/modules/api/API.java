@@ -372,8 +372,7 @@ public interface API {
                                  @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
                                  @Query("offset") int offset,
                                  @Query("limit") int limit);
-//    5379
-//            4581
+
 
     @GET("audio/playlist/songs")
     Call<List<Song>> getPopularSongs(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
@@ -485,6 +484,12 @@ public interface API {
                                              @Query("limit") int limit,
                                              @Query("type") String type);
 
+    @GET("audio/search-history")
+    Call<List<String>> getSearchSuggestions(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
+                                              @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
+                                              @Query("limit") int limit);
+
+
     @GET("audio/playlist")
     Call<List<DailyMix>> getAllDailymix(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
                                         @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
@@ -519,6 +524,16 @@ public interface API {
                                         @Query("offset") int offset,
                                         @Query("limit") int limit,
                                         @Query("g") boolean globle);
+
+    @GET("audio/playlist/songs/{id}")
+    Call<List<Song>> getSongsOfPlaylistInLibrary(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
+                                        @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
+                                        @Path("id") int id,
+                                        @Query("offset") int offset,
+                                        @Query("limit") int limit,
+                                        @Query("sessionid") String sessionid,
+                                        @Query("g") boolean globle);
+
 
     @GET("audio/playlist/songs/{id}")
     Call<List<Song>> getSongsOfUserPlaylist(@Header(HEADER_AUTHORIZATION) String basicAuthToken,

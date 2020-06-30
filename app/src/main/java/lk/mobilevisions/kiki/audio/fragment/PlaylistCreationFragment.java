@@ -221,23 +221,6 @@ public class PlaylistCreationFragment extends Fragment implements PlaylistCreati
                     }
                     binding.confirmText.setEnabled(false);
                 }
-
-
-//                if(encodedImage!=null ){
-//                    if (name != null && !name.isEmpty()) {
-//                        createPlayList(name,encodedImage);
-//                    } else {
-//                        createPlayList("New playlist",encodedImage);;
-//                    }
-//                }else{
-//                    if (name != null && !name.isEmpty()) {
-//                        createPlayList(name,null);
-//                    } else {
-//                        createPlayList("New playlist",null);
-//                    }
-//                }
-//                System.out.println("checccccck " + name);
-
             }
         });
 
@@ -292,6 +275,13 @@ public class PlaylistCreationFragment extends Fragment implements PlaylistCreati
                     songIdList.add(song.getId());
                 }
                 playlistSongsList = songs;
+                if (editPlaylist){
+                    for(Song song : playlistSongsList){
+                        if(!Application.getInstance().getSongsAddedToPlaylist().contains(song.getId())){
+                            Application.getInstance().addSongToPlayList(song.getId());
+                        }
+                    }
+                }
                 binding.addedSongsRecycle.setAdapter(new PlaylistCreationAdapter(getContext(),
                         playlistSongsList, PlaylistCreationFragment.this));
                 if (songs.size() <= 0) {
@@ -312,37 +302,6 @@ public class PlaylistCreationFragment extends Fragment implements PlaylistCreati
             }
         });
     }
-
-//    private void setDataToPlaylistSongs(String sessionId) {
-//
-//        tvManager.getSongsOfTempPlayList(sessionId,  new APIListener<List<Song>>() {
-//            @Override
-//            public void onSuccess(List<Song> result, List<Object> params) {
-//                playlistSongsList = result;
-//                binding.addedSongsRecycle.setAdapter(new PlaylistCreationAdapter(getContext(),
-//                        playlistSongsList, PlaylistCreationFragment.this));
-//                if (result.size() <= 0) {
-//                    binding.addedSongsRecycle.setVisibility(View.GONE);
-//                    binding.aviPlaylist.setVisibility(View.GONE);
-//
-//                } else {
-//
-//                    binding.addedSongsRecycle.setVisibility(View.VISIBLE);
-//                    binding.aviPlaylist.setVisibility(View.GONE);
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Throwable t) {
-//
-//                Utils.Error.onServiceCallFail(getContext(), t);
-//            }
-//        });
-//
-//
-//    }
-
 
     public void hideKeyboard() {
         InputMethodManager inputMethodManager = (InputMethodManager) getContext().getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);

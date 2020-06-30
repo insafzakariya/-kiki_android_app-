@@ -67,7 +67,7 @@ public class PopularSongsVerticalAdapter extends
         final Song current = popularSongsList.get(pos);
 
         holder.titleTextView.setText(current.getName());
-        holder.descriptionTextView.setText(current.getDescription());
+        holder.descriptionTextView.setText(current.getArtistName());
         try {
             Picasso.with(context).load(URLDecoder.decode(current.getImage(), "UTF-8"))
                     .placeholder(R.drawable.program)

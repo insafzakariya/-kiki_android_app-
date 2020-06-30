@@ -13,8 +13,8 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:clickable="true"
-            app:cardBackgroundColor="#F5F6FF"
-            app:cardCornerRadius="2dp"
+            app:cardBackgroundColor="@color/colorWhite"
+            app:cardCornerRadius="20dp"
             app:cardElevation="0dp"
             app:cardUseCompatPadding="true">
 
@@ -28,7 +28,7 @@
                     android:layout_height="48dp"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:scaleType="center"/>
+                    android:scaleType="center" />
 
                 <org.cryse.widget.persistentsearch.LogoView
                     android:id="@+id/logoview"
@@ -38,10 +38,6 @@
                     android:layout_toEndOf="@+id/button_home"
                     android:layout_toLeftOf="@+id/button_mic"
                     android:layout_toStartOf="@+id/button_mic"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginEnd="16dp"
                     android:gravity="center_vertical"
                     android:singleLine="true"
                     android:textAppearance="?android:attr/textAppearanceMedium"
@@ -55,15 +51,12 @@
                     android:layout_toEndOf="@+id/button_home"
                     android:layout_toLeftOf="@+id/button_mic"
                     android:layout_toStartOf="@+id/button_mic"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginEnd="16dp"
                     android:gravity="start|center"
                     android:background="@null"
                     android:ems="10"
                     android:imeOptions="actionSearch|flagNoExtractUi"
                     android:singleLine="true"
+                    android:textSize="@dimen/_13sdp"
                     android:textColor="#212121"
                     android:visibility="gone">
 
@@ -77,7 +70,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true"
                     android:scaleType="center"
-                    android:src="@drawable/ic_action_mic_black"/>
+                    android:src="@drawable/ic_action_mic_black" />
 
             </RelativeLayout>
 
