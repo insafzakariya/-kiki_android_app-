@@ -426,14 +426,11 @@ public interface API {
                                     @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
                                     @Path("id") int artistID);
 
-//    @GET("artist/{id}/songs")
-//    Call<List<PlayList>> getGenrePlaylist(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
-//                                          @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
-//                                          @Path("id") int id);
 
     @GET("radio/channel")
     Call<List<Song>> getRadioChannel(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
                                      @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken);
+
 
     @GET("audio/songs/genre/{genre}")
     Call<List<Song>> getGenreSongs(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
@@ -489,6 +486,12 @@ public interface API {
                                               @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
                                               @Query("limit") int limit);
 
+    @GET("audio/songs/suggession/genre")
+    Call<List<Song>> getAudioSuggestionList(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
+                                        @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
+                                        @Query("offset") int offset,
+                                        @Query("limit") int limit,
+                                        @Query("song_id") int songID);
 
     @GET("audio/playlist")
     Call<List<DailyMix>> getAllDailymix(@Header(HEADER_AUTHORIZATION) String basicAuthToken,

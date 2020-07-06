@@ -91,7 +91,7 @@ android {
         production {
             buildConfigField "Integer", "MAIN_SERVER_API_VERSION", "2"
             buildConfigField "String", "MAIN_SERVER_API_NAME", "\"MAIN_SERVER_API_V_\""
-            buildConfigField "String", "MOBILE_PAYMENT_GATEWAY_NAME", "\"MOBILE_PAYMENT_GATEWAY_URL\""
+            buildConfigField "String", "MOBILE_PAYMENT_GATEWAY_NAME", "\"MOBILE_PAYMENT_GATEWAY_URL_V2\""
             buildConfigField "String", "ALL_USERS_TOPIC_NAME", "\"AllUsers\""
         }
 

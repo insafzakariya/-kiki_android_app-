@@ -175,6 +175,7 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
     private AudioStreamingManager streamingManager;
     private Song currentSong;
     private List<Song> listOfSongs = new ArrayList<Song>();
+    private List<Song> suggestedSongList = new ArrayList<Song>();
     private List<Genre> listOfGenres = new ArrayList<Genre>();
     private DisplayImageOptions options;
     private ImageLoader imageLoader = ImageLoader.getInstance();
@@ -1727,6 +1728,7 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
             }
             showSongInfo(media);
         }
+
     }
 
     private void checkAlreadyPlaying() {
@@ -2018,6 +2020,7 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
         }
         listOfSongs = songs;
         streamingManager.setMediaList(listOfSongs);
+
     }
 
     public void genreSongFragmentSongClickedEvent(Song song, int position, List<Song> songs) {
@@ -2588,9 +2591,9 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
 //        addSongsToPlaylist(playList.getId());
     }
 
-    private void getAudioAllSongs(final int offset) {
+    private void getNextOrSuggestedSongs(int id,final int offset) {
         System.out.println("rfjfjfjfjfjfj 111  " + offset);
-        tvManager.getAllSongs(offset, 8, new APIListener<List<Song>>() {
+        tvManager.getAudioSuggestionList(id , new APIListener<List<Song>>() {
             @Override
             public void onSuccess(List<Song> songs, List<Object> params) {
                 System.out.println("rfjfjfjfjfjfj 222 " + songs.size());
@@ -2598,7 +2601,7 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
                     if (songAdapter != null) {
                         listOfSongs.addAll(songs);
                         streamingManager.setMediaList(listOfSongs);
-                        songAdapter.notifyItemRangeInserted(offset, songs.size());
+                        songAdapter.notifyItemRangeInserted(offset,songs.size());
                     }
 
                 }
@@ -2674,16 +2677,13 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
         @Override
         public void onBindViewHolder(SongAdapter.ViewHolder holder, int position) {
 
-            if ((data.size() - position) == 3) {
-                if (genre != null) {
-                    if (genre.equals("All Songs")) {
-                        getAudioAllSongs(data.size());
-                    } else {
-                        getGenreSongs(data.size(), genre);
-                    }
+            if ((data.size() - position) == 1) {
+                int lastSongId = data.get(position).getId();
+                        getNextOrSuggestedSongs(lastSongId,data.size());
+
                 }
 
-            }
+
             Song current = data.get(position);
             if (current.getImage() != null) {
                 try {
