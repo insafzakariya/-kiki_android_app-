@@ -60,7 +60,7 @@ public class NotificationsActivity extends AppCompatActivity implements Notifica
             window.setStatusBarColor(ContextCompat.getColor(this, R.color.backgroundColor));
         }
         ((Application) getApplication()).getAnalytics().setCurrentScreen(this, "VideoNotificationActivity", null);
-        binding.includedToolbar.titleTextview.setText("Notifications");
+        binding.includedToolbar.titleTextview.setText(R.string.menu_notifications);
         binding.includedToolbar.backImageview.setOnClickListener(this);
         binding.clearAllButton.setOnClickListener(this);
 

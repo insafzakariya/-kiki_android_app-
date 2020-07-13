@@ -74,7 +74,7 @@ public class LibraryPlaylistDetailFragment extends Fragment implements LibraryPl
         binding.addAllSongs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(binding.addAllSongs.getText().toString().contains("Add all")){
+                if(binding.addAllSongs.getText().toString().contains(getResources().getString(R.string.add_all))){
                     addAllSongs();
                 }else{
                     removeAllSongs();
@@ -93,9 +93,9 @@ public class LibraryPlaylistDetailFragment extends Fragment implements LibraryPl
         binding.playlistYear.setText(playlistYear.substring(0,4));
 
         if(Application.getInstance().getPlaylistIds().contains(playlistID)){
-            binding.addAllSongs.setText("Remove all");
+            binding.addAllSongs.setText(R.string.clear_all);
         }else{
-            binding.addAllSongs.setText("Add all");
+            binding.addAllSongs.setText(R.string.add_all);
         }
 
 
@@ -198,7 +198,7 @@ public class LibraryPlaylistDetailFragment extends Fragment implements LibraryPl
                 Utils.Error.onServiceCallFail(getActivity(), t);
             }
         });
-        binding.addAllSongs.setText("Add all");
+        binding.addAllSongs.setText(R.string.add_all);
         libraryPlaylistSongAdapter.notifyDataSetChanged();
 
     }
@@ -235,7 +235,7 @@ public class LibraryPlaylistDetailFragment extends Fragment implements LibraryPl
                 Utils.Error.onServiceCallFail(getActivity(), t);
             }
         });
-        binding.addAllSongs.setText("Remove all");
+        binding.addAllSongs.setText(R.string.clear_all);
 
         libraryPlaylistSongAdapter.notifyDataSetChanged();
 

@@ -28,6 +28,8 @@ import lk.mobilevisions.kiki.databinding.FragmentGenreWisePlaylistBinding;
 import lk.mobilevisions.kiki.modules.api.APIListener;
 import lk.mobilevisions.kiki.modules.tv.TvManager;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 public class LibraryHomePlaylistListFragment extends Fragment implements LibraryHomePlaylistListAdapter.OnPlaylistItemClickListener {
     @Inject
     TvManager tvManager;
@@ -176,7 +178,7 @@ public class LibraryHomePlaylistListFragment extends Fragment implements Library
 //                mAdapter.notifyDataSetChanged();
                 System.out.println("successss 2121212");
 //                setDataToPlaylists();
-                Toast.makeText(getActivity(), "Removed from library.", Toast.LENGTH_SHORT ).show();
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.removed_from_lib), Toast.LENGTH_SHORT).show();
             }
 
             @Override

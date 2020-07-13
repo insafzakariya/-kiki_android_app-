@@ -188,7 +188,7 @@ public class VideoEpisodeActivity extends AppCompatActivity implements View.OnCl
                         binding.thumbTextview.setText("Already liked");
                     } else {
                         binding.thumbImageview.setBackgroundResource(R.drawable.ic_thumup_outlined);
-                        binding.thumbTextview.setText("Like this movie");
+                        binding.thumbTextview.setText(R.string.like_movie);
                     }
 
                     if (episodes.get(0).isSubscribed()) {
@@ -199,7 +199,7 @@ public class VideoEpisodeActivity extends AppCompatActivity implements View.OnCl
                     } else {
                         binding.removeImageview.setVisibility(View.GONE);
                         binding.addImageview.setVisibility(View.VISIBLE);
-                        binding.addTextview.setText("Add to my list");
+                        binding.addTextview.setText(R.string.add_to_my_list);
                     }
                 }
             }
@@ -271,7 +271,7 @@ public class VideoEpisodeActivity extends AppCompatActivity implements View.OnCl
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.thumb_imageview:
-                if (binding.thumbTextview.getText().toString().equals("Like this movie")) {
+                if (binding.thumbTextview.getText().toString().trim().equals(getResources().getString(R.string.like_movie))) {
                     likeTrailer();
                 } else {
                     unLikeTrailer();
@@ -341,6 +341,7 @@ public class VideoEpisodeActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void likeTrailer() {
+        System.out.println("uvggvgh");
         binding.thumbImageview.setBackgroundResource(R.drawable.ic_thumb_up_filled);
         binding.thumbTextview.setText("Already liked");
 
@@ -361,7 +362,7 @@ public class VideoEpisodeActivity extends AppCompatActivity implements View.OnCl
 
     private void unLikeTrailer() {
         binding.thumbImageview.setBackgroundResource(R.drawable.ic_thumup_outlined);
-        binding.thumbTextview.setText("Like this movie");
+        binding.thumbTextview.setText(R.string.like_movie);
         tvManager.likeEpisode(Integer.parseInt(program.getId()), 1,new APIListener<List<Void>>() {
             @Override
             public void onSuccess(List<Void> result, List<Object> params) {
@@ -445,7 +446,7 @@ public class VideoEpisodeActivity extends AppCompatActivity implements View.OnCl
                                 binding.playNowLayout.setClickable(true);
                                 binding.addTextview.setVisibility(View.VISIBLE);
                                 binding.addImageview.setVisibility(View.VISIBLE);
-                                binding.addTextview.setText("Add to my list");
+                                binding.addTextview.setText(R.string.add_to_my_list);
                                 Application.BUS.post(new SubscribeEvent(false));
                                 JSONObject props = new JSONObject();
                                 try {

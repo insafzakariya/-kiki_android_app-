@@ -276,7 +276,6 @@ public class AudioHomeFragment extends Fragment implements DailyMixAdapter.Daily
                     @Override
                     public void onSuccess(Song song, List<Object> params) {
 
-                        System.out.println("sjnfsjkbfv 1111" + song.getId());
                         List<Song> songsList = new ArrayList<>();
                         songsList.add(song);
 
@@ -361,7 +360,6 @@ public class AudioHomeFragment extends Fragment implements DailyMixAdapter.Daily
         tvManager.getDailyMixNew(0,10,new APIListener<List<PlayList>>() {
             @Override
             public void onSuccess(List<PlayList> result, List<Object> params) {
-                System.out.println("Check playlist  " + result.size());
                 if (result.size() == 0) {
                     binding.dailyMixLayout.setVisibility(View.GONE);
 
@@ -383,34 +381,6 @@ public class AudioHomeFragment extends Fragment implements DailyMixAdapter.Daily
 
 
     }
-
-//    private void setDataToRecentlyPlayed() {
-//
-//
-//        tvManager.getAudioRecentlyPlayed(new APIListener<List<Song>>() {
-//            @Override
-//            public void onSuccess(List<Song> result, List<Object> params) {
-//                if (result.size() == 0) {
-//
-//                    binding.recentlyPlayedLayout.setVisibility(View.GONE);
-//                } else {
-//                    binding.recentlyPlayedLayout.setVisibility(View.VISIBLE);
-//                    recentlyPlayedArrayList = result;
-//                    recentlyPlayedVerticalAdapter = new RecentlyPlayedVerticalAdapter(getActivity(), recentlyPlayedArrayList);
-//                    binding.recentlyPlayedRecyclerview.setAdapter(recentlyPlayedVerticalAdapter);
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Throwable t) {
-//
-//
-//            }
-//        });
-//
-//
-//    }
 
     private int generateRandomIndex(int size) {
         while (true) {
@@ -580,10 +550,6 @@ public class AudioHomeFragment extends Fragment implements DailyMixAdapter.Daily
 
     }
 
-//    public void setDailyMixActionListener(DailyMixAdapter.DailyMixItemActionListener actionListener) {
-//        this.dailyMixItemActionListener = actionListener;
-//    }
-
     public void setActionListener(RecentlyPlayedVerticalAdapter.RecentlyPlayedItemActionListener actionListener) {
         this.recentlyPlayedItemActionListener = actionListener;
     }
@@ -690,8 +656,6 @@ public class AudioHomeFragment extends Fragment implements DailyMixAdapter.Daily
                     @Override
                     public void onSuccess(Package thePackage, List<Object> params) {
                         binding.aviProgress.setVisibility(View.GONE);
-                        System.out.println("Check sub status1 " + thePackage.getId());
-
 
                         if (thePackage.getId() == 46 || thePackage.getId() == 81 || thePackage.getId() == 101 || thePackage.getId() == 106) {
 
@@ -764,6 +728,7 @@ public class AudioHomeFragment extends Fragment implements DailyMixAdapter.Daily
                 .commit();
 
     }
+
     @Subscribe
     public void onSearchNavigateEvent(SearchNavigationEvent event) {
 
@@ -774,7 +739,6 @@ public class AudioHomeFragment extends Fragment implements DailyMixAdapter.Daily
 
             Bundle bundle = new Bundle();
             bundle.putString("searchKey", searchKeyWord);
-            System.out.println("ksjhbsdjhkb " + searchKeyWord);
 
             SearchedSongsFragment searchedSongsFragment = new SearchedSongsFragment();
             searchedSongsFragment.setArguments(bundle);
@@ -799,7 +763,7 @@ public class AudioHomeFragment extends Fragment implements DailyMixAdapter.Daily
 
             Bundle bundle=new Bundle();
             bundle.putString("searchKey", searchKeyWord);
-            System.out.println("sdjkbfsdjhbv " + searchKeyWord);
+
             SearchedPlaylistFragment searchedPlaylistFragment = new SearchedPlaylistFragment();
             searchedPlaylistFragment.setArguments(bundle);
             getFragmentManager().beginTransaction()

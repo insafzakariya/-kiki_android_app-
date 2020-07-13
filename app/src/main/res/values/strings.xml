@@ -29,9 +29,14 @@
     <string name="register">Sign Up</string>
     <string name="mobile_number">Mobile No.*:</string>
     <string name="please_wait">Please wait</string>
+    <string name="more_episodes">MORE EPISODES</string>
 
     <string name="drawer_open">Open menu</string>
     <string name="drawer_close">Close menu</string>
+    <string name="close">CLOSE</string>
+    <string name="new_playlist">New Playlist</string>
+    <string name="create_new_playlist">Create new playlist</string>
+    <string name="removed_from_lib">Removed from library</string>
 
     <string name="ok">OK</string>
     <string name="confirm">Confirm</string>
@@ -90,6 +95,7 @@
     <string name="reset_confirm_code">Please confirm your code</string>
     <string name="forgot_password_greating">A confirmation code has been sent to your number. Please enter it to reset password for</string>
     <string name="reset_password">Reset Password</string>
+    <string name="resend_code">Resend Code</string>
 
     <string name="enter_new_password">Enter New Password</string>
     <string name="type_new_password">Type your new password</string>
@@ -189,6 +195,9 @@
     <string name="music_confirm">Confirm</string>
     <string name="music_edit">Edit</string>
     <string name="no_search_found">No search results found.</string>
+    <string name="add_all">Add all</string>
+    <string name="clear_all">Remove all</string>
+    <string name="recent_search">Recent search</string>
 
     <string name="play_2">Play</string>
     <string name="play_random">Play Random</string>
@@ -204,6 +213,9 @@
     <string name="channel">Channel</string>
     <string name="videos">Videos</string>
     <string name="cancel">Cancel</string>
+    <string name="my_list">My List</string>
+    <string name="add_to_my_list">Add to my list</string>
+    <string name="like_movie">Like this movie</string>
 
     <string name="count_song"><xliff:g id="count">%d</xliff:g> song</string>
     <string name="count_songs"><xliff:g id="count">%d</xliff:g> songs</string>

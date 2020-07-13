@@ -56,7 +56,7 @@ public class AudioNotificationActivity extends AppCompatActivity implements Noti
             window.setStatusBarColor(ContextCompat.getColor(this, R.color.dialogBackground));
         }
         ((Application) getApplication()).getAnalytics().setCurrentScreen(this, "VideoNotificationActivity", null);
-        binding.includedToolbar.titleTextview.setText("Notifications");
+        binding.includedToolbar.titleTextview.setText(R.string.menu_notifications);
         binding.includedToolbar.backImageview.setOnClickListener(this);
         binding.clearAllButton.setOnClickListener(this);
         final ArrayList<Integer> readNotificationIds = new ArrayList<>();

@@ -132,7 +132,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_17sdp"
                     android:background="@drawable/library_add_background"
-                    android:text="Add all"
+                    android:text="@string/add_all"
                     android:drawableStart="@drawable/ic_add_green"
                     android:gravity="center"
                     android:drawablePadding="@dimen/_5sdp"

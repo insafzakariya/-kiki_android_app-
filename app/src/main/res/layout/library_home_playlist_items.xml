@@ -82,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_2sdp"
-                android:text="Create new playlist"
+                android:text="@string/create_new_playlist"
                 android:gravity="center"
                 android:visibility="visible"
                 android:singleLine="true"

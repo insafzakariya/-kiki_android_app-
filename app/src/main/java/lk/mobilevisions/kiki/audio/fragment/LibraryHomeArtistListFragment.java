@@ -31,6 +31,8 @@ import lk.mobilevisions.kiki.databinding.FragmentArtistListBinding;
 import lk.mobilevisions.kiki.modules.api.APIListener;
 import lk.mobilevisions.kiki.modules.tv.TvManager;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 public class LibraryHomeArtistListFragment extends Fragment implements LibraryHomeArtistListAdapter.OnArtistItemClickListener {
     @Inject
     TvManager tvManager;
@@ -166,7 +168,7 @@ public class LibraryHomeArtistListFragment extends Fragment implements LibraryHo
 //                librarySongList.remove(removeSongId);
 //                mAdapter.notifyDataSetChanged();
                 getLibraryArtists();
-                Toast.makeText(getActivity(), "Removed from library.", Toast.LENGTH_SHORT ).show();
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.removed_from_lib), Toast.LENGTH_SHORT).show();
             }
 
             @Override

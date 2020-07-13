@@ -8,18 +8,18 @@
     <string name="or">හෝ</string>
     <string name="sign_in">පිවිසෙන්න</string>
     <string name="sign_in_button">පිවිසෙන්න</string>
-    <string name="type_email">ඔබගේ email එක type කරන්න</string>
+    <string name="type_email">ඔබගේ email එක typec කරන්න</string>
     <string name="type_username">පරිශීලක නාමය ඇතුළත් කරන්න</string>
     <string name="password">මුර පදය</string>
     <string name="enter_password">මුර පදය ඇතුළත් කරන්න</string>
     <string name="sign_in_text">පිවිසෙන්න</string>
-    <string name="register_now">ලියා පදිංචි වන්න</string>
+    <string name="register_now">ලියාපදිංචි වන්න</string>
     <string name="email">Email</string>
     <string name="username">පරිශීලක නාමය</string>
     <string name="confirm_password">මුර පදය  නැවත තහවුරු කරන්න</string>
     <string name="type_password_again">නැවතත් ඔබේ මුර පදය ඇතුළත් කර තහවුරු  කරන්න</string>
     <string name="sign_up_text">පිවිසෙන්න</string>
-    <string name="enter_phone_number">ඔබගේ දුරකථන අංකය ඇතුළත් කරන්න</string>
+    <string name="enter_phone_number">ඔබේ දුරකතන අංකය ඇතුළත් කරන්න</string>
     <string name="mobile_number_confirm">පිවිසෙන්න</string>
     <string name="logout_text">ඔබට ඉවත් වීමට අවශ්‍යද?</string>
     <string name="logout">ඉවත්ව යාම</string>
@@ -38,6 +38,24 @@
     <string name="no_subscribed_programs">No subscribed programs available. Please subscribe to your favorite programs from Mobile TV.</string>
     <string name="create_an_account_login">ගිණුමක් සකසන්න</string>
 
+    <string name="my_list">මාගේ එකතුව</string>
+    <string name="add_to_my_list">මාගේ එකතුවට \nඑක් කරන්න</string>
+    <string name="like_movie">කැමතී</string>
+    <string name="ok">හරි</string>
+    <string name="play_now">දැන් ප්ලේ කරන්න</string>
+    <string name="play_trailer">PLAY TRAILER</string>
+    <string name="close">වසා දමන්න</string>
+    <string name="menu_chile_mode">චයිල්ඩ් මූඩ්</string>
+    <string name="new_playlist">නව එකතුව</string>
+    <string name="menu_notifications">දැනුම්දීම්</string>
+    <string name="create_new_playlist">නව එකතුවක් සකස් \nකරන්න</string>
+    <string name="removed_from_lib">ඔබේ එකතුවෙන් ඉවත් කරන්න</string>
+    <string name="reset_confirmation_code">රහස් පදය සක්‍රීය කර ගැනීම සඳහා නිරවද්‍යතාව සහතික කරන අංකය ඔබේ දුරකතනය වෙත ලැබෙනු ඇත</string>
+    <string name="reset_confirm_code">ඔබේ රහස් අංකය ඇතුළත් කරන්න</string>
+    <string name="forgot_password_greating">රහස් පදය සක්‍රීය කර ගැනීම සඳහා නිරවද්‍යතාව සහතික කරන අංකය ඔබේ දුරකතනය වෙත යවන ලදී රහස් අංකය ඇතුළත් කරන්න</string>
+    <string name="reset_password">රහස් පදය අලුත් කරන්න</string>
+    <string name="resend_code">රහස් අංකය නැවත එවන්න</string>
+    <string name="more_episodes">තවත් කථාංග (Episodes)</string>
 
     //Error messages
     <string name="email_cannot_be_empty">Email හිස් විය නොහැක</string>
@@ -90,5 +108,8 @@
     <string name="music_confirm">සනාථ කරන්න</string>
     <string name="music_edit">සංස්කරණය කරන්න</string>
     <string name="no_search_found">සෙවුම් ප්‍රතිපලයක් සොයා ගැනීමට නැත.</string>
+    <string name="add_all">එකතු කරන්න</string>
+    <string name="clear_all">සියල්ල ඉවත් කරන්න</string>
+    <string name="recent_search">මෑතක දී කල සෙවුම්</string>
 
 </resources>

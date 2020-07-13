@@ -29,7 +29,6 @@ public class PopularSongsVerticalAdapter extends
 
     public PopularSongsVerticalAdapter (Context mContext,
                                            List<Song> popularSongsList) {
-        System.out.printf("hwjhsjsjsjsjsd 111 " + onPopularSongsItemActionListener);
         this.context = mContext;
         this.popularSongsList = popularSongsList;
 
@@ -78,7 +77,6 @@ public class PopularSongsVerticalAdapter extends
         holder.rvHorizontal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.printf("hwjhsjsjsjsjsd 2222 " + onPopularSongsItemActionListener);
                 PopularSongsVerticalAdapter adapter = PopularSongsVerticalAdapter.getInstance(context);
                 adapter.requestStream(popularSongsList.get(holder.getAdapterPosition()),holder.getAdapterPosition(),popularSongsList);
             }
@@ -119,14 +117,13 @@ public class PopularSongsVerticalAdapter extends
         }
     }
     private void requestStream(Song song,int position,List<Song> songs) {
-        System.out.printf("hwjhsjsjsjsjsd 333 " + onPopularSongsItemActionListener);
         if(onPopularSongsItemActionListener!=null){
-            System.out.printf("hwjhsjsjsjsjsd 4444 " + onPopularSongsItemActionListener);
+
             onPopularSongsItemActionListener.onPopularSongsPlayAction(song,position,songs);
         }
     }
-    public void setOnPopularSongsItemActionListener (OnPopularSongsItemActionListener actionListener){
-        System.out.printf("hwjhsjsjsjsjsd 5555 " + onPopularSongsItemActionListener);
+    public void setOnPopularSongsItemActionListener (OnPopularSongsItemActionListener actionListener) {
+
         this.onPopularSongsItemActionListener = actionListener;
     }
     public interface OnPopularSongsItemActionListener{

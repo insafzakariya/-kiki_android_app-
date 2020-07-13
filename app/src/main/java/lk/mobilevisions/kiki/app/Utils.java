@@ -79,6 +79,7 @@ public class Utils {
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putInt(key, value);
                 editor.commit();
+
             }
         }
 

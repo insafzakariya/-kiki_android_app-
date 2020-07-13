@@ -234,7 +234,8 @@ public class LibraryHomeSongListFragment extends Fragment implements LibraryHome
 //                librarySongList.remove(removeSongId);
 //                mAdapter.notifyDataSetChanged();
                 getLibrarySongs();
-                Toast.makeText(getActivity(), "Removed from library.", Toast.LENGTH_SHORT ).show();
+
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.removed_from_lib), Toast.LENGTH_SHORT).show();
             }
 
             @Override

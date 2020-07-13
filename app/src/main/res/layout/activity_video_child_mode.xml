@@ -41,7 +41,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="@dimen/_16sdp"
                 android:layout_marginTop="40dp"
-                android:text="Child Mode"
+                android:text="@string/menu_chile_mode"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/_13sdp"
                 app:layout_constraintHorizontal_bias="0.0"

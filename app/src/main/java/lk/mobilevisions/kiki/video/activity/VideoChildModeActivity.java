@@ -38,7 +38,7 @@ public class VideoChildModeActivity extends AppCompatActivity   {
             window.setStatusBarColor(ContextCompat.getColor(this, R.color.newUiBackground));
         }
 
-        binding.includedToolbar.titleTextview.setText("Child Mode");
+        binding.includedToolbar.titleTextview.setText(R.string.menu_chile_mode);
 
         binding.includedToolbar.backImageview.setOnClickListener(new View.OnClickListener() {
             @Override
