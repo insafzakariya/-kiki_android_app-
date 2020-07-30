@@ -21,13 +21,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+            <RelativeLayout
+                android:id="@+id/top_action_buttons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/song_picker">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
                 <ImageView
                     android:id="@+id/back_imageview"
                     android:layout_width="@dimen/_25sdp"
                     android:layout_height="@dimen/_25sdp"
                     android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:clickable="true"
                     android:foregroundTint="#434343"
@@ -55,7 +66,6 @@
                     android:id="@+id/three_dots"
                     android:layout_width="@dimen/_25sdp"
                     android:layout_height="@dimen/_25sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_15sdp"
                     android:clickable="true"
                     android:foregroundTint="#434343"
@@ -63,17 +73,32 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_more_audio" />
 
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </RelativeLayout>
 
                 <com.yarolegovich.discretescrollview.DiscreteScrollView
                     android:id="@+id/song_picker"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/_250sdp"
-                    android:layout_marginTop="@dimen/_5sdp"
                     android:layout_marginBottom="@dimen/_5sdp"
-                    app:layout_constraintBottom_toTopOf="@+id/audio_name"
+                    app:layout_constraintBottom_toTopOf="@+id/audio_details_layout"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/back_imageview" />
+                    app:layout_constraintTop_toBottomOf="@+id/top_action_buttons" />
+
+                <RelativeLayout
+                    android:id="@+id/audio_details_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    app:layout_constraintBottom_toTopOf="@+id/layout_progress"
+                    app:layout_constraintTop_toBottomOf="@+id/song_picker"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
                 <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
                     android:id="@+id/audio_name"
@@ -104,7 +129,11 @@
                     android:textSize="@dimen/_12sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toTopOf="@+id/layout_progress" />
+                    app:layout_constraintTop_toBottomOf="@+id/audio_name"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/layout_progress"
@@ -112,7 +141,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_20sdp"
                     android:layout_marginEnd="@dimen/_20sdp"
-                    android:layout_marginBottom="@dimen/_30sdp"
+                    android:layout_marginBottom="@dimen/_15sdp"
+                    app:layout_constraintTop_toBottomOf="@+id/audio_details_layout"
                     app:layout_constraintBottom_toTopOf="@+id/layout_controler"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent">
@@ -166,16 +196,13 @@
 
                 </RelativeLayout>
 
-
-
-
                 <RelativeLayout
                     android:id="@+id/layout_controler"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_30sdp"
                     android:layout_marginEnd="@dimen/_30sdp"
-                    android:layout_marginBottom="@dimen/_60sdp"
+                    app:layout_constraintTop_toTopOf="@+id/layout_progress"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent">
@@ -310,14 +337,12 @@
 
         </FrameLayout>
 
-
                 <include
                     android:id="@+id/slideBottomView"
                     layout="@layout/activity_dashboard_bottom_slide"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     android:visibility="visible" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
