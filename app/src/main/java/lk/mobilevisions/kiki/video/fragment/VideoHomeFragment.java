@@ -1,5 +1,6 @@
 package lk.mobilevisions.kiki.video.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 
 import androidx.databinding.DataBindingUtil;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.otto.Subscribe;
 
 import org.json.JSONException;
@@ -62,6 +64,8 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
     private boolean isKidsMoodOn;
     private Program selectedProgram;
     private int selectedProgramPosition;
+    private FirebaseAnalytics mFirebaseAnalytics;
+    Context context;
 
     public VideoHomeFragment() {
         // Required empty public constructor
@@ -78,6 +82,7 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home_video, container, false);
         ((Application) getActivity().getApplication()).getInjector().inject(this);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(context);
         selectedDate = Utils.DateUtil.getDateOnly(new Date());
         binding.recycleviewChannelsPrograms.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.recycleviewChannelsPrograms.setNestedScrollingEnabled(false);
@@ -170,6 +175,10 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
                 });
             }
         }
+
+        Bundle params = new Bundle();
+        params.putString("user_actions", "Video Home");
+        mFirebaseAnalytics.logEvent("VideoTab", params);
 
         return binding.getRoot();
     }

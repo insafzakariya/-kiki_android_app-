@@ -43,7 +43,7 @@ import lk.mobilevisions.kiki.modules.subscriptions.SubscriptionsManager;
 import lk.mobilevisions.kiki.modules.tv.TvManager;
 import timber.log.Timber;
 
-public class LibrarySongSelectionFragment extends Fragment implements  LibrarySongsVerticalAdapter.OnGenreSongsItemActionListener, LibraryArtistVerticalAdapter.OnArtistsItemActionListener, LibraryPlaylistVerticalAdapter.OnPlaylistItemActionListener, LibraryPlaylistSongAdapter.OnLibraryPlaylistItemClickListener {
+public class LibrarySongSelectionFragment extends Fragment implements LibrarySongsVerticalAdapter.OnGenreSongsItemActionListener, LibraryArtistVerticalAdapter.OnArtistsItemActionListener, LibraryPlaylistVerticalAdapter.OnPlaylistItemActionListener, LibraryPlaylistSongAdapter.OnLibraryPlaylistItemClickListener {
 
     @Inject
     TvManager tvManager;
@@ -105,7 +105,7 @@ public class LibrarySongSelectionFragment extends Fragment implements  LibrarySo
         binding.seeAllArtists.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle=new Bundle();
+                Bundle bundle = new Bundle();
 //                bundle.putInt("genreId", genreId);
 //                System.out.println("check genre id " + genreId);
                 LibraryArtistListFragment libraryArtistListFragment = new LibraryArtistListFragment();
@@ -119,7 +119,7 @@ public class LibrarySongSelectionFragment extends Fragment implements  LibrarySo
         binding.seeAllPlaylist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle=new Bundle();
+                Bundle bundle = new Bundle();
 //                bundle.putInt("genreId", genreId);
 //                System.out.println("check genre id " + genreId);
                 LibraryPlaylistListFragment libraryPlaylistListFragment = new LibraryPlaylistListFragment();
@@ -197,7 +197,7 @@ public class LibrarySongSelectionFragment extends Fragment implements  LibrarySo
     }
 
     private void setupSearchSongs() {
-        channelsLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL,false);
+        channelsLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         binding.searchSongsRecyclerview.setLayoutManager(channelsLayoutManager);
         binding.searchSongsRecyclerview.setHasFixedSize(true);
         binding.searchSongsRecyclerview.setItemViewCacheSize(50);
@@ -207,45 +207,41 @@ public class LibrarySongSelectionFragment extends Fragment implements  LibrarySo
     }
 
 
-
     //
-private void searchSongs(String text) {
-    System.out.println("searchsize 222 " + text);
-    binding.aviProgress.setVisibility(View.VISIBLE);
-//    binding.noSongsTextView.setVisibility(View.GONE);
-    tvManager.getSearchSongsbyType(0, 100, text, new APIListener<List<Song>>() {
-        @Override
-        public void onSuccess(List<Song> result, List<Object> params) {
+    private void searchSongs(String text) {
+        binding.aviProgress.setVisibility(View.VISIBLE);
+
+        tvManager.getSearchSongsbyType(0, 100, text, new APIListener<List<Song>>() {
+            @Override
+            public void onSuccess(List<Song> result, List<Object> params) {
 //            searchSongsList.clear();
-            if (result.size() == 0) {
-                binding.searchLayout.setVisibility(View.GONE);
-                System.out.println("searchsize " + result.size());
+                if (result.size() == 0) {
+                    binding.searchLayout.setVisibility(View.GONE);
 
-            } else {
-                binding.searchLayout.setVisibility(View.VISIBLE);
-                searchSongsList = result;
-                System.out.println("searchsize 111 " + searchSongsList.size());
-                searchAdapter = new LibraryPlaylistSongAdapter(getActivity(), searchSongsList,LibrarySongSelectionFragment.this);
-                binding.searchSongsRecyclerview.setAdapter(searchAdapter);
+                } else {
+                    binding.searchLayout.setVisibility(View.VISIBLE);
+                    searchSongsList = result;
+                    searchAdapter = new LibraryPlaylistSongAdapter(getActivity(), searchSongsList, LibrarySongSelectionFragment.this);
+                    binding.searchSongsRecyclerview.setAdapter(searchAdapter);
+                }
+                binding.aviProgress.setVisibility(View.GONE);
             }
-            binding.aviProgress.setVisibility(View.GONE);
-        }
 
-        @Override
-        public void onFailure(Throwable t) {
-            binding.aviProgress.setVisibility(View.GONE);
-            System.out.println("dhdhdhdhdhdh 222  " + t.toString());
+            @Override
+            public void onFailure(Throwable t) {
+                binding.aviProgress.setVisibility(View.GONE);
+                System.out.println("dhdhdhdhdhdh 222  " + t.toString());
 
-        }
-    });
-}
+            }
+        });
+    }
 
 
     private void setDataToArtists() {
 
         System.out.println("Check artist 123123");
 
-        tvManager.getAllArtists(0,10, new APIListener<List<Artist>>() {
+        tvManager.getAllArtists(0, 10, new APIListener<List<Artist>>() {
             @Override
             public void onSuccess(List<Artist> result, List<Object> params) {
                 System.out.println("Check artist  " + result.size());
@@ -255,7 +251,7 @@ private void searchSongs(String text) {
                 } else {
                     binding.libraryArtistLayout.setVisibility(View.VISIBLE);
                     genreArtistsArrayList = result;
-                    artistsVerticalAdapter = new LibraryArtistVerticalAdapter(getActivity(), genreArtistsArrayList,LibrarySongSelectionFragment.this);
+                    artistsVerticalAdapter = new LibraryArtistVerticalAdapter(getActivity(), genreArtistsArrayList, LibrarySongSelectionFragment.this);
                     binding.libraryArtistRecyclerview.setAdapter(artistsVerticalAdapter);
                 }
                 binding.aviProgress.setVisibility(View.GONE);
@@ -272,9 +268,7 @@ private void searchSongs(String text) {
 
     private void setDataToPlaylists() {
 
-//        System.out.println("Check artist " + genreId);
-
-        tvManager.getDailyMixNew(0,10, new APIListener<List<PlayList>>() {
+        tvManager.getDailyMixNew(0, 10, new APIListener<List<PlayList>>() {
             @Override
             public void onSuccess(List<PlayList> result, List<Object> params) {
                 System.out.println("Check playlist  " + result.size());
@@ -284,7 +278,7 @@ private void searchSongs(String text) {
                 } else {
                     binding.libraryPlaylistLayout.setVisibility(View.VISIBLE);
                     genrePlaylistArrayList = result;
-                    playlistVerticalAdapter = new LibraryPlaylistVerticalAdapter(getActivity(), genrePlaylistArrayList,LibrarySongSelectionFragment.this);
+                    playlistVerticalAdapter = new LibraryPlaylistVerticalAdapter(getActivity(), genrePlaylistArrayList, LibrarySongSelectionFragment.this);
                     binding.libraryPlaylistRecycleview.setAdapter(playlistVerticalAdapter);
                 }
                 binding.aviProgress.setVisibility(View.GONE);
@@ -300,7 +294,6 @@ private void searchSongs(String text) {
     }
 
 
-
     @Override
     public void onAttach(Context context) {
 
@@ -311,7 +304,7 @@ private void searchSongs(String text) {
 
 
     private void getGenreSongs() {
-        tvManager.getAllSongs(0, 10,new APIListener<List<Song>>() {
+        tvManager.getAllSongs(0, 10, new APIListener<List<Song>>() {
             @Override
             public void onSuccess(List<Song> songs, List<Object> params) {
                 System.out.println("djdjdjdjddjd  111 " + songs.size());
@@ -322,7 +315,7 @@ private void searchSongs(String text) {
                     binding.librarySongsLayout.setVisibility(View.VISIBLE);
                     genreSongsArrayList = songs;
                     System.out.println("djdjdjdjddjd 222 " + genreSongsArrayList.size());
-                    genreSongsVerticalAdapter = new LibrarySongsVerticalAdapter(getActivity(), genreSongsArrayList,LibrarySongSelectionFragment.this);
+                    genreSongsVerticalAdapter = new LibrarySongsVerticalAdapter(getActivity(), genreSongsArrayList, LibrarySongSelectionFragment.this);
                     binding.librarySongsRecyclerview.setAdapter(genreSongsVerticalAdapter);
 
                 }
@@ -342,10 +335,10 @@ private void searchSongs(String text) {
     @Override
     public void onGenreSongsPlayAction(Song song, int position, List<Song> songs) {
 
-        if(!Application.getInstance().getSongsAddedToPlaylist().contains(song.getId())){
+        if (!Application.getInstance().getSongsAddedToPlaylist().contains(song.getId())) {
             Application.getInstance().addSongToPlayList(song.getId());
 
-        }else{
+        } else {
             Application.getInstance().removeSongFromPlayList(song.getId());
         }
         addSongsToPlaylist(song.getId());
@@ -374,7 +367,7 @@ private void searchSongs(String text) {
     @Override
     public void onPlaylistPlayAction(PlayList playList, int position, List<PlayList> playLists) {
 
-        Bundle bundle=new Bundle();
+        Bundle bundle = new Bundle();
         bundle.putInt("playlistID", playList.getId());
         bundle.putString("playlistName", playList.getName());
         bundle.putString("songCount", playList.getSongCount());
@@ -389,18 +382,18 @@ private void searchSongs(String text) {
                 .commit();
     }
 
-    private  void addSongsToPlaylist(int id) {
+    private void addSongsToPlaylist(int id) {
         Application.getInstance().getInjector().inject(this);
 
         String sessionId = null;
-        if(Application.getInstance().getSessionId()!=null){
+        if (Application.getInstance().getSessionId() != null) {
             sessionId = Application.getInstance().getSessionId();
-        }else{
+        } else {
             sessionId = UUID.randomUUID().toString();
             Application.getInstance().addSessionId(sessionId);
         }
         System.out.println("sessionnnn 11111 " + sessionId);
-        tvManager.addSongsToTempTable(sessionId, id,"S", new APIListener<Void>() {
+        tvManager.addSongsToTempTable(sessionId, id, "S", new APIListener<Void>() {
             @Override
             public void onSuccess(Void result, List<Object> params) {
 
@@ -417,11 +410,11 @@ private void searchSongs(String text) {
     @Override
     public void onPlaylistItemClick(Song song, int position, List<Song> songs) {
 
-        if(!Application.getInstance().getSongsAddedToPlaylist().contains(song.getId())){
+        if (!Application.getInstance().getSongsAddedToPlaylist().contains(song.getId())) {
             Application.getInstance().addSongToPlayList(song.getId());
             System.out.println("playlistcheck 44444 ");
 
-        }else{
+        } else {
             Application.getInstance().removeSongFromPlayList(song.getId());
             System.out.println("playlistcheck 33333 ");
         }

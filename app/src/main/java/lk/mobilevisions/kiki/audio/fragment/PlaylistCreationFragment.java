@@ -65,7 +65,7 @@ public class PlaylistCreationFragment extends Fragment implements PlaylistCreati
     private List<Song> playlistSongsList = new ArrayList<>();
     private int playlistId;
     private Uri selectedImageUri;
-    private String encodedImage="";
+    private String encodedImage = "";
     private boolean editPlaylist;
     private int editPlaylistID;
 
@@ -75,7 +75,6 @@ public class PlaylistCreationFragment extends Fragment implements PlaylistCreati
 
         binding = DataBindingUtil.inflate(inflater, R.layout.new_playlist_creation, container, false);
         ((Application) getActivity().getApplication()).getInjector().inject(this);
-        System.out.println("sjhjhshshshshshshsh 333 ");
         Application.BUS.register(this);
         Application.getInstance().addSessionId(null);
         Application.getInstance().clearPlayList();
@@ -94,27 +93,22 @@ public class PlaylistCreationFragment extends Fragment implements PlaylistCreati
         });
 
 
-
         editPlaylist = getArguments().getBoolean("editPlaylist");
         editPlaylistID = getArguments().getInt("editPlaylistID");
         String editPlaylistName = getArguments().getString("editPlaylistName");
         String editPlaylistImage = getArguments().getString("editPlaylistImage");
-        System.out.println("dsjhbvsdhjbvsd " + editPlaylist);
 
-        if (editPlaylist){
-            System.out.println("ksdnjfbsdjkd 11111" );
+        if (editPlaylist) {
+
             loadPlaylistTempTable(editPlaylistID);
-            System.out.println("afdfsdfsf " + editPlaylistID);
-//            String sessionID;
-//            sessionID = Application.getInstance().getSessionId();
-        }else {
+
+        } else {
             String sessionId;
             sessionId = Application.getInstance().getSessionId();
-            System.out.println("djdjdjdjdjdjddjjsjsj 2222 " + sessionId);
             getTempPlaylistSongs(sessionId);
         }
 
-        if (editPlaylist){
+        if (editPlaylist) {
 
             binding.editPlaylistName.setText(editPlaylistName);
             if (editPlaylistImage != null) {
@@ -122,8 +116,6 @@ public class PlaylistCreationFragment extends Fragment implements PlaylistCreati
                     Picasso.with(getActivity()).load(URLDecoder.decode(editPlaylistImage, "UTF-8"))
                             .placeholder(R.drawable.ic_image_camera)
                             .fit()
-//                            .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
-//                            .networkPolicy(NetworkPolicy.NO_STORE, NetworkPolicy.NO_CACHE)
                             .into(binding.customPlaylistImage);
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
@@ -132,7 +124,7 @@ public class PlaylistCreationFragment extends Fragment implements PlaylistCreati
 
         }
 
-        channelsLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL,false);
+        channelsLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         binding.addedSongsRecycle.setLayoutManager(channelsLayoutManager);
         playlistCreationAdapter = new PlaylistCreationAdapter(getActivity(), playlistSongsList, PlaylistCreationFragment.this);
         binding.addedSongsRecycle.setHasFixedSize(true);
@@ -164,8 +156,7 @@ public class PlaylistCreationFragment extends Fragment implements PlaylistCreati
             public void onClick(View v) {
                 Intent pickPhoto = new Intent(Intent.ACTION_PICK,
                         android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(pickPhoto , 1);
-
+                startActivityForResult(pickPhoto, 1);
             }
         });
 
@@ -178,46 +169,44 @@ public class PlaylistCreationFragment extends Fragment implements PlaylistCreati
 
                     String name = binding.editPlaylistName.getText().toString();
 
-                    if(selectedImageUri!=null && !name.isEmpty()){
+                    if (selectedImageUri != null && !name.isEmpty()) {
 
-                        saveEditedPlaylist(name,encodedImage);
+                        saveEditedPlaylist(name, encodedImage);
 
-                    } else if(selectedImageUri==null && !name.isEmpty()){
+                    } else if (selectedImageUri == null && !name.isEmpty()) {
 
-                        saveEditedPlaylist(name,"data:image/png;base64,null");
+                        saveEditedPlaylist(name, "data:image/png;base64,null");
 
-                    } else if(selectedImageUri !=null && name.isEmpty()){
+                    } else if (selectedImageUri != null && name.isEmpty()) {
 
-                        saveEditedPlaylist("New playlist",encodedImage);
+                        saveEditedPlaylist("New playlist", encodedImage);
 
                     } else {
 
-                        saveEditedPlaylist("New playlist","data:image/png;base64,null");
+                        saveEditedPlaylist("New playlist", "data:image/png;base64,null");
                     }
-
-                    System.out.println("sdfvzdddddv 2525");
                     binding.confirmText.setEnabled(false);
-                }else {
+                } else {
                     binding.confirmText.setEnabled(true);
                     binding.aviPlaylist.setVisibility(View.VISIBLE);
 
                     String name = binding.editPlaylistName.getText().toString();
 
-                    if(selectedImageUri!=null && !name.isEmpty()){
+                    if (selectedImageUri != null && !name.isEmpty()) {
 
-                        createPlayList(name,encodedImage);
+                        createPlayList(name, encodedImage);
 
-                    } else if(selectedImageUri==null && !name.isEmpty()){
+                    } else if (selectedImageUri == null && !name.isEmpty()) {
 
-                        createPlayList(name,"data:image/png;base64,null");
+                        createPlayList(name, "data:image/png;base64,null");
 
-                    } else if(selectedImageUri !=null && name.isEmpty()){
+                    } else if (selectedImageUri != null && name.isEmpty()) {
 
-                        createPlayList("New playlist",encodedImage);
+                        createPlayList("New playlist", encodedImage);
 
                     } else {
 
-                        createPlayList("New playlist","data:image/png;base64,null");
+                        createPlayList("New playlist", "data:image/png;base64,null");
                     }
                     binding.confirmText.setEnabled(false);
                 }
@@ -225,39 +214,34 @@ public class PlaylistCreationFragment extends Fragment implements PlaylistCreati
         });
 
 
-
         return binding.getRoot();
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
-        switch(requestCode) {
+        switch (requestCode) {
             case 1:
-                if(resultCode == RESULT_OK){
+                if (resultCode == RESULT_OK) {
                     selectedImageUri = imageReturnedIntent.getData();
                     binding.customPlaylistImage.setImageURI(selectedImageUri);
                     final InputStream imageStream;
                     try {
                         imageStream = getActivity().getContentResolver().openInputStream(selectedImageUri);
                         final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                         encodedImage = encodeImage(selectedImage);
-                         encodedImage = "data:image/png;base64," + encodedImage;
-                        System.out.print("dbhdhksdhksdhdjdjdjdjdjdjdjdjd " + encodedImage.length());
+                        encodedImage = encodeImage(selectedImage);
+                        encodedImage = "data:image/png;base64," + encodedImage;
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
-
                 }
 
-
                 break;
-
         }
     }
-    private String encodeImage(Bitmap bm)
-    {
+
+    private String encodeImage(Bitmap bm) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bm.compress(Bitmap.CompressFormat.JPEG,100,baos);
+        bm.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] b = baos.toByteArray();
         String encImage = Base64.encodeToString(b, Base64.DEFAULT);
 
@@ -265,19 +249,17 @@ public class PlaylistCreationFragment extends Fragment implements PlaylistCreati
     }
 
     private void getTempPlaylistSongs(String sessionId) {
-        System.out.println("sesssssionid 1111" + sessionId);
         songIdList.clear();
         tvManager.getSongsOfTempPlayList(sessionId, new APIListener<List<Song>>() {
             @Override
             public void onSuccess(List<Song> songs, List<Object> params) {
-                System.out.println("dydhhdhdhdhdhdh 7777777   " + songs.size());
                 for (Song song : songs) {
                     songIdList.add(song.getId());
                 }
                 playlistSongsList = songs;
-                if (editPlaylist){
-                    for(Song song : playlistSongsList){
-                        if(!Application.getInstance().getSongsAddedToPlaylist().contains(song.getId())){
+                if (editPlaylist) {
+                    for (Song song : playlistSongsList) {
+                        if (!Application.getInstance().getSongsAddedToPlaylist().contains(song.getId())) {
                             Application.getInstance().addSongToPlayList(song.getId());
                         }
                     }
@@ -285,15 +267,12 @@ public class PlaylistCreationFragment extends Fragment implements PlaylistCreati
                 binding.addedSongsRecycle.setAdapter(new PlaylistCreationAdapter(getContext(),
                         playlistSongsList, PlaylistCreationFragment.this));
                 if (songs.size() <= 0) {
-                    System.out.println("sdgsdgsdg " + songs.size());
                     binding.addedSongsRecycle.setVisibility(View.GONE);
-                    binding.aviPlaylist.setVisibility(View.GONE);
 
                 } else {
-                    System.out.println("sdgsdgsdg 1111" + songs.size());
                     binding.addedSongsRecycle.setVisibility(View.VISIBLE);
-                    binding.aviPlaylist.setVisibility(View.GONE);
                 }
+                binding.aviPlaylist.setVisibility(View.GONE);
             }
 
             @Override
@@ -309,16 +288,15 @@ public class PlaylistCreationFragment extends Fragment implements PlaylistCreati
     }
 
 
-    private void createPlayList(String name,String imageUrl) {
-        System.out.println("Test Data name " + name);
-        System.out.println("Test Data Image " + imageUrl);
-        tvManager.createPlaylist(name,imageUrl, new APIListener<PlayList>() {
+    private void createPlayList(String name, String imageUrl) {
+
+        tvManager.createPlaylist(name, imageUrl, new APIListener<PlayList>() {
 
             @Override
             public void onSuccess(PlayList playList, List<Object> params) {
                 playlistId = playList.getId();
-                addSongsToPlaylist(playlistId,songIdList);
-                Toast.makeText(getActivity(), "Your playlist created.", Toast.LENGTH_SHORT ).show();
+                addSongsToPlaylist(playlistId, songIdList);
+                Toast.makeText(getActivity(), "Your playlist created.", Toast.LENGTH_SHORT).show();
                 hideKeyboard();
 
                 binding.aviPlaylist.setVisibility(View.GONE);
@@ -335,12 +313,11 @@ public class PlaylistCreationFragment extends Fragment implements PlaylistCreati
         });
     }
 
-    private void addSongsToPlaylist(int playlistId, List<Integer> songIdList ) {
+    private void addSongsToPlaylist(int playlistId, List<Integer> songIdList) {
 
         tvManager.addSongsToPlaylist(playlistId, songIdList, new APIListener<Void>() {
             @Override
             public void onSuccess(Void result, List<Object> params) {
-
 
 
             }
@@ -352,14 +329,13 @@ public class PlaylistCreationFragment extends Fragment implements PlaylistCreati
         });
     }
 
-    private void saveEditedPlaylist (String playlistName, String playlistImage) {
+    private void saveEditedPlaylist(String playlistName, String playlistImage) {
 
-        tvManager.saveEditedPlaylist(playlistName, editPlaylistID, songIdList,playlistImage, new APIListener<Void>() {
+        tvManager.saveEditedPlaylist(playlistName, editPlaylistID, songIdList, playlistImage, new APIListener<Void>() {
             @Override
             public void onSuccess(Void result, List<Object> params) {
-                    songIdList.size();
-                System.out.println("asdascasc " + songIdList.size());
-                Toast.makeText(getActivity(), "Your playlist edited successfully.", Toast.LENGTH_SHORT ).show();
+                songIdList.size();
+                Toast.makeText(getActivity(), "Your playlist edited successfully.", Toast.LENGTH_SHORT).show();
                 AudioDashboardActivity hhh = (AudioDashboardActivity) getActivity();
                 hhh.onBackPressed();
 
@@ -368,35 +344,32 @@ public class PlaylistCreationFragment extends Fragment implements PlaylistCreati
             @Override
             public void onFailure(Throwable t) {
 
-                Toast.makeText(getActivity(), "Failed.", Toast.LENGTH_SHORT ).show();
+                Toast.makeText(getActivity(), "Failed.", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void loadPlaylistTempTable(int editPlaylistID ) {
+    private void loadPlaylistTempTable(int editPlaylistID) {
 
         String sessionId = null;
-        if(Application.getInstance().getSessionId()!=null){
+        if (Application.getInstance().getSessionId() != null) {
             sessionId = Application.getInstance().getSessionId();
-            System.out.println("removetcheck 22222 ");
-        }else{
+        } else {
             sessionId = UUID.randomUUID().toString();
             Application.getInstance().addSessionId(sessionId);
-            System.out.println("removetcheck 11111 ");
         }
-        System.out.println("sesssssionid 2222" + sessionId);
         tvManager.loadPlaylistTempTable(sessionId, editPlaylistID, new APIListener<Void>() {
             @Override
             public void onSuccess(Void result, List<Object> params) {
                 getTempPlaylistSongs(Application.getInstance().getSessionId());
-                System.out.println("sdjkfbsdkjbv " + Application.getInstance().getSessionId());
             }
 
             @Override
             public void onFailure(Throwable t) {
 
             }
-        });    }
+        });
+    }
 
 
     @Override
@@ -404,23 +377,19 @@ public class PlaylistCreationFragment extends Fragment implements PlaylistCreati
 
         songIdList.remove(position);
         songIdList.size();
-        System.out.println("sdfsdfsdf " + songIdList.size());
-        Toast.makeText(getActivity(), "Removed.", Toast.LENGTH_SHORT ).show();
+        Toast.makeText(getActivity(), "Removed.", Toast.LENGTH_SHORT).show();
 
     }
 
     private void addSongsToTempPlaylist(int songId) {
         String sessionId = null;
-        if(Application.getInstance().getSessionId()!=null){
+        if (Application.getInstance().getSessionId() != null) {
             sessionId = Application.getInstance().getSessionId();
-            System.out.println("removetcheck 22222 ");
-        }else{
+        } else {
             sessionId = UUID.randomUUID().toString();
             Application.getInstance().addSessionId(sessionId);
-            System.out.println("removetcheck 11111 ");
         }
-        System.out.println("sessionnnn 11111 " + sessionId);
-        tvManager.addSongsToTempTable(sessionId, songId,"S", new APIListener<Void>() {
+        tvManager.addSongsToTempTable(sessionId, songId, "S", new APIListener<Void>() {
             @Override
             public void onSuccess(Void result, List<Object> params) {
 
@@ -435,11 +404,9 @@ public class PlaylistCreationFragment extends Fragment implements PlaylistCreati
     }
 
 
-
     @Override
     public void onPause() {
         super.onPause();
-        System.out.println("sjhjhshshshshshshsh 222 ");
     }
 
     @Override
@@ -451,33 +418,28 @@ public class PlaylistCreationFragment extends Fragment implements PlaylistCreati
     @Override
     public void onStart() {
         super.onStart();
-        System.out.println("sjhjhshshshshshshsh 4444 ");
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        System.out.println("sjhjhshshshshshshsh 5555 ");
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        System.out.println("sjhjhshshshshshshsh 6666 ");
     }
 
     @Override
     public void setUserVisibleHint(boolean visible) {
         super.setUserVisibleHint(visible);
         if (visible && isResumed()) {
-            System.out.println("sjhjhshshshshshshsh 7777 ");
             onResume();
         }
     }
 
     @Override
     public void onResume() {
-        System.out.println("sjhjhshshshshshshsh 1111 ");
         super.onResume();
         if (!getUserVisibleHint()) {
             return;
@@ -488,7 +450,6 @@ public class PlaylistCreationFragment extends Fragment implements PlaylistCreati
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        System.out.println("sjhjhshshshshshshsh 8888 ");
     }
 
     @Subscribe
@@ -498,7 +459,6 @@ public class PlaylistCreationFragment extends Fragment implements PlaylistCreati
             getTempPlaylistSongs(Application.getInstance().getSessionId());
         }
 
-        System.out.println("sjhjhshshshshshshsh 9999 ");
     }
 
 }

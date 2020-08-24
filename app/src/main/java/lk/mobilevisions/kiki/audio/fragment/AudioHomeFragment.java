@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.crashlytics.android.answers.FirebaseAnalyticsEvent;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.otto.Subscribe;
 
 import java.io.UnsupportedEncodingException;
@@ -91,7 +93,7 @@ public class AudioHomeFragment extends Fragment implements DailyMixAdapter.Daily
     private PlaylistVerticalAdapter.OnPlaylistItemActionListener playlistItemActionListener;
 
     private int lastRandomNumber;
-
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     public AudioHomeFragment() {
         // Required empty public constructor
@@ -108,6 +110,7 @@ public class AudioHomeFragment extends Fragment implements DailyMixAdapter.Daily
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home_audio, container, false);
         ((Application) getActivity().getApplication()).getInjector().inject(this);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(context);
 
         checkSubscription();
         setupDailyMix();
@@ -124,6 +127,7 @@ public class AudioHomeFragment extends Fragment implements DailyMixAdapter.Daily
         setDataToLatestSongs();
         setDataToRadioChannel();
         setDataToArtists();
+
 
         Application.BUS.register(this);
 
@@ -294,6 +298,9 @@ public class AudioHomeFragment extends Fragment implements DailyMixAdapter.Daily
 
         }
 
+        Bundle params = new Bundle();
+        params.putString("user_actions", "Audio Home");
+        mFirebaseAnalytics.logEvent("AudioTab", params);
 
         return binding.getRoot();
     }
@@ -473,7 +480,7 @@ public class AudioHomeFragment extends Fragment implements DailyMixAdapter.Daily
 
     private void setDataToRadioChannel() {
 
-        tvManager.getRadioChannels( new APIListener<List<Song>>() {
+        tvManager.getRadioChannels(new APIListener<List<Song>>() {
             @Override
             public void onSuccess(List<Song> result, List<Object> params) {
                 if (result.size() == 0) {
@@ -481,7 +488,7 @@ public class AudioHomeFragment extends Fragment implements DailyMixAdapter.Daily
 
                 } else {
                     binding.radioChannelLayout.setVisibility(View.VISIBLE);
-                    for(Song song : result){
+                    for (Song song : result) {
                         Song song1 = new Song();
                         try {
                             song1.setUrl(URLDecoder.decode(song.getUrl(), "UTF-8"));
@@ -661,11 +668,11 @@ public class AudioHomeFragment extends Fragment implements DailyMixAdapter.Daily
 
 
                         } else {
-                            try {
-                                subscriptionDialog();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
+//                            try {
+//                                subscriptionDialog();
+//                            } catch (Exception e) {
+//                                e.printStackTrace();
+//                            }
 
                         }
 

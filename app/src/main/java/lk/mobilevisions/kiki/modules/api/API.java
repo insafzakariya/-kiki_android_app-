@@ -80,24 +80,24 @@ public interface API {
 
     @GET("content/programs")
     Call<Program> getProgramWithID(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
-                                    @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
-                                    @Query("searchId") int programID);
+                                   @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
+                                   @Query("searchId") int programID);
 
     @GET("artist/searchbyid")
     Call<Artist> getArtistWithID(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
-                                   @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
-                                   @Query("artist_id") int artistID);
+                                 @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
+                                 @Query("artist_id") int artistID);
 
     @GET("playlist/playlistdata/{id}")
     Call<PlayList> getPlaylistWithID(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
-                                 @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
-                                   @Path("id") int playlistID,
-                                   @Query("g") boolean g);
+                                     @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
+                                     @Path("id") int playlistID,
+                                     @Query("g") boolean g);
 
     @GET("audio/songsbyid")
     Call<Song> getSongWithID(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
-                                     @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
-                                     @Query("song_id") int songID);
+                             @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
+                             @Query("song_id") int songID);
 
     @GET("content/programs")
     Call<List<Program>> getChannelTrailers(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
@@ -389,15 +389,15 @@ public interface API {
 
     @GET("library/artists")
     Call<List<Artist>> getLibraryArtists(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
-                                     @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
-                                     @Query("limit") int limit,
-                                     @Query("offset") int offset);
-
-    @GET("library/playlist")
-    Call<List<PlayList>> getLibraryPlaylists(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
                                          @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
                                          @Query("limit") int limit,
                                          @Query("offset") int offset);
+
+    @GET("library/playlist")
+    Call<List<PlayList>> getLibraryPlaylists(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
+                                             @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
+                                             @Query("limit") int limit,
+                                             @Query("offset") int offset);
 
 
     @GET("audio/playlist/songs")
@@ -441,8 +441,8 @@ public interface API {
 
     @GET("genre/{id}/playlists")
     Call<List<PlayList>> getGenrePlaylists(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
-                                   @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
-                                   @Path("id") int id);
+                                           @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
+                                           @Path("id") int id);
 
 
     @GET("audio/songs/search/{text}")
@@ -454,44 +454,44 @@ public interface API {
 
     @GET("audio/search-all")
     Call<SearchResponse> getSearchedAll(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
-                                              @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
-                                              @Query("query_text") String text);
+                                        @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
+                                        @Query("query_text") String text);
 
     @GET("audio/search-by-type")
     Call<List<Song>> getSearchSongsbyType(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
-                                      @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
-                                      @Query("query_text") String text,
-                                          @Query("offset") int offset,
-                                      @Query("limit") int limit,
-                                      @Query("type") String type);
-
-    @GET("audio/search-by-type")
-    Call<List<Artist>> getSearchArtistbyType(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
                                           @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
                                           @Query("query_text") String text,
-                                             @Query("offset") int offset,
+                                          @Query("offset") int offset,
                                           @Query("limit") int limit,
                                           @Query("type") String type);
 
     @GET("audio/search-by-type")
-    Call<List<PlayList>> getSearchPlaylistbyType(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
+    Call<List<Artist>> getSearchArtistbyType(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
                                              @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
                                              @Query("query_text") String text,
-                                                 @Query("offset") int offset,
+                                             @Query("offset") int offset,
                                              @Query("limit") int limit,
                                              @Query("type") String type);
 
+    @GET("audio/search-by-type")
+    Call<List<PlayList>> getSearchPlaylistbyType(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
+                                                 @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
+                                                 @Query("query_text") String text,
+                                                 @Query("offset") int offset,
+                                                 @Query("limit") int limit,
+                                                 @Query("type") String type);
+
     @GET("audio/search-history")
     Call<List<String>> getSearchSuggestions(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
-                                              @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
-                                              @Query("limit") int limit);
+                                            @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
+                                            @Query("limit") int limit);
 
     @GET("audio/songs/suggession/genre")
     Call<List<Song>> getAudioSuggestionList(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
-                                        @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
-                                        @Query("offset") int offset,
-                                        @Query("limit") int limit,
-                                        @Query("song_id") int songID);
+                                            @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
+                                            @Query("offset") int offset,
+                                            @Query("limit") int limit,
+                                            @Query("song_id") int songID);
 
     @GET("audio/playlist")
     Call<List<DailyMix>> getAllDailymix(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
@@ -502,10 +502,10 @@ public interface API {
 
     @GET("audio/playlist")
     Call<List<PlayList>> getAllDailymixNew(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
-                                        @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
-                                        @Query("offset") int offset,
-                                        @Query("limit") int limit,
-                                        @Query("g") boolean globle);
+                                           @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
+                                           @Query("offset") int offset,
+                                           @Query("limit") int limit,
+                                           @Query("g") boolean globle);
 
     @GET("audio/playlist")
     Call<List<PlayList>> getAllPlaylist(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
@@ -515,9 +515,9 @@ public interface API {
 
     @GET("playlist/playlistdata/{id}")
     Call<PlayList> getPlaylistData(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
-                                        @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
-                                        @Path("id") int id,
-                                         @Query("g") boolean data);
+                                   @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
+                                   @Path("id") int id,
+                                   @Query("g") boolean data);
 
 
     @GET("audio/playlist/songs/{id}")
@@ -530,20 +530,20 @@ public interface API {
 
     @GET("audio/playlist/songs/{id}")
     Call<List<Song>> getSongsOfPlaylistInLibrary(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
-                                        @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
-                                        @Path("id") int id,
-                                        @Query("offset") int offset,
-                                        @Query("limit") int limit,
-                                        @Query("sessionid") String sessionid,
-                                        @Query("g") boolean globle);
+                                                 @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
+                                                 @Path("id") int id,
+                                                 @Query("offset") int offset,
+                                                 @Query("limit") int limit,
+                                                 @Query("sessionid") String sessionid,
+                                                 @Query("g") boolean globle);
 
 
     @GET("audio/playlist/songs/{id}")
     Call<List<Song>> getSongsOfUserPlaylist(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
-                                        @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
-                                        @Path("id") int id,
-                                        @Query("offset") int offset,
-                                        @Query("limit") int limit);
+                                            @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
+                                            @Path("id") int id,
+                                            @Query("offset") int offset,
+                                            @Query("limit") int limit);
 
 
     @GET("audio/playlist/songs/{id}")
@@ -561,26 +561,26 @@ public interface API {
 
     @POST("audio/playlist/remove")
     Call<Void> audioPlaylistRemove(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
-                                       @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
-                                       @Header("Content-Type") String content_type,
-                                       @Body HashMap<String, Object> request);
+                                   @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
+                                   @Header("Content-Type") String content_type,
+                                   @Body HashMap<String, Object> request);
 
     @POST("audio/playlist/create")
     Call<PlayList> audioPlaylistCreateLibrary(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
-                                       @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
-                                       @Header("Content-Type") String content_type,
-                                       @Body ArrayList<String> strings);
+                                              @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
+                                              @Header("Content-Type") String content_type,
+                                              @Body ArrayList<String> strings);
 
 
     @POST("playlist/songs/add")
     Call<Void> addSongsToPlaylist(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
-                                      @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
-                                      @Body HashMap<String, Object> request);                   //Body created with Hashmap
+                                  @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
+                                  @Body HashMap<String, Object> request);                   //Body created with Hashmap
 
     @POST("library/add")
     Call<Void> addDataToLibrary(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
-                                    @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
-                                    @Body PlaylistModel request);                              //Body created with Model
+                                @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
+                                @Body PlaylistModel request);                              //Body created with Model
 
     @POST("library/add")
     Call<Void> addDataToLibraryHash(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
@@ -589,29 +589,29 @@ public interface API {
 
     @POST("library/remove")
     Call<Void> removeDatafromLibrary(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
-                                    @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
-                                    @Body HashMap<String, Object> request);                    //Body created with HASHMAP
+                                     @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
+                                     @Body HashMap<String, Object> request);                    //Body created with HASHMAP
 
 
     @POST("audio/playlist/addtotemp")
     Call<Void> addSongsToTempTable(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
-                                  @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
-                                  @Body HashMap<String, Object> request);                   //Add n Add all songs to temp table
-
-    @POST("audio/playlist/temp/reload")
-    Call<Void> loadPlaylistTempTable(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
                                    @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
                                    @Body HashMap<String, Object> request);                   //Add n Add all songs to temp table
 
-    @POST("playlist/songs/editsongs")
-    Call<Void> saveEditedPlaylist(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
+    @POST("audio/playlist/temp/reload")
+    Call<Void> loadPlaylistTempTable(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
                                      @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
                                      @Body HashMap<String, Object> request);                   //Add n Add all songs to temp table
 
+    @POST("playlist/songs/editsongs")
+    Call<Void> saveEditedPlaylist(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
+                                  @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
+                                  @Body HashMap<String, Object> request);                   //Add n Add all songs to temp table
+
     @GET("audio/playlist/temp/all")
     Call<List<Song>> getSongsFromPlaylistTable(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
-                                           @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
-                                           @Query("session_id") String sessionId);
+                                               @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
+                                               @Query("session_id") String sessionId);
 
 
     @POST("audio/playlist/addsongs/{id}")
@@ -640,16 +640,16 @@ public interface API {
 
     @POST("deviceid/update")
     Call<Void> sendDeviceId(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
-                                  @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
-                                  @Body HashMap<String, Object> request);
+                            @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
+                            @Body HashMap<String, Object> request);
 
     @GET("analytics/screen/{Content_Id}/{Screen_Id}/{Screen_Action_Id}/{Screen_Time}")
     Call<Void> sendActionAnalytics(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
-                                @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
-                                @Path("Content_Id") int contentId,
-                                @Path("Screen_Id") int screenId,
-                                @Path("Screen_Action_Id") int actionId,
-                                @Path("Screen_Time") String screenTime);
+                                   @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
+                                   @Path("Content_Id") int contentId,
+                                   @Path("Screen_Id") int screenId,
+                                   @Path("Screen_Action_Id") int actionId,
+                                   @Path("Screen_Time") String screenTime);
 
 
 }

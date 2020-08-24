@@ -49,6 +49,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -141,7 +142,18 @@ import timber.log.Timber;
 import static com.androidquery.util.AQUtility.getContext;
 
 
-public class AudioDashboardActivity extends BaseActivity implements CurrentSessionCallback, Slider.OnValueChangedListener, RecentlyPlayedVerticalAdapter.RecentlyPlayedItemActionListener, YouAlsoMightLikeVerticalAdapter.OnYouMightAlsoLikeItemActionListener, PopularSongsVerticalAdapter.OnPopularSongsItemActionListener, DiscreteScrollView.OnItemChangedListener, View.OnClickListener, PlaylistDialogAdapter.OnAudioPlaylistItemClickListener, SongsAdapter.OnAudioSongsItemClickListener, ArtistsVerticalAdapter.OnArtistsItemActionListener, AddSongToPlaylistDialogAdapter.OnPlaylistDialogItemClickListener, ArtistListAdapter.OnArtistListItemActionListener, LatestPlaylistAdapter.OnLatestPlaylistItemClickListener,
+public class AudioDashboardActivity extends BaseActivity implements CurrentSessionCallback, Slider.OnValueChangedListener,
+        RecentlyPlayedVerticalAdapter.RecentlyPlayedItemActionListener,
+        YouAlsoMightLikeVerticalAdapter.OnYouMightAlsoLikeItemActionListener,
+        PopularSongsVerticalAdapter.OnPopularSongsItemActionListener,
+        DiscreteScrollView.OnItemChangedListener,
+        View.OnClickListener,
+        PlaylistDialogAdapter.OnAudioPlaylistItemClickListener,
+        SongsAdapter.OnAudioSongsItemClickListener,
+        ArtistsVerticalAdapter.OnArtistsItemActionListener,
+        AddSongToPlaylistDialogAdapter.OnPlaylistDialogItemClickListener,
+        ArtistListAdapter.OnArtistListItemActionListener,
+        LatestPlaylistAdapter.OnLatestPlaylistItemClickListener,
         SearchSuggestionAdapter.OnSearchSugTextviewItemClickListener {
 
 
@@ -1984,6 +1996,9 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
     @Override
     public void showErrorDialog(int indexP, Song currentAudio) {
         subscriptionDialog();
+        if (streamingManager.isPlaying()){
+                    streamingManager.onStop();
+        }
     }
 
     @Override
@@ -2650,7 +2665,18 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
             searchKeyWord = string;
             searchSongs(searchKeyWord);
             binding.includeDashboard.viewSearchTint.setVisibility(View.GONE);
+            hideKeyboard();
+//            binding.includeDashboard.searchview.setSearchString(searchKeyWord,true);
     }
+
+    public void hideKeyboard() {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
 
     public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder> {
 

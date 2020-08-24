@@ -20,6 +20,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.valdesekamdem.library.mdtoast.MDToast;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -203,6 +205,11 @@ public class YouMightAlsoLikeFragment extends Fragment implements YouMightAlsoLi
     tvManager.addDataToLibraryHash("S",songId, new APIListener<Void>() {
         @Override
         public void onSuccess(Void result, List<Object> params) {
+
+//            MDToast mdToast = MDToast.makeText(getApplicationContext(),
+//                    getResources().getString(R.string.added_to_library),
+//                    Toast.LENGTH_SHORT, MDToast.TYPE_SUCCESS);
+//            mdToast.show();
 
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.added_to_library), Toast.LENGTH_SHORT).show();
         }

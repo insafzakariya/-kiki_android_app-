@@ -95,6 +95,7 @@ public class AudioPaymentActivity extends AppCompatActivity implements AdvancedW
                             Timber.d("Loading URL from the WebView: %s", Utils.App.getConfig(getApplication()).getMobilePaymentGatewayURL() + "?token=" + packageToken.getTokenHash());
                             binding.webViewPayment.addHttpHeader("X-Requested-With", "");
                             binding.webViewPayment.loadUrl(Utils.App.getConfig(getApplication()).getMobilePaymentGatewayURL() + "?token=" + packageToken.getTokenHash());
+//                            System.out.println("urlCheck " + Utils.App.getConfig(getApplication()).getMobilePaymentGatewayURL());
                             return;
                         }
 //                        if (thePackage.getId() == 46 || thePackage.getId() == 81) {

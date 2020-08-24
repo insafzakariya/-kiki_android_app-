@@ -37,6 +37,7 @@ public class HeaderResponse {
     }
 
     public String getPhoneNumber() {
+
         if (phoneNumber != null) {
             if (!phoneNumber.startsWith("+")) {
                 phoneNumber = "+" + phoneNumber;

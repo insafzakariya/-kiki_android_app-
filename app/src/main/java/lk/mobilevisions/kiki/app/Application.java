@@ -205,7 +205,7 @@ public class Application extends android.app.Application {
         API api = retrofit.create(API.class);
 
         retrofitCom = new Retrofit.Builder()
-                .baseUrl("http://220.247.201.206:90")
+                .baseUrl("http://35.200.229.111/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(httpClientCom.build())
                 .build();

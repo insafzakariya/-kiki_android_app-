@@ -228,6 +228,7 @@ public class AudioStreamingManager extends StreamingManager {
      * @param isIncremental
      * @return
      */
+
     private boolean isValidIndex(boolean isIncremental, int index) {
         if (isIncremental) {
             return (playMultiple && !isMediaListEmpty() && mediaList.size() > index);
