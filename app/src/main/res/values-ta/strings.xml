@@ -42,6 +42,8 @@
     <string name="my_list">எனது பட்டியல்</string>
     <string name="add_to_my_list">எனது பட்டியலில் \nசேர்க்கவும்</string>
     <string name="like_movie">இந்த திரைப்படத்தை \nவிரும்பு</string>
+    <string name="unlike_movie">ஏற்கனவே விரும்புகிறேன்</string>
+    <string name="remove_from_my_list">எனது பட்டியலிலிருந்து நீக்கப்பட்டது</string>
     <string name="ok">சரி</string>
     <string name="play_now">தற்பொழுது  இயக்கவும்</string>
     <string name="play_trailer">டிரெய்லர் இயக்கவும்</string>
@@ -94,7 +96,7 @@
     <string name="playlist">பாடல்வரிசை</string>
     <string name="your_playlist">உங்களுடைய பாடல்வரிசை</string>
     <string name="add_to_library">தொகுப்பில் சேர்க்கவும்</string>
-    <string name="add_to_playlist">பாடல் வரிசையில் சேர்க்கவும் ></string>
+    <string name="add_to_playlist">பாடல் வரிசையில் சேர்க்கவும்</string>
     <string name="add_to_playlist_2">பாடல் வரிசையில் சேர்க்கவும்</string>
     <string name="kiki_playlist">KiKi பாடல்வரிசை</string>
     <string name="genre">பாடல்வகை</string>

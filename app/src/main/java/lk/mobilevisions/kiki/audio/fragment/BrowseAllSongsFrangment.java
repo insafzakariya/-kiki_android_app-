@@ -16,6 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 
+import com.squareup.otto.Subscribe;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +29,7 @@ import lk.mobilevisions.kiki.app.Utils;
 import lk.mobilevisions.kiki.audio.adapter.ArtistsVerticalAdapter;
 import lk.mobilevisions.kiki.audio.adapter.BrowseAllSongsAdapter;
 import lk.mobilevisions.kiki.audio.adapter.GenreArtistVerticalAdapter;
+import lk.mobilevisions.kiki.audio.event.SearchNavigationEvent;
 import lk.mobilevisions.kiki.audio.model.dto.Artist;
 import lk.mobilevisions.kiki.audio.model.dto.Genre;
 import lk.mobilevisions.kiki.audio.model.dto.Song;
@@ -66,7 +69,6 @@ public class BrowseAllSongsFrangment extends Fragment implements BrowseAllSongsA
         ((Application) getActivity().getApplication()).getInjector().inject(this);
         setupArtists();
         setDataToArtists();
-
 
         channelsLayoutManager = new GridLayoutManager(getActivity(), 3);
         binding.genreRecycle.setLayoutManager(channelsLayoutManager);
@@ -208,5 +210,6 @@ public class BrowseAllSongsFrangment extends Fragment implements BrowseAllSongsA
                 .replace(R.id.genre_artist_browse_container, artistDetailFragment, "artistID")
                 .addToBackStack(null)
                 .commit();
+
     }
 }

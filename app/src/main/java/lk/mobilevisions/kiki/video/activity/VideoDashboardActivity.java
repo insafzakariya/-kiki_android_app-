@@ -13,6 +13,8 @@ import android.os.Handler;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 
+import com.facebook.appevents.AppEventsConstants;
+import com.facebook.appevents.AppEventsLogger;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
@@ -261,6 +263,8 @@ public class VideoDashboardActivity extends BaseActivity {
 
             }
         });
+        AppEventsLogger logger = AppEventsLogger.newLogger(this);
+        logger.logEvent("Video_Screen");
 
     }
 

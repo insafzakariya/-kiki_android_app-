@@ -13,6 +13,8 @@ import lk.mobilevisions.kiki.audio.activity.AudioPackagesActivity;
 import lk.mobilevisions.kiki.audio.activity.AudioPaymentActivity;
 import lk.mobilevisions.kiki.audio.activity.AudioPlayerActivity;
 import lk.mobilevisions.kiki.audio.activity.AudioProfileActivity;
+import lk.mobilevisions.kiki.audio.activity.search.SearchedArtistsActivity;
+import lk.mobilevisions.kiki.audio.activity.search.SearchedPlaylistsActivity;
 import lk.mobilevisions.kiki.audio.fragment.ArtistDetailFragment;
 import lk.mobilevisions.kiki.audio.fragment.ArtistListFragment;
 import lk.mobilevisions.kiki.audio.fragment.ArtistSongsListFragment;
@@ -50,8 +52,9 @@ import lk.mobilevisions.kiki.audio.fragment.PlaylistFragment;
 import lk.mobilevisions.kiki.audio.fragment.ProgrammesFragment;
 import lk.mobilevisions.kiki.audio.fragment.RecentlyPlayedFragment;
 import lk.mobilevisions.kiki.audio.fragment.SearchedArtistFragment;
+import lk.mobilevisions.kiki.audio.fragment.SearchedPlaylistDetailFragment;
 import lk.mobilevisions.kiki.audio.fragment.SearchedPlaylistFragment;
-import lk.mobilevisions.kiki.audio.fragment.SearchedSongsFragment;
+import lk.mobilevisions.kiki.audio.activity.search.SearchedSongsActivity;
 import lk.mobilevisions.kiki.audio.fragment.SeeAllGenreFragment;
 import lk.mobilevisions.kiki.audio.fragment.VideosFragment;
 import lk.mobilevisions.kiki.audio.fragment.YouMightAlsoLikeFragment;
@@ -135,7 +138,7 @@ public interface Injector {
     void inject(GenreWiseArtistListFragment fragment);
     void inject(GenreWiseSongsFragment fragment);
     void inject(SeeAllGenreFragment fragment);
-    void inject(SearchedSongsFragment fragment);
+    void inject(SearchedSongsActivity activity);
     void inject(SearchedPlaylistFragment fragment);
     void inject(SearchedArtistFragment fragment);
     void inject(LibraryHomeSongListFragment fragment);
@@ -155,6 +158,7 @@ public interface Injector {
     void inject(LibraryPlaylistDetailFragment fragment);
     void inject(LibraryArtistDetailFragment fragment);
     void inject(LibraryArtistSongsList fragment);
+    void inject(SearchedPlaylistDetailFragment fragment);
     void inject(AudioPlayerActivity activity);
     void inject(AudioDashboardActivity activity);
     void inject(FullScreenEpisodesActivity activity);
@@ -168,6 +172,8 @@ public interface Injector {
     void inject(VideoEpisodeActivity activity);
     void inject(PaymentActivity activity);
     void inject(AudioPaymentActivity activity);
+    void inject(SearchedArtistsActivity activity);
+    void inject(SearchedPlaylistsActivity activity);
 
 
 }

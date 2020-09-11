@@ -255,7 +255,22 @@
         <activity
             android:name=".ui.settings.SettingsActivity"
             android:label="Settings"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".audio.activity.search.SearchedSongsActivity"
+            android:label="SearchedSongs"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".audio.activity.search.SearchedArtistsActivity"
+            android:label="SearchedArtists"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".audio.activity.search.SearchedPlaylistsActivity"
+            android:label="SearchedPlaylists"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".video.activity.VideoSettingsActivity"
             android:screenOrientation="portrait" />
@@ -327,6 +342,8 @@
         <meta-data
             android:name="com.microsoft.applicationinsights.instrumentationKey"
             android:value="2237c85c-b8ff-467f-82c3-04675efa9188" />
+        <meta-data android:name="com.facebook.sdk.AutoLogAppEventsEnabled"
+            android:value="true"/>
     </application>
 
 </manifest>

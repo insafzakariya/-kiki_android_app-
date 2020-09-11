@@ -1,10 +1,13 @@
-package lk.mobilevisions.kiki.audio.fragment;
+package lk.mobilevisions.kiki.audio.activity.search;
 
 import android.app.AlertDialog;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,8 +20,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import lk.mobilevisions.kiki.R;
@@ -29,21 +33,19 @@ import lk.mobilevisions.kiki.audio.adapter.AddSongToPlaylistDialogAdapter;
 import lk.mobilevisions.kiki.audio.adapter.GenreWiseSongsAdapter;
 import lk.mobilevisions.kiki.audio.model.dto.PlayList;
 import lk.mobilevisions.kiki.audio.model.dto.Song;
-import lk.mobilevisions.kiki.databinding.FragmentGenreWiseSongsBinding;
+import lk.mobilevisions.kiki.databinding.ActivitySearchedsongsBinding;
 import lk.mobilevisions.kiki.modules.api.APIListener;
 import lk.mobilevisions.kiki.modules.tv.TvManager;
 
-import static com.facebook.FacebookSdk.getApplicationContext;
-
-public class SearchedSongsFragment extends Fragment implements GenreWiseSongsAdapter.OnYouMightLikeItemClickListener , AddSongToPlaylistDialogAdapter.OnPlaylistDialogItemClickListener {
+public class SearchedSongsActivity extends AppCompatActivity implements GenreWiseSongsAdapter.OnYouMightLikeItemClickListener, AddSongToPlaylistDialogAdapter.OnPlaylistDialogItemClickListener, View.OnClickListener {
     @Inject
     TvManager tvManager;
 
 
-    FragmentGenreWiseSongsBinding binding;
+    ActivitySearchedsongsBinding binding;
 
     GenreWiseSongsAdapter mAdapter;
-    List<Song> genreSongsList = new ArrayList<>();
+    List<Song> searchedSongsList = new ArrayList<>();
     private Animation animShow, animHide;
     LinearLayoutManager channelsLayoutManager;
     private Endless endless;
@@ -52,35 +54,38 @@ public class SearchedSongsFragment extends Fragment implements GenreWiseSongsAda
     List<Integer> songId = new ArrayList<>();
     private AlertDialog alertDialog;
 
-    public SearchedSongsFragment() {
+    public SearchedSongsActivity() {
         // Required empty public constructor
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_searchedsongs);
+        ((Application) getApplication()).getInjector().inject(this);
+        Window window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.setStatusBarColor(ContextCompat.getColor(this, R.color.newUiBackground));
+        }
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_genre_wise_songs, container, false);
-        ((Application) getActivity().getApplication()).getInjector().inject(this);
+        String searchKey = getIntent().getStringExtra("searchKey");
 
-        String searchKey = getArguments().getString("searchKey");
+        channelsLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        binding.searchedsongsRecyclerview.setLayoutManager(channelsLayoutManager);
+        mAdapter = new GenreWiseSongsAdapter(this, searchedSongsList, SearchedSongsActivity.this);
+        binding.searchedsongsRecyclerview.setHasFixedSize(true);
+        binding.searchedsongsRecyclerview.setItemViewCacheSize(50);
+        binding.searchedsongsRecyclerview.setDrawingCacheEnabled(true);
 
-        channelsLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-        binding.genreWiseRecyclerview.setLayoutManager(channelsLayoutManager);
-        mAdapter = new GenreWiseSongsAdapter(getActivity(), genreSongsList, SearchedSongsFragment.this);
-        binding.genreWiseRecyclerview.setHasFixedSize(true);
-        binding.genreWiseRecyclerview.setItemViewCacheSize(50);
-        binding.genreWiseRecyclerview.setDrawingCacheEnabled(true);
+        binding.includedToolbar.titleTextview.setText("Search");
+        binding.includedToolbar.backImageview.setOnClickListener(this);
 
-        View loadingView = View.inflate(getActivity(), R.layout.layout_loading, null);
+        View loadingView = View.inflate(this, R.layout.layout_loading, null);
         loadingView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        endless = Endless.applyTo(binding.genreWiseRecyclerview,
+        endless = Endless.applyTo(binding.searchedsongsRecyclerview,
                 loadingView
         );
         endless.setAdapter(mAdapter);
@@ -92,24 +97,22 @@ public class SearchedSongsFragment extends Fragment implements GenreWiseSongsAda
 
             }
         });
-        binding.genreWiseRecyclerview.setAdapter(mAdapter);
+        binding.searchedsongsRecyclerview.setAdapter(mAdapter);
         getGenreSongs(0, searchKey);
 
-        binding.backImageview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AudioDashboardActivity hhh = (AudioDashboardActivity) getActivity();
-                hhh.onBackPressed();
-
-            }
-        });
-
-        return binding.getRoot();
+//        binding.backImageview.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                onBackPressed();
+//
+//            }
+//        });
 
     }
 
     private void getGenreSongs(final int page, final String genre) {
-        int arraySize = Utils.SharedPrefUtil.getIntFromSharedPref(getActivity(),
+        int arraySize = Utils.SharedPrefUtil.getIntFromSharedPref(this,
                 genre, 0);
         int offset;
         if (page == 0) {
@@ -122,7 +125,7 @@ public class SearchedSongsFragment extends Fragment implements GenreWiseSongsAda
             public void onSuccess(List<Song> songs, List<Object> params) {
                 System.out.println("sjhdbcdhscbh " + songs.size());
                 System.out.println("sjhdbcdhscbh 0000" + songs.size());
-                genreSongsList.addAll(songs);
+                searchedSongsList.addAll(songs);
                 if (page == 0) {
                     mAdapter.setData(songs);
                 } else {
@@ -139,8 +142,8 @@ public class SearchedSongsFragment extends Fragment implements GenreWiseSongsAda
                 binding.aviProgress.setVisibility(View.GONE);
 
 
-                Utils.SharedPrefUtil.saveIntToSharedPref(getActivity(),
-                        genre, genreSongsList.size());
+                Utils.SharedPrefUtil.saveIntToSharedPref(getApplicationContext(),
+                        genre, searchedSongsList.size());
 
             }
 
@@ -155,7 +158,7 @@ public class SearchedSongsFragment extends Fragment implements GenreWiseSongsAda
     @Override
     public void onYouMightLikeItemClick(Song song, int position, List<Song> songs) {
 
-        AudioDashboardActivity hhh = (AudioDashboardActivity) getActivity();
+        AudioDashboardActivity hhh = (AudioDashboardActivity) getApplicationContext();
         hhh.genreSongFragmentSongClickedEvent(song, position, songs);
 
     }
@@ -168,10 +171,9 @@ public class SearchedSongsFragment extends Fragment implements GenreWiseSongsAda
     }
 
     private void addToLibraryDialog(Song song) {
-        LayoutInflater myLayout = LayoutInflater.from(getActivity());
+        LayoutInflater myLayout = LayoutInflater.from(this);
         final View dialogView = myLayout.inflate(R.layout.audio_alertdialog_view, null);
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                getActivity());
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setView(dialogView);
         final AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.setCanceledOnTouchOutside(true);
@@ -221,7 +223,7 @@ public class SearchedSongsFragment extends Fragment implements GenreWiseSongsAda
 
             @Override
             public void onFailure(Throwable t) {
-                Utils.Error.onServiceCallFail(getActivity(), t);
+                Utils.Error.onServiceCallFail(getApplicationContext(), t);
             }
         });
 
@@ -229,19 +231,18 @@ public class SearchedSongsFragment extends Fragment implements GenreWiseSongsAda
 
     private void addToLibraryPlaylistDialog(List<PlayList> playLists) {
 
-        LayoutInflater myLayout = LayoutInflater.from(getActivity());
+        LayoutInflater myLayout = LayoutInflater.from(this);
         final View dialogView = myLayout.inflate(R.layout.audio_alertdialog_playlist_view, null);
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                getActivity());
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setView(dialogView);
         alertDialog = alertDialogBuilder.create();
         alertDialog.setCanceledOnTouchOutside(true);
         alertDialog.show();
 
         RecyclerView recyclerView = (RecyclerView) alertDialog.findViewById(R.id.addSongToPlaylistRecycle);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        AddSongToPlaylistDialogAdapter adapter = new AddSongToPlaylistDialogAdapter(getActivity(), playLists, SearchedSongsFragment.this);
+        AddSongToPlaylistDialogAdapter adapter = new AddSongToPlaylistDialogAdapter(this, playLists, SearchedSongsActivity.this);
         recyclerView.setAdapter(adapter);
 
         TextView songTitle = (TextView) alertDialog.findViewById(R.id.add_to_playlist_text);
@@ -272,7 +273,7 @@ public class SearchedSongsFragment extends Fragment implements GenreWiseSongsAda
 
             @Override
             public void onFailure(Throwable t) {
-                Utils.Error.onServiceCallFail(getActivity(), t);
+                Utils.Error.onServiceCallFail(getApplicationContext(), t);
             }
         });
     }
@@ -299,6 +300,17 @@ public class SearchedSongsFragment extends Fragment implements GenreWiseSongsAda
 
             }
         });
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.back_imageview:
+                finish();
+                break;
+            default:
+
+        }
     }
 
 

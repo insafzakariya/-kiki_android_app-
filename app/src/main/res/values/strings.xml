@@ -185,7 +185,7 @@
     <string name="kiki_playlist">KiKi Playlist</string>
     <string name="genre">Genres</string>
     <string name="songs">Songs</string>
-    <string name="added_to_playlist">Added to play list</string>
+    <string name="added_to_playlist">Added to Playlist</string>
     <string name="no_playlist_found">No play list found</string>
     <string name="added_to_library">Added to library</string>
     <string name="listen_to_fav">listen to your favorites</string>
@@ -216,6 +216,8 @@
     <string name="my_list">My List</string>
     <string name="add_to_my_list">Add to my list</string>
     <string name="like_movie">Like this movie</string>
+    <string name="unlike_movie">Already liked</string>
+    <string name="remove_from_my_list">Remove from my list</string>
 
     <string name="count_song"><xliff:g id="count">%d</xliff:g> song</string>
     <string name="count_songs"><xliff:g id="count">%d</xliff:g> songs</string>

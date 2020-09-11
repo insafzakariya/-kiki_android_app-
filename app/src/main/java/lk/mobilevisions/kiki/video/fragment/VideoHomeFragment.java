@@ -177,8 +177,8 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
         }
 
         Bundle params = new Bundle();
-        params.putString("user_actions", "Video Home");
-        mFirebaseAnalytics.logEvent("VideoTab", params);
+        params.putString("user_actions", "videoHome");
+        mFirebaseAnalytics.logEvent("video_tab", params);
 
         return binding.getRoot();
     }

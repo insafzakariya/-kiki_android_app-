@@ -35,12 +35,14 @@
     <string name="child_mode_deact">දරුවන්ට අදාල වැඩසටහන් අක්‍රීය විය</string>
     <string name="child_mode_act_pass">දරුවන්ට අදාල වැඩසටහන් ක්‍රියාත්මක කිරීමට මුරපදය යොදන්න</string>
     <string name="child_mode_deact_pass">දරුවන්ට අදාල වැඩසටහන් අක්‍රීය කිරීමට මුරපදය යොදන්න</string>
-    <string name="no_subscribed_programs">No subscribed programs available. Please subscribe to your favorite programs from Mobile TV.</string>
+    <string name="no_subscribed_programs">ඔබ සබ්ස්ක්‍රයිබ් කළ වැඩසටහන් වලට පිවිසිය නොහැක. මොබයිල් TV හරහා කැමතිම වැඩසටහන් තොරාගන්න.</string>
     <string name="create_an_account_login">ගිණුමක් සකසන්න</string>
 
     <string name="my_list">මාගේ එකතුව</string>
     <string name="add_to_my_list">මාගේ එකතුවට \nඑක් කරන්න</string>
     <string name="like_movie">කැමතී</string>
+    <string name="unlike_movie">කැමති වූ</string>
+    <string name="remove_from_my_list">ලයිස්තුවෙන් ඉවත් කරන්න</string>
     <string name="ok">හරි</string>
     <string name="play_now">දැන් ප්ලේ කරන්න</string>
     <string name="play_trailer">PLAY TRAILER</string>
@@ -93,7 +95,7 @@
     <string name="playlist">ගීත එකතු</string>
     <string name="your_playlist">ඔබේ ගීත එකතු</string>
     <string name="add_to_library">මගේ එකතුවට එක් කරන්න</string>
-    <string name="add_to_playlist">ගීත එකතුවට එක් කරන්න ></string>
+    <string name="add_to_playlist">ගීත එකතුවට එක් කරන්න</string>
     <string name="add_to_playlist_2">ගීත එකතුවට එක් කරන්න</string>
     <string name="kiki_playlist">කිකී ගීත එකතුව</string>
     <string name="genre">ගීත ශානර</string>

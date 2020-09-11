@@ -17,9 +17,12 @@ public class Song {
     @SerializedName("image")
     @Expose
     private String image;
-    @SerializedName("url")
+    @SerializedName("fileUrl")
     @Expose
     private String url;
+    @SerializedName("url")
+    @Expose
+    private String streamUrl;
     @SerializedName("date")
     @Expose
     private String date;
@@ -45,6 +48,14 @@ public class Song {
     @Expose
     private boolean blocked;
     private int playState;
+
+    public String getStreamUrl() {
+        return streamUrl;
+    }
+
+    public void setStreamUrl(String streamUrl) {
+        this.streamUrl = streamUrl;
+    }
 
     public int getId() {
         return id;

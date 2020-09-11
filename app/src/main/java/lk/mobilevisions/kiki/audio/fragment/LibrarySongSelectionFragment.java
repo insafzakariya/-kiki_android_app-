@@ -66,9 +66,6 @@ public class LibrarySongSelectionFragment extends Fragment implements LibrarySon
     LibraryArtistVerticalAdapter artistsVerticalAdapter;
     LibraryPlaylistVerticalAdapter playlistVerticalAdapter;
 
-    private int artistID;
-    private int lastRandomNumber;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

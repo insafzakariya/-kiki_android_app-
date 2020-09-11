@@ -299,8 +299,8 @@ public class AudioHomeFragment extends Fragment implements DailyMixAdapter.Daily
         }
 
         Bundle params = new Bundle();
-        params.putString("user_actions", "Audio Home");
-        mFirebaseAnalytics.logEvent("AudioTab", params);
+        params.putString("user_actions", "audioHome");
+        mFirebaseAnalytics.logEvent("audio_tab", params);
 
         return binding.getRoot();
     }
@@ -491,7 +491,7 @@ public class AudioHomeFragment extends Fragment implements DailyMixAdapter.Daily
                     for (Song song : result) {
                         Song song1 = new Song();
                         try {
-                            song1.setUrl(URLDecoder.decode(song.getUrl(), "UTF-8"));
+                            song1.setUrl(URLDecoder.decode(song.getStreamUrl(), "UTF-8"));
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
                         }
@@ -742,30 +742,30 @@ public class AudioHomeFragment extends Fragment implements DailyMixAdapter.Daily
         String searchKeyWord = event.getmSearchKey();
         String searchType = event.getMtype();
 
-        if (searchType.equals("seeAllSongs")) {
-
-            Bundle bundle = new Bundle();
-            bundle.putString("searchKey", searchKeyWord);
-
-            SearchedSongsFragment searchedSongsFragment = new SearchedSongsFragment();
-            searchedSongsFragment.setArguments(bundle);
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.frame_container_search_toSeeAllSongs, searchedSongsFragment, "Search to ViewAllSongs")
-                    .addToBackStack(null)
-                    .commit();
-        }
-        if (searchType.equals("seeAllArtists")) {
-
-            Bundle bundle=new Bundle();
-            bundle.putString("searchKey", searchKeyWord);
-
-            SearchedArtistFragment searchedArtistFragment = new SearchedArtistFragment();
-            searchedArtistFragment.setArguments(bundle);
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.frame_container_search_toSeeAllArtist, searchedArtistFragment, "Search to ViewAllArtists")
-                    .addToBackStack(null)
-                    .commit();
-        }
+//        if (searchType.equals("seeAllSongs")) {
+//
+//            Bundle bundle = new Bundle();
+//            bundle.putString("searchKey", searchKeyWord);
+//
+//            SearchedSongsFragment searchedSongsFragment = new SearchedSongsFragment();
+//            searchedSongsFragment.setArguments(bundle);
+//            getFragmentManager().beginTransaction()
+//                    .replace(R.id.frame_container_search_toSeeAllSongs, searchedSongsFragment, "Search to ViewAllSongs")
+//                    .addToBackStack(null)
+//                    .commit();
+//        }
+//        if (searchType.equals("seeAllArtists")) {
+//
+//            Bundle bundle=new Bundle();
+//            bundle.putString("searchKey", searchKeyWord);
+//
+//            SearchedArtistFragment searchedArtistFragment = new SearchedArtistFragment();
+//            searchedArtistFragment.setArguments(bundle);
+//            getFragmentManager().beginTransaction()
+//                    .replace(R.id.frame_container_search_toSeeAllArtist, searchedArtistFragment, "Search to ViewAllArtists")
+//                    .addToBackStack(null)
+//                    .commit();
+//        }
         if (searchType.equals("seeAllPlaylists")) {
 
             Bundle bundle=new Bundle();

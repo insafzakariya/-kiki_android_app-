@@ -20,6 +20,7 @@ import android.speech.RecognizerIntent;
 
 import androidx.annotation.Nullable;
 
+import com.facebook.appevents.AppEventsLogger;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.fragment.app.Fragment;
@@ -31,7 +32,6 @@ import android.support.v4.media.session.PlaybackStateCompat;
 
 import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -60,8 +60,6 @@ import android.widget.Toast;
 import com.microsoft.appcenter.AppCenter;
 import com.microsoft.appcenter.analytics.Analytics;
 import com.microsoft.appcenter.crashes.Crashes;
-import com.microsoft.applicationinsights.library.ApplicationInsights;
-import com.microsoft.applicationinsights.library.TelemetryClient;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.squareup.picasso.Picasso;
@@ -85,6 +83,8 @@ import lk.mobilevisions.kiki.R;
 import lk.mobilevisions.kiki.app.Application;
 import lk.mobilevisions.kiki.app.Constants;
 import lk.mobilevisions.kiki.app.Utils;
+import lk.mobilevisions.kiki.audio.activity.search.SearchedArtistsActivity;
+import lk.mobilevisions.kiki.audio.activity.search.SearchedPlaylistsActivity;
 import lk.mobilevisions.kiki.audio.adapter.AddSongToPlaylistDialogAdapter;
 import lk.mobilevisions.kiki.audio.adapter.ArtistListAdapter;
 import lk.mobilevisions.kiki.audio.adapter.ArtistsVerticalAdapter;
@@ -101,16 +101,14 @@ import lk.mobilevisions.kiki.audio.fragment.ArtistDetailFragment;
 import lk.mobilevisions.kiki.audio.fragment.AudioHomeFragment;
 import lk.mobilevisions.kiki.audio.fragment.AudioSongsFragment;
 import lk.mobilevisions.kiki.audio.fragment.BrowseAllSongsFrangment;
-import lk.mobilevisions.kiki.audio.fragment.ComingSoonFragment;
 import lk.mobilevisions.kiki.audio.fragment.LibraryFragment;
 import lk.mobilevisions.kiki.audio.fragment.PlaylistDetailFragment;
-import lk.mobilevisions.kiki.audio.fragment.PlaylistFragment;
 import lk.mobilevisions.kiki.audio.fragment.ProgrammesFragment;
 import lk.mobilevisions.kiki.audio.fragment.RecentlyPlayedFragment;
 import lk.mobilevisions.kiki.audio.fragment.SearchedArtistFragment;
+import lk.mobilevisions.kiki.audio.fragment.SearchedPlaylistDetailFragment;
 import lk.mobilevisions.kiki.audio.fragment.SearchedPlaylistFragment;
-import lk.mobilevisions.kiki.audio.fragment.SearchedSongsFragment;
-import lk.mobilevisions.kiki.audio.model.PlaylistModel;
+import lk.mobilevisions.kiki.audio.activity.search.SearchedSongsActivity;
 import lk.mobilevisions.kiki.audio.model.dto.Artist;
 import lk.mobilevisions.kiki.audio.model.dto.Genre;
 import lk.mobilevisions.kiki.audio.model.dto.PlayList;
@@ -133,7 +131,6 @@ import lk.mobilevisions.kiki.modules.auth.AuthManager;
 import lk.mobilevisions.kiki.modules.notifications.NotificationManager;
 import lk.mobilevisions.kiki.modules.tv.TvManager;
 import lk.mobilevisions.kiki.ui.base.BaseActivity;
-import lk.mobilevisions.kiki.ui.main.MainActivity;
 import lk.mobilevisions.kiki.ui.splash.SplashActivity;
 import lk.mobilevisions.kiki.video.activity.VideoChildModeActivity;
 import lk.mobilevisions.kiki.video.activity.VideoDashboardActivity;
@@ -476,7 +473,10 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
         binding.includeDashboard.seeAllSongs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Application.BUS.post(new SearchNavigationEvent(searchKeyWord,"seeAllSongs"));
+//                Application.BUS.post(new SearchNavigationEvent(searchKeyWord,"seeAllSongs"));
+                Intent intent = new Intent(getBaseContext(), SearchedSongsActivity.class);
+                intent.putExtra("searchKey", searchKeyWord);
+                startActivity(intent);
                 binding.includeDashboard.searchLayout.setVisibility(View.GONE);
                 binding.includeDashboard.searchview.setVisibility(View.GONE);
 
@@ -485,7 +485,10 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
         binding.includeDashboard.seeAllArtists.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Application.BUS.post(new SearchNavigationEvent(searchKeyWord,"seeAllArtists"));
+//                Application.BUS.post(new SearchNavigationEvent(searchKeyWord,"seeAllArtists"));
+                Intent intent = new Intent(getBaseContext(), SearchedArtistsActivity.class);
+                intent.putExtra("searchKey", searchKeyWord);
+                startActivity(intent);
                 binding.includeDashboard.searchLayout.setVisibility(View.GONE);
                 binding.includeDashboard.searchview.setVisibility(View.GONE);
 
@@ -494,7 +497,10 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
         binding.includeDashboard.seeAllPlaylists.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Application.BUS.post(new SearchNavigationEvent(searchKeyWord,"seeAllPlaylists"));
+//                Application.BUS.post(new SearchNavigationEvent(searchKeyWord,"seeAllPlaylists"));
+                Intent intent = new Intent(getBaseContext(), SearchedPlaylistsActivity.class);
+                intent.putExtra("searchKey", searchKeyWord);
+                startActivity(intent);
                 binding.includeDashboard.searchLayout.setVisibility(View.GONE);
                 binding.includeDashboard.searchview.setVisibility(View.GONE);
 
@@ -731,8 +737,6 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
                 } else {
                     binding.includeSlidingPanelChildtwo.songPicker.smoothScrollToPosition(0);
                 }
-
-
             }
         });
         binding.includeSlidingPanelChildtwo.slideBottomView.replyImageview.setOnClickListener(new View.OnClickListener() {
@@ -797,6 +801,9 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
         }
 //        utils.getLastItemStreamUrl();
 //        System.out.println("sdfsdssdfsd " + utils.getLastItemStreamUrl());
+
+        AppEventsLogger logger = AppEventsLogger.newLogger(this);
+        logger.logEvent("Audio_Screen");
     }
 
     private void subscriptionDialog() {
@@ -833,6 +840,9 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
 
 
     private void searchSongs(String text) {
+        binding.includeDashboard.seeAllSongs.setEnabled(false);
+        binding.includeDashboard.seeAllArtists.setEnabled(false);
+        binding.includeDashboard.seeAllPlaylists.setEnabled(false);
         binding.includeDashboard.aviProgress.setVisibility(View.VISIBLE);
         binding.includeDashboard.noSongsTextView.setVisibility(View.GONE);
         tvManager.getSearchedAll(text, new APIListener<SearchResponse>() {
@@ -926,6 +936,9 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
                 } else {
                     binding.includeDashboard.noSongsTextView.setVisibility(View.GONE);
                 }
+                binding.includeDashboard.seeAllSongs.setEnabled(true);
+                binding.includeDashboard.seeAllArtists.setEnabled(true);
+                binding.includeDashboard.seeAllPlaylists.setEnabled(true);
             }
 
             @Override
@@ -1002,7 +1015,7 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
         bundle.putString("playlistImage", playList.getImage());
         bundle.putString("playlistYear", playList.getDate());
 
-        PlaylistDetailFragment playlistDetailFragment = new PlaylistDetailFragment();
+        SearchedPlaylistDetailFragment playlistDetailFragment = new SearchedPlaylistDetailFragment();
         playlistDetailFragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.frame_container_search_toPlaylist, playlistDetailFragment, "Search to nPlaylistDetail")
@@ -1615,21 +1628,22 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
         if (binding.includeDashboard.searchview.isSearching()) {
 
             FragmentManager fragmentManager = getSupportFragmentManager();
-            SearchedSongsFragment searchedSongsFragment = (SearchedSongsFragment) fragmentManager.findFragmentByTag("Search to ViewAllSongs");
+//            SearchedSongsFragment searchedSongsFragment = (SearchedSongsFragment) fragmentManager.findFragmentByTag("Search to ViewAllSongs");
             SearchedArtistFragment searchedArtistFragment = (SearchedArtistFragment) fragmentManager.findFragmentByTag("Search to ViewAllArtists");
             SearchedPlaylistFragment searchedPlaylistFragment = (SearchedPlaylistFragment) fragmentManager.findFragmentByTag("Search to ViewAllPlaylists");
             ArtistDetailFragment artistDetailFragment = (ArtistDetailFragment) fragmentManager.findFragmentByTag("Search to nArtistDetail");
             ArtistDetailFragment nArtistDetailFragment = (ArtistDetailFragment) fragmentManager.findFragmentByTag("SearchedArtistDetail");
-            PlaylistDetailFragment playlistDetailFragment = (PlaylistDetailFragment) fragmentManager.findFragmentByTag("Search to nPlaylistDetail");
+            SearchedPlaylistDetailFragment playlistDetailFragment = (SearchedPlaylistDetailFragment) fragmentManager.findFragmentByTag("Search to nPlaylistDetail");
             PlaylistDetailFragment sPlaylistDetailFragment = (PlaylistDetailFragment) fragmentManager.findFragmentByTag("searchedPlaylistDetail");
 
-            if (searchedSongsFragment != null && searchedSongsFragment.isVisible() || searchedArtistFragment != null && searchedArtistFragment.isVisible()
+            if (searchedArtistFragment != null && searchedArtistFragment.isVisible()
                     || searchedPlaylistFragment != null && searchedPlaylistFragment.isVisible() || artistDetailFragment != null && artistDetailFragment.isVisible()
                     || playlistDetailFragment != null && playlistDetailFragment.isVisible() || sPlaylistDetailFragment != null && sPlaylistDetailFragment.isVisible()
                     || nArtistDetailFragment != null && nArtistDetailFragment.isVisible()) {
+
+                fragmentManager.popBackStack();
                 binding.includeDashboard.searchview.setVisibility(View.VISIBLE);
                 binding.includeDashboard.searchLayout.setVisibility(View.VISIBLE);
-                fragmentManager.popBackStack();
 
             } else {
                 binding.includeDashboard.searchview.closeSearch();
@@ -2534,7 +2548,7 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
         }
         listOfSongs = songs;
         streamingManager.setMediaList(listOfSongs);
-//        youAlsoLikeFragmentSongClickedEvent(song,position,listOfSongs);
+        youAlsoLikeFragmentSongClickedEvent(song,position,listOfSongs);
     }
 
     @Override
@@ -2666,7 +2680,7 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
             searchSongs(searchKeyWord);
             binding.includeDashboard.viewSearchTint.setVisibility(View.GONE);
             hideKeyboard();
-//            binding.includeDashboard.searchview.setSearchString(searchKeyWord,true);
+            binding.includeDashboard.searchview.setSearchString(searchKeyWord,true);
     }
 
     public void hideKeyboard() {

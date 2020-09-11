@@ -98,6 +98,22 @@ public class Utils {
            return 0;
         }
 
+        public static int getEpisodeIntFromSharedPref(Context context, int key, int defaultValue) {
+
+            if(context != null){
+                try{
+                    SharedPreferences sharedPref = context.getApplicationContext()
+                            .getSharedPreferences(SHARED_PREF_FILE, Context.MODE_PRIVATE);
+                    return sharedPref.getInt(String.valueOf(key),defaultValue);
+                }catch(ClassCastException e){
+                    return 0;
+                }
+
+            }
+            return 0;
+        }
+
+
         public static void saveLongToSharedPref(Context context, String key, long value) {
             if(context != null) {
                 SharedPreferences sharedPref = context.getApplicationContext()

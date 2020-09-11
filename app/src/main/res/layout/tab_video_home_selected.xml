@@ -21,7 +21,7 @@
             android:textSize="@dimen/_11sdp"
             android:lineSpacingExtra="8sp"
             android:singleLine="true"
-            android:text="Home"
+            android:text="@string/home"
             android:textColor="#ffffff" />
 
         <ImageView
