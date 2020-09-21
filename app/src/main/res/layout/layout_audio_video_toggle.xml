@@ -32,7 +32,7 @@
                     android:textSize="@dimen/_11sdp"
                     android:lineSpacingExtra="8sp"
                     android:singleLine="true"
-                    android:text="VIDEO"
+                    android:text="@string/video_tab"
                     android:textColor="@color/md_grey_1100" />
 
                 <ImageView
@@ -79,7 +79,7 @@
                     android:textSize="@dimen/_11sdp"
                     android:lineSpacingExtra="8sp"
                     android:singleLine="true"
-                    android:text="MUSIC"
+                    android:text="@string/audio_tab"
                     android:textColor="@color/colorWhite"
                      />
 

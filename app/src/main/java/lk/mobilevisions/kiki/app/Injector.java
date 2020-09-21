@@ -55,6 +55,7 @@ import lk.mobilevisions.kiki.audio.fragment.SearchedArtistFragment;
 import lk.mobilevisions.kiki.audio.fragment.SearchedPlaylistDetailFragment;
 import lk.mobilevisions.kiki.audio.fragment.SearchedPlaylistFragment;
 import lk.mobilevisions.kiki.audio.activity.search.SearchedSongsActivity;
+import lk.mobilevisions.kiki.audio.fragment.SearchedSongsFragment;
 import lk.mobilevisions.kiki.audio.fragment.SeeAllGenreFragment;
 import lk.mobilevisions.kiki.audio.fragment.VideosFragment;
 import lk.mobilevisions.kiki.audio.fragment.YouMightAlsoLikeFragment;
@@ -174,6 +175,7 @@ public interface Injector {
     void inject(AudioPaymentActivity activity);
     void inject(SearchedArtistsActivity activity);
     void inject(SearchedPlaylistsActivity activity);
+    void inject(SearchedSongsFragment fragment);
 
 
 }

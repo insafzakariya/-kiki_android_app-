@@ -15,12 +15,14 @@ public class AudioStreamingReceiver extends BroadcastReceiver {
     private AudioStreamingManager audioStreamingManager;
     @Override
     public void onReceive(Context context, Intent intent) {
-        System.out.println("NOTIFICATINNNNNN 52525 ");
+        System.out.println("checking Notification  000 ");
         this.audioStreamingManager = AudioStreamingManager.getInstance(context);
         if(this.audioStreamingManager ==null){
+            System.out.println("checking Notification  1111 ");
             return;
         }
         if (intent.getAction().equals(Intent.ACTION_MEDIA_BUTTON)) {
+            System.out.println("checking Notification  2222 ");
             System.out.println("NOTIFICATINNNNNN 0000 ");
             if (intent.getExtras() == null) {
                 return;
@@ -61,19 +63,27 @@ public class AudioStreamingReceiver extends BroadcastReceiver {
                     break;
             }
         } else {
+            System.out.println("checking Notification  33333 ");
             System.out.println("NOTIFICATINNNNNN 1111 ");
             this.audioStreamingManager = AudioStreamingManager.getInstance(context);
-            if (intent.getAction().equals(AudioStreamingService.NOTIFY_PLAY)) {
-                this.audioStreamingManager.onPlay(this.audioStreamingManager.getCurrentAudio());
-            } else if (intent.getAction().equals(AudioStreamingService.NOTIFY_PAUSE)
-                    || intent.getAction().equals(android.media.AudioManager.ACTION_AUDIO_BECOMING_NOISY)) {
-                this.audioStreamingManager.onPause();
-            } else if (intent.getAction().equals(AudioStreamingService.NOTIFY_NEXT)) {
-                this.audioStreamingManager.onSkipToNext();
-            } else if (intent.getAction().equals(AudioStreamingService.NOTIFY_CLOSE)) {
-                this.audioStreamingManager.cleanupPlayer(context, true, true);
-            } else if (intent.getAction().equals(AudioStreamingService.NOTIFY_PREVIOUS)) {
-                this.audioStreamingManager.onSkipToPrevious();
+            switch (intent.getAction()) {
+                case AudioStreamingService.NOTIFY_PLAY:
+                    this.audioStreamingManager.onPlay(this.audioStreamingManager.getCurrentAudio());
+                    break;
+                case AudioStreamingService.NOTIFY_PAUSE:
+                case android.media.AudioManager.ACTION_AUDIO_BECOMING_NOISY:
+                    this.audioStreamingManager.onPause();
+                    break;
+                case AudioStreamingService.NOTIFY_NEXT:
+                    System.out.println("checking Notification  4444 ");
+                    this.audioStreamingManager.onSkipToNext();
+                    break;
+                case AudioStreamingService.NOTIFY_CLOSE:
+                    this.audioStreamingManager.cleanupPlayer(context, true, true);
+                    break;
+                case AudioStreamingService.NOTIFY_PREVIOUS:
+                    this.audioStreamingManager.onSkipToPrevious();
+                    break;
             }
         }
     }

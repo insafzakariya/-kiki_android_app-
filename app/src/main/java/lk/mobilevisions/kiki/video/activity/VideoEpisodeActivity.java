@@ -62,7 +62,7 @@ public class VideoEpisodeActivity extends AppCompatActivity implements View.OnCl
     ProgramEpisodeAdapter programEpisodeAdapter;
     LinearLayoutManager episodesLayoutManager;
     private Endless endless;
-    EndlessRecyclerViewScrollListener recyclerViewScrollListener;
+//    EndlessRecyclerViewScrollListener recyclerViewScrollListener;
     public static final String TV_PLAYER_EPISODE_POSITION = "TV_PLAYER_EPISODE_POSITION";
     public static final String TV_PLAYER_EPISODE_TRAILER_POSITION = "TV_PLAYER_EPISODE_TRAILER_POSITION";
     public static final String TV_PLAYER_EPISODE = "TV_PLAYER_EPISODE";
@@ -86,7 +86,7 @@ public class VideoEpisodeActivity extends AppCompatActivity implements View.OnCl
         binding.recycleviewProgramEpisodes.setLayoutManager(episodesLayoutManager);
         binding.recycleviewProgramEpisodes.setHasFixedSize(true);
         binding.recycleviewProgramEpisodes.setItemViewCacheSize(50);
-        binding.recycleviewProgramEpisodes.setNestedScrollingEnabled(false);
+//        binding.recycleviewProgramEpisodes.setNestedScrollingEnabled(false);
         programEpisodeAdapter = new ProgramEpisodeAdapter(this, episodeList, VideoEpisodeActivity.this);
 
         binding.btnBack.setOnClickListener(this);
@@ -100,7 +100,6 @@ public class VideoEpisodeActivity extends AppCompatActivity implements View.OnCl
 
             binding.programeNameTextview.setText(program.getName());
             binding.programeDescriptionTextview.setText(program.getDescription());
-
 
         }
         loadProgramTrailer();

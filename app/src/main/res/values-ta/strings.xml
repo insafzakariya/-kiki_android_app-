@@ -38,6 +38,8 @@
     <string name="no_subscribed_programs">சந்தா நிரல்கள் எதுவும் கிடைக்கவில்லை , தயவு செய்து மொபைல் டிவியில் இருந்து உங்களுக்கு பிடித்த நிரல்களுக்கு குழுசேரவும்.</string>
     <string name="create_an_account_login">ஒரு கணக்கை உருவாக்க / உள்நுழைய / வகை</string>
 
+    <string name="video_tab">வீடியோ</string>
+    <string name="audio_tab">இசை</string>
 
     <string name="my_list">எனது பட்டியல்</string>
     <string name="add_to_my_list">எனது பட்டியலில் \nசேர்க்கவும்</string>

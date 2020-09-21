@@ -109,6 +109,7 @@ import lk.mobilevisions.kiki.audio.fragment.SearchedArtistFragment;
 import lk.mobilevisions.kiki.audio.fragment.SearchedPlaylistDetailFragment;
 import lk.mobilevisions.kiki.audio.fragment.SearchedPlaylistFragment;
 import lk.mobilevisions.kiki.audio.activity.search.SearchedSongsActivity;
+import lk.mobilevisions.kiki.audio.fragment.SearchedSongsFragment;
 import lk.mobilevisions.kiki.audio.model.dto.Artist;
 import lk.mobilevisions.kiki.audio.model.dto.Genre;
 import lk.mobilevisions.kiki.audio.model.dto.PlayList;
@@ -137,6 +138,7 @@ import lk.mobilevisions.kiki.video.activity.VideoDashboardActivity;
 import timber.log.Timber;
 
 import static com.androidquery.util.AQUtility.getContext;
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 
 public class AudioDashboardActivity extends BaseActivity implements CurrentSessionCallback, Slider.OnValueChangedListener,
@@ -473,10 +475,20 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
         binding.includeDashboard.seeAllSongs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Application.BUS.post(new SearchNavigationEvent(searchKeyWord,"seeAllSongs"));
-                Intent intent = new Intent(getBaseContext(), SearchedSongsActivity.class);
-                intent.putExtra("searchKey", searchKeyWord);
-                startActivity(intent);
+
+                Bundle bundle = new Bundle();
+                bundle.putString("searchKey", searchKeyWord);
+
+                FragmentManager manager = getSupportFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
+
+                SearchedSongsFragment searchedSongsFragment = new SearchedSongsFragment();
+                searchedSongsFragment.setArguments(bundle);
+
+                transaction.add(R.id.frame_container_search,searchedSongsFragment,"SearchedSongsFragment");
+                transaction.addToBackStack(null);
+                transaction.commit();
+
                 binding.includeDashboard.searchLayout.setVisibility(View.GONE);
                 binding.includeDashboard.searchview.setVisibility(View.GONE);
 
@@ -485,10 +497,20 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
         binding.includeDashboard.seeAllArtists.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Application.BUS.post(new SearchNavigationEvent(searchKeyWord,"seeAllArtists"));
-                Intent intent = new Intent(getBaseContext(), SearchedArtistsActivity.class);
-                intent.putExtra("searchKey", searchKeyWord);
-                startActivity(intent);
+
+                Bundle bundle = new Bundle();
+                bundle.putString("searchKey", searchKeyWord);
+
+                FragmentManager manager = getSupportFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
+
+                SearchedArtistFragment searchedArtistFragment = new SearchedArtistFragment();
+                searchedArtistFragment.setArguments(bundle);
+
+                transaction.add(R.id.frame_container_search,searchedArtistFragment,"SearchedArtistFragment");
+                transaction.addToBackStack(null);
+                transaction.commit();
+
                 binding.includeDashboard.searchLayout.setVisibility(View.GONE);
                 binding.includeDashboard.searchview.setVisibility(View.GONE);
 
@@ -497,10 +519,20 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
         binding.includeDashboard.seeAllPlaylists.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Application.BUS.post(new SearchNavigationEvent(searchKeyWord,"seeAllPlaylists"));
-                Intent intent = new Intent(getBaseContext(), SearchedPlaylistsActivity.class);
-                intent.putExtra("searchKey", searchKeyWord);
-                startActivity(intent);
+
+                Bundle bundle = new Bundle();
+                bundle.putString("searchKey", searchKeyWord);
+
+                FragmentManager manager = getSupportFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
+
+                SearchedPlaylistFragment searchedPlaylistFragment = new SearchedPlaylistFragment();
+                searchedPlaylistFragment.setArguments(bundle);
+
+                transaction.add(R.id.frame_container_search,searchedPlaylistFragment,"SearchedPlaylistFragment");
+                transaction.addToBackStack(null);
+                transaction.commit();
+
                 binding.includeDashboard.searchLayout.setVisibility(View.GONE);
                 binding.includeDashboard.searchview.setVisibility(View.GONE);
 
@@ -559,7 +591,6 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
                     //slideBottomView.getBackground().setAlpha(100);
                     isExpand = true;
                     binding.includeSlidingPanelChildtwo.slideBottomView.getRoot().setVisibility(View.GONE);
-
                 }
             }
 
@@ -1003,6 +1034,7 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
     @Override
     public void onAddArtistItemClick(Artist artist) {
 
+        addArtistToLibrary(artist.getId());
     }
 
     @Override
@@ -1023,9 +1055,48 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
                 .commit();
     }
 
-    @Override
-    public void onAddPlaylistItemClick(PlayList song) {
+    private void addArtistToLibrary(int artistID) {
 
+        ArrayList <Integer> artistId = new ArrayList<>();
+        artistId.add(artistID);
+        tvManager.addDataToLibraryHash("A",artistId, new APIListener<Void>() {
+            @Override
+            public void onSuccess(Void result, List<Object> params) {
+
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.added_to_library), Toast.LENGTH_SHORT ).show();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Utils.Error.onServiceCallFail(getApplicationContext(), t);
+            }
+        });
+
+    }
+
+    private void addPlaylistToLibrary(int playlistID){
+
+        ArrayList<Integer> playlistId = new ArrayList<>();
+        playlistId.add(playlistID);
+        tvManager.addDataToLibraryHash("P",playlistId, new APIListener<Void>() {
+            @Override
+            public void onSuccess(Void result, List<Object> params) {
+
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.added_to_library), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Utils.Error.onServiceCallFail(getApplicationContext(), t);
+            }
+        });
+
+    }
+
+    @Override
+    public void onAddPlaylistItemClick(PlayList playList) {
+
+        addPlaylistToLibrary(playList.getId());
     }
 
 //    private MaterialDialog createProgressDialog() {
@@ -1628,15 +1699,15 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
         if (binding.includeDashboard.searchview.isSearching()) {
 
             FragmentManager fragmentManager = getSupportFragmentManager();
-//            SearchedSongsFragment searchedSongsFragment = (SearchedSongsFragment) fragmentManager.findFragmentByTag("Search to ViewAllSongs");
-            SearchedArtistFragment searchedArtistFragment = (SearchedArtistFragment) fragmentManager.findFragmentByTag("Search to ViewAllArtists");
-            SearchedPlaylistFragment searchedPlaylistFragment = (SearchedPlaylistFragment) fragmentManager.findFragmentByTag("Search to ViewAllPlaylists");
+            SearchedSongsFragment searchedSongsFragment = (SearchedSongsFragment) fragmentManager.findFragmentByTag("SearchedSongsFragment");
+            SearchedArtistFragment searchedArtistFragment = (SearchedArtistFragment) fragmentManager.findFragmentByTag("SearchedArtistFragment");
+            SearchedPlaylistFragment searchedPlaylistFragment = (SearchedPlaylistFragment) fragmentManager.findFragmentByTag("SearchedPlaylistFragment");
             ArtistDetailFragment artistDetailFragment = (ArtistDetailFragment) fragmentManager.findFragmentByTag("Search to nArtistDetail");
             ArtistDetailFragment nArtistDetailFragment = (ArtistDetailFragment) fragmentManager.findFragmentByTag("SearchedArtistDetail");
             SearchedPlaylistDetailFragment playlistDetailFragment = (SearchedPlaylistDetailFragment) fragmentManager.findFragmentByTag("Search to nPlaylistDetail");
             PlaylistDetailFragment sPlaylistDetailFragment = (PlaylistDetailFragment) fragmentManager.findFragmentByTag("searchedPlaylistDetail");
 
-            if (searchedArtistFragment != null && searchedArtistFragment.isVisible()
+            if (searchedArtistFragment != null && searchedArtistFragment.isVisible() || searchedSongsFragment != null && searchedSongsFragment.isVisible()
                     || searchedPlaylistFragment != null && searchedPlaylistFragment.isVisible() || artistDetailFragment != null && artistDetailFragment.isVisible()
                     || playlistDetailFragment != null && playlistDetailFragment.isVisible() || sPlaylistDetailFragment != null && sPlaylistDetailFragment.isVisible()
                     || nArtistDetailFragment != null && nArtistDetailFragment.isVisible()) {
@@ -2241,13 +2312,13 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
 
     @Override
     public void onStop() {
-        try {
-            if (streamingManager != null) {
-                streamingManager.unSubscribeCallBack();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            if (streamingManager != null) {
+//                streamingManager.unSubscribeCallBack();
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         super.onStop();
     }
 
@@ -2532,13 +2603,14 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
         }
     }
 
-
     @Override
     public void onAudioSongsPlayItemClick(Song song, int position) {
 
         System.out.println("efjbdnfnff 11111");
         List<Song> songs = new ArrayList<Song>();
         songs.add(song);
+
+        shouldBottomPlayerPlay = false;
         itemEventClicked = true;
         listOfSongs = new ArrayList<Song>();
         songPosition = 0;
@@ -2548,8 +2620,8 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
         }
         listOfSongs = songs;
         streamingManager.setMediaList(listOfSongs);
-        youAlsoLikeFragmentSongClickedEvent(song,position,listOfSongs);
-    }
+//        youAlsoLikeFragmentSongClickedEvent(song,position,listOfSongs);
+        }
 
     @Override
     public void onAddSongsItemClick(Song song) {
@@ -2621,16 +2693,17 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
     }
 
     private void getNextOrSuggestedSongs(int id,final int offset) {
-        System.out.println("rfjfjfjfjfjfj 111  " + offset);
+
         tvManager.getAudioSuggestionList(id , new APIListener<List<Song>>() {
             @Override
             public void onSuccess(List<Song> songs, List<Object> params) {
-                System.out.println("rfjfjfjfjfjfj 222 " + songs.size());
+
                 if (songs.size() > 0) {
                     if (songAdapter != null) {
                         listOfSongs.addAll(songs);
                         streamingManager.setMediaList(listOfSongs);
                         songAdapter.notifyItemRangeInserted(offset,songs.size());
+
                     }
 
                 }

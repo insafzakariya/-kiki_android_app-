@@ -116,7 +116,7 @@ public class LibrarySongListFragment extends Fragment implements LibrarySongsLis
                     binding.spinKit.setVisibility(View.GONE);
 
                 }
-                if(songs.size()>10){
+                if(songs.size() > 10) {
                     endless.setLoadMoreAvailable(false);
                 }
 

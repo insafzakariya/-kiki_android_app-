@@ -146,7 +146,7 @@ import static android.media.MediaPlayer.OnSeekCompleteListener;
 
     @Override
     public void play(Song item) {
-        System.out.println("CheckaudioQ 14 ");
+        System.out.println("checking Notification  232323 ");
         mPlayOnFocusGain = true;
         tryToGetAudioFocus();
         registerAudioNoisyReceiver();

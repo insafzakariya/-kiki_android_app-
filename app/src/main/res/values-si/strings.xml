@@ -38,6 +38,9 @@
     <string name="no_subscribed_programs">ඔබ සබ්ස්ක්‍රයිබ් කළ වැඩසටහන් වලට පිවිසිය නොහැක. මොබයිල් TV හරහා කැමතිම වැඩසටහන් තොරාගන්න.</string>
     <string name="create_an_account_login">ගිණුමක් සකසන්න</string>
 
+    <string name="video_tab">ටෙලි සිනමා</string>
+    <string name="audio_tab">ගීත</string>
+
     <string name="my_list">මාගේ එකතුව</string>
     <string name="add_to_my_list">මාගේ එකතුවට \nඑක් කරන්න</string>
     <string name="like_movie">කැමතී</string>

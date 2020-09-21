@@ -280,6 +280,18 @@
                         android:layout_height="match_parent"
                         android:layout_marginTop="5dp" />
 
+                    <com.github.ybq.android.spinkit.SpinKitView
+                        android:id="@+id/spin_kit"
+                        style="@style/SpinKitView.Small.MultiplePulse"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:visibility="visible"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center"
+                        app:SpinKit_Color="@color/colorAccent" />
+
+
                 </RelativeLayout>
 
             </RelativeLayout>

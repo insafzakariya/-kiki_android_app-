@@ -29,8 +29,8 @@ android {
         applicationId "lk.mobilevisions.kiki"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 169
-        versionName "1.0.169"
+        versionCode 173
+        versionName "1.0.173"
         vectorDrawables.useSupportLibrary = true
         renderscriptTargetApi 20
         renderscriptSupportModeEnabled true
@@ -96,10 +96,10 @@ android {
         }
 
         staging {
-            buildConfigField "Integer", "MAIN_SERVER_API_VERSION", "2"
-            buildConfigField "String", "MAIN_SERVER_API_NAME", "\"STAGING_SERVER_API_V_\""
-            buildConfigField "String", "MOBILE_PAYMENT_GATEWAY_NAME", "\"STAGING_MOBILE_PAYMENT_GATEWAY_URL\""
-            buildConfigField "String", "ALL_USERS_TOPIC_NAME", "\"StagingAllUsers\""
+            buildConfigField "Integer", "MAIN_SERVER_API_VERSION", "3"
+            buildConfigField "String", "MAIN_SERVER_API_NAME", "\"MAIN_SERVER_API_V_\""
+            buildConfigField "String", "MOBILE_PAYMENT_GATEWAY_NAME", "\"MOBILE_PAYMENT_GATEWAY_URL_V3\""
+            buildConfigField "String", "ALL_USERS_TOPIC_NAME", "\"AllUsers\""
         }
 
         alpha {

@@ -47,7 +47,6 @@ public class LibrarySongsListAdapter extends
     }
 
     public void setData(List<Song> data) {
-        System.out.println("dhdhdhdhdhdh 333  " + data.size());
         this.mArrayList = data;
         notifyDataSetChanged();
     }

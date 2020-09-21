@@ -45,11 +45,9 @@ public class LibraryArtistDetailFragment extends Fragment implements LibrarySong
     private Endless endless;
     List<Song> genreSongsArrayList = new ArrayList<>();
 
-
     @Inject
     SubscriptionsManager subscriptionsManager;
     LibrarySongsVerticalAdapter librarySongsVerticalAdapter;
-
 
     private int lastRandomNumber;
     private int artistID;
@@ -75,7 +73,6 @@ public class LibraryArtistDetailFragment extends Fragment implements LibrarySong
 
         setupArtistSongs();
         setDataToArtistSongs(artistID);
-
 
         binding.seeAllArtistSongs.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,10 +109,10 @@ public class LibraryArtistDetailFragment extends Fragment implements LibrarySong
             }
         }
 
+        binding.addArtist.setVisibility(View.GONE);
 
         return binding.getRoot();
     }
-
 
     private void setupArtistSongs() {
         binding.artistDetailSongsRecycleview.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
@@ -124,7 +121,6 @@ public class LibraryArtistDetailFragment extends Fragment implements LibrarySong
         binding.artistDetailSongsRecycleview.setNestedScrollingEnabled(false);
 
     }
-
 
     private void setDataToArtistSongs(int artistID) {
 
@@ -152,8 +148,6 @@ public class LibraryArtistDetailFragment extends Fragment implements LibrarySong
 
     }
 
-
-
     @Override
     public void onAttach(Context context) {
 
@@ -161,7 +155,6 @@ public class LibraryArtistDetailFragment extends Fragment implements LibrarySong
         this.context = context;
 
     }
-
 
     @Override
     public void onGenreSongsPlayAction(Song song, int position, List<Song> songs) {
@@ -185,7 +178,7 @@ public class LibraryArtistDetailFragment extends Fragment implements LibrarySong
             sessionId = UUID.randomUUID().toString();
             Application.getInstance().addSessionId(sessionId);
         }
-        System.out.println("sessionnnn 22222 " + sessionId);
+
         tvManager.addSongsToTempTable(sessionId, songId,"S", new APIListener<Void>() {
             @Override
             public void onSuccess(Void result, List<Object> params) {

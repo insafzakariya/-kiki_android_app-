@@ -11,6 +11,8 @@ import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import com.github.ybq.endless.Endless;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,6 +31,7 @@ import lk.mobilevisions.kiki.audio.activity.AudioPaymentActivity;
 import lk.mobilevisions.kiki.audio.adapter.LibraryArtistVerticalAdapter;
 import lk.mobilevisions.kiki.audio.adapter.LibraryPlaylistSongAdapter;
 import lk.mobilevisions.kiki.audio.adapter.LibraryPlaylistVerticalAdapter;
+import lk.mobilevisions.kiki.audio.adapter.LibrarySongsListAdapter;
 import lk.mobilevisions.kiki.audio.adapter.LibrarySongsVerticalAdapter;
 import lk.mobilevisions.kiki.audio.adapter.PlaylistDetailAdapter;
 import lk.mobilevisions.kiki.audio.model.dto.Artist;
@@ -58,6 +61,8 @@ public class LibrarySongSelectionFragment extends Fragment implements LibrarySon
     List<Song> genreSongsArrayList = new ArrayList<>();
     List<Artist> genreArtistsArrayList = new ArrayList<>();
     LinearLayoutManager channelsLayoutManager;
+    private Endless endless;
+    String searchText;
 
     @Inject
     SubscriptionsManager subscriptionsManager;
@@ -88,6 +93,7 @@ public class LibrarySongSelectionFragment extends Fragment implements LibrarySon
         setDataToArtists();
         getGenreSongs();
         setupSearchSongs();
+
         binding.seeAllSongs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,10 +154,28 @@ public class LibrarySongSelectionFragment extends Fragment implements LibrarySon
         binding.searchText.onActionViewExpanded();
 //        binding.searchText.setIconified(false);
         binding.searchText.clearFocus();
+
+        View loadingView = View.inflate(getActivity(), R.layout.layout_loading, null);
+        loadingView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        endless = Endless.applyTo(binding.searchSongsRecyclerview,
+                loadingView
+        );
+        endless.setAdapter(searchAdapter);
+        endless.setLoadMoreListener(new Endless.LoadMoreListener() {
+            @Override
+            public void onLoadMore(int page) {
+                binding.spinKit.setVisibility(View.VISIBLE);
+                searchSongs(searchText,page);
+
+            }
+        });
+
         binding.searchText.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                searchSongs(query);
+
+                binding.searchSongsRecyclerview.setAdapter(searchAdapter);
+                searchSongs(query,0);
                 System.out.println("sdjfnsdjvn " + query);
                 return false;
             }
@@ -195,39 +219,62 @@ public class LibrarySongSelectionFragment extends Fragment implements LibrarySon
 
     private void setupSearchSongs() {
         channelsLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        searchAdapter = new LibraryPlaylistSongAdapter(getActivity(), searchSongsList, LibrarySongSelectionFragment.this);
         binding.searchSongsRecyclerview.setLayoutManager(channelsLayoutManager);
         binding.searchSongsRecyclerview.setHasFixedSize(true);
         binding.searchSongsRecyclerview.setItemViewCacheSize(50);
         binding.searchSongsRecyclerview.setDrawingCacheEnabled(true);
-        binding.searchSongsRecyclerview.setAdapter(searchAdapter);
 
     }
 
 
     //
-    private void searchSongs(String text) {
+    private void searchSongs(String text, int page) {
+
+//        binding.searchSongsRecyclerview.setNestedScrollingEnabled(false);
+        searchText = text;
         binding.aviProgress.setVisibility(View.VISIBLE);
-
-        tvManager.getSearchSongsbyType(0, 100, text, new APIListener<List<Song>>() {
+        int offset;
+        if (page == 0) {
+            offset = 0;
+        } else {
+            offset = searchSongsList.size();
+        }
+        tvManager.getSearchSongsbyType(offset, 10, text, new APIListener<List<Song>>() {
             @Override
-            public void onSuccess(List<Song> result, List<Object> params) {
+            public void onSuccess(List<Song> songs, List<Object> params) {
 //            searchSongsList.clear();
-                if (result.size() == 0) {
-                    binding.searchLayout.setVisibility(View.GONE);
-
+                System.out.println("dhfgdhfgdhg " + searchText);
+                searchSongsList.addAll(songs);
+                if (page == 0) {
+                    searchAdapter.setData(songs);
+                    binding.searchLayout.setVisibility(View.VISIBLE);
                 } else {
                     binding.searchLayout.setVisibility(View.VISIBLE);
-                    searchSongsList = result;
-                    searchAdapter = new LibraryPlaylistSongAdapter(getActivity(), searchSongsList, LibrarySongSelectionFragment.this);
-                    binding.searchSongsRecyclerview.setAdapter(searchAdapter);
+                    searchAdapter.setList(songs);
+                    endless.loadMoreComplete();
+                    binding.spinKit.setVisibility(View.GONE);
+
                 }
+                if (songs.size() > 10) {
+                    binding.searchLayout.setVisibility(View.VISIBLE);
+                    endless.setLoadMoreAvailable(false);
+                }
+                if (songs.size() == 0) {
+                    binding.searchLayout.setVisibility(View.GONE);
+
+                }
+
+                binding.spinKit.setVisibility(View.GONE);
                 binding.aviProgress.setVisibility(View.GONE);
+
+//                binding.searchSongsRecyclerview.setNestedScrollingEnabled(true);
             }
+
 
             @Override
             public void onFailure(Throwable t) {
                 binding.aviProgress.setVisibility(View.GONE);
-                System.out.println("dhdhdhdhdhdh 222  " + t.toString());
 
             }
         });

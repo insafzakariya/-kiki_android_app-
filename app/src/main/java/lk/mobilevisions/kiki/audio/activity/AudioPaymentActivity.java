@@ -259,8 +259,15 @@ public class AudioPaymentActivity extends AppCompatActivity implements AdvancedW
     @Override
     public void onBackPressed() {
 
-        Intent intent = new Intent(AudioPaymentActivity.this, AudioDashboardActivity.class);
-        startActivity(intent);
-        finish();
+        if (binding.webViewPayment.canGoBack()) {
+            binding.webViewPayment.goBack();
+        } else {
+            super.onBackPressed();
+        }
+
+//        Intent intent = new Intent(AudioPaymentActivity.this, AudioDashboardActivity.class);
+//        startActivity(intent);
+//        finish();
+//
     }
 }

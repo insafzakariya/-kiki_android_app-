@@ -120,6 +120,7 @@ public class AudioStreamingManager extends StreamingManager {
 
     @Override
     public void onPlay(Song infoData) {
+        System.out.println("checking Notification  9999 ");
         if (infoData == null) {
             return;
         }
@@ -128,20 +129,24 @@ public class AudioStreamingManager extends StreamingManager {
         }
 
         if (this.currentAudio != null && String.valueOf(this.currentAudio.getId()).equalsIgnoreCase(String.valueOf(infoData.getId())) && instance.audioPlayback != null && instance.audioPlayback.isPlaying()) {
-
+            System.out.println("checking Notification  1000 ");
             onPause();
 //            this.currentAudio = infoData;
 //            handlePlayRequest();
         } else {
+            System.out.println("checking Notification  1212121 ");
             if (infoData.getUrl() != null && infoData.getUrl().length() > 0) {
+                System.out.println("checking Notification  1313131 ");
                 this.currentAudio = infoData;
                 handlePlayRequest();
                 if (currentSessionCallback != null) {
+                    System.out.println("checking Notification  1414141 ");
                     currentSessionCallback.playCurrent(index, currentAudio);
                 }
 
             } else {
                 if (currentSessionCallback != null) {
+                    System.out.println("checking Notification  1515151 ");
                     currentSessionCallback.showErrorDialog(index, currentAudio);
                 }
 
@@ -174,15 +179,18 @@ public class AudioStreamingManager extends StreamingManager {
 
     @Override
     public void onSkipToNext() {
-        System.out.println("fnhiefdjdfjnfjnfjn 111 " + isReplayClicked);
+        System.out.println("checking Notification  5555 ");
         if (isReplayClicked) {
             onReplayAgain();
         } else {
+            System.out.println("checking Notification  6666 ");
             int nextIndex = index + 1;
             if (isValidIndex(true, nextIndex)) {
                 Song metaData = mediaList.get(nextIndex);
+                System.out.println("checking Notification  7777 ");
                 onPlay(metaData);
-                if (instance.currentSessionCallback != null) {
+                if (currentSessionCallback != null) {
+                    System.out.println("checking Notification  88888 ");
                     currentSessionCallback.playNext(nextIndex, metaData);
                 }
             }
@@ -239,13 +247,18 @@ public class AudioStreamingManager extends StreamingManager {
 
     public void handlePlayRequest() {
         Logger.d(TAG, "handlePlayRequest: mState=" + audioPlayback.getState());
+        System.out.println("checking Notification  1717171 ");
         if (audioPlayback != null && currentAudio != null) {
+            System.out.println("checking Notification  1818181 ");
             audioPlayback.play(currentAudio);
             if (showPlayerNotification) {
+                System.out.println("checking Notification  1919191 ");
                 if (context != null) {
+                    System.out.println("checking Notification  2020202 ");
                     Intent intent = new Intent(context, AudioStreamingService.class);
                     context.startService(intent);
                 } else {
+                    System.out.println("checking Notification  21212 ");
                     Intent intent = new Intent(context, AudioStreamingService.class);
                     context.stopService(intent);
                 }
