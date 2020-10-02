@@ -9,6 +9,8 @@ import android.view.animation.Animation;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.otto.Subscribe;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +25,7 @@ import lk.mobilevisions.kiki.app.Application;
 import lk.mobilevisions.kiki.app.Utils;
 import lk.mobilevisions.kiki.audio.activity.AudioDashboardActivity;
 import lk.mobilevisions.kiki.audio.adapter.LibraryHomePlaylistListAdapter;
+import lk.mobilevisions.kiki.audio.event.UserNavigateBackEvent;
 import lk.mobilevisions.kiki.audio.model.dto.PlayList;
 import lk.mobilevisions.kiki.databinding.FragmentGenreWisePlaylistBinding;
 import lk.mobilevisions.kiki.modules.api.APIListener;
@@ -64,6 +67,7 @@ public class LibraryHomePlaylistListFragment extends Fragment implements Library
 
 //        System.out.println("Check artist 1414141414 " + genreId);
 
+        Application.BUS.register(this);
         channelsLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL,false);
         binding.genrePlaylistRecyclerview.setLayoutManager(channelsLayoutManager);
         mAdapter = new LibraryHomePlaylistListAdapter(getActivity(), playlistArrayList, LibraryHomePlaylistListFragment.this);
@@ -87,6 +91,8 @@ public class LibraryHomePlaylistListFragment extends Fragment implements Library
 
 
     private void setDataToPlaylists() {
+
+        playlistArrayList.clear();
 
         tvManager.getAllPlaylist( new APIListener<List<PlayList>>() {
             @Override
@@ -151,7 +157,6 @@ public class LibraryHomePlaylistListFragment extends Fragment implements Library
             public void onClick(View v) {
                 int playlistID = playList.getId();
                 String str = Integer.toString(playlistID);
-                System.out.println("afjbdjh " + str);
                 removePlaylist(str);
                 playlistArrayList.remove(playList);
                 mAdapter.notifyDataSetChanged();
@@ -226,20 +231,10 @@ public class LibraryHomePlaylistListFragment extends Fragment implements Library
 
     }
 
+    @Subscribe
+    public void UserNavigateBack(UserNavigateBackEvent event){
 
-    class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
-
-        private int spanCount;
-        private int spacing;
-        private boolean includeEdge;
-
-        public GridSpacingItemDecoration(int spanCount, int spacing, boolean includeEdge) {
-            this.spanCount = spanCount;
-            this.spacing = spacing;
-            this.includeEdge = includeEdge;
-        }
-
+        setDataToPlaylists();
     }
-
 
 }

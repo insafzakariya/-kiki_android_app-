@@ -23,6 +23,22 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
+        <lk.mobilevisions.kiki.audio.util.KikiAudioMediumTextView
+            android:id="@+id/disable_confirm_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:clickable="true"
+            android:layout_marginEnd="@dimen/_6sdp"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:text="@string/music_confirm"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/_10sdp"
+            android:background="@drawable/confirm_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+
         <TextView
             android:id="@+id/cancel_textview"
             android:layout_width="wrap_content"

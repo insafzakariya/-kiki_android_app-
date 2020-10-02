@@ -27,12 +27,18 @@ public class ArtistListAdapter extends
     private static ArtistListAdapter mInstance;
     private List<Artist> artistList;
     OnArtistListItemActionListener onArtistListItemActionListener;
+    public boolean enabled;
+
 
     public ArtistListAdapter(Context mContext, List<Artist> artistList, OnArtistListItemActionListener onArtistListItemActionListener) {
         this.mcontext = mContext;
         this.artistList = artistList;
         this.onArtistListItemActionListener = onArtistListItemActionListener;
 
+    }
+
+    public void setEnabled(boolean isEnable){
+        this.enabled = isEnable;
     }
 
     @Override
@@ -84,7 +90,10 @@ public class ArtistListAdapter extends
         holder.addArtistTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onArtistListItemActionListener.onAddArtistItemClick(artistList.get(holder.getAdapterPosition()));
+
+                if (enabled) {
+                    onArtistListItemActionListener.onAddArtistItemClick(artistList.get(holder.getAdapterPosition()));
+                }
             }
         });
     }
@@ -108,6 +117,10 @@ public class ArtistListAdapter extends
 
         @BindView(R.id.addArtist)
         TextView addArtistTextView;
+
+        @BindView(R.id.addArtistDisable)
+        TextView addArtistDisable;
+
 
         @BindView(R.id.artist_image)
         ImageView imageView;

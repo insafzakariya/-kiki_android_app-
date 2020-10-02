@@ -164,7 +164,6 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:id="@+id/genre_playlist_layout"
-                    android:padding="5dp"
                     android:layout_below="@+id/genre_artist_layout"
                     android:layout_height="wrap_content">
 

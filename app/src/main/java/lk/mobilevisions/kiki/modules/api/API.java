@@ -25,6 +25,7 @@ import lk.mobilevisions.kiki.modules.api.dto.Notification;
 import lk.mobilevisions.kiki.modules.api.dto.NotificationCountResponse;
 import lk.mobilevisions.kiki.modules.api.dto.Package;
 import lk.mobilevisions.kiki.modules.api.dto.PackageToken;
+import lk.mobilevisions.kiki.modules.api.dto.PackageV2;
 import lk.mobilevisions.kiki.modules.api.dto.Program;
 import lk.mobilevisions.kiki.modules.api.dto.Slider;
 import okhttp3.RequestBody;
@@ -270,6 +271,10 @@ public interface API {
     @GET("subscription/current")
     Call<Package> getActivatedPackage(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
                                       @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken);
+
+    @GET("subscription/current/v2")
+    Call<PackageV2> getTrialStatus(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
+                                   @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken);
 
     @GET("subscription/packages")
     Call<List<Package>> getAllSubscriptionPackages(@Header(HEADER_AUTHORIZATION) String basicAuthToken,

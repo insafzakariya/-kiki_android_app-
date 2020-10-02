@@ -5,6 +5,7 @@ package lk.mobilevisions.kiki.modules.subscriptions;
 
 import java.util.List;
 
+import lk.mobilevisions.kiki.modules.api.dto.PackageV2;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -112,6 +113,50 @@ public class SubscriptionsManager {
 
             @Override
             public void onFailure(Call<Package> call, Throwable t) {
+                Timber.e(t);
+                listener.onFailure(new NoInternetConnectionException());
+            }
+        });
+    }
+
+    public void getTrialStatus(final APIListener<PackageV2> listener) {
+
+        api.getTrialStatus(Utils.Auth.getBasicAuthToken(application), Utils.Auth.getBearerToken(application)).enqueue(new Callback<PackageV2>() {
+
+            @Override
+            public void onResponse(Call<PackageV2> call, Response<PackageV2> response) {
+                System.out.println("EPID: "+ response.code()+" "+response.body());
+                switch (response.code()) {
+                    case 200:
+                        if (response.body() != null) {
+                            listener.onSuccess(response.body(), null);
+
+                        } else {
+                            listener.onFailure(new InvalidResponseException());
+                        }
+                        break;
+                    case 401:
+                        try {
+                            listener.onFailure(Utils.Error.getServerError(application, response, AuthenticationFailedWithAccessTokenException.class));
+                        } catch (ErrorResponseException e) {
+                            listener.onFailure(e);
+                        }
+                        break;
+                    case 400:
+                        try {
+                            listener.onFailure(Utils.Error.getServerError(application, response, ApplicationException.class));
+                        } catch (ErrorResponseException e) {
+                            listener.onFailure(e);
+                        }
+                        break;
+                    default:
+                        listener.onFailure(new RemoteServerException());
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PackageV2> call, Throwable t) {
                 Timber.e(t);
                 listener.onFailure(new NoInternetConnectionException());
             }

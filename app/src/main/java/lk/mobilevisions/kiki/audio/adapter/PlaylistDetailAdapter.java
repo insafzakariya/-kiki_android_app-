@@ -21,6 +21,7 @@ import butterknife.ButterKnife;
 import lk.mobilevisions.kiki.R;
 import lk.mobilevisions.kiki.audio.model.dto.PlayList;
 import lk.mobilevisions.kiki.audio.model.dto.Song;
+import lk.mobilevisions.kiki.audio.util.NavigationUtils;
 
 public class PlaylistDetailAdapter extends
         RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -61,7 +62,7 @@ public class PlaylistDetailAdapter extends
     private void initLayoutOne(final LatestPlaylistViewHolder holder, int pos) {
         final Song current = mArrayList.get(pos);
         holder.songTitleTextview.setText(current.getName());
-
+        holder.songDuration.setText(NavigationUtils.convertMinutesToFormat(current.getDuration()));
         holder.artistTextView.setText(current.getArtistName());
 
         try {
@@ -110,6 +111,8 @@ public class PlaylistDetailAdapter extends
         @BindView(R.id.addSongs)
         TextView addSongs;
 
+        @BindView(R.id.plalist_song_duration)
+        TextView songDuration;
 
 
         public LatestPlaylistViewHolder(View itemView) {

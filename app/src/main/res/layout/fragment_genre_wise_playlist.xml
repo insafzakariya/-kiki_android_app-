@@ -7,6 +7,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/genrePlaylistLayout"
         android:background="@color/customBlack1"
+        android:clickable="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

@@ -96,13 +96,13 @@ public class GenreWiseSongsFragment extends Fragment implements GenreWiseSongsAd
         binding.genreWiseRecyclerview.setAdapter(mAdapter);
         getGenreSongs(0,genre);
 
-//        binding.backImageview.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                AudioDashboardActivity hhh = (AudioDashboardActivity) getActivity();
-//                hhh.onBackPressed();
-//            }
-//        });
+        binding.backImageview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AudioDashboardActivity hhh = (AudioDashboardActivity) getActivity();
+                hhh.onBackPressed();
+            }
+        });
 
         return binding.getRoot();
 

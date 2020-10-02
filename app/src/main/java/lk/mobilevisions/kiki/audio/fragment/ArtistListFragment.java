@@ -1,9 +1,11 @@
 package lk.mobilevisions.kiki.audio.fragment;
 
 import android.content.Context;
+
 import androidx.databinding.DataBindingUtil;
 
 import android.os.Bundle;
+
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -60,9 +62,9 @@ public class ArtistListFragment extends Fragment implements ArtistListAdapter.On
         ((Application) getActivity().getApplication()).getInjector().inject(this);
 
 
-        channelsLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL,false);
+        channelsLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         binding.artistListRecycle.setLayoutManager(channelsLayoutManager);
-        artistListAdapter = new ArtistListAdapter(getActivity(), artistsArrayList,ArtistListFragment.this);
+        artistListAdapter = new ArtistListAdapter(getActivity(), artistsArrayList, ArtistListFragment.this);
         binding.artistListRecycle.setHasFixedSize(true);
         binding.artistListRecycle.setItemViewCacheSize(50);
         binding.artistListRecycle.setDrawingCacheEnabled(true);
@@ -84,8 +86,6 @@ public class ArtistListFragment extends Fragment implements ArtistListAdapter.On
     }
 
 
-
-
     private void setupArtistList() {
         binding.artistListRecycle.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         binding.artistListRecycle.addItemDecoration(new SpacesItemDecoration(15));
@@ -97,7 +97,7 @@ public class ArtistListFragment extends Fragment implements ArtistListAdapter.On
 
     private void setDatatoArtistList() {
 
-        tvManager.getPopularArtists( new APIListener<List<Artist>>() {
+        tvManager.getPopularArtists(new APIListener<List<Artist>>() {
             @Override
             public void onSuccess(List<Artist> result, List<Object> params) {
                 if (result.size() == 0) {
@@ -106,7 +106,7 @@ public class ArtistListFragment extends Fragment implements ArtistListAdapter.On
                 } else {
                     binding.artistListRecycle.setVisibility(View.VISIBLE);
                     artistsArrayList = result;
-                    artistListAdapter = new ArtistListAdapter(getActivity(), artistsArrayList,ArtistListFragment.this);
+                    artistListAdapter = new ArtistListAdapter(getActivity(), artistsArrayList, ArtistListFragment.this);
                     binding.artistListRecycle.setAdapter(artistListAdapter);
                 }
                 binding.aviProgress.setVisibility(View.GONE);
@@ -120,19 +120,21 @@ public class ArtistListFragment extends Fragment implements ArtistListAdapter.On
         });
     }
 
-    private void addArtistToLibrary(int artistID){
+    private void addArtistToLibrary(int artistID) {
 
-        ArrayList <Integer> artistId = new ArrayList<>();
+        ArrayList<Integer> artistId = new ArrayList<>();
         artistId.add(artistID);
-        tvManager.addDataToLibraryHash("A",artistId, new APIListener<Void>() {
+        tvManager.addDataToLibraryHash("A", artistId, new APIListener<Void>() {
             @Override
             public void onSuccess(Void result, List<Object> params) {
-
-                Toast.makeText(getActivity(), getResources().getString(R.string.added_to_library), Toast.LENGTH_SHORT ).show();
+                binding.aviProgress.setVisibility(View.GONE);
+                Toast.makeText(getActivity(), getResources().getString(R.string.added_to_library), Toast.LENGTH_SHORT).show();
+                artistListAdapter.setEnabled(true);
             }
 
             @Override
             public void onFailure(Throwable t) {
+                artistListAdapter.setEnabled(true);
                 Utils.Error.onServiceCallFail(getActivity(), t);
             }
         });
@@ -143,7 +145,7 @@ public class ArtistListFragment extends Fragment implements ArtistListAdapter.On
     @Override
     public void onArtistListItemClick(Artist artist, int position, List<Artist> artistList) {
 
-        Bundle bundle=new Bundle();
+        Bundle bundle = new Bundle();
         bundle.putInt("artistID", artist.getId());
         System.out.println("ssdffjfnjffjfjfj" + artist.getId());
         bundle.putString("artistName", artist.getName());
@@ -164,7 +166,11 @@ public class ArtistListFragment extends Fragment implements ArtistListAdapter.On
     @Override
     public void onAddArtistItemClick(Artist artist) {
 
+        binding.aviProgress.setVisibility(View.VISIBLE);
         int artistID = artist.getId();
-        addArtistToLibrary(artistID);
+        if (artistListAdapter.enabled) {
+            addArtistToLibrary(artistID);
+        }
+        artistListAdapter.setEnabled(false);
     }
 }

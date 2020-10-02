@@ -20,6 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import lk.mobilevisions.kiki.R;
 import lk.mobilevisions.kiki.audio.model.dto.Song;
+import lk.mobilevisions.kiki.audio.util.NavigationUtils;
 
 public class PlaylistLibraryDetailAdapter extends
         RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -62,6 +63,7 @@ public class PlaylistLibraryDetailAdapter extends
         holder.songTitleTextview.setText(current.getName());
 
         holder.artistTextView.setText(current.getArtistName());
+        holder.songDuration.setText(NavigationUtils.convertMinutesToFormat(current.getDuration()));
 
         try {
             Picasso.with(mContext).load(URLDecoder.decode(current.getImage(), "UTF-8")).fit().centerCrop()
@@ -94,6 +96,9 @@ public class PlaylistLibraryDetailAdapter extends
 
         @BindView(R.id.artist_text)
         TextView artistTextView;
+
+        @BindView(R.id.playlist_song_duration)
+        TextView songDuration;
 
         @BindView(R.id.playlist_image)
         ImageView playlistImageView;

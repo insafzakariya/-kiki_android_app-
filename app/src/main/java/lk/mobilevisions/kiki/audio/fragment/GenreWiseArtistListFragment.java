@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import lk.mobilevisions.kiki.R;
 import lk.mobilevisions.kiki.app.Application;
 import lk.mobilevisions.kiki.app.Utils;
+import lk.mobilevisions.kiki.audio.activity.AudioDashboardActivity;
 import lk.mobilevisions.kiki.audio.adapter.GenreArtistListAdapter;
 import lk.mobilevisions.kiki.audio.model.dto.Artist;
 import lk.mobilevisions.kiki.databinding.FragmentArtistListBinding;
@@ -68,13 +69,13 @@ public class GenreWiseArtistListFragment extends Fragment implements GenreArtist
         binding.artistListRecycle.setAdapter(mAdapter);
         getGenreWiseArtists(genreId);
 
-//        binding.backImageview.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                AudioDashboardActivity hhh = (AudioDashboardActivity) getActivity();
-//                hhh.onBackPressed();
-//            }
-//        });
+        binding.backImageview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AudioDashboardActivity hhh = (AudioDashboardActivity) getActivity();
+                hhh.onBackPressed();
+            }
+        });
 
         return binding.getRoot();
 
@@ -119,12 +120,14 @@ public class GenreWiseArtistListFragment extends Fragment implements GenreArtist
         tvManager.addDataToLibraryHash("A",artistId, new APIListener<Void>() {
             @Override
             public void onSuccess(Void result, List<Object> params) {
-
+                binding.aviProgress.setVisibility(View.GONE);
                 Toast.makeText(getActivity(), "Added to library.", Toast.LENGTH_SHORT ).show();
+                mAdapter.setEnbaled(true);
             }
 
             @Override
             public void onFailure(Throwable t) {
+                mAdapter.setEnbaled(true);
                 Utils.Error.onServiceCallFail(getActivity(), t);
             }
         });
@@ -152,9 +155,10 @@ public class GenreWiseArtistListFragment extends Fragment implements GenreArtist
 
     @Override
     public void onAddArtistItemClick(Artist artist) {
-
+        binding.aviProgress.setVisibility(View.VISIBLE);
         int artistID = artist.getId();
         addArtistToLibrary(artistID);
+        mAdapter.setEnbaled(false);
     }
 
     class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {

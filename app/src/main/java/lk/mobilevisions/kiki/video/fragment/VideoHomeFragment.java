@@ -1,20 +1,27 @@
 package lk.mobilevisions.kiki.video.fragment;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 
 import androidx.databinding.DataBindingUtil;
+
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
+
 import androidx.fragment.app.Fragment;
 import androidx.core.view.ViewCompat;
 import androidx.viewpager.widget.ViewPager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
@@ -34,13 +41,18 @@ import javax.inject.Inject;
 import lk.mobilevisions.kiki.R;
 import lk.mobilevisions.kiki.app.Application;
 import lk.mobilevisions.kiki.app.Utils;
+import lk.mobilevisions.kiki.audio.activity.AudioTrialActivationActivity;
 import lk.mobilevisions.kiki.databinding.FragmentHomeVideoBinding;
 import lk.mobilevisions.kiki.modules.api.APIListener;
 import lk.mobilevisions.kiki.modules.api.dto.Channel;
+import lk.mobilevisions.kiki.modules.api.dto.PackageToken;
+import lk.mobilevisions.kiki.modules.api.dto.PackageV2;
 import lk.mobilevisions.kiki.modules.api.dto.Program;
+import lk.mobilevisions.kiki.modules.subscriptions.SubscriptionsManager;
 import lk.mobilevisions.kiki.modules.tv.TvManager;
 import lk.mobilevisions.kiki.video.activity.VideoChildModeActivity;
 import lk.mobilevisions.kiki.video.activity.VideoEpisodeActivity;
+import lk.mobilevisions.kiki.video.activity.VideoTrialActivationActivity;
 import lk.mobilevisions.kiki.video.adapter.ChannelAdapter;
 import lk.mobilevisions.kiki.video.adapter.ProgramAdapter;
 import lk.mobilevisions.kiki.video.adapter.SlidingImageAdapter;
@@ -50,6 +62,9 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
 
     @Inject
     TvManager tvManager;
+
+    @Inject
+    SubscriptionsManager subscriptionsManager;
     List<Program> programs;
     private static int currentPage = 0;
     private static int NUM_PAGES = 0;
@@ -66,6 +81,9 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
     private int selectedProgramPosition;
     private FirebaseAnalytics mFirebaseAnalytics;
     Context context;
+
+    private String alertTitle;
+    private String messageBody;
 
     public VideoHomeFragment() {
         // Required empty public constructor
@@ -89,6 +107,7 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
         setupSliderView();
         Application.BUS.register(this);
         loadChannelsAndPrograms();
+        checkSubscription();
 
         binding.indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -147,10 +166,10 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
 
         String programType = getActivity().getIntent().getStringExtra("programType");
 
-        if (programType != null){
-            if (programType.equals("0")){
+        if (programType != null) {
+            if (programType.equals("0")) {
 
-                tvManager.getProgramWithID(programid, new APIListener <Program>() {
+                tvManager.getProgramWithID(programid, new APIListener<Program>() {
                     @Override
                     public void onSuccess(Program program, List<Object> params) {
 
@@ -183,6 +202,84 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
         return binding.getRoot();
     }
 
+    private void trialSubscriptionDialog() {
+        LayoutInflater myLayout = LayoutInflater.from(getActivity());
+        final View dialogView = myLayout.inflate(R.layout.alert_dialog_trial_subscription, null);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                getActivity());
+        alertDialogBuilder.setView(dialogView);
+        dialogView.setClipToOutline(true);
+        final AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.setCanceledOnTouchOutside(false);
+        alertDialog.show();
+
+
+        RelativeLayout tryTextview = (RelativeLayout) alertDialog.findViewById(R.id.try_now_layout);
+        ImageView closeImageView = (ImageView) alertDialog.findViewById(R.id.close_imageview);
+        TextView title = (TextView) alertDialog.findViewById(R.id.alert_title);
+        title.setText(alertTitle);
+        TextView body = (TextView) alertDialog.findViewById(R.id.message_body_text);
+        body.setText(messageBody);
+
+
+        tryTextview.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                alertDialog.dismiss();
+                Intent intentPackages = new Intent(getActivity(), VideoTrialActivationActivity.class);
+                startActivity(intentPackages);
+
+
+            }
+        });
+        closeImageView.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                alertDialog.dismiss();
+
+
+            }
+        });
+    }
+
+    private void checkSubscription() {
+        subscriptionsManager.generateSubscriptionToken((int) Utils.App.getConfig(getActivity().getApplication()).getPaidPackageId(),
+                new APIListener<PackageToken>() {
+                    @Override
+                    public void onSuccess(final PackageToken packageToken, List<Object> params) {
+
+                        subscriptionsManager.getTrialStatus(new APIListener<PackageV2>() {
+                            @Override
+                            public void onSuccess(PackageV2 thePackage, List<Object> params) {
+
+                                alertTitle = thePackage.getTitleText();
+                                messageBody = thePackage.getMessageBody();
+
+                                if (thePackage.isTrialStatus() && !thePackage.isSubStatus()) {
+
+                                    try {
+                                        trialSubscriptionDialog();
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Throwable t) {
+
+
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onFailure(Throwable t) {
+
+
+                    }
+                });
+    }
 
     @Override
     public void onResume() {
@@ -214,7 +311,7 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
                     binding.indicator.setRadius(5 * density);
 
                     NUM_PAGES = programs.size();
-                    if(!isSlidersLoaded){
+                    if (!isSlidersLoaded) {
                         setUpTimer();
                         isSlidersLoaded = true;
                     }
@@ -302,9 +399,9 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
                 if (channels != null && channels.size() > 0) {
                     channelList = channels;
                     channelSize = channels.size();
-                    if(isKidsMoodOn){
+                    if (isKidsMoodOn) {
                         fetchKisdProgramsByChannelId(channelList.get(0));
-                    }else{
+                    } else {
                         fetchProgramsByChannelId(channelList.get(0));
                     }
 
@@ -381,7 +478,7 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
             @Override
             public void onSuccess(List<Program> programs, List<Object> params) {
 
-                setProgramsToAdapter(programs,channel);
+                setProgramsToAdapter(programs, channel);
 
 
             }
@@ -395,7 +492,7 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
 
     }
 
-    private void setProgramsToAdapter(List<Program> programs,Channel channel){
+    private void setProgramsToAdapter(List<Program> programs, Channel channel) {
         if (isAdded()) {
             if (programs.size() > 0) {
                 channel.setProgramList(programs);
@@ -423,6 +520,7 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
 
         }
     }
+
     private void fetchKisdProgramsByChannelId(final Channel channel) {
 
         if (selectedDate == null) {
@@ -444,10 +542,10 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
                         channel.setProgramList(programs);
                         channelAdapter.addChannel(channel);
 
-                            binding.aviProgressRecycler.setVisibility(View.GONE);
-                            binding.recycleviewChannelsPrograms.setAdapter(channelAdapter);
-                            ViewCompat.setNestedScrollingEnabled(binding.recycleviewChannelsPrograms, false);
-                            channelAdapter.notifyDataSetChanged();
+                        binding.aviProgressRecycler.setVisibility(View.GONE);
+                        binding.recycleviewChannelsPrograms.setAdapter(channelAdapter);
+                        ViewCompat.setNestedScrollingEnabled(binding.recycleviewChannelsPrograms, false);
+                        channelAdapter.notifyDataSetChanged();
                     }
 
                 }

@@ -2,14 +2,10 @@ package lk.mobilevisions.kiki.audio.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import androidx.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,19 +23,20 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.databinding.DataBindingUtil;
 import im.delight.android.webview.AdvancedWebView;
 import lk.mobilevisions.kiki.R;
 import lk.mobilevisions.kiki.app.Application;
 import lk.mobilevisions.kiki.app.Utils;
 import lk.mobilevisions.kiki.databinding.ActivityAudioPaymentBinding;
 import lk.mobilevisions.kiki.modules.api.APIListener;
-import lk.mobilevisions.kiki.modules.api.dto.Package;
 import lk.mobilevisions.kiki.modules.api.dto.PackageToken;
 import lk.mobilevisions.kiki.modules.subscriptions.SubscriptionsManager;
 import timber.log.Timber;
 
-
-public class AudioPaymentActivity extends AppCompatActivity implements AdvancedWebView.Listener{
+public class AudioTrialActivationActivity extends AppCompatActivity implements AdvancedWebView.Listener{
 
 
     ActivityAudioPaymentBinding binding;
@@ -61,7 +58,7 @@ public class AudioPaymentActivity extends AppCompatActivity implements AdvancedW
         binding.includedToolbar.backImageview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AudioPaymentActivity.this, AudioDashboardActivity.class);
+                Intent intent = new Intent(AudioTrialActivationActivity.this, AudioDashboardActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -88,9 +85,9 @@ public class AudioPaymentActivity extends AppCompatActivity implements AdvancedW
             public void onSuccess(final PackageToken packageToken, List<Object> params) {
 
                 if (packageToken.getTokenHash() != null) {
-                    Timber.d("Loading URL from the WebView: %s", Utils.App.getConfig(getApplication()).getMobilePaymentGatewayURL() + "?token=" + packageToken.getTokenHash());
+                    Timber.d("Loading URL from the WebView: %s", Utils.App.getConfig(getApplication()).getMobilePaymentGatewayURL() + "?token=" + packageToken.getTokenHash()  + "&isFreeTrial=true");
                     binding.webViewPayment.addHttpHeader("X-Requested-With", "");
-                    binding.webViewPayment.loadUrl(Utils.App.getConfig(getApplication()).getMobilePaymentGatewayURL() + "?token=" + packageToken.getTokenHash());
+                    binding.webViewPayment.loadUrl(Utils.App.getConfig(getApplication()).getMobilePaymentGatewayURL() + "?token=" + packageToken.getTokenHash() + "&isFreeTrial=true");
 //                            System.out.println("urlCheck " + Utils.App.getConfig(getApplication()).getMobilePaymentGatewayURL());
                     return;
                 }
@@ -101,10 +98,10 @@ public class AudioPaymentActivity extends AppCompatActivity implements AdvancedW
 //                    public void onSuccess(Package thePackage, List<Object> params) {
 //                        binding.aviProgress.setVisibility(View.GONE);
 //                        if (packageToken.getTokenHash() != null) {
-//                            Timber.d("Loading URL from the WebView: %s", Utils.App.getConfig(getApplication()).getMobilePaymentGatewayURL() + "?token=" + packageToken.getTokenHash());
+//                            Timber.d("Loading URL from the WebView: %s", Utils.App.getConfig(getApplication()).getMobilePaymentGatewayURL() + "?token=" + packageToken.getTokenHash()  + "&isFreeTrial=true");
 //                            binding.webViewPayment.addHttpHeader("X-Requested-With", "");
-//                            binding.webViewPayment.loadUrl(Utils.App.getConfig(getApplication()).getMobilePaymentGatewayURL() + "?token=" + packageToken.getTokenHash());
-////                            System.out.println("urlCheck " + Utils.App.getConfig(getApplication()).getMobilePaymentGatewayURL());z
+//                            binding.webViewPayment.loadUrl(Utils.App.getConfig(getApplication()).getMobilePaymentGatewayURL() + "?token=" + packageToken.getTokenHash() + "&isFreeTrial=true");
+////                            System.out.println("urlCheck " + Utils.App.getConfig(getApplication()).getMobilePaymentGatewayURL());
 //                            return;
 //                        }
 ////                        if (thePackage.getId() == 46 || thePackage.getId() == 81) {
@@ -138,7 +135,7 @@ public class AudioPaymentActivity extends AppCompatActivity implements AdvancedW
 //                    @Override
 //                    public void onFailure(Throwable t) {
 //                        binding.aviProgress.setVisibility(View.GONE);
-//                        Utils.Error.onServiceCallFail(AudioPaymentActivity.this, t);
+//                        Utils.Error.onServiceCallFail(TrialActivationActivity.this, t);
 //                    }
 //                });
             }
@@ -146,7 +143,7 @@ public class AudioPaymentActivity extends AppCompatActivity implements AdvancedW
             @Override
             public void onFailure(Throwable t) {
                 binding.aviProgress.setVisibility(View.GONE);
-                Utils.Error.onServiceCallFail(AudioPaymentActivity.this, t);
+                Utils.Error.onServiceCallFail(AudioTrialActivationActivity.this, t);
             }
         });
 

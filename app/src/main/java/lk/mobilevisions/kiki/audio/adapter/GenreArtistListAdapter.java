@@ -29,6 +29,7 @@ public class GenreArtistListAdapter extends
     private Context mContext;
     private List<Artist> artistList;
     OnArtistItemClickListener itemClickListener;
+    public boolean enabled = true;
 
     public GenreArtistListAdapter(Context mContext, List<Artist> artistList, OnArtistItemClickListener itemClickListener) {
         this.mContext = mContext;
@@ -46,6 +47,9 @@ public class GenreArtistListAdapter extends
 
     }
 
+    public void setEnbaled(boolean isEnable){
+        this.enabled = isEnable;
+    }
 
     public void setList(List<Artist> artistList) {
         this.artistList.addAll(artistList);
@@ -88,7 +92,10 @@ public class GenreArtistListAdapter extends
         holder.addArtistTextview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                itemClickListener.onAddArtistItemClick(artistList.get(holder.getAdapterPosition()));
+                if (enabled){
+                    itemClickListener.onAddArtistItemClick(artistList.get(holder.getAdapterPosition()));
+                }
+
             }
         });
 

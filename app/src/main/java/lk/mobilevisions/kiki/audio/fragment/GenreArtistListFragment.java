@@ -116,12 +116,14 @@ public class GenreArtistListFragment extends Fragment implements GenreArtistList
         tvManager.addDataToLibraryHash("A",artistId, new APIListener<Void>() {
             @Override
             public void onSuccess(Void result, List<Object> params) {
-
+                binding.aviProgress.setVisibility(View.GONE);
                 Toast.makeText(getActivity(), "Added to library.", Toast.LENGTH_SHORT ).show();
+                mAdapter.setEnbaled(true);
             }
 
             @Override
             public void onFailure(Throwable t) {
+                mAdapter.setEnbaled(true);
                 Utils.Error.onServiceCallFail(getActivity(), t);
             }
         });
@@ -150,9 +152,10 @@ public class GenreArtistListFragment extends Fragment implements GenreArtistList
 
     @Override
     public void onAddArtistItemClick(Artist artist) {
-
+        binding.aviProgress.setVisibility(View.VISIBLE);
         int artistID = artist.getId();
         addArtistToLibrary(artistID);
+        mAdapter.setEnbaled(false);
     }
 
     class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {

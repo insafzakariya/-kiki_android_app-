@@ -251,6 +251,7 @@ public class PlaylistCreationFragment extends Fragment implements PlaylistCreati
     private void getTempPlaylistSongs(String sessionId) {
 //        binding.aviPlaylist.setVisibility(View.VISIBLE);
         binding.confirmText.setEnabled(false);
+        binding.disableConfirmText.setVisibility(View.VISIBLE);
         songIdList.clear();
         tvManager.getSongsOfTempPlayList(sessionId, new APIListener<List<Song>>() {
             @Override
@@ -276,6 +277,7 @@ public class PlaylistCreationFragment extends Fragment implements PlaylistCreati
                 }
                 binding.aviPlaylist.setVisibility(View.GONE);
                 binding.confirmText.setEnabled(true);
+                binding.disableConfirmText.setVisibility(View.GONE);
             }
 
             @Override

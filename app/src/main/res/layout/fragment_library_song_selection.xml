@@ -42,7 +42,7 @@
                     android:layout_marginEnd="@dimen/_6sdp"
                     android:layout_marginTop="@dimen/_6sdp"
                     android:layout_alignParentEnd="true"
-                    android:text="Confirm"
+                    android:text="@string/confirm"
                     android:textColor="#FFFFFF"
                     android:textSize="@dimen/_10sdp"
                     android:background="@drawable/viewall_background"/>

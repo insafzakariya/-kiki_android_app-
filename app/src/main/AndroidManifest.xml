@@ -235,6 +235,14 @@
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".audio.activity.AudioTrialActivationActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".video.activity.VideoTrialActivationActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".video.activity.ContactActivity"
             android:screenOrientation="portrait" />
         <activity

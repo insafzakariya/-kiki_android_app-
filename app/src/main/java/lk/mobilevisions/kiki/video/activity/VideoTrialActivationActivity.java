@@ -1,15 +1,11 @@
-package lk.mobilevisions.kiki.audio.activity;
+package lk.mobilevisions.kiki.video.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import androidx.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,28 +23,31 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.databinding.DataBindingUtil;
 import im.delight.android.webview.AdvancedWebView;
 import lk.mobilevisions.kiki.R;
 import lk.mobilevisions.kiki.app.Application;
 import lk.mobilevisions.kiki.app.Utils;
-import lk.mobilevisions.kiki.databinding.ActivityAudioPaymentBinding;
+import lk.mobilevisions.kiki.audio.activity.AudioDashboardActivity;
+import lk.mobilevisions.kiki.audio.activity.AudioTrialActivationActivity;
+import lk.mobilevisions.kiki.databinding.ActivityPaymentBinding;
 import lk.mobilevisions.kiki.modules.api.APIListener;
-import lk.mobilevisions.kiki.modules.api.dto.Package;
 import lk.mobilevisions.kiki.modules.api.dto.PackageToken;
 import lk.mobilevisions.kiki.modules.subscriptions.SubscriptionsManager;
 import timber.log.Timber;
 
+public class VideoTrialActivationActivity extends AppCompatActivity implements AdvancedWebView.Listener{
 
-public class AudioPaymentActivity extends AppCompatActivity implements AdvancedWebView.Listener{
 
-
-    ActivityAudioPaymentBinding binding;
+    ActivityPaymentBinding binding;
     @Inject
     SubscriptionsManager subscriptionsManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_audio_payment);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_payment);
         ((Application) getApplication()).getInjector().inject(this);
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -61,7 +60,7 @@ public class AudioPaymentActivity extends AppCompatActivity implements AdvancedW
         binding.includedToolbar.backImageview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AudioPaymentActivity.this, AudioDashboardActivity.class);
+                Intent intent = new Intent(VideoTrialActivationActivity.this, VideoDashboardActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -88,65 +87,19 @@ public class AudioPaymentActivity extends AppCompatActivity implements AdvancedW
             public void onSuccess(final PackageToken packageToken, List<Object> params) {
 
                 if (packageToken.getTokenHash() != null) {
-                    Timber.d("Loading URL from the WebView: %s", Utils.App.getConfig(getApplication()).getMobilePaymentGatewayURL() + "?token=" + packageToken.getTokenHash());
+                    Timber.d("Loading URL from the WebView: %s", Utils.App.getConfig(getApplication()).getMobilePaymentGatewayURL() + "?token=" + packageToken.getTokenHash()  + "&isFreeTrial=true");
                     binding.webViewPayment.addHttpHeader("X-Requested-With", "");
-                    binding.webViewPayment.loadUrl(Utils.App.getConfig(getApplication()).getMobilePaymentGatewayURL() + "?token=" + packageToken.getTokenHash());
-//                            System.out.println("urlCheck " + Utils.App.getConfig(getApplication()).getMobilePaymentGatewayURL());
+                    binding.webViewPayment.loadUrl(Utils.App.getConfig(getApplication()).getMobilePaymentGatewayURL() + "?token=" + packageToken.getTokenHash() + "&isFreeTrial=true");
+
                     return;
                 }
 
-
-//                subscriptionsManager.getActivatedPackage(new APIListener<Package>() {
-//                    @Override
-//                    public void onSuccess(Package thePackage, List<Object> params) {
-//                        binding.aviProgress.setVisibility(View.GONE);
-//                        if (packageToken.getTokenHash() != null) {
-//                            Timber.d("Loading URL from the WebView: %s", Utils.App.getConfig(getApplication()).getMobilePaymentGatewayURL() + "?token=" + packageToken.getTokenHash());
-//                            binding.webViewPayment.addHttpHeader("X-Requested-With", "");
-//                            binding.webViewPayment.loadUrl(Utils.App.getConfig(getApplication()).getMobilePaymentGatewayURL() + "?token=" + packageToken.getTokenHash());
-////                            System.out.println("urlCheck " + Utils.App.getConfig(getApplication()).getMobilePaymentGatewayURL());z
-//                            return;
-//                        }
-////                        if (thePackage.getId() == 46 || thePackage.getId() == 81) {
-//////                            new MaterialDialog.Builder(AudioPaymentActivity.this)
-//////                                    .title(getString(R.string.app_name))
-//////                                    .content("You already have a subscription. Are you sure you want to subscribe it again?")
-//////                                    .positiveText("Yes")
-//////                                    .negativeText("No")
-//////                                    .onPositive(new MaterialDialog.SingleButtonCallback() {
-//////                                        @Override
-//////                                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-//////                                            if (packageToken.getTokenHash() != null) {
-//////                                                Timber.d("Loading URL from the WebView: %s", Utils.App.getConfig(getApplication()).getMobilePaymentGatewayURL() + "?token=" + packageToken.getTokenHash());
-//////                                                binding.webViewPayment.addHttpHeader("X-Requested-With", "");
-//////                                                binding.webViewPayment.loadUrl(Utils.App.getConfig(getApplication()).getMobilePaymentGatewayURL() + "?token=" + packageToken.getTokenHash());
-//////                                                return;
-//////                                            }
-//////
-//////                                        }
-//////                                    })
-//////                                    .show();
-////                        } else {
-////
-////
-////                        }
-//
-//
-//
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Throwable t) {
-//                        binding.aviProgress.setVisibility(View.GONE);
-//                        Utils.Error.onServiceCallFail(AudioPaymentActivity.this, t);
-//                    }
-//                });
             }
 
             @Override
             public void onFailure(Throwable t) {
                 binding.aviProgress.setVisibility(View.GONE);
-                Utils.Error.onServiceCallFail(AudioPaymentActivity.this, t);
+                Utils.Error.onServiceCallFail(VideoTrialActivationActivity.this, t);
             }
         });
 

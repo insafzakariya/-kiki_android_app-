@@ -11,10 +11,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.crashlytics.android.answers.FirebaseAnalyticsEvent;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.otto.Subscribe;
 
@@ -33,6 +33,7 @@ import lk.mobilevisions.kiki.app.Application;
 import lk.mobilevisions.kiki.app.Utils;
 import lk.mobilevisions.kiki.audio.activity.AudioDashboardActivity;
 import lk.mobilevisions.kiki.audio.activity.AudioPaymentActivity;
+import lk.mobilevisions.kiki.audio.activity.AudioTrialActivationActivity;
 import lk.mobilevisions.kiki.audio.adapter.ArtistsVerticalAdapter;
 import lk.mobilevisions.kiki.audio.adapter.DailyMixAdapter;
 import lk.mobilevisions.kiki.audio.adapter.GenreArtistVerticalAdapter;
@@ -43,7 +44,6 @@ import lk.mobilevisions.kiki.audio.adapter.RadioChannelVerticalAdapter;
 import lk.mobilevisions.kiki.audio.adapter.RecentlyPlayedVerticalAdapter;
 import lk.mobilevisions.kiki.audio.adapter.YouAlsoMightLikeVerticalAdapter;
 import lk.mobilevisions.kiki.audio.event.SearchNavigationEvent;
-import lk.mobilevisions.kiki.audio.event.UserNavigateBackEvent;
 import lk.mobilevisions.kiki.audio.model.dto.Artist;
 import lk.mobilevisions.kiki.audio.model.dto.DailyMix;
 import lk.mobilevisions.kiki.audio.model.dto.PlayList;
@@ -51,8 +51,8 @@ import lk.mobilevisions.kiki.audio.model.dto.Song;
 import lk.mobilevisions.kiki.audio.util.SpacesItemDecoration;
 import lk.mobilevisions.kiki.databinding.FragmentHomeAudioBinding;
 import lk.mobilevisions.kiki.modules.api.APIListener;
-import lk.mobilevisions.kiki.modules.api.dto.Package;
 import lk.mobilevisions.kiki.modules.api.dto.PackageToken;
+import lk.mobilevisions.kiki.modules.api.dto.PackageV2;
 import lk.mobilevisions.kiki.modules.subscriptions.SubscriptionsManager;
 import lk.mobilevisions.kiki.modules.tv.TvManager;
 
@@ -91,6 +91,9 @@ public class AudioHomeFragment extends Fragment implements DailyMixAdapter.Daily
     private RadioChannelVerticalAdapter.OnRadioChannelItemActionListener radioChannelItemActionListener;
     private ArtistsVerticalAdapter.OnArtistsItemActionListener artistsItemActionListener;
     private PlaylistVerticalAdapter.OnPlaylistItemActionListener playlistItemActionListener;
+
+    private String alertTitle;
+    private String messageBody;
 
     private int lastRandomNumber;
     private FirebaseAnalytics mFirebaseAnalytics;
@@ -619,6 +622,47 @@ public class AudioHomeFragment extends Fragment implements DailyMixAdapter.Daily
 //        dailyMixAdapter.UpdateData(position, userData);
     }
 
+    private void trialSubscriptionDialog() {
+        LayoutInflater myLayout = LayoutInflater.from(getActivity());
+        final View dialogView = myLayout.inflate(R.layout.alert_dialog_trial_subscription, null);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                getActivity());
+        alertDialogBuilder.setView(dialogView);
+        dialogView.setClipToOutline(true);
+        final AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.setCanceledOnTouchOutside(false);
+        alertDialog.show();
+
+
+        RelativeLayout tryTextview = (RelativeLayout) alertDialog.findViewById(R.id.try_now_layout);
+        ImageView closeImageView = (ImageView) alertDialog.findViewById(R.id.close_imageview);
+        TextView title = (TextView) alertDialog.findViewById(R.id.alert_title);
+        title.setText(alertTitle);
+        TextView body = (TextView) alertDialog.findViewById(R.id.message_body_text);
+        body.setText(messageBody);
+
+
+        tryTextview.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                alertDialog.dismiss();
+                Intent intentPackages = new Intent(getActivity(), AudioTrialActivationActivity.class);
+                startActivity(intentPackages);
+
+
+            }
+        });
+        closeImageView.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                alertDialog.dismiss();
+
+
+            }
+        });
+    }
+
+
     private void subscriptionDialog() {
         LayoutInflater myLayout = LayoutInflater.from(getActivity());
         final View dialogView = myLayout.inflate(R.layout.alert_dialog_subscription, null);
@@ -655,34 +699,38 @@ public class AudioHomeFragment extends Fragment implements DailyMixAdapter.Daily
     }
 
     private void checkSubscription(){
-        subscriptionsManager.generateSubscriptionToken((int) Utils.App.getConfig(getActivity().getApplication()).getPaidPackageId(), new APIListener<PackageToken>() {
+        subscriptionsManager.generateSubscriptionToken((int) Utils.App.getConfig(getActivity().getApplication()).getPaidPackageId(),
+                new APIListener<PackageToken>() {
             @Override
             public void onSuccess(final PackageToken packageToken, List<Object> params) {
 
-                subscriptionsManager.getActivatedPackage(new APIListener<Package>() {
+                subscriptionsManager.getTrialStatus(new APIListener<PackageV2>() {
                     @Override
-                    public void onSuccess(Package thePackage, List<Object> params) {
+                    public void onSuccess(PackageV2 thePackage, List<Object> params) {
                         binding.aviProgress.setVisibility(View.GONE);
-
-                        if (thePackage.getId() == 46 || thePackage.getId() == 81 || thePackage.getId() == 101 || thePackage.getId() == 106) {
-
-
-                        } else {
+                        alertTitle = thePackage.getTitleText();
+                        messageBody = thePackage.getMessageBody();
+                        System.out.println("hdfhdfhdh " + alertTitle);
+                        System.out.println("hdfhdfhdh 111  " + messageBody);
+//                        if (thePackage.getPackageId() == 46 || thePackage.getPackageId() == 81 ||
+//                                thePackage.getPackageId() == 101 || thePackage.getPackageId() == 106) {
+//
+//                        } else {
 //                            try {
 //                                subscriptionDialog();
 //                            } catch (Exception e) {
 //                                e.printStackTrace();
 //                            }
-
-                        }
-
-//                        if (thePackage.getId() !=1){
-//                            subscriptionDialog();
-//
 //                        }
 
+                        if (thePackage.isTrialStatus() && !thePackage.isSubStatus()) {
 
-
+                            try {
+                                trialSubscriptionDialog();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
                     }
 
                     @Override
