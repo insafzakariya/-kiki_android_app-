@@ -137,9 +137,9 @@ public class GenreArtistListFragment extends Fragment implements GenreArtistList
 
         Bundle bundle=new Bundle();
         bundle.putInt("artistID", artist.getId());
-        System.out.println("ssdffjfnjffjfjfj" + artist.getId());
+
         bundle.putString("artistName", artist.getName());
-        System.out.println("ssdffjfnjffjfjfj" + artist.getName());
+        bundle.putString("artistImage", artist.getImage());
         bundle.putString("songCount", artist.getSongsCount());
         ArtistDetailFragment artistDetailFragment = new ArtistDetailFragment();
         artistDetailFragment.setArguments(bundle);

@@ -115,7 +115,7 @@ public class AudioHomeFragment extends Fragment implements DailyMixAdapter.Daily
         ((Application) getActivity().getApplication()).getInjector().inject(this);
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(context);
 
-        checkSubscription();
+//        checkSubscription();
         setupDailyMix();
         setupRecenltPlayed();
         setupYouMightAlsoLike();

@@ -96,6 +96,7 @@ public class AuthManager {
 
     private void socialLogin(final User user, final APIListener<AuthUser> listener) {
         HashMap<String, Object> request = new HashMap<>();
+        System.out.println("sdsdsds 2222 " + user.getSocialAccessToken());
         if (user.getProvider().toString().toLowerCase() != null) {
             request.put(SOCIAL_TYPE, user.getProvider().toString().toLowerCase());
         }
@@ -111,6 +112,7 @@ public class AuthManager {
         }
         if (user.getSocialAccessToken() != null) {
             request.put(SOCIAL_TOKEN, user.getSocialAccessToken());
+            System.out.println("sdsdsds 1111 " + SOCIAL_TOKEN);
         }
         if (user.getSocialAccessTokenSecret() != null) {
             request.put(SOCIAL_TOKEN_SECRET, user.getSocialAccessTokenSecret());
@@ -529,8 +531,6 @@ public class AuthManager {
                     }
                 });
     }
-
-
 
 
     public void updateUserDetails(User user, final APIListener<AuthUser> listener) {

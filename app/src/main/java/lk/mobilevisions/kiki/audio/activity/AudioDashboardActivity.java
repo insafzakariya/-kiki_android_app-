@@ -125,8 +125,11 @@ import lk.mobilevisions.kiki.databinding.ActivityDashboadNewBinding;
 import lk.mobilevisions.kiki.modules.analytics.AnalyticsManager;
 import lk.mobilevisions.kiki.modules.api.APIListener;
 import lk.mobilevisions.kiki.modules.api.dto.NotificationCountResponse;
+import lk.mobilevisions.kiki.modules.api.dto.PackageToken;
+import lk.mobilevisions.kiki.modules.api.dto.PackageV2;
 import lk.mobilevisions.kiki.modules.auth.AuthManager;
 import lk.mobilevisions.kiki.modules.notifications.NotificationManager;
+import lk.mobilevisions.kiki.modules.subscriptions.SubscriptionsManager;
 import lk.mobilevisions.kiki.modules.tv.TvManager;
 import lk.mobilevisions.kiki.ui.base.BaseActivity;
 import lk.mobilevisions.kiki.ui.splash.SplashActivity;
@@ -156,6 +159,8 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
     ActivityDashboadNewBinding binding;
     @Inject
     TvManager tvManager;
+    @Inject
+    SubscriptionsManager subscriptionsManager;
 
     private AudioHomeFragment fragmentOne;
     private BrowseAllSongsFrangment fragmentTwo;
@@ -198,6 +203,10 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
     private int playlistId;
     List<Integer> songId = new ArrayList<>();
     String searchKeyWord;
+
+    private String alertTitle;
+    private String messageBody;
+    private boolean trialStatus;
 
     private static final int VOICE_RECOGNITION_REQUEST_CODE = 1023;
     int songDuration;
@@ -277,12 +286,19 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
 //        binding.drawerLayout.addDrawerListener(drawerToggle);
 //        bindWidgetsWithAnEvent();
 //        setupTabLayout();
+        checkTrialStatus();
         binding.subLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentPackages = new Intent(AudioDashboardActivity.this, AudioPaymentActivity.class);
-                startActivity(intentPackages);
-                binding.drawerLayout.closeDrawer(GravityCompat.START);
+                if (trialStatus) {
+                    Intent intentPackages = new Intent(AudioDashboardActivity.this, AudioTrialActivationActivity.class);
+                    startActivity(intentPackages);
+                    binding.drawerLayout.closeDrawer(GravityCompat.START);
+                } else {
+                    Intent intentPackages = new Intent(AudioDashboardActivity.this, AudioPaymentActivity.class);
+                    startActivity(intentPackages);
+                    binding.drawerLayout.closeDrawer(GravityCompat.START);
+                }
             }
         });
 
@@ -348,7 +364,7 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
         binding.includeDashboard.searchArtistRecyclerview.setHasFixedSize(true);
         binding.includeDashboard.searchArtistRecyclerview.setItemViewCacheSize(1000);
         binding.includeDashboard.searchArtistRecyclerview.setDrawingCacheEnabled(true);
-        artistListAdapter = new ArtistListAdapter(this,artistsArrayList,this);
+        artistListAdapter = new ArtistListAdapter(this, artistsArrayList, this);
         binding.includeDashboard.searchArtistRecyclerview.setAdapter(artistListAdapter);
 
         songsLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -356,7 +372,7 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
         binding.includeDashboard.searchPlaylistRecyclerview.setHasFixedSize(true);
         binding.includeDashboard.searchPlaylistRecyclerview.setItemViewCacheSize(1000);
         binding.includeDashboard.searchPlaylistRecyclerview.setDrawingCacheEnabled(true);
-        playlistAdapter = new LatestPlaylistAdapter(this,playListArrayList,this);
+        playlistAdapter = new LatestPlaylistAdapter(this, playListArrayList, this);
         binding.includeDashboard.searchPlaylistRecyclerview.setAdapter(playlistAdapter);
 
         songsLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -364,9 +380,8 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
         binding.includeDashboard.recentSearchRecyclerview.setHasFixedSize(true);
         binding.includeDashboard.recentSearchRecyclerview.setItemViewCacheSize(1000);
         binding.includeDashboard.recentSearchRecyclerview.setDrawingCacheEnabled(true);
-        searchSuggestionAdapter = new SearchSuggestionAdapter(this,searchSugList,this);
+        searchSuggestionAdapter = new SearchSuggestionAdapter(this, searchSugList, this);
         binding.includeDashboard.recentSearchRecyclerview.setAdapter(searchSuggestionAdapter);
-
 
 
         addPlaylistLayout = (RelativeLayout) findViewById(R.id.add_play_list_layout);
@@ -482,7 +497,7 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
                 SearchedSongsFragment searchedSongsFragment = new SearchedSongsFragment();
                 searchedSongsFragment.setArguments(bundle);
 
-                transaction.add(R.id.frame_container_search,searchedSongsFragment,"SearchedSongsFragment");
+                transaction.add(R.id.frame_container_search, searchedSongsFragment, "SearchedSongsFragment");
                 transaction.addToBackStack(null);
                 transaction.commit();
 
@@ -504,7 +519,7 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
                 SearchedArtistFragment searchedArtistFragment = new SearchedArtistFragment();
                 searchedArtistFragment.setArguments(bundle);
 
-                transaction.add(R.id.frame_container_search,searchedArtistFragment,"SearchedArtistFragment");
+                transaction.add(R.id.frame_container_search, searchedArtistFragment, "SearchedArtistFragment");
                 transaction.addToBackStack(null);
                 transaction.commit();
 
@@ -526,7 +541,7 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
                 SearchedPlaylistFragment searchedPlaylistFragment = new SearchedPlaylistFragment();
                 searchedPlaylistFragment.setArguments(bundle);
 
-                transaction.add(R.id.frame_container_search,searchedPlaylistFragment,"SearchedPlaylistFragment");
+                transaction.add(R.id.frame_container_search, searchedPlaylistFragment, "SearchedPlaylistFragment");
                 transaction.addToBackStack(null);
                 transaction.commit();
 
@@ -716,7 +731,7 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
         binding.includeSlidingPanelChildtwo.audioForwardImageview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                streamingManager.onSkipToNext();
+                streamingManager.onSkipToNext(false);
 
             }
         });
@@ -866,6 +881,95 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
         });
     }
 
+    private void checkTrialStatus() {
+        subscriptionsManager.generateSubscriptionToken((int) Utils.App.getConfig(this.getApplication()).getPaidPackageId(),
+                new APIListener<PackageToken>() {
+                    @Override
+                    public void onSuccess(final PackageToken packageToken, List<Object> params) {
+
+                        subscriptionsManager.getTrialStatus(new APIListener<PackageV2>() {
+                            @Override
+                            public void onSuccess(PackageV2 thePackage, List<Object> params) {
+//                                binding.aviProgress.setVisibility(View.GONE);
+                                alertTitle = thePackage.getTitleText();
+                                messageBody = thePackage.getMessageBody();
+                                trialStatus = thePackage.isTrialStatus();
+                                System.out.println("hdfhdfhdh " + alertTitle);
+                                System.out.println("hdfhdfhdh 111  " + messageBody);
+//                        if (thePackage.getPackageId() == 46 || thePackage.getPackageId() == 81 ||
+//                                thePackage.getPackageId() == 101 || thePackage.getPackageId() == 106) {
+//
+//                        } else {
+//                            try {
+//                                subscriptionDialog();
+//                            } catch (Exception e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+
+                                if (thePackage.isTrialStatus() && !thePackage.isSubStatus()) {
+
+                                    try {
+                                        trialSubscriptionDialog();
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Throwable t) {
+
+
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onFailure(Throwable t) {
+
+
+                    }
+                });
+    }
+
+    private void trialSubscriptionDialog() {
+        LayoutInflater myLayout = LayoutInflater.from(this);
+        final View dialogView = myLayout.inflate(R.layout.alert_dialog_trial_subscription, null);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                this);
+        alertDialogBuilder.setView(dialogView);
+        dialogView.setClipToOutline(true);
+        final AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.setCanceledOnTouchOutside(false);
+        alertDialog.show();
+
+
+        RelativeLayout tryTextview = (RelativeLayout) alertDialog.findViewById(R.id.try_now_layout);
+        ImageView closeImageView = (ImageView) alertDialog.findViewById(R.id.close_imageview);
+        TextView title = (TextView) alertDialog.findViewById(R.id.alert_title);
+        title.setText(alertTitle);
+        TextView body = (TextView) alertDialog.findViewById(R.id.message_body_text);
+        body.setText(messageBody);
+
+
+        tryTextview.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                alertDialog.dismiss();
+                Intent intentPackages = new Intent(AudioDashboardActivity.this, AudioTrialActivationActivity.class);
+                startActivity(intentPackages);
+            }
+        });
+        closeImageView.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                alertDialog.dismiss();
+
+
+            }
+        });
+    }
 
     private void searchSongs(String text) {
         binding.includeDashboard.seeAllSongs.setEnabled(false);
@@ -885,18 +989,18 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
                 } else {
                     binding.includeDashboard.searchSongsLayout.setVisibility(View.GONE);
                 }
-                if (response.getSongList() !=null && response.getSongList().size() >=3){
-                for(int i = 0; i < 3; i++){
-                    searchedSongsList.add(response.getSongList().get(i));
-                   }
+                if (response.getSongList() != null && response.getSongList().size() >= 3) {
+                    for (int i = 0; i < 3; i++) {
+                        searchedSongsList.add(response.getSongList().get(i));
+                    }
                 } else {
-                    if (response.getSongList() !=null && response.getSongList().size() <= 3){
-                        for(int i = 0; i < response.getSongList().size() ; i++){
+                    if (response.getSongList() != null && response.getSongList().size() <= 3) {
+                        for (int i = 0; i < response.getSongList().size(); i++) {
                             searchedSongsList.add(response.getSongList().get(i));
                         }
                     }
                 }
-                if (response.getSongList() != null && response.getSongList().size() <= 3){
+                if (response.getSongList() != null && response.getSongList().size() <= 3) {
                     binding.includeDashboard.seeAllSongs.setVisibility(View.GONE);
                 } else {
                     binding.includeDashboard.seeAllSongs.setVisibility(View.VISIBLE);
@@ -912,19 +1016,19 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
                 } else {
                     binding.includeDashboard.searchArtistLayout.setVisibility(View.GONE);
                 }
-                if (response.getArtistList() !=null && response.getArtistList().size() >= 3) {
-                    for (int i = 0; i < 3 ; i++) {
+                if (response.getArtistList() != null && response.getArtistList().size() >= 3) {
+                    for (int i = 0; i < 3; i++) {
                         nArtistsArrayList.add(response.getArtistList().get(i));
                     }
                 } else {
-                    if (response.getArtistList() !=null && response.getArtistList().size() <= 3){
-                        for(int i = 0; i < response.getArtistList().size() ; i++){
+                    if (response.getArtistList() != null && response.getArtistList().size() <= 3) {
+                        for (int i = 0; i < response.getArtistList().size(); i++) {
                             nArtistsArrayList.add(response.getArtistList().get(i));
                             System.out.println("shdbhdcvh " + searchedSongsList.size());
                         }
                     }
                 }
-                if (response.getArtistList() != null && response.getArtistList().size() <= 3){
+                if (response.getArtistList() != null && response.getArtistList().size() <= 3) {
                     binding.includeDashboard.seeAllArtists.setVisibility(View.GONE);
                 } else {
                     binding.includeDashboard.seeAllArtists.setVisibility(View.VISIBLE);
@@ -939,19 +1043,19 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
                 } else {
                     binding.includeDashboard.searchPlaylistLayout.setVisibility(View.GONE);
                 }
-                if (response.getPlaylistList() !=null && response.getPlaylistList().size() >= 3) {
-                    for (int i = 0; i < 3 ; i++) {
+                if (response.getPlaylistList() != null && response.getPlaylistList().size() >= 3) {
+                    for (int i = 0; i < 3; i++) {
                         nPlayListArrayList.add(response.getPlaylistList().get(i));
                     }
                 } else {
-                    if (response.getPlaylistList() !=null && response.getPlaylistList().size() <= 3){
-                        for(int i = 0; i < response.getPlaylistList().size() ; i++){
+                    if (response.getPlaylistList() != null && response.getPlaylistList().size() <= 3) {
+                        for (int i = 0; i < response.getPlaylistList().size(); i++) {
                             nPlayListArrayList.add(response.getPlaylistList().get(i));
                             System.out.println("shdbhdcvh " + searchedSongsList.size());
                         }
                     }
                 }
-                if (response.getPlaylistList() != null && response.getPlaylistList().size() <= 3){
+                if (response.getPlaylistList() != null && response.getPlaylistList().size() <= 3) {
                     binding.includeDashboard.seeAllPlaylists.setVisibility(View.GONE);
                 } else {
                     binding.includeDashboard.seeAllPlaylists.setVisibility(View.VISIBLE);
@@ -959,7 +1063,7 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
 
                 playlistAdapter.setList(nPlayListArrayList);
 
-                if (response.getSongList().size() == 0 && response.getArtistList().size() == 0 && response.getPlaylistList().size() == 0){
+                if (response.getSongList().size() == 0 && response.getArtistList().size() == 0 && response.getPlaylistList().size() == 0) {
                     binding.includeDashboard.noSongsTextView.setVisibility(View.VISIBLE);
                 } else {
                     binding.includeDashboard.noSongsTextView.setVisibility(View.GONE);
@@ -974,13 +1078,14 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
                 binding.includeDashboard.aviProgress.setVisibility(View.GONE);
                 System.out.println("dhdhdhdhdhdh 222  " + t.toString());
 
-            }});
+            }
+        });
     }
 
     private void getSearchSuggestions() {
 
 
-        tvManager.getSearchSuggestions( new APIListener<List<String>>() {
+        tvManager.getSearchSuggestions(new APIListener<List<String>>() {
             @Override
             public void onSuccess(List<String> result, List<Object> params) {
                 searchSugList = result;
@@ -1012,7 +1117,7 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
     @Override
     public void onArtistListItemClick(Artist artist, int position, List<Artist> artistList) {
         System.out.println("sjkdcadcadc 1111");
-        Bundle bundle=new Bundle();
+        Bundle bundle = new Bundle();
         bundle.putInt("artistID", artist.getId());
         System.out.println("sjkdcadcadc 2222" + artist.getId());
         bundle.putString("artistName", artist.getName());
@@ -1037,7 +1142,7 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
     @Override
     public void onLatestPlaylistItemClick(PlayList playList, int position, List<PlayList> songs) {
 
-        Bundle bundle=new Bundle();
+        Bundle bundle = new Bundle();
         bundle.putInt("playlistID", playList.getId());
         bundle.putString("playlistName", playList.getName());
         bundle.putString("songCount", playList.getSongCount());
@@ -1054,13 +1159,13 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
 
     private void addArtistToLibrary(int artistID) {
 
-        ArrayList <Integer> artistId = new ArrayList<>();
+        ArrayList<Integer> artistId = new ArrayList<>();
         artistId.add(artistID);
-        tvManager.addDataToLibraryHash("A",artistId, new APIListener<Void>() {
+        tvManager.addDataToLibraryHash("A", artistId, new APIListener<Void>() {
             @Override
             public void onSuccess(Void result, List<Object> params) {
 
-                Toast.makeText(getApplicationContext(), getResources().getString(R.string.added_to_library), Toast.LENGTH_SHORT ).show();
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.added_to_library), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -1071,11 +1176,11 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
 
     }
 
-    private void addPlaylistToLibrary(int playlistID){
+    private void addPlaylistToLibrary(int playlistID) {
 
         ArrayList<Integer> playlistId = new ArrayList<>();
         playlistId.add(playlistID);
-        tvManager.addDataToLibraryHash("P",playlistId, new APIListener<Void>() {
+        tvManager.addDataToLibraryHash("P", playlistId, new APIListener<Void>() {
             @Override
             public void onSuccess(Void result, List<Object> params) {
 
@@ -2077,9 +2182,14 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
 
     @Override
     public void showErrorDialog(int indexP, Song currentAudio) {
-        subscriptionDialog();
-        if (streamingManager.isPlaying()){
-                    streamingManager.onStop();
+        if (trialStatus) {
+            trialSubscriptionDialog();
+        } else {
+            subscriptionDialog();
+        }
+
+        if (streamingManager.isPlaying()) {
+            streamingManager.onStop();
         }
     }
 
@@ -2561,7 +2671,7 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.next_imageview:
-                streamingManager.onSkipToNext();
+                streamingManager.onSkipToNext(false);
 //                sendAnalytics(Constants.PLAYER_AUDIO_STOP_PLAY);
                 break;
             case R.id.previous_imageview:
@@ -2618,7 +2728,7 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
         listOfSongs = songs;
         streamingManager.setMediaList(listOfSongs);
 //        youAlsoLikeFragmentSongClickedEvent(song,position,listOfSongs);
-        }
+    }
 
     @Override
     public void onAddSongsItemClick(Song song) {
@@ -2689,9 +2799,9 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
 //        addSongsToPlaylist(playList.getId());
     }
 
-    private void getNextOrSuggestedSongs(int id,final int offset) {
+    private void getNextOrSuggestedSongs(int id, final int offset) {
 
-        tvManager.getAudioSuggestionList(id , new APIListener<List<Song>>() {
+        tvManager.getAudioSuggestionList(id, new APIListener<List<Song>>() {
             @Override
             public void onSuccess(List<Song> songs, List<Object> params) {
 
@@ -2699,7 +2809,7 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
                     if (songAdapter != null) {
                         listOfSongs.addAll(songs);
                         streamingManager.setMediaList(listOfSongs);
-                        songAdapter.notifyItemRangeInserted(offset,songs.size());
+                        songAdapter.notifyItemRangeInserted(offset, songs.size());
 
                     }
 
@@ -2746,11 +2856,11 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
 
     @Override
     public void onSearchSugTextviewItemClick(String string, int position, List<String> songs) {
-            searchKeyWord = string;
-            searchSongs(searchKeyWord);
-            binding.includeDashboard.viewSearchTint.setVisibility(View.GONE);
-            hideKeyboard();
-            binding.includeDashboard.searchview.setSearchString(searchKeyWord,true);
+        searchKeyWord = string;
+        searchSongs(searchKeyWord);
+        binding.includeDashboard.viewSearchTint.setVisibility(View.GONE);
+        hideKeyboard();
+        binding.includeDashboard.searchview.setSearchString(searchKeyWord, true);
     }
 
     public void hideKeyboard() {
@@ -2789,9 +2899,9 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
 
             if ((data.size() - position) == 1) {
                 int lastSongId = data.get(position).getId();
-                        getNextOrSuggestedSongs(lastSongId,data.size());
+                getNextOrSuggestedSongs(lastSongId, data.size());
 
-                }
+            }
 
 
             Song current = data.get(position);

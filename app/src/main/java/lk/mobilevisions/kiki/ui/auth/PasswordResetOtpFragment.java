@@ -1,8 +1,11 @@
 package lk.mobilevisions.kiki.ui.auth;
 
 import androidx.databinding.DataBindingUtil;
+
 import android.os.Bundle;
+
 import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +48,7 @@ public class PasswordResetOtpFragment extends Fragment implements View.OnClickLi
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.reset_layout:
-                if (binding.otpCode.getText().toString().length()!=4){
+                if (binding.otpCode.getText().toString().length() != 4) {
                     Utils.Dialog.showOKDialog(getActivity(), getString(R.string.invalid_otp));
                     return;
                 }
@@ -66,10 +69,12 @@ public class PasswordResetOtpFragment extends Fragment implements View.OnClickLi
 
     public class UserNavigatesBack {
     }
+
     public class UserResetPassword {
 
 
     }
+
     public class UserOtpRequest {
 
         private String otp;
@@ -95,12 +100,10 @@ public class PasswordResetOtpFragment extends Fragment implements View.OnClickLi
     @Subscribe
     public void onSetUserNameEvent(LoginActivity.SetUserNameEvent event) {
         ForgotPasswordUser forgotPasswordUser = Application.getInstance().getForgotPasswordUser();
-        if(forgotPasswordUser!=null){
-            System.out.println("en2ejkwnjkenjkernj 1111" + forgotPasswordUser.getUserName());
+        if (forgotPasswordUser != null) {
+
             binding.showUsername.setText(getString(R.string.hi_user, forgotPasswordUser.getUserName()));
 
-        }else{
-            System.out.println("en2ejkwnjkenjkernj 22222");
         }
     }
 }

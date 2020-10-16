@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -16,20 +16,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.joooonho.SelectableRoundedImageView
-                xmlns:app="http://schemas.android.com/apk/res-auto"
+            <com.joooonho.SelectableRoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/artist_image"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
-                android:src="@drawable/ic_havana"
-                android:scaleType="centerCrop"
-                app:sriv_left_top_corner_radius="5dip"
-                app:sriv_right_top_corner_radius="5dip"
-                app:sriv_left_bottom_corner_radius="5dip"
-                app:sriv_right_bottom_corner_radius="10dip"
-                app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="@dimen/_7sdp"
-                app:layout_constraintBottom_toTopOf="@+id/view_line2"/>
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_havana"
+                app:layout_constraintBottom_toTopOf="@+id/view_line2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:sriv_left_bottom_corner_radius="5dip"
+                app:sriv_left_top_corner_radius="5dip"
+                app:sriv_right_bottom_corner_radius="10dip"
+                app:sriv_right_top_corner_radius="5dip" />
 
 
             <lk.mobilevisions.kiki.audio.util.KikiAudioMediumTextView
@@ -38,41 +37,41 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginEnd="@dimen/_15sdp"
+                android:gravity="center|start"
+                android:singleLine="true"
                 android:text="Havana"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/_12sdp"
-                android:gravity="center|start"
-                android:singleLine="true"
                 app:layout_constraintStart_toEndOf="@+id/artist_image"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
                 android:id="@+id/textView_descrip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_15sdp"
-                android:layout_marginEnd="@dimen/_15sdp"
                 android:layout_marginTop="4dp"
-                android:text="Camila Cabello"
+                android:layout_marginEnd="@dimen/_15sdp"
                 android:gravity="center|start"
-                android:visibility="visible"
                 android:singleLine="true"
+                android:text="Camila Cabello"
                 android:textColor="#FFFFFF"
                 android:textSize="@dimen/_10sdp"
+                android:visibility="visible"
                 app:layout_constraintStart_toEndOf="@id/artist_image"
-                app:layout_constraintTop_toBottomOf="@+id/textView_head"/>
+                app:layout_constraintTop_toBottomOf="@+id/textView_head" />
 
             <TextView
                 android:id="@+id/song_duration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="00:00"
-                android:textColor="#FFFFFF"
-                android:gravity="center"
                 android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_12sdp"
+                android:gravity="center"
+                android:text="00:00"
+                android:textColor="#FFFFFF"
                 app:layout_constraintStart_toEndOf="@id/artist_image"
-                app:layout_constraintTop_toBottomOf="@id/textView_descrip"/>
+                app:layout_constraintTop_toBottomOf="@id/textView_descrip" />
 
             <!--            <TextView-->
             <!--                android:layout_width="wrap_content"-->
@@ -90,46 +89,44 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/_7sdp"
                 android:background="@drawable/library_add_background"
                 android:drawableStart="@drawable/ic_add_green"
-                android:text=" Add "
+                android:paddingStart="@dimen/_15sdp"
+                android:paddingEnd="@dimen/_15sdp"
                 android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_7sdp"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                />
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/addedSongs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="@drawable/viewall_background"
-                android:text=" Added "
-                android:visibility="gone"
-                android:textColor="@color/see_all"
-                android:textSize="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_7sdp"
+                android:background="@drawable/viewall_background"
+                android:drawableStart="@drawable/ic_library_added"
+                android:paddingStart="@dimen/_15sdp"
+                android:paddingEnd="@dimen/_15sdp"
+                android:textColor="@color/see_all"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-
+                app:layout_constraintTop_toTopOf="parent" />
 
 
             <View
                 android:id="@+id/view_line2"
                 android:layout_width="0dp"
-                android:background="#98999b"
-                android:layout_marginTop="@dimen/_11sdp"
                 android:layout_height="2dp"
                 android:layout_marginStart="@dimen/_7sdp"
+                android:layout_marginTop="@dimen/_11sdp"
                 android:layout_marginEnd="@dimen/_7sdp"
-                app:layout_constraintStart_toStartOf="parent"
+                android:background="#98999b"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/artist_image">
-            </View>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/artist_image"></View>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -66,12 +66,12 @@ public class LibraryPlaylistSongAdapter extends
     private void initLayoutOne(final LibraryPlaylistViewHolder holder, int pos) {
         final Song current = mArrayList.get(pos);
 
-        if(Application.getInstance().getSongsAddedToPlaylist().contains(current.getId())){
+        if (Application.getInstance().getSongsAddedToPlaylist().contains(current.getId())) {
             holder.addedSongs.setVisibility(View.VISIBLE);
             holder.addSongs.setVisibility(View.GONE);
             System.out.println("checkcheck 1111");
 
-        }else{
+        } else {
             holder.addedSongs.setVisibility(View.GONE);
             holder.addSongs.setVisibility(View.VISIBLE);
             System.out.println("checkcheck 2222");
@@ -92,7 +92,7 @@ public class LibraryPlaylistSongAdapter extends
             @Override
             public void onClick(View v) {
                 itemClickListener.onPlaylistItemClick(mArrayList.get(holder.getAdapterPosition()),
-                        holder.getAdapterPosition(),mArrayList);
+                        holder.getAdapterPosition(), mArrayList);
             }
         });
 
@@ -124,7 +124,6 @@ public class LibraryPlaylistSongAdapter extends
         TextView addedSongs;
 
 
-
         public LibraryPlaylistViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -132,7 +131,7 @@ public class LibraryPlaylistSongAdapter extends
     }
 
     public interface OnLibraryPlaylistItemClickListener {
-        public void onPlaylistItemClick(Song song, int position,List<Song> songs);
+        public void onPlaylistItemClick(Song song, int position, List<Song> songs);
     }
 
 }

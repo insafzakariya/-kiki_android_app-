@@ -120,6 +120,7 @@ public class AudioProfileActivity extends AppCompatActivity implements View.OnCl
             public void onSuccess(AuthUser user, List<Object> params) {
                 binding.phoneNumberEdittext.setText(user.getMobileNumber());
                 binding.nameEdittext.setText(user.getName());
+                binding.usernameField.setText(user.getUsername());
                 changeLanguageSelectStates(user.getLanguage().toLowerCase());
                 binding.updateLayout.setEnabled(true);
                 binding.aviProgress.setVisibility(View.GONE);

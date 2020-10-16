@@ -67,12 +67,12 @@ public class LibrarySongsListAdapter extends
 
         final Song current = mArrayList.get(pos);
 
-        if(Application.getInstance().getSongsAddedToPlaylist().contains(current.getId())){
+        if (Application.getInstance().getSongsAddedToPlaylist().contains(current.getId())) {
             holder.addedSongText.setVisibility(View.VISIBLE);
 
-        }else if(current.isAvailable()){
+        } else if (current.isAvailable()) {
             holder.addedSongText.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             holder.addedSongText.setVisibility(View.GONE);
         }
 
@@ -91,7 +91,7 @@ public class LibrarySongsListAdapter extends
             @Override
             public void onClick(View v) {
                 itemClickListener.onLibrarySongsItemClick(mArrayList.get(holder.getAdapterPosition()),
-                        holder.getAdapterPosition(),mArrayList);
+                        holder.getAdapterPosition(), mArrayList);
             }
         });
 
@@ -130,7 +130,7 @@ public class LibrarySongsListAdapter extends
     }
 
     public interface OnLibrarySongsItemClickListener {
-        public void onLibrarySongsItemClick(Song song, int position,List<Song> songs);
+        public void onLibrarySongsItemClick(Song song, int position, List<Song> songs);
     }
 
 }

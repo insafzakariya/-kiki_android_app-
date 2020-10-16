@@ -91,7 +91,7 @@ public class AudioPaymentActivity extends AppCompatActivity implements AdvancedW
                     Timber.d("Loading URL from the WebView: %s", Utils.App.getConfig(getApplication()).getMobilePaymentGatewayURL() + "?token=" + packageToken.getTokenHash());
                     binding.webViewPayment.addHttpHeader("X-Requested-With", "");
                     binding.webViewPayment.loadUrl(Utils.App.getConfig(getApplication()).getMobilePaymentGatewayURL() + "?token=" + packageToken.getTokenHash());
-//                            System.out.println("urlCheck " + Utils.App.getConfig(getApplication()).getMobilePaymentGatewayURL());
+                            System.out.println("urlCheck 111 " + Utils.App.getConfig(getApplication()).getMobilePaymentGatewayURL());
                     return;
                 }
 
@@ -224,6 +224,11 @@ public class AudioPaymentActivity extends AppCompatActivity implements AdvancedW
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             System.out.println("lffhfhfbvhh  111" + url);
+            if (url.contains("https://payv2.kiki.lk/susilawebpay/thanks/redirecthome")){
+                Intent intent = new Intent(AudioPaymentActivity.this, AudioDashboardActivity.class);
+                startActivity(intent);
+                finish();
+            }
             if (url.startsWith("sms:")) {
                 handleSMSLink(url);
                 finish();

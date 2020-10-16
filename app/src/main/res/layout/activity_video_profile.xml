@@ -31,18 +31,60 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <lk.mobilevisions.kiki.audio.util.KikiAudioMediumTextView
-                android:id="@+id/name_text_view"
+                android:id="@+id/username_text_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="@dimen/_16sdp"
                 android:layout_marginTop="40dp"
-                android:text="Name"
+                android:text="Username"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/_12sdp"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view" />
+
+            <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+                android:id="@+id/username_field"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:background="@null"
+                android:text=""
+                android:singleLine="true"
+                android:textCursorDrawable="@null"
+                android:textColor="@color/audioSettingsTextColor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/username_text_view" />
+
+            <View
+                android:id="@+id/username_line_view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_2sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@color/audioSettingsLineColor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/username_field" />
+
+            <lk.mobilevisions.kiki.audio.util.KikiAudioMediumTextView
+                android:id="@+id/name_text_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="20dp"
+                android:text="Name"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/_12sdp"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/username_line_view" />
 
             <lk.mobilevisions.kiki.audio.util.KikiBoldEditText
                 android:id="@+id/name_edittext"

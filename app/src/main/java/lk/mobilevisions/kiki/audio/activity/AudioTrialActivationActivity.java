@@ -220,13 +220,19 @@ public class AudioTrialActivationActivity extends AppCompatActivity implements A
     private class PaymentsBrowser extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            System.out.println("lffhfhfbvhh  111" + url);
+            if (url.contains("https://payv2.kiki.lk/susilawebpay/thanks/redirecthome")){
+                Intent intent = new Intent(AudioTrialActivationActivity.this, AudioDashboardActivity.class);
+                startActivity(intent);
+                finish();
+            }
+
+
             if (url.startsWith("sms:")) {
                 handleSMSLink(url);
                 finish();
                 return true;
             }
-            System.out.println("lffhfhfbvhh 2222 " + url);
+
             view.loadUrl(url);
             return true;
         }

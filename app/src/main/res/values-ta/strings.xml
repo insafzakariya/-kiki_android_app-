@@ -38,6 +38,10 @@
     <string name="no_subscribed_programs">சந்தா நிரல்கள் எதுவும் கிடைக்கவில்லை , தயவு செய்து மொபைல் டிவியில் இருந்து உங்களுக்கு பிடித்த நிரல்களுக்கு குழுசேரவும்.</string>
     <string name="create_an_account_login">ஒரு கணக்கை உருவாக்க / உள்நுழைய / வகை</string>
 
+    <string name="enter_new_password">புதிய கடவுச்சொல்லை உள்ளிடவும்</string>
+    <string name="type_new_password">உங்கள் புதிய கடவுச்சொல்லை உள்ளிடவும்</string>
+    <string name="type_new_password_again">உங்கள் புதிய கடவுச்சொல்லை மீண்டும் உள்ளிடவும்</string>
+
     <string name="video_tab">வீடியோ</string>
     <string name="audio_tab">இசை</string>
 
@@ -76,6 +80,7 @@
     <string name="invalid_mobile_number">தவறான மொபைல் எண். செல்லுபடியாகும் மொபைல் எண்ணை உள்ளிடுக.</string>
     <string name="network_problem_message">இணையத்துடன் இணைக்க முடியவில்லை, உங்கள் இணைய இணைப்பை சரிபார்க்கவும்.</string>
     <string name="forgot_password">கடவுச்சொல்லை மறந்து</string>
+    <string name="invalid_otp">தவறான OTP. செல்லுபடியாகும் OTP எண்ணை உள்ளிடுக அல்லது புதிய குறியீட்டைப் பெற மீள அனுப்பவும் என்பதை அழுத்தவும்.</string>
 
     //Music
     <string name="popular_songs">பிரபலமான பாடல்கள்</string>
@@ -88,6 +93,7 @@
     <string name="browse">தேடுக</string>
     <string name="library">எனது தொகுப்பு</string>
     <string name="add">சேர்க்க</string>
+    <string name="added">சேர்க்கப்பட்டது</string>
     <string name="genre_wise">பாடல்வகைகளின் வரிசைப்படி</string>
     <string name="artist_wise">கலைஞர்களின் வரிசைப்படி</string>
     <string name="song">பாடல் </string>

@@ -2,13 +2,16 @@ package lk.mobilevisions.kiki.ui.packages;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+
 import androidx.databinding.DataBindingUtil;
+
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,11 +33,14 @@ import lk.mobilevisions.kiki.R;
 import lk.mobilevisions.kiki.app.Application;
 import lk.mobilevisions.kiki.app.Utils;
 
+import lk.mobilevisions.kiki.audio.activity.AudioDashboardActivity;
+import lk.mobilevisions.kiki.audio.activity.AudioPaymentActivity;
 import lk.mobilevisions.kiki.databinding.ActivityPaymentBinding;
 import lk.mobilevisions.kiki.modules.api.APIListener;
 import lk.mobilevisions.kiki.modules.api.dto.Package;
 import lk.mobilevisions.kiki.modules.api.dto.PackageToken;
 import lk.mobilevisions.kiki.modules.subscriptions.SubscriptionsManager;
+import lk.mobilevisions.kiki.video.activity.VideoDashboardActivity;
 import timber.log.Timber;
 
 public class PaymentActivity extends AppCompatActivity implements AdvancedWebView.Listener {
@@ -42,6 +48,7 @@ public class PaymentActivity extends AppCompatActivity implements AdvancedWebVie
     ActivityPaymentBinding binding;
     @Inject
     SubscriptionsManager subscriptionsManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,7 +116,6 @@ public class PaymentActivity extends AppCompatActivity implements AdvancedWebVie
 //
 //
 //                        }
-
 
 
                     }
@@ -213,13 +219,18 @@ public class PaymentActivity extends AppCompatActivity implements AdvancedWebVie
     private class PaymentsBrowser extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            System.out.println("lffhfhfbvhh  111" + url);
+            if (url.contains("https://payv2.kiki.lk/susilawebpay/thanks/redirecthome")) {
+                Intent intent = new Intent(PaymentActivity.this, VideoDashboardActivity.class);
+                startActivity(intent);
+                finish();
+            }
+
             if (url.startsWith("sms:")) {
                 handleSMSLink(url);
                 PaymentActivity.this.finish();
                 return true;
             }
-            System.out.println("lffhfhfbvhh 2222 " + url);
+
             view.loadUrl(url);
             return true;
         }

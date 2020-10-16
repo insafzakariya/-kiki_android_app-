@@ -197,12 +197,10 @@ public class BrowseAllSongsFrangment extends Fragment implements BrowseAllSongsA
     public void onArtistsPlayAction(Artist artist, int position, List<Artist> artistList) {
         Bundle bundle=new Bundle();
         bundle.putInt("artistID", artist.getId());
-        System.out.println("ssdffjfnjffjfjfj" + artist.getId());
         bundle.putString("artistName", artist.getName());
-        System.out.println("ssdffjfnjffjfjfj" + artist.getName());
         bundle.putString("artistImage", artist.getImage());
         bundle.putString("songCount", artist.getSongsCount());
-        System.out.println("sdfsdfvsdv 1111 " + artist.getSongsCount());
+
 
         ArtistDetailFragment artistDetailFragment = new ArtistDetailFragment();
         artistDetailFragment.setArguments(bundle);

@@ -7,6 +7,7 @@ import android.content.res.Configuration;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,6 +19,7 @@ import com.facebook.appevents.AppEventsLogger;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -25,6 +27,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -51,8 +54,11 @@ import lk.mobilevisions.kiki.audio.activity.AudioDashboardActivity;
 import lk.mobilevisions.kiki.databinding.ActivityVideoDashboardBinding;
 import lk.mobilevisions.kiki.modules.api.APIListener;
 import lk.mobilevisions.kiki.modules.api.dto.NotificationCountResponse;
+import lk.mobilevisions.kiki.modules.api.dto.PackageToken;
+import lk.mobilevisions.kiki.modules.api.dto.PackageV2;
 import lk.mobilevisions.kiki.modules.auth.AuthManager;
 import lk.mobilevisions.kiki.modules.notifications.NotificationManager;
+import lk.mobilevisions.kiki.modules.subscriptions.SubscriptionsManager;
 import lk.mobilevisions.kiki.ui.base.BaseActivity;
 import lk.mobilevisions.kiki.ui.notifications.NotificationsActivity;
 import lk.mobilevisions.kiki.ui.packages.PaymentActivity;
@@ -64,6 +70,8 @@ public class VideoDashboardActivity extends BaseActivity {
 
     @Inject
     NotificationManager notificationManager;
+    @Inject
+    SubscriptionsManager subscriptionsManager;
 
     ActivityVideoDashboardBinding binding;
 
@@ -73,6 +81,10 @@ public class VideoDashboardActivity extends BaseActivity {
     private boolean isMylistLoaded;
     private ActionBarDrawerToggle drawerToggle;
     private TextView textViewHeader;
+
+    private String alertTitle;
+    private String messageBody;
+    private boolean trialStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,12 +130,19 @@ public class VideoDashboardActivity extends BaseActivity {
         binding.drawerLayout.addDrawerListener(drawerToggle);
         bindWidgetsWithAnEvent();
         setupTabLayout();
+        checkTrialStatus();
         binding.subLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentPackages = new Intent(VideoDashboardActivity.this, PaymentActivity.class);
-                startActivity(intentPackages);
-                binding.drawerLayout.closeDrawer(GravityCompat.START);
+                if (trialStatus) {
+                    Intent intentPackages = new Intent(VideoDashboardActivity.this, VideoTrialActivationActivity.class);
+                    startActivity(intentPackages);
+                    binding.drawerLayout.closeDrawer(GravityCompat.START);
+                } else {
+                    Intent intentPackages = new Intent(VideoDashboardActivity.this, PaymentActivity.class);
+                    startActivity(intentPackages);
+                    binding.drawerLayout.closeDrawer(GravityCompat.START);
+                }
             }
         });
 
@@ -146,7 +165,6 @@ public class VideoDashboardActivity extends BaseActivity {
         });
 
 
-
         binding.childLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -163,9 +181,6 @@ public class VideoDashboardActivity extends BaseActivity {
                 binding.drawerLayout.closeDrawer(GravityCompat.START);
             }
         });
-
-
-
 
 
 //        binding.navigationView.setNavigationItemSelectedListener(
@@ -303,6 +318,58 @@ public class VideoDashboardActivity extends BaseActivity {
 
         binding.drawerLayout.closeDrawers();
 
+    }
+
+    private void checkTrialStatus() {
+        subscriptionsManager.generateSubscriptionToken((int) Utils.App.getConfig(this.getApplication()).getPaidPackageId(),
+                new APIListener<PackageToken>() {
+                    @Override
+                    public void onSuccess(final PackageToken packageToken, List<Object> params) {
+
+                        subscriptionsManager.getTrialStatus(new APIListener<PackageV2>() {
+                            @Override
+                            public void onSuccess(PackageV2 thePackage, List<Object> params) {
+//                                binding.aviProgress.setVisibility(View.GONE);
+                                alertTitle = thePackage.getTitleText();
+                                messageBody = thePackage.getMessageBody();
+                                trialStatus = thePackage.isTrialStatus();
+                                System.out.println("hdfhdfhdh " + alertTitle);
+                                System.out.println("hdfhdfhdh 111  " + messageBody);
+//                        if (thePackage.getPackageId() == 46 || thePackage.getPackageId() == 81 ||
+//                                thePackage.getPackageId() == 101 || thePackage.getPackageId() == 106) {
+//
+//                        } else {
+//                            try {
+//                                subscriptionDialog();
+//                            } catch (Exception e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+
+//                                if (thePackage.isTrialStatus() && !thePackage.isSubStatus()) {
+//
+//                                    try {
+//                                        trialSubscriptionDialog();
+//                                    } catch (Exception e) {
+//                                        e.printStackTrace();
+//                                    }
+//                                }
+                            }
+
+                            @Override
+                            public void onFailure(Throwable t) {
+
+
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onFailure(Throwable t) {
+
+
+                    }
+                });
     }
 
     @Override

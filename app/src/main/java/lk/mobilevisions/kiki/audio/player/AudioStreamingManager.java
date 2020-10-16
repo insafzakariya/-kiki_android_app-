@@ -177,26 +177,6 @@ public class AudioStreamingManager extends StreamingManager {
         return (audioPlayback == null) ? 0 : (int) audioPlayback.getCurrentStreamPosition();
     }
 
-    @Override
-    public void onSkipToNext() {
-        System.out.println("checking Notification  5555 ");
-        if (isReplayClicked) {
-            onReplayAgain();
-        } else {
-            System.out.println("checking Notification  6666 ");
-            int nextIndex = index + 1;
-            if (isValidIndex(true, nextIndex)) {
-                Song metaData = mediaList.get(nextIndex);
-                System.out.println("checking Notification  7777 ");
-                onPlay(metaData);
-                if (currentSessionCallback != null) {
-                    System.out.println("checking Notification  88888 ");
-                    currentSessionCallback.playNext(nextIndex, metaData);
-                }
-            }
-        }
-
-    }
 
 
     @Override
@@ -222,6 +202,25 @@ public class AudioStreamingManager extends StreamingManager {
                 currentSessionCallback.playCurrent(currentIndex, metaData);
             }
 
+        }
+    }
+
+    @Override
+    public void onSkipToNext(boolean isToCheckRepeat) {
+        if (isToCheckRepeat && isReplayClicked) {
+            onReplayAgain();
+        } else {
+            System.out.println("checking Notification  6666 ");
+            int nextIndex = index + 1;
+            if (isValidIndex(true, nextIndex)) {
+                Song metaData = mediaList.get(nextIndex);
+                System.out.println("checking Notification  7777 ");
+                onPlay(metaData);
+                if (currentSessionCallback != null) {
+                    System.out.println("checking Notification  88888 ");
+                    currentSessionCallback.playNext(nextIndex, metaData);
+                }
+            }
         }
     }
 
@@ -303,7 +302,7 @@ public class AudioStreamingManager extends StreamingManager {
                 if (instance.currentSessionCallback != null) {
                     instance.currentSessionCallback.playSongComplete();
                 }
-                instance.onSkipToNext();
+                instance.onSkipToNext(true);
             } else {
                 instance.handleStopRequest(null);
             }

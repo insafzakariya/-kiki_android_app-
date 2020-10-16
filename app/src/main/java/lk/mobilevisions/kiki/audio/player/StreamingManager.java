@@ -22,7 +22,7 @@ public abstract class StreamingManager {
 
     public abstract void onReplayAgain();
 
-    public abstract void onSkipToNext();
+    public abstract void onSkipToNext(boolean isToCheckRepeat);
 
     public abstract void onSkipToPrevious();
 

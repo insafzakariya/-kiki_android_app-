@@ -70,7 +70,6 @@ public class ArtistListFragment extends Fragment implements ArtistListAdapter.On
         binding.artistListRecycle.setDrawingCacheEnabled(true);
         binding.artistListRecycle.setAdapter(artistListAdapter);
 
-        setupArtistList();
         setDatatoArtistList();
 
         binding.backImageview.setOnClickListener(new View.OnClickListener() {
@@ -168,9 +167,8 @@ public class ArtistListFragment extends Fragment implements ArtistListAdapter.On
 
         binding.aviProgress.setVisibility(View.VISIBLE);
         int artistID = artist.getId();
-        if (artistListAdapter.enabled) {
-            addArtistToLibrary(artistID);
-        }
+        addArtistToLibrary(artistID);
         artistListAdapter.setEnabled(false);
+
     }
 }

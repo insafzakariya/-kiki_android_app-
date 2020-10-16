@@ -31,6 +31,7 @@ import lk.mobilevisions.kiki.R;
 import lk.mobilevisions.kiki.app.Application;
 import lk.mobilevisions.kiki.app.Utils;
 import lk.mobilevisions.kiki.audio.activity.AudioDashboardActivity;
+import lk.mobilevisions.kiki.audio.activity.AudioPaymentActivity;
 import lk.mobilevisions.kiki.audio.activity.AudioTrialActivationActivity;
 import lk.mobilevisions.kiki.databinding.ActivityPaymentBinding;
 import lk.mobilevisions.kiki.modules.api.APIListener;
@@ -177,6 +178,13 @@ public class VideoTrialActivationActivity extends AppCompatActivity implements A
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             System.out.println("lffhfhfbvhh  111" + url);
+            if (url.contains("https://payv2.kiki.lk/susilawebpay/thanks/redirecthome")){
+                Intent intent = new Intent(VideoTrialActivationActivity.this, VideoDashboardActivity.class);
+                startActivity(intent);
+                finish();
+
+            }
+
             if (url.startsWith("sms:")) {
                 handleSMSLink(url);
                 finish();

@@ -165,7 +165,7 @@ public class LibrarySongSelectionFragment extends Fragment implements LibrarySon
             @Override
             public void onLoadMore(int page) {
                 binding.spinKit.setVisibility(View.VISIBLE);
-                searchSongs(searchText,page);
+                searchSongs(searchText, page);
 
             }
         });
@@ -175,7 +175,7 @@ public class LibrarySongSelectionFragment extends Fragment implements LibrarySon
             public boolean onQueryTextSubmit(String query) {
 
                 binding.searchSongsRecyclerview.setAdapter(searchAdapter);
-                searchSongs(query,0);
+                searchSongs(query, 0);
                 System.out.println("sdjfnsdjvn " + query);
                 return false;
             }
@@ -232,6 +232,8 @@ public class LibrarySongSelectionFragment extends Fragment implements LibrarySon
     private void searchSongs(String text, int page) {
 
 //        binding.searchSongsRecyclerview.setNestedScrollingEnabled(false);
+
+//        binding.scrollView.setScrollingEnabled(false);
         searchText = text;
         binding.aviProgress.setVisibility(View.VISIBLE);
         int offset;
@@ -262,7 +264,6 @@ public class LibrarySongSelectionFragment extends Fragment implements LibrarySon
                 }
                 if (songs.size() == 0) {
                     binding.searchLayout.setVisibility(View.GONE);
-
                 }
 
                 binding.spinKit.setVisibility(View.GONE);
@@ -283,12 +284,9 @@ public class LibrarySongSelectionFragment extends Fragment implements LibrarySon
 
     private void setDataToArtists() {
 
-        System.out.println("Check artist 123123");
-
         tvManager.getAllArtists(0, 10, new APIListener<List<Artist>>() {
             @Override
             public void onSuccess(List<Artist> result, List<Object> params) {
-                System.out.println("Check artist  " + result.size());
                 if (result.size() == 0) {
                     binding.libraryArtistLayout.setVisibility(View.GONE);
 
@@ -304,7 +302,6 @@ public class LibrarySongSelectionFragment extends Fragment implements LibrarySon
             @Override
             public void onFailure(Throwable t) {
 
-
             }
         });
 
@@ -315,7 +312,6 @@ public class LibrarySongSelectionFragment extends Fragment implements LibrarySon
         tvManager.getDailyMixNew(0, 10, new APIListener<List<PlayList>>() {
             @Override
             public void onSuccess(List<PlayList> result, List<Object> params) {
-                System.out.println("Check playlist  " + result.size());
                 if (result.size() == 0) {
                     binding.libraryPlaylistLayout.setVisibility(View.GONE);
 
@@ -351,14 +347,12 @@ public class LibrarySongSelectionFragment extends Fragment implements LibrarySon
         tvManager.getAllSongs(0, 10, new APIListener<List<Song>>() {
             @Override
             public void onSuccess(List<Song> songs, List<Object> params) {
-                System.out.println("djdjdjdjddjd  111 " + songs.size());
                 if (songs.size() == 0) {
                     binding.librarySongsLayout.setVisibility(View.GONE);
 
                 } else {
                     binding.librarySongsLayout.setVisibility(View.VISIBLE);
                     genreSongsArrayList = songs;
-                    System.out.println("djdjdjdjddjd 222 " + genreSongsArrayList.size());
                     genreSongsVerticalAdapter = new LibrarySongsVerticalAdapter(getActivity(), genreSongsArrayList, LibrarySongSelectionFragment.this);
                     binding.librarySongsRecyclerview.setAdapter(genreSongsVerticalAdapter);
 
@@ -436,7 +430,6 @@ public class LibrarySongSelectionFragment extends Fragment implements LibrarySon
             sessionId = UUID.randomUUID().toString();
             Application.getInstance().addSessionId(sessionId);
         }
-        System.out.println("sessionnnn 11111 " + sessionId);
         tvManager.addSongsToTempTable(sessionId, id, "S", new APIListener<Void>() {
             @Override
             public void onSuccess(Void result, List<Object> params) {
@@ -456,11 +449,9 @@ public class LibrarySongSelectionFragment extends Fragment implements LibrarySon
 
         if (!Application.getInstance().getSongsAddedToPlaylist().contains(song.getId())) {
             Application.getInstance().addSongToPlayList(song.getId());
-            System.out.println("playlistcheck 44444 ");
 
         } else {
             Application.getInstance().removeSongFromPlayList(song.getId());
-            System.out.println("playlistcheck 33333 ");
         }
         addSongsToPlaylist(song.getId());
         searchAdapter.notifyDataSetChanged();

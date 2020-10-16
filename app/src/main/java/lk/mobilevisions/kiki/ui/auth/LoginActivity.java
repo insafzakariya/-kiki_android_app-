@@ -743,7 +743,7 @@ public class LoginActivity extends BaseActivity implements
     }
 
     private void goToResetPasswordScreen() {
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         viewPager.setCurrentItem(6, false);
     }
 

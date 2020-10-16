@@ -55,7 +55,7 @@ public class AudioStreamingReceiver extends BroadcastReceiver {
                     break;
                 case KeyEvent.KEYCODE_MEDIA_NEXT:
 
-                    this.audioStreamingManager.onSkipToNext();
+                    this.audioStreamingManager.onSkipToNext(false);
                     break;
                 case KeyEvent.KEYCODE_MEDIA_PREVIOUS:
 
@@ -76,7 +76,7 @@ public class AudioStreamingReceiver extends BroadcastReceiver {
                     break;
                 case AudioStreamingService.NOTIFY_NEXT:
                     System.out.println("checking Notification  4444 ");
-                    this.audioStreamingManager.onSkipToNext();
+                    this.audioStreamingManager.onSkipToNext(false);
                     break;
                 case AudioStreamingService.NOTIFY_CLOSE:
                     this.audioStreamingManager.cleanupPlayer(context, true, true);

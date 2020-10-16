@@ -82,7 +82,7 @@ public class LibraryHomePlaylistDetailFragment extends Fragment implements Playl
             public void onClick(View view) {
 
                 AudioDashboardActivity hhh = (AudioDashboardActivity) getActivity();
-                hhh.genreSongFragmentSongClickedEvent(song , 0,playlistSongsList);
+                hhh.genreSongFragmentSongClickedEvent(song, 0, playlistSongsList);
 
 
             }
@@ -92,11 +92,11 @@ public class LibraryHomePlaylistDetailFragment extends Fragment implements Playl
             @Override
             public void onClick(View v) {
 
-                Bundle playlistBundle=new Bundle();
-                playlistBundle.putBoolean("editPlaylist",true);
-                playlistBundle.putInt("editPlaylistID",playlistID);
-                playlistBundle.putString("editPlaylistName",playlistName);
-                playlistBundle.putString("editPlaylistImage",updatedImage);
+                Bundle playlistBundle = new Bundle();
+                playlistBundle.putBoolean("editPlaylist", true);
+                playlistBundle.putInt("editPlaylistID", playlistID);
+                playlistBundle.putString("editPlaylistName", playlistName);
+                playlistBundle.putString("editPlaylistImage", updatedImage);
                 PlaylistCreationFragment playlistCreationFragment = new PlaylistCreationFragment();
                 playlistCreationFragment.setArguments(playlistBundle);
                 getFragmentManager().beginTransaction()
@@ -112,7 +112,7 @@ public class LibraryHomePlaylistDetailFragment extends Fragment implements Playl
         playlistImage = getArguments().getString("playlistImage");
         String playlistYear = getArguments().getString("playlistYear");
 
-        binding.playlistYear.setText(playlistYear.substring(0,4));
+        binding.playlistYear.setText(playlistYear.substring(0, 4));
 
         setDataToPlaylistSongs(playlistID);
         binding.backImageview.setOnClickListener(new View.OnClickListener() {
@@ -124,7 +124,7 @@ public class LibraryHomePlaylistDetailFragment extends Fragment implements Playl
         });
 
 
-        channelsLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL,false);
+        channelsLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         binding.playlistSongsRecyclerview.setLayoutManager(channelsLayoutManager);
         playlistDetailAdapter = new PlaylistLibraryDetailAdapter(getActivity(), playlistSongsList, LibraryHomePlaylistDetailFragment.this);
         binding.playlistSongsRecyclerview.setHasFixedSize(true);
@@ -156,11 +156,9 @@ public class LibraryHomePlaylistDetailFragment extends Fragment implements Playl
     }
 
 
-
     private void setDataToPlaylistSongs(int playlistID) {
 
-
-        tvManager.getSongsOfUserPlaylist(playlistID,  new APIListener<List<Song>>() {
+        tvManager.getSongsOfUserPlaylist(playlistID, new APIListener<List<Song>>() {
             @Override
             public void onSuccess(List<Song> result, List<Object> params) {
                 playlistSongsList = result;
@@ -190,7 +188,7 @@ public class LibraryHomePlaylistDetailFragment extends Fragment implements Playl
 
     private void getPlaylistData() {
 
-        tvManager.getPlaylistData(playlistID, new APIListener <PlayList>() {
+        tvManager.getPlaylistData(playlistID, new APIListener<PlayList>() {
             @Override
             public void onSuccess(PlayList playList, List<Object> params) {
 
@@ -261,7 +259,7 @@ public class LibraryHomePlaylistDetailFragment extends Fragment implements Playl
                     outRect.top = spacing;
                 }
                 outRect.bottom = spacing; // item bottom
-            } else  {
+            } else {
                 outRect.left = column * spacing / spanCount; // column * ((1f / spanCount) * spacing)
                 outRect.right = spacing - (column + 1) * spacing / spanCount; // spacing - (column + 1) * ((1f /    spanCount) * spacing)
                 if (position >= spanCount) {

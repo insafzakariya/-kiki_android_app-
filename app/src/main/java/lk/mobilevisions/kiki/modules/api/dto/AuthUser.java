@@ -17,6 +17,9 @@ public class AuthUser {
     @SerializedName("name")
     @Expose
     private String name;
+    @SerializedName("username")
+    @Expose
+    private String username;
     @SerializedName("access_token")
     @Expose
     private String accessToken;
@@ -44,6 +47,15 @@ public class AuthUser {
     @SerializedName("country")
     @Expose
     private String countryCode;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     /**
      *
      * @return

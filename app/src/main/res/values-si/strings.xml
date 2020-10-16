@@ -38,6 +38,10 @@
     <string name="no_subscribed_programs">ඔබ සබ්ස්ක්‍රයිබ් කළ වැඩසටහන් වලට පිවිසිය නොහැක. මොබයිල් TV හරහා කැමතිම වැඩසටහන් තොරාගන්න.</string>
     <string name="create_an_account_login">ගිණුමක් සකසන්න</string>
 
+    <string name="enter_new_password">නව රහස්ය පදය ඇතුලත් කරන්න</string>
+    <string name="type_new_password">නව රහස්‍ය පදය ඇතුළත් කරන්න</string>
+    <string name="type_new_password_again">නව රහස්‍ය පදය නැවත ඇතුළත් කරන්න</string>
+
     <string name="video_tab">ටෙලි සිනමා</string>
     <string name="audio_tab">ගීත</string>
 
@@ -76,6 +80,7 @@
     <string name="invalid_mobile_number">අවලංගු දුරකථන අංකයක්. කරුණාකර වලංගු දුරකථන අංකයක් ඇතුලත් කරන්න.</string>
     <string name="network_problem_message">අන්තර්ජාලයට සම්බන්ධවිය නොහැක. කරුණාකර ඔබේ අන්තර්ජාල සබඳතාව පිරික්ෂා කරන්න.</string>
     <string name="forgot_password">මුරපදය අමතකද?</string>
+    <string name="invalid_otp">OTP අංකය වැරදී, නිවැරදි OTP අංකය ඇතුළත් කරන්න.</string>
 
     //Music
     <string name="popular_songs">ජනප්‍රිය ගීත</string>
@@ -88,6 +93,7 @@
     <string name="browse">සොයන්න</string>
     <string name="library">මගේ එකතුව</string>
     <string name="add">එකතු කරන්න</string>
+    <string name="added">එකතු කරන ලදී</string>
     <string name="genre_wise">ගීත වර්ගය</string>
     <string name="artist_wise">ගායක ගායිකාවන්</string>
     <string name="song">ගීතය</string>

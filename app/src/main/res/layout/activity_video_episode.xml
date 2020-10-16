@@ -142,6 +142,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_18sdp"
                     android:layout_marginTop="@dimen/_5sdp"
+                    android:clickable="false"
                     android:layout_marginEnd="@dimen/_18sdp"
                     android:background="@drawable/round_corner_background_settings_update_button"
                     android:gravity="center"

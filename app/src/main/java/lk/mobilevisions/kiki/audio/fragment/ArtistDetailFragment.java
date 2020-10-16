@@ -57,7 +57,6 @@ public class ArtistDetailFragment extends Fragment implements GenreSongsVertical
     SubscriptionsManager subscriptionsManager;
     GenreSongsVerticalAdapter genreSongsVerticalAdapter;
 
-
     private int lastRandomNumber;
     int artistID;
 
@@ -79,7 +78,6 @@ public class ArtistDetailFragment extends Fragment implements GenreSongsVertical
         String artistSongCount = getArguments().getString("songCount");
 
         binding.soungCount.setText(artistSongCount + " Songs");
-        System.out.println("sdfsdfvsdv 2222 " + artistSongCount);
 
         setupArtistSongs();
         setDataToArtistSongs(artistID);

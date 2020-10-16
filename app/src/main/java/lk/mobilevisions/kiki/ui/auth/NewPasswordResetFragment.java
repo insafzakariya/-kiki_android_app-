@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import lk.mobilevisions.kiki.R;
 import lk.mobilevisions.kiki.app.Application;
@@ -18,9 +19,13 @@ public class NewPasswordResetFragment extends Fragment implements View.OnClickLi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_forgot_password_reset, container, false);
-        binding.signUpLayout.setOnClickListener(this);
+        binding.confirmLayout.setOnClickListener(this);
         binding.btnBack.setOnClickListener(this);
+        binding.passwordEdittext.requestFocus();
+        binding.confirmPasswordEdittext.setOnClickListener(this);
+
         ((Application) getActivity().getApplication()).getAnalytics().setCurrentScreen(getActivity(), "NewPasswordResetFragment", null);
 
 
@@ -30,7 +35,7 @@ public class NewPasswordResetFragment extends Fragment implements View.OnClickLi
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.sign_up_layout:
+            case R.id.confirm_layout:
            String password = binding.passwordEdittext.getText().toString();
            String confirmPassword = binding.confirmPasswordEdittext.getText().toString();
                 Application.BUS.post(new UserNewPasswordEvent(password,confirmPassword));

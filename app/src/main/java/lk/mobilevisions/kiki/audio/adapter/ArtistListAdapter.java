@@ -91,9 +91,7 @@ public class ArtistListAdapter extends
             @Override
             public void onClick(View v) {
 
-                if (enabled) {
                     onArtistListItemActionListener.onAddArtistItemClick(artistList.get(holder.getAdapterPosition()));
-                }
             }
         });
     }

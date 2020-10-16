@@ -1,5 +1,6 @@
 package lk.mobilevisions.kiki.video.activity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import androidx.databinding.DataBindingUtil;
 import android.os.Build;
@@ -10,10 +11,15 @@ import androidx.core.widget.NestedScrollView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.github.ybq.endless.Endless;
 import com.squareup.picasso.Picasso;
@@ -32,12 +38,17 @@ import javax.inject.Inject;
 import lk.mobilevisions.kiki.R;
 import lk.mobilevisions.kiki.app.Application;
 import lk.mobilevisions.kiki.app.Utils;
+import lk.mobilevisions.kiki.audio.activity.AudioDashboardActivity;
+import lk.mobilevisions.kiki.audio.activity.AudioTrialActivationActivity;
 import lk.mobilevisions.kiki.audio.adapter.LibrarySongsListAdapter;
 import lk.mobilevisions.kiki.audio.fragment.LibrarySongListFragment;
 import lk.mobilevisions.kiki.databinding.ActivityVideoEpisodeBinding;
 import lk.mobilevisions.kiki.modules.api.APIListener;
 import lk.mobilevisions.kiki.modules.api.dto.Episode;
+import lk.mobilevisions.kiki.modules.api.dto.PackageToken;
+import lk.mobilevisions.kiki.modules.api.dto.PackageV2;
 import lk.mobilevisions.kiki.modules.api.dto.Program;
+import lk.mobilevisions.kiki.modules.subscriptions.SubscriptionsManager;
 import lk.mobilevisions.kiki.modules.tv.TvManager;
 import lk.mobilevisions.kiki.ui.main.fullscreen.FullScreenActivity;
 import lk.mobilevisions.kiki.ui.widgets.DividerItemDecoration;
@@ -49,6 +60,8 @@ import lk.mobilevisions.kiki.video.adapter.ProgramEpisodeAdapter;
 public class VideoEpisodeActivity extends AppCompatActivity implements View.OnClickListener, EpisodeAdapter.OnEpisodesItemClickListener, ProgramEpisodeAdapter.OnEpisodeItemClickListener {
     @Inject
     TvManager tvManager;
+    @Inject
+    SubscriptionsManager subscriptionsManager;
     Program program;
     private List<Episode> episodeList = new ArrayList<>();
     private List<Episode> trailerList = new ArrayList<>();
@@ -62,6 +75,10 @@ public class VideoEpisodeActivity extends AppCompatActivity implements View.OnCl
     ProgramEpisodeAdapter programEpisodeAdapter;
     LinearLayoutManager episodesLayoutManager;
     private Endless endless;
+
+    private String alertTitle;
+    private String messageBody;
+    private boolean trialStatus;
 //    EndlessRecyclerViewScrollListener recyclerViewScrollListener;
     public static final String TV_PLAYER_EPISODE_POSITION = "TV_PLAYER_EPISODE_POSITION";
     public static final String TV_PLAYER_EPISODE_TRAILER_POSITION = "TV_PLAYER_EPISODE_TRAILER_POSITION";
@@ -82,7 +99,7 @@ public class VideoEpisodeActivity extends AppCompatActivity implements View.OnCl
         program = (Program) getIntent().getSerializableExtra("program");
         selectedDate = (Date) getIntent().getSerializableExtra("selectedDate");
         sortAscending = false;
-        episodesLayoutManager = new LinearLayoutManager(this);
+        episodesLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
         binding.recycleviewProgramEpisodes.setLayoutManager(episodesLayoutManager);
         binding.recycleviewProgramEpisodes.setHasFixedSize(true);
         binding.recycleviewProgramEpisodes.setItemViewCacheSize(50);
@@ -113,6 +130,7 @@ public class VideoEpisodeActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void onLoadMore(int page) {
                 binding.spinKit.setVisibility(View.VISIBLE);
+                System.out.println("acsc 222 " + page);
                 loadEpisodes(page);
 
             }
@@ -124,7 +142,6 @@ public class VideoEpisodeActivity extends AppCompatActivity implements View.OnCl
 
     private void loadProgramTrailer() {
         binding.aviProgress.setVisibility(View.VISIBLE);
-        binding.playNowLayout.setClickable(false);
         if (selectedDate == null) {
             selectedDate = Utils.DateUtil.getDateOnly(new Date());
         }
@@ -144,7 +161,6 @@ public class VideoEpisodeActivity extends AppCompatActivity implements View.OnCl
                 Application.PLAYER.setCurrentVideo(0);
                 Application.PLAYER.setCurrentVideoPosition(0);
                 binding.aviProgress.setVisibility(View.GONE);
-                binding.playNowLayout.setClickable(true);
                 if (episodes != null && episodes.size() > 0) {
 
                     try {
@@ -179,7 +195,6 @@ public class VideoEpisodeActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void onFailure(Throwable t) {
                 binding.aviProgress.setVisibility(View.GONE);
-                binding.playNowLayout.setClickable(true);
                 Utils.Error.onServiceCallFail(VideoEpisodeActivity.this, t);
             }
         });
@@ -187,8 +202,8 @@ public class VideoEpisodeActivity extends AppCompatActivity implements View.OnCl
 
 
     private void loadEpisodes(final int page) {
+        System.out.println("acsc 11 " + page);
         binding.aviProgressRecycler.setVisibility(View.GONE);
-        binding.playNowLayout.setClickable(false);
         if (selectedDate == null) {
             selectedDate = Utils.DateUtil.getDateOnly(new Date());
         }
@@ -208,18 +223,19 @@ public class VideoEpisodeActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void onSuccess(List<Episode> episodes, List<Object> params) {
                 binding.aviProgress.setVisibility(View.GONE);
-                binding.playNowLayout.setClickable(true);
-
                 episodeList.addAll(episodes);
                 if (page == 0) {
                     programEpisodeAdapter.setData(episodes);
+                    if(episodes.size()>0){
+                        binding.playNowLayout.setClickable(true);
+                    }
                 } else {
                     programEpisodeAdapter.addData(episodes);
                     endless.loadMoreComplete();
                     binding.spinKit.setVisibility(View.GONE);
 
                 }
-                if(episodes.size() > 10){
+                if(episodes.size() < 10){
                     endless.setLoadMoreAvailable(false);
                 }
 
@@ -250,7 +266,6 @@ public class VideoEpisodeActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void onFailure(Throwable t) {
                 binding.aviProgress.setVisibility(View.GONE);
-                binding.playNowLayout.setClickable(true);
                 Utils.Error.onServiceCallFail(VideoEpisodeActivity.this, t);
             }
         });
@@ -386,13 +401,11 @@ public class VideoEpisodeActivity extends AppCompatActivity implements View.OnCl
                         binding.addImageview.setVisibility(View.GONE);
                         binding.addTextview.setVisibility(View.GONE);
                         binding.addAviProgress.setVisibility(View.VISIBLE);
-                        binding.playNowLayout.setClickable(false);
                         tvManager.subscribeProgram(Integer.valueOf(program.getId()),2, new APIListener<Void>() {
                             @Override
                             public void onSuccess(Void result, List<Object> params) {
                                 program.setSubscribed(true);
                                 binding.addAviProgress.setVisibility(View.GONE);
-                                binding.playNowLayout.setClickable(true);
                                 binding.addTextview.setVisibility(View.VISIBLE);
                                 binding.removeImageview.setVisibility(View.VISIBLE);
                                 binding.addTextview.setText(R.string.remove_from_my_list);
@@ -413,7 +426,6 @@ public class VideoEpisodeActivity extends AppCompatActivity implements View.OnCl
                                 binding.addImageview.setVisibility(View.VISIBLE);
                                 binding.addTextview.setVisibility(View.VISIBLE);
                                 binding.addAviProgress.setVisibility(View.GONE);
-                                binding.playNowLayout.setClickable(true);
                                 binding.removeImageview.setVisibility(View.GONE);
                             }
                         });
@@ -432,13 +444,11 @@ public class VideoEpisodeActivity extends AppCompatActivity implements View.OnCl
                         binding.removeImageview.setVisibility(View.GONE);
                         binding.addTextview.setVisibility(View.GONE);
                         binding.addAviProgress.setVisibility(View.VISIBLE);
-                        binding.playNowLayout.setClickable(false);
                         tvManager.unSubscribeProgram(Integer.valueOf(program.getId()), 2,new APIListener<Void>() {
                             @Override
                             public void onSuccess(Void result, List<Object> params) {
                                 program.setSubscribed(false);
                                 binding.addAviProgress.setVisibility(View.GONE);
-                                binding.playNowLayout.setClickable(true);
                                 binding.addTextview.setVisibility(View.VISIBLE);
                                 binding.addImageview.setVisibility(View.VISIBLE);
                                 binding.addTextview.setText(R.string.add_to_my_list);
@@ -459,7 +469,6 @@ public class VideoEpisodeActivity extends AppCompatActivity implements View.OnCl
                                 binding.removeImageview.setVisibility(View.VISIBLE);
                                 binding.addTextview.setVisibility(View.VISIBLE);
                                 binding.addAviProgress.setVisibility(View.GONE);
-                                binding.playNowLayout.setClickable(true);
                                 binding.addImageview.setVisibility(View.GONE);
                             }
                         });
@@ -483,12 +492,106 @@ public class VideoEpisodeActivity extends AppCompatActivity implements View.OnCl
 
             ((Application) getApplication()).getMixpanelAPI().track("Episode Selected", props);
         } else {
-            Intent intentEpisodes = new Intent(this, SubscriptionAlertActivity.class);
-            intentEpisodes.putExtra("Episode", episode);
-            startActivity(intentEpisodes);
+            checkTrialStatus(episode);
+
         }
     }
 
+    private void checkTrialStatus(Episode episode){
+        subscriptionsManager.generateSubscriptionToken((int) Utils.App.getConfig(this.getApplication()).getPaidPackageId(),
+                new APIListener<PackageToken>() {
+                    @Override
+                    public void onSuccess(final PackageToken packageToken, List<Object> params) {
+
+                        subscriptionsManager.getTrialStatus(new APIListener<PackageV2>() {
+                            @Override
+                            public void onSuccess(PackageV2 thePackage, List<Object> params) {
+//                                binding.aviProgress.setVisibility(View.GONE);
+                                alertTitle = thePackage.getTitleText();
+                                messageBody = thePackage.getMessageBody();
+                                trialStatus = thePackage.isTrialStatus();
+                                System.out.println("hdfhdfhdh " + alertTitle);
+                                System.out.println("hdfhdfhdh 111  " + messageBody);
+//                        if (thePackage.getPackageId() == 46 || thePackage.getPackageId() == 81 ||
+//                                thePackage.getPackageId() == 101 || thePackage.getPackageId() == 106) {
+//
+//                        } else {
+//                            try {
+//                                subscriptionDialog();
+//                            } catch (Exception e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+
+                                if (thePackage.isTrialStatus() && !thePackage.isSubStatus()) {
+
+                                    try {
+                                        trialSubscriptionDialog();
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                } else {
+                                    Intent intentEpisodes = new Intent(VideoEpisodeActivity.this, SubscriptionAlertActivity.class);
+                                    intentEpisodes.putExtra("Episode", episode);
+                                    startActivity(intentEpisodes);
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Throwable t) {
+
+
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onFailure(Throwable t) {
+
+
+                    }
+                });
+    }
+
+    private void trialSubscriptionDialog() {
+        LayoutInflater myLayout = LayoutInflater.from(this);
+        final View dialogView = myLayout.inflate(R.layout.alert_dialog_trial_subscription, null);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                this);
+        alertDialogBuilder.setView(dialogView);
+        dialogView.setClipToOutline(true);
+        final AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.setCanceledOnTouchOutside(false);
+        alertDialog.show();
+
+
+        RelativeLayout tryTextview = (RelativeLayout) alertDialog.findViewById(R.id.try_now_layout);
+        ImageView closeImageView = (ImageView) alertDialog.findViewById(R.id.close_imageview);
+        TextView title = (TextView) alertDialog.findViewById(R.id.alert_title);
+        title.setText(alertTitle);
+        TextView body = (TextView) alertDialog.findViewById(R.id.message_body_text);
+        body.setText(messageBody);
+
+
+        tryTextview.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                alertDialog.dismiss();
+                Intent intentPackages = new Intent(VideoEpisodeActivity.this, AudioTrialActivationActivity.class);
+                startActivity(intentPackages);
+
+
+            }
+        });
+        closeImageView.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                alertDialog.dismiss();
+
+
+            }
+        });
+    }
 
     public class SubscribeEvent {
         private boolean isSubcribed;
