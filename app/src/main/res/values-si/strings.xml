@@ -117,10 +117,12 @@
     <string name="no">නැත</string>
     <string name="remove_this_from_library">මෙය ඔබේ එකතුවෙන් ඉවත් කළ යුතු ද?</string>
     <string name="music_confirm">සනාථ කරන්න</string>
-    <string name="music_edit">සංස්කරණය කරන්න</string>
+    <string name="music_edit">(සංස්කරණය)</string>
+    <string name="edit_playlist">සංස්කරණය කරන්න</string>
     <string name="no_search_found">සෙවුම් ප්‍රතිපලයක් සොයා ගැනීමට නැත.</string>
     <string name="add_all">එකතු කරන්න</string>
     <string name="clear_all">සියල්ල ඉවත් කරන්න</string>
     <string name="recent_search">මෑතක දී කල සෙවුම්</string>
+    <string name="add_songs">ගීත එකතු කරන්න</string>
 
 </resources>

@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@dimen/_90sdp"
     android:layout_height="@dimen/_90sdp"
+    android:layout_marginStart="@dimen/_1sdp"
     android:layout_marginEnd="@dimen/_3sdp"
     android:layout_marginBottom="@dimen/_7sdp"
-    android:layout_marginStart="@dimen/_1sdp"
     android:orientation="horizontal"
-    app:cardCornerRadius="@dimen/_5sdp">
+    app:cardCornerRadius="@dimen/_10sdp">
 
     <RelativeLayout
         android:id="@+id/relativeLayoutRoot12"
@@ -22,12 +22,11 @@
             android:layout_height="wrap_content">
 
 
-            <com.joooonho.SelectableRoundedImageView
-                xmlns:app="http://schemas.android.com/apk/res-auto"
+            <com.joooonho.SelectableRoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/imageGenres"
                 android:layout_width="@dimen/_90sdp"
                 android:layout_height="@dimen/_90sdp"
-                android:scaleType="centerCrop"
+                android:scaleType="fitCenter"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:sriv_left_bottom_corner_radius="12dip"
@@ -36,26 +35,25 @@
                 app:sriv_right_top_corner_radius="12dip" />
 
 
-            <lk.mobilevisions.kiki.audio.util.KikiAudioMediumTextView
-                android:id="@+id/song_title_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+<!--            <lk.mobilevisions.kiki.audio.util.KikiAudioMediumTextView-->
+<!--                android:id="@+id/song_title_textview"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
 
-                android:text="Havana"
-                android:singleLine="true"
-                android:textColor="@color/text_color"
-                android:textSize="13sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="parent"
-                app:layout_constraintBottom_toTopOf="parent"/>
+<!--                android:singleLine="true"-->
+<!--                android:text="Havana"-->
+<!--                android:textColor="@color/text_color"-->
+<!--                android:textSize="13sp"-->
+<!--                app:layout_constraintBottom_toTopOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="parent" />-->
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </RelativeLayout>
-
 
 
 </androidx.cardview.widget.CardView>

@@ -126,13 +126,13 @@ public class SplashActivity extends AppCompatActivity {
             }
         });
 
-        if (!isTaskRoot()
-                && getIntent().hasCategory(Intent.CATEGORY_LAUNCHER)
-                && getIntent().getAction() != null
-                && getIntent().getAction().equals(Intent.ACTION_MAIN)) {
-            finish();
-            return;
-        }
+//        if (!isTaskRoot()
+//                && getIntent().hasCategory(Intent.CATEGORY_LAUNCHER)
+//                && getIntent().getAction() != null
+//                && getIntent().getAction().equals(Intent.ACTION_MAIN)) {
+//            finish();
+//            return;
+//        }
 
         type = getIntent().getStringExtra("type");
         System.out.println("fsdvsdvsdd " + type);

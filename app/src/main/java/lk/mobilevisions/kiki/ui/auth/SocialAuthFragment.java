@@ -2,9 +2,11 @@ package lk.mobilevisions.kiki.ui.auth;
 
 
 import androidx.databinding.DataBindingUtil;
+
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +47,7 @@ public class SocialAuthFragment extends Fragment implements View.OnClickListener
         binding.facebookLoginLayout.setOnClickListener(this);
         binding.btnBack.setOnClickListener(this);
 
-        ((Application) getActivity().getApplication()).getAnalytics().setCurrentScreen(getActivity(),"SocialAuthFragment",null);
+        ((Application) getActivity().getApplication()).getAnalytics().setCurrentScreen(getActivity(), "SocialAuthFragment", null);
 
 
         LoginManager.getInstance().registerCallback(((LoginActivity) getActivity()).fbCallbackManager, new FacebookCallback<LoginResult>() {
@@ -70,10 +72,10 @@ public class SocialAuthFragment extends Fragment implements View.OnClickListener
                 Timber.e(e, "Facebook sign in failed");
             }
         });
-        String selectedLanguage = Utils.SharedPrefUtil.getStringFromSharedPref(getActivity(),Constants.KEY_LANGUAGE_PHONE,null);
-        if(selectedLanguage!= null){
-          binding.btnBack.setVisibility(View.GONE);
-        }else{
+        String selectedLanguage = Utils.SharedPrefUtil.getStringFromSharedPref(getActivity(), Constants.KEY_LANGUAGE_PHONE, null);
+        if (selectedLanguage != null) {
+            binding.btnBack.setVisibility(View.GONE);
+        } else {
             binding.btnBack.setVisibility(View.VISIBLE);
         }
 
@@ -105,8 +107,10 @@ public class SocialAuthFragment extends Fragment implements View.OnClickListener
 
     public class UserCustomLogin {
     }
+
     public class UserCustomRegister {
     }
+
     public class UserNavigatesBack {
     }
 }

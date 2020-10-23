@@ -571,6 +571,9 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
                 } else {
                     openSearch();
                 }
+                if (binding.includeDashboard.searchview.isSearching()) {
+                    binding.slidingLayout.setPanelState(SlidingUpPanelLayoutOne.PanelState.COLLAPSED);
+                }
 
             }
         });
@@ -2578,7 +2581,7 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
             public void onSuccess(Void result, List<Object> params) {
 
                 Toast.makeText(AudioDashboardActivity.this,
-                        "Added to library.", Toast.LENGTH_SHORT).show();
+                        getResources().getString(R.string.added_to_library), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -2625,7 +2628,7 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
 //                binding.aviProgress.setVisibility(View.GONE);
                 if (playLists.size() == 0) {
                     Toast.makeText(AudioDashboardActivity.this,
-                            "No playlists found.", Toast.LENGTH_SHORT).show();
+                            getResources().getString(R.string.no_playlist_found), Toast.LENGTH_SHORT).show();
                 } else {
                     addToLibraryPlaylistDialog(playLists);
                 }
@@ -2655,7 +2658,7 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
             public void onSuccess(Void result, List<Object> params) {
 
                 Toast.makeText(AudioDashboardActivity.this,
-                        "Added to playlist.", Toast.LENGTH_SHORT).show();
+                        getResources().getString(R.string.added_to_playlist), Toast.LENGTH_SHORT).show();
 
             }
 

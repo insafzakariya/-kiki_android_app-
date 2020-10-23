@@ -134,7 +134,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_17sdp"
                     android:background="@drawable/viewall_background"
-                    android:text="@string/music_edit"
+                    android:text="@string/edit_playlist"
                     android:drawableStart="@drawable/ic_edit_icon"
                     android:drawablePadding="5dp"
                     android:paddingEnd="@dimen/_10sdp"

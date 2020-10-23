@@ -266,7 +266,7 @@ public class VideoEpisodeActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void onFailure(Throwable t) {
                 binding.aviProgress.setVisibility(View.GONE);
-                Utils.Error.onServiceCallFail(VideoEpisodeActivity.this, t);
+//                Utils.Error.onServiceCallFail(VideoEpisodeActivity.this, t);
             }
         });
     }
