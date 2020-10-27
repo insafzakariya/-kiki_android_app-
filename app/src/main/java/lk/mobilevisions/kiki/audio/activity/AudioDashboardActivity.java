@@ -286,19 +286,19 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
 //        binding.drawerLayout.addDrawerListener(drawerToggle);
 //        bindWidgetsWithAnEvent();
 //        setupTabLayout();
-        checkTrialStatus();
+//        checkTrialStatus();
         binding.subLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (trialStatus) {
-                    Intent intentPackages = new Intent(AudioDashboardActivity.this, AudioTrialActivationActivity.class);
-                    startActivity(intentPackages);
-                    binding.drawerLayout.closeDrawer(GravityCompat.START);
-                } else {
+//                if (trialStatus) {
+//                    Intent intentPackages = new Intent(AudioDashboardActivity.this, AudioTrialActivationActivity.class);
+//                    startActivity(intentPackages);
+//                    binding.drawerLayout.closeDrawer(GravityCompat.START);
+//                } else {
                     Intent intentPackages = new Intent(AudioDashboardActivity.this, AudioPaymentActivity.class);
                     startActivity(intentPackages);
                     binding.drawerLayout.closeDrawer(GravityCompat.START);
-                }
+//                }
             }
         });
 
@@ -308,6 +308,7 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
                 Intent intentPackages = new Intent(AudioDashboardActivity.this, AudioSettingsActivity.class);
                 startActivity(intentPackages);
                 binding.drawerLayout.closeDrawer(GravityCompat.START);
+//                throw new RuntimeException("Test Crash");
             }
         });
 
@@ -501,6 +502,7 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
                 transaction.addToBackStack(null);
                 transaction.commit();
 
+//                binding.searchImageview.setVisibility(View.INVISIBLE);
                 binding.includeDashboard.searchLayout.setVisibility(View.GONE);
                 binding.includeDashboard.searchview.setVisibility(View.GONE);
 
@@ -523,6 +525,7 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
                 transaction.addToBackStack(null);
                 transaction.commit();
 
+//                binding.searchImageview.setVisibility(View.INVISIBLE);
                 binding.includeDashboard.searchLayout.setVisibility(View.GONE);
                 binding.includeDashboard.searchview.setVisibility(View.GONE);
 
@@ -545,6 +548,7 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
                 transaction.addToBackStack(null);
                 transaction.commit();
 
+//                binding.searchImageview.setVisibility(View.INVISIBLE);
                 binding.includeDashboard.searchLayout.setVisibility(View.GONE);
                 binding.includeDashboard.searchview.setVisibility(View.GONE);
 
@@ -680,6 +684,7 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
                             public void onAnimationEnd(Animator animation) {
                                 super.onAnimationEnd(animation);
                                 binding.includeDashboard.viewSearchTint.setVisibility(View.GONE);
+//                                binding.searchImageview.setVisibility(View.VISIBLE);
                             }
                         })
                         .start();
@@ -698,6 +703,7 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
             @Override
             public void onSearchExit() {
                 binding.includeDashboard.searchLayout.setVisibility(View.GONE);
+//                binding.searchImageview.setVisibility(View.VISIBLE);
                 Application.BUS.post(new UserNavigateBackEvent());
             }
 
@@ -2185,11 +2191,11 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
 
     @Override
     public void showErrorDialog(int indexP, Song currentAudio) {
-        if (trialStatus) {
-            trialSubscriptionDialog();
-        } else {
+//        if (trialStatus) {
+//            trialSubscriptionDialog();
+//        } else {
             subscriptionDialog();
-        }
+//        }
 
         if (streamingManager.isPlaying()) {
             streamingManager.onStop();

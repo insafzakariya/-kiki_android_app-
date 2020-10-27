@@ -29,8 +29,8 @@ android {
         applicationId "lk.mobilevisions.kiki"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 178
-        versionName "1.0.178"
+        versionCode 180
+        versionName "1.0.180"
         vectorDrawables.useSupportLibrary = true
         renderscriptTargetApi 20
         renderscriptSupportModeEnabled true
@@ -89,9 +89,9 @@ android {
     productFlavors {
 
         production {
-            buildConfigField "Integer", "MAIN_SERVER_API_VERSION", "3"
+            buildConfigField "Integer", "MAIN_SERVER_API_VERSION", "2"
             buildConfigField "String", "MAIN_SERVER_API_NAME", "\"MAIN_SERVER_API_V_\""
-            buildConfigField "String", "MOBILE_PAYMENT_GATEWAY_NAME", "\"MOBILE_PAYMENT_GATEWAY_URL_V3\""
+            buildConfigField "String", "MOBILE_PAYMENT_GATEWAY_NAME", "\"MOBILE_PAYMENT_GATEWAY_URL_V2\""
             buildConfigField "String", "ALL_USERS_TOPIC_NAME", "\"AllUsers\""
         }
 
@@ -148,9 +148,6 @@ dependencies {
     //    implementation 'com.android.support:support:28.0.0'
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
-    implementation 'com.google.firebase:firebase-config:16.1.0'
-    implementation 'com.google.firebase:firebase-messaging:20.1.2'
-    implementation 'com.google.firebase:firebase-core:16.0.6'
     implementation 'com.facebook.android:facebook-android-sdk:5.11.0'
     implementation 'com.facebook.android:facebook-marketing:4.42.0'
     implementation 'com.jakewharton:butterknife:10.0.0'
@@ -206,9 +203,13 @@ dependencies {
     def appCenterSdkVersion = '3.1.0'
     implementation "com.microsoft.appcenter:appcenter-analytics:${appCenterSdkVersion}"
     implementation "com.microsoft.appcenter:appcenter-crashes:${appCenterSdkVersion}"
+
+    implementation 'com.google.firebase:firebase-config:16.1.0'
+    implementation 'com.google.firebase:firebase-messaging:20.1.2'
+    implementation 'com.google.firebase:firebase-core:16.0.6'
+    implementation 'com.google.firebase:firebase-dynamic-links:19.1.1'
+
 }
-
-
-
 apply plugin: 'com.google.gms.google-services'
+
 

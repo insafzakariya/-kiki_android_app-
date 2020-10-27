@@ -130,19 +130,19 @@ public class VideoDashboardActivity extends BaseActivity {
         binding.drawerLayout.addDrawerListener(drawerToggle);
         bindWidgetsWithAnEvent();
         setupTabLayout();
-        checkTrialStatus();
+//        checkTrialStatus();
         binding.subLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (trialStatus) {
-                    Intent intentPackages = new Intent(VideoDashboardActivity.this, VideoTrialActivationActivity.class);
-                    startActivity(intentPackages);
-                    binding.drawerLayout.closeDrawer(GravityCompat.START);
-                } else {
+//                if (trialStatus) {
+//                    Intent intentPackages = new Intent(VideoDashboardActivity.this, VideoTrialActivationActivity.class);
+//                    startActivity(intentPackages);
+//                    binding.drawerLayout.closeDrawer(GravityCompat.START);
+//                } else {
                     Intent intentPackages = new Intent(VideoDashboardActivity.this, PaymentActivity.class);
                     startActivity(intentPackages);
                     binding.drawerLayout.closeDrawer(GravityCompat.START);
-                }
+//                }
             }
         });
 

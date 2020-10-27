@@ -2,6 +2,8 @@ package lk.mobilevisions.kiki.ui.splash;
 
 import android.content.Intent;
 import androidx.databinding.DataBindingUtil;
+
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,6 +26,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
+import com.google.firebase.dynamiclinks.PendingDynamicLinkData;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -141,6 +145,8 @@ public class SplashActivity extends AppCompatActivity {
         contentId = getIntent().getStringExtra("content_id");
         System.out.println("fsdvsdvsdd 22222" + contentId);
 
+//        checkForDynamicLinks();
+
 //            Intent intent;
 //        if (type !=null && type.equals("0")){
 //             intent = new Intent(SplashActivity.this, VideoDashboardActivity.class);
@@ -154,10 +160,36 @@ public class SplashActivity extends AppCompatActivity {
 //        }
     }
 
+//    private void checkForDynamicLinks() {
+//        FirebaseDynamicLinks.getInstance().getDynamicLink(getIntent()).addOnSuccessListener(this, new OnSuccessListener<PendingDynamicLinkData>() {
+//            @Override
+//            public void onSuccess(PendingDynamicLinkData pendingDynamicLinkData) {
+//
+//                Uri deepLink = null;
+//                if (pendingDynamicLinkData != null) {
+//                    deepLink = pendingDynamicLinkData.getLink();
+//                    System.out.println("sfgdgdf " + deepLink);
+//                }
+//
+//                if (deepLink != null){
+//
+//                }
+//                Intent intent = null;
+//                intent = new Intent(SplashActivity.this, AudioDashboardActivity.class);
+//            }
+//        }).addOnFailureListener(this, new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//
+//            }
+//        });
+//    }
+
     @Override
     protected void onStart() {
         init();
         super.onStart();
+//        checkForDynamicLinks();
     }
 
     private void init() {

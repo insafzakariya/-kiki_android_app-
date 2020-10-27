@@ -98,8 +98,14 @@
             android:theme="@style/AppThemeFullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:host="app.kiki.lk" android:scheme="http"/>
+                <data android:host="app.kiki.lk" android:scheme="https"/>
             </intent-filter>
         </activity> <!-- <activity -->
         <!-- android:name=".audio.activity.AudioDashboardActivity" -->
@@ -265,21 +271,6 @@
             android:name=".ui.settings.SettingsActivity"
             android:label="Settings"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".audio.activity.search.SearchedSongsActivity"
-            android:label="SearchedSongs"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
-        <activity
-            android:name=".audio.activity.search.SearchedArtistsActivity"
-            android:label="SearchedArtists"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
-        <activity
-            android:name=".audio.activity.search.SearchedPlaylistsActivity"
-            android:label="SearchedPlaylists"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
         <activity
             android:name=".video.activity.VideoSettingsActivity"
             android:screenOrientation="portrait" />

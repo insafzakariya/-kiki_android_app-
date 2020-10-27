@@ -107,7 +107,7 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
         setupSliderView();
         Application.BUS.register(this);
         loadChannelsAndPrograms();
-        checkSubscription();
+//        checkSubscription();
 
         binding.indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 

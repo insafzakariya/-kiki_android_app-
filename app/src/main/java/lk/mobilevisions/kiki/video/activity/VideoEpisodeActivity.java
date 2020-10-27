@@ -492,7 +492,10 @@ public class VideoEpisodeActivity extends AppCompatActivity implements View.OnCl
 
             ((Application) getApplication()).getMixpanelAPI().track("Episode Selected", props);
         } else {
-            checkTrialStatus(episode);
+            Intent intentEpisodes = new Intent(this, SubscriptionAlertActivity.class);
+            intentEpisodes.putExtra("Episode", episode);
+            startActivity(intentEpisodes);
+//            checkTrialStatus(episode);
 
         }
     }
@@ -577,7 +580,7 @@ public class VideoEpisodeActivity extends AppCompatActivity implements View.OnCl
 
             public void onClick(View v) {
                 alertDialog.dismiss();
-                Intent intentPackages = new Intent(VideoEpisodeActivity.this, AudioTrialActivationActivity.class);
+                Intent intentPackages = new Intent(VideoEpisodeActivity.this, VideoTrialActivationActivity.class);
                 startActivity(intentPackages);
 
 
