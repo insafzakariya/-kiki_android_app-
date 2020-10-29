@@ -37,6 +37,7 @@ import com.microsoft.applicationinsights.library.TelemetryClient;
 import com.uxcam.UXCam;
 
 import java.util.List;
+import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -145,7 +146,7 @@ public class SplashActivity extends AppCompatActivity {
         contentId = getIntent().getStringExtra("content_id");
         System.out.println("fsdvsdvsdd 22222" + contentId);
 
-//        checkForDynamicLinks();
+        checkForDynamicLinks();
 
 //            Intent intent;
 //        if (type !=null && type.equals("0")){
@@ -160,36 +161,42 @@ public class SplashActivity extends AppCompatActivity {
 //        }
     }
 
-//    private void checkForDynamicLinks() {
-//        FirebaseDynamicLinks.getInstance().getDynamicLink(getIntent()).addOnSuccessListener(this, new OnSuccessListener<PendingDynamicLinkData>() {
-//            @Override
-//            public void onSuccess(PendingDynamicLinkData pendingDynamicLinkData) {
-//
-//                Uri deepLink = null;
-//                if (pendingDynamicLinkData != null) {
-//                    deepLink = pendingDynamicLinkData.getLink();
-//                    System.out.println("sfgdgdf " + deepLink);
-//                }
-//
-//                if (deepLink != null){
-//
-//                }
-//                Intent intent = null;
-//                intent = new Intent(SplashActivity.this, AudioDashboardActivity.class);
-//            }
-//        }).addOnFailureListener(this, new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//
-//            }
-//        });
-//    }
+    private void checkForDynamicLinks() {
+        FirebaseDynamicLinks.getInstance().getDynamicLink(getIntent()).addOnSuccessListener(this, new OnSuccessListener<PendingDynamicLinkData>() {
+            @Override
+            public void onSuccess(PendingDynamicLinkData pendingDynamicLinkData) {
+
+                Uri deepLink = null;
+                if (pendingDynamicLinkData != null) {
+                    deepLink = pendingDynamicLinkData.getLink();
+                    System.out.println("deepLink " + deepLink);
+
+                    String query = deepLink.getQuery();
+
+                    System.out.println("deepLink 111 " + query);
+                }
+
+
+
+//                Intent intent = getIntent();
+//                String action = intent.getAction();
+//                Uri data = intent.getData();
+//                System.out.println("deepLink 111 " + data);
+//                System.out.println("deepLink 222 " + action);
+            }
+        }).addOnFailureListener(this, new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
+    }
 
     @Override
     protected void onStart() {
         init();
         super.onStart();
-//        checkForDynamicLinks();
+        checkForDynamicLinks();
     }
 
     private void init() {

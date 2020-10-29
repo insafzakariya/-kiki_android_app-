@@ -27,6 +27,7 @@ import lk.mobilevisions.kiki.audio.adapter.LibraryKikiPlaylistAdapter;
 import lk.mobilevisions.kiki.audio.model.dto.PlayList;
 import lk.mobilevisions.kiki.audio.model.dto.Song;
 import lk.mobilevisions.kiki.databinding.FragmentGenreWisePlaylistBinding;
+import lk.mobilevisions.kiki.databinding.FragmentHomePlaylistListBinding;
 import lk.mobilevisions.kiki.modules.api.APIListener;
 import lk.mobilevisions.kiki.modules.tv.TvManager;
 
@@ -37,7 +38,7 @@ public class LibraryKikiPLaylistListFragment extends Fragment implements Library
     TvManager tvManager;
 
 
-    FragmentGenreWisePlaylistBinding binding;
+    FragmentHomePlaylistListBinding binding;
     LibraryKikiPlaylistAdapter mAdapter;
     List<PlayList> playlistArrayList = new ArrayList<>();
     private Animation animShow, animHide;
@@ -58,7 +59,7 @@ public class LibraryKikiPLaylistListFragment extends Fragment implements Library
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_genre_wise_playlist, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home_playlist_list, container, false);
         ((Application) getActivity().getApplication()).getInjector().inject(this);
 
 
@@ -187,7 +188,7 @@ public class LibraryKikiPLaylistListFragment extends Fragment implements Library
         LibraryKikiPlaylistDetailFragment kikiPlaylistDetailFragment = new LibraryKikiPlaylistDetailFragment();
         kikiPlaylistDetailFragment.setArguments(bundle);
         getFragmentManager().beginTransaction()
-                .replace(R.id.Library_kikiList_playlist_detail, kikiPlaylistDetailFragment, "Home to PlaylistDetail")
+                .replace(R.id.library_kikiList_playlist_detail, kikiPlaylistDetailFragment, "Home to PlaylistDetail")
                 .addToBackStack(null)
                 .commit();
     }

@@ -26,6 +26,8 @@ import lk.mobilevisions.kiki.databinding.FragmentArtistListBinding;
 import lk.mobilevisions.kiki.modules.api.APIListener;
 import lk.mobilevisions.kiki.modules.tv.TvManager;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 public class GenreArtistListFragment extends Fragment implements GenreArtistListAdapter.OnArtistItemClickListener {
     @Inject
     TvManager tvManager;
@@ -117,7 +119,7 @@ public class GenreArtistListFragment extends Fragment implements GenreArtistList
             @Override
             public void onSuccess(Void result, List<Object> params) {
                 binding.aviProgress.setVisibility(View.GONE);
-                Toast.makeText(getActivity(), "Added to library.", Toast.LENGTH_SHORT ).show();
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.added_to_library), Toast.LENGTH_SHORT).show();
                 mAdapter.setEnbaled(true);
             }
 
@@ -137,14 +139,14 @@ public class GenreArtistListFragment extends Fragment implements GenreArtistList
 
         Bundle bundle=new Bundle();
         bundle.putInt("artistID", artist.getId());
-
         bundle.putString("artistName", artist.getName());
         bundle.putString("artistImage", artist.getImage());
         bundle.putString("songCount", artist.getSongsCount());
+
         ArtistDetailFragment artistDetailFragment = new ArtistDetailFragment();
         artistDetailFragment.setArguments(bundle);
         getFragmentManager().beginTransaction()
-                .replace(R.id.browse_artist_list_to_detail_container, artistDetailFragment, "artistID")
+                .replace(R.id.browse_artist_list_to_detail_container, artistDetailFragment, "genreArtist")
                 .addToBackStack(null)
                 .commit();
 

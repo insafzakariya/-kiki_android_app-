@@ -458,6 +458,32 @@
                 </FrameLayout>
 
                 <FrameLayout
+                    android:id="@+id/deeplink_artist_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:visibility="visible">
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/deeplink_playlist_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:visibility="visible">
+
+                </FrameLayout>
+
+
+
+                <FrameLayout
                     android:id="@+id/frame_container_search_toPlaylist"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

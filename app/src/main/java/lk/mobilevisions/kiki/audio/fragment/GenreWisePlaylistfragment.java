@@ -26,6 +26,8 @@ import lk.mobilevisions.kiki.databinding.FragmentGenreWisePlaylistBinding;
 import lk.mobilevisions.kiki.modules.api.APIListener;
 import lk.mobilevisions.kiki.modules.tv.TvManager;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 public class GenreWisePlaylistfragment extends Fragment implements LatestPlaylistAdapter.OnLatestPlaylistItemClickListener {
     @Inject
     TvManager tvManager;
@@ -120,7 +122,7 @@ public class GenreWisePlaylistfragment extends Fragment implements LatestPlaylis
             @Override
             public void onSuccess(Void result, List<Object> params) {
 
-                Toast.makeText(getActivity(), "Added to library.", Toast.LENGTH_SHORT ).show();
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.added_to_library), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -136,12 +138,11 @@ public class GenreWisePlaylistfragment extends Fragment implements LatestPlaylis
     public void onLatestPlaylistItemClick(PlayList song, int position, List<PlayList> songs) {
         Bundle bundle=new Bundle();
         bundle.putInt("playlistID", song.getId());
-        System.out.println("ssdffjfnjffjfjfj" + song.getId());
         bundle.putString("playlistName", song.getName());
         bundle.putString("songCount", song.getSongCount());
-        System.out.println("song count " + song.getSongCount());
         bundle.putString("playlistImage", song.getImage());
         bundle.putString("playlistYear", song.getDate());
+
         PlaylistDetailFragment playlistDetailFragment = new PlaylistDetailFragment();
         playlistDetailFragment.setArguments(bundle);
         getFragmentManager().beginTransaction()

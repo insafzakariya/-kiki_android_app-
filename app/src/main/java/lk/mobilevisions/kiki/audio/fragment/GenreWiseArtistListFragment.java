@@ -26,6 +26,8 @@ import lk.mobilevisions.kiki.databinding.FragmentArtistListBinding;
 import lk.mobilevisions.kiki.modules.api.APIListener;
 import lk.mobilevisions.kiki.modules.tv.TvManager;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 public class GenreWiseArtistListFragment extends Fragment implements GenreArtistListAdapter.OnArtistItemClickListener {
     @Inject
     TvManager tvManager;
@@ -121,7 +123,7 @@ public class GenreWiseArtistListFragment extends Fragment implements GenreArtist
             @Override
             public void onSuccess(Void result, List<Object> params) {
                 binding.aviProgress.setVisibility(View.GONE);
-                Toast.makeText(getActivity(), "Added to library.", Toast.LENGTH_SHORT ).show();
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.added_to_library), Toast.LENGTH_SHORT).show();
                 mAdapter.setEnbaled(true);
             }
 

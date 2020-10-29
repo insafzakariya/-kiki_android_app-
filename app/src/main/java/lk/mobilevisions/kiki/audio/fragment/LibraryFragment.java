@@ -271,7 +271,7 @@ public class LibraryFragment extends Fragment implements PlaylistAdapter.OnUserP
 
     }
 
-    private void setDataLibraryArtists() {
+    private void  setDataLibraryArtists() {
 
         tvManager.getLibraryArtists(10,1, new APIListener<List<Artist>>() {
             @Override

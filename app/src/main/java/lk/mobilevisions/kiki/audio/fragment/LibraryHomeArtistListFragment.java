@@ -28,6 +28,7 @@ import lk.mobilevisions.kiki.audio.adapter.LibraryHomeArtistListAdapter;
 import lk.mobilevisions.kiki.audio.model.dto.Artist;
 import lk.mobilevisions.kiki.audio.model.dto.Song;
 import lk.mobilevisions.kiki.databinding.FragmentArtistListBinding;
+import lk.mobilevisions.kiki.databinding.FragmentLibraryHomeArtistListBinding;
 import lk.mobilevisions.kiki.modules.api.APIListener;
 import lk.mobilevisions.kiki.modules.tv.TvManager;
 
@@ -38,7 +39,7 @@ public class LibraryHomeArtistListFragment extends Fragment implements LibraryHo
     TvManager tvManager;
 
 
-    FragmentArtistListBinding binding;
+    FragmentLibraryHomeArtistListBinding binding;
     LibraryHomeArtistListAdapter mAdapter;
     List<Artist> artistArrayList = new ArrayList<>();
     private Animation animShow, animHide;
@@ -59,7 +60,7 @@ public class LibraryHomeArtistListFragment extends Fragment implements LibraryHo
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_artist_list, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_library_home_artist_list, container, false);
         ((Application) getActivity().getApplication()).getInjector().inject(this);
 
 
@@ -184,15 +185,14 @@ public class LibraryHomeArtistListFragment extends Fragment implements LibraryHo
 
         Bundle bundle=new Bundle();
         bundle.putInt("artistID", artist.getId());
-        System.out.println("ssdffjfnjffjfjfj" + artist.getId());
         bundle.putString("artistName", artist.getName());
-        System.out.println("ssdffjfnjffjfjfj" + artist.getName());
         bundle.putString("artistImage", artist.getImage());
         bundle.putString("songCount", artist.getSongsCount());
+
         LibraryHomeArtistDetailFragment artistDetailFragment = new LibraryHomeArtistDetailFragment();
         artistDetailFragment.setArguments(bundle);
         getFragmentManager().beginTransaction()
-                .replace(R.id.library_artist_list_to_detail, artistDetailFragment, "artistID")
+                .replace(R.id.library_artist_list_to_detail, artistDetailFragment, "genreArtist")
                 .addToBackStack(null)
                 .commit();
 

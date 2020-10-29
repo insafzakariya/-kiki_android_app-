@@ -134,10 +134,10 @@ public class LibraryHomeArtistDetailFragment extends Fragment implements GenreSo
             @Override
             public void onSuccess(List<Song> result, List<Object> params) {
                 if (result.size() == 0) {
-                    binding.libraryArtistDetailView.setVisibility(View.GONE);
+                    binding.artistDetailSongsLayout.setVisibility(View.GONE);
 
                 } else {
-                    binding.libraryArtistDetailView.setVisibility(View.VISIBLE);
+                    binding.artistDetailSongsLayout.setVisibility(View.VISIBLE);
                     genreSongsArrayList = result;
                     genreSongsVerticalAdapter = new GenreSongsVerticalAdapter(getActivity(), genreSongsArrayList,LibraryHomeArtistDetailFragment.this);
                     binding.artistDetailSongsRecycleview.setAdapter(genreSongsVerticalAdapter);

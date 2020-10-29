@@ -8,6 +8,7 @@ import android.content.res.Configuration;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,6 +18,8 @@ import android.os.Vibrator;
 import com.facebook.appevents.AppEventsConstants;
 import com.facebook.appevents.AppEventsLogger;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
 
@@ -39,8 +42,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
+import com.google.firebase.dynamiclinks.PendingDynamicLinkData;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -56,9 +64,11 @@ import lk.mobilevisions.kiki.modules.api.APIListener;
 import lk.mobilevisions.kiki.modules.api.dto.NotificationCountResponse;
 import lk.mobilevisions.kiki.modules.api.dto.PackageToken;
 import lk.mobilevisions.kiki.modules.api.dto.PackageV2;
+import lk.mobilevisions.kiki.modules.api.dto.Program;
 import lk.mobilevisions.kiki.modules.auth.AuthManager;
 import lk.mobilevisions.kiki.modules.notifications.NotificationManager;
 import lk.mobilevisions.kiki.modules.subscriptions.SubscriptionsManager;
+import lk.mobilevisions.kiki.modules.tv.TvManager;
 import lk.mobilevisions.kiki.ui.base.BaseActivity;
 import lk.mobilevisions.kiki.ui.notifications.NotificationsActivity;
 import lk.mobilevisions.kiki.ui.packages.PaymentActivity;
@@ -72,6 +82,8 @@ public class VideoDashboardActivity extends BaseActivity {
     NotificationManager notificationManager;
     @Inject
     SubscriptionsManager subscriptionsManager;
+    @Inject
+    TvManager tvManager;
 
     ActivityVideoDashboardBinding binding;
 
@@ -130,19 +142,19 @@ public class VideoDashboardActivity extends BaseActivity {
         binding.drawerLayout.addDrawerListener(drawerToggle);
         bindWidgetsWithAnEvent();
         setupTabLayout();
-//        checkTrialStatus();
+        checkTrialStatus();
         binding.subLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (trialStatus) {
-//                    Intent intentPackages = new Intent(VideoDashboardActivity.this, VideoTrialActivationActivity.class);
-//                    startActivity(intentPackages);
-//                    binding.drawerLayout.closeDrawer(GravityCompat.START);
-//                } else {
+                if (trialStatus) {
+                    Intent intentPackages = new Intent(VideoDashboardActivity.this, VideoTrialActivationActivity.class);
+                    startActivity(intentPackages);
+                    binding.drawerLayout.closeDrawer(GravityCompat.START);
+                } else {
                     Intent intentPackages = new Intent(VideoDashboardActivity.this, PaymentActivity.class);
                     startActivity(intentPackages);
                     binding.drawerLayout.closeDrawer(GravityCompat.START);
-//                }
+                }
             }
         });
 
@@ -280,6 +292,63 @@ public class VideoDashboardActivity extends BaseActivity {
         });
         AppEventsLogger logger = AppEventsLogger.newLogger(this);
         logger.logEvent("Video_Screen");
+
+        FirebaseDynamicLinks.getInstance().getDynamicLink(getIntent()).addOnSuccessListener(this, new OnSuccessListener<PendingDynamicLinkData>() {
+            @Override
+            public void onSuccess(PendingDynamicLinkData pendingDynamicLinkData) {
+
+                Uri deepLink = null;
+                if (pendingDynamicLinkData != null) {
+                    deepLink = pendingDynamicLinkData.getLink();
+                    System.out.println("deepLink " + deepLink);
+
+                    String query = deepLink.getQuery();
+
+                    System.out.println("deepLink 111 " + query);
+                }
+
+                if (deepLink != null) {
+
+                    String programId = deepLink.getQueryParameter("program");
+                    String type = deepLink.getQueryParameter("type");
+
+                    if (type != null && type.contains("0")) {
+                        int programIdDeepLink = Integer.parseInt(programId);
+                        tvManager.getProgramWithID(programIdDeepLink, new APIListener<Program>() {
+                            @Override
+                            public void onSuccess(Program program, List<Object> params) {
+
+                                Intent intentEpisodes = new Intent(VideoDashboardActivity.this, VideoEpisodeActivity.class);
+                                intentEpisodes.putExtra("program", program);
+                                startActivity(intentEpisodes);
+
+                                JSONObject props = new JSONObject();
+                                try {
+                                    props.put("ProgramName", program.getName());
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+//                            ((Application) this().getApplication()).getMixpanelAPI().track("Program Selected", props);
+                            }
+
+                            @Override
+                            public void onFailure(Throwable t) {
+
+                            }
+                        });
+                    }
+
+                }
+
+            }
+        }).addOnFailureListener(this, new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                System.out.println("fghfgdhgf 11111 " );
+            }
+        });
+
 
     }
 

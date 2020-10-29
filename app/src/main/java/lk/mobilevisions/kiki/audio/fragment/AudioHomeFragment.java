@@ -753,6 +753,7 @@ public class AudioHomeFragment extends Fragment implements DailyMixAdapter.Daily
     public void onArtistsPlayAction(Artist artist, int position, List<Artist> artistList) {
         Bundle bundle=new Bundle();
         bundle.putInt("artistID", artist.getId());
+//        System.out.println("dbfjdbfd " + artist.getId());
         bundle.putString("artistName", artist.getName());
         bundle.putString("artistImage", artist.getImage());
         bundle.putString("songCount", artist.getSongsCount());
@@ -770,6 +771,7 @@ public class AudioHomeFragment extends Fragment implements DailyMixAdapter.Daily
 
         Bundle bundle=new Bundle();
         bundle.putInt("playlistID", playList.getId());
+        System.out.println("dbfjdbfd 1111111 " + playList.getId());
         bundle.putString("playlistName", playList.getName());
         bundle.putString("songCount", playList.getSongCount());
         bundle.putString("playlistImage", playList.getImage());
