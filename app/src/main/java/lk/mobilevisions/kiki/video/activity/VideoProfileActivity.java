@@ -25,6 +25,8 @@ import lk.mobilevisions.kiki.R;
 import lk.mobilevisions.kiki.app.Application;
 import lk.mobilevisions.kiki.app.Constants;
 import lk.mobilevisions.kiki.app.Utils;
+import lk.mobilevisions.kiki.audio.activity.AudioDashboardActivity;
+import lk.mobilevisions.kiki.audio.activity.AudioProfileActivity;
 import lk.mobilevisions.kiki.databinding.ActivityVideoProfileBinding;
 import lk.mobilevisions.kiki.modules.api.APIListener;
 import lk.mobilevisions.kiki.modules.api.dto.AuthUser;
@@ -153,6 +155,9 @@ public class VideoProfileActivity extends AppCompatActivity implements View.OnCl
                 ((Application) getApplication()).setAuthUser(result);
                 progressDialog.dismiss();
                 setUpAppLanguage();
+                Intent intent = new Intent(VideoProfileActivity.this, VideoDashboardActivity.class);
+                startActivity(intent);
+                finish();
                 Toast.makeText(getApplicationContext(),"Updated Successfully",Toast.LENGTH_SHORT);
 
             }

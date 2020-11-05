@@ -25,31 +25,28 @@ import lk.mobilevisions.kiki.R;
 import lk.mobilevisions.kiki.app.Application;
 import lk.mobilevisions.kiki.app.Utils;
 import lk.mobilevisions.kiki.audio.activity.AudioDashboardActivity;
-import lk.mobilevisions.kiki.audio.adapter.LibrarySongsVerticalAdapter;
+import lk.mobilevisions.kiki.audio.adapter.LibraryArtistDetailSongsAdapter;
 import lk.mobilevisions.kiki.audio.model.dto.Song;
 import lk.mobilevisions.kiki.audio.util.SpacesItemDecoration;
-import lk.mobilevisions.kiki.databinding.FragmentArtistDetailBinding;
+import lk.mobilevisions.kiki.databinding.FragmentLibraryPlaylistArtistDetailBinding;
 import lk.mobilevisions.kiki.modules.api.APIListener;
 import lk.mobilevisions.kiki.modules.subscriptions.SubscriptionsManager;
 import lk.mobilevisions.kiki.modules.tv.TvManager;
 
-public class LibraryArtistDetailFragment extends Fragment implements LibrarySongsVerticalAdapter.OnGenreSongsItemActionListener {
+public class LibraryArtistDetailFragment extends Fragment implements LibraryArtistDetailSongsAdapter.OnArtistSongsItemActionListener {
 
     @Inject
     TvManager tvManager;
 
-    FragmentArtistDetailBinding binding;
-    private int episodesLimit = 200;
-    Date selectedDate;
+    FragmentLibraryPlaylistArtistDetailBinding binding;
+
     Context context;
-    private Endless endless;
-    List<Song> genreSongsArrayList = new ArrayList<>();
+    List<Song> artistSongsArrayList = new ArrayList<>();
 
     @Inject
     SubscriptionsManager subscriptionsManager;
-    LibrarySongsVerticalAdapter librarySongsVerticalAdapter;
+    LibraryArtistDetailSongsAdapter libraryArtistDetailSongsAdapter;
 
-    private int lastRandomNumber;
     private int artistID;
 
     @Override
@@ -61,15 +58,15 @@ public class LibraryArtistDetailFragment extends Fragment implements LibrarySong
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_artist_detail, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_library_playlist_artist_detail, container, false);
         ((Application) getActivity().getApplication()).getInjector().inject(this);
 
-        int artistID = getArguments().getInt("artistID");
+        artistID = getArguments().getInt("artistID");
         String artistName = getArguments().getString("artistName");
         String artistImage = getArguments().getString("artistImage");
         String artistSongCount = getArguments().getString("songCount");
 
-        binding.soungCount.setText(artistSongCount + " Songs");
+        binding.artistSongCount.setText(artistSongCount + " Songs");
 
         setupArtistSongs();
         setDataToArtistSongs(artistID);
@@ -80,7 +77,7 @@ public class LibraryArtistDetailFragment extends Fragment implements LibrarySong
                 Bundle bundle=new Bundle();
                 bundle.putInt("artistID", artistID);
                 LibraryArtistSongsList libraryArtistSongsList = new LibraryArtistSongsList();
-                libraryArtistSongsList.setArguments(bundle);
+            libraryArtistSongsList.setArguments(bundle);
                 getFragmentManager().beginTransaction()
                         .replace(R.id.artist_container_song_to_list, libraryArtistSongsList, "artist songs")
                         .addToBackStack(null)
@@ -109,17 +106,16 @@ public class LibraryArtistDetailFragment extends Fragment implements LibrarySong
             }
         }
 
-        binding.addArtist.setVisibility(View.GONE);
-
         return binding.getRoot();
     }
 
     private void setupArtistSongs() {
+        libraryArtistDetailSongsAdapter = new LibraryArtistDetailSongsAdapter(getActivity(),LibraryArtistDetailFragment.this);
+        binding.artistDetailSongsRecycleview.setAdapter(libraryArtistDetailSongsAdapter);
         binding.artistDetailSongsRecycleview.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         binding.artistDetailSongsRecycleview.addItemDecoration(new SpacesItemDecoration(15));
         binding.artistDetailSongsRecycleview.setHasFixedSize(true);
-        binding.artistDetailSongsRecycleview.setNestedScrollingEnabled(false);
-
+//        binding.artistDetailSongsRecycleview.setNestedScrollingEnabled(false);
     }
 
     private void setDataToArtistSongs(int artistID) {
@@ -127,14 +123,15 @@ public class LibraryArtistDetailFragment extends Fragment implements LibrarySong
         tvManager.getArtistSongs(artistID, new APIListener<List<Song>>() {
             @Override
             public void onSuccess(List<Song> result, List<Object> params) {
+                System.out.println("dhhdhdhdhd 1111 " + result.size());
                 if (result.size() == 0) {
                     binding.artistDetailSongsLayout.setVisibility(View.GONE);
 
                 } else {
                     binding.artistDetailSongsLayout.setVisibility(View.VISIBLE);
-                    genreSongsArrayList = result;
-                    librarySongsVerticalAdapter = new LibrarySongsVerticalAdapter(getActivity(), genreSongsArrayList,LibraryArtistDetailFragment.this);
-                    binding.artistDetailSongsRecycleview.setAdapter(librarySongsVerticalAdapter);
+                    artistSongsArrayList = result;
+                    libraryArtistDetailSongsAdapter.setData(artistSongsArrayList);
+
                 }
                 binding.aviProgress.setVisibility(View.GONE);
             }
@@ -153,20 +150,6 @@ public class LibraryArtistDetailFragment extends Fragment implements LibrarySong
 
         super.onAttach(context);
         this.context = context;
-
-    }
-
-    @Override
-    public void onGenreSongsPlayAction(Song song, int position, List<Song> songs) {
-
-        if(!Application.getInstance().getSongsAddedToPlaylist().contains(song.getId())){
-            Application.getInstance().addSongToPlayList(song.getId());
-
-        }else{
-            Application.getInstance().removeSongFromPlayList(song.getId());
-        }
-        addSongsToPlaylist(song.getId());
-        librarySongsVerticalAdapter.notifyDataSetChanged();
 
     }
 
@@ -193,4 +176,15 @@ public class LibraryArtistDetailFragment extends Fragment implements LibrarySong
         });
     }
 
+    @Override
+    public void onArtistSongsPlayAction(Song song, int position, List<Song> songs) {
+        if(!Application.getInstance().getSongsAddedToPlaylist().contains(song.getId())){
+            Application.getInstance().addSongToPlayList(song.getId());
+
+        }else{
+            Application.getInstance().removeSongFromPlayList(song.getId());
+        }
+        addSongsToPlaylist(song.getId());
+        libraryArtistDetailSongsAdapter.notifyDataSetChanged();
+    }
 }

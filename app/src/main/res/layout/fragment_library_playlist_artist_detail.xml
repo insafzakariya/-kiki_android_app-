@@ -82,17 +82,17 @@
                     android:orientation="horizontal"
                     android:layout_centerInParent="true">
 
-<!--                    <TextView-->
-<!--                        android:id="@+id/albums_text"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="0 albums"-->
-<!--                        android:textSize="@dimen/_10sdp"-->
-<!--                        android:textColor="@color/md_grey_600"-->
-<!--                        android:gravity="center"-->
-<!--                        android:layout_marginEnd="@dimen/_5sdp"-->
-<!--                        android:layout_marginTop="@dimen/_5sdp"-->
-<!--                        />-->
+                    <!--                    <TextView-->
+                    <!--                        android:id="@+id/albums_text"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:text="0 albums"-->
+                    <!--                        android:textSize="@dimen/_10sdp"-->
+                    <!--                        android:textColor="@color/md_grey_600"-->
+                    <!--                        android:gravity="center"-->
+                    <!--                        android:layout_marginEnd="@dimen/_5sdp"-->
+                    <!--                        android:layout_marginTop="@dimen/_5sdp"-->
+                    <!--                        />-->
 
 
                     <TextView
@@ -184,10 +184,8 @@
                 android:layout_height="wrap_content">
 
                 <LinearLayout
-                    xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="?android:selectableItemBackground"
                     android:orientation="vertical"
                     android:paddingTop="@dimen/_5sdp"
                     android:visibility="visible"
@@ -226,16 +224,33 @@
                             android:textColor="@color/see_all"
                             android:textSize="10sp" />
 
+
+
                     </RelativeLayout>
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/artist_detail_songs_recycleview"
+
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_gravity="center_vertical"
-                        android:orientation="horizontal" />
+                        android:layout_height="@dimen/_190sdp">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/artist_detail_songs_recycleview"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginTop="10dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_gravity="center_vertical"
+                            android:orientation="horizontal" />
+
+
+                    </RelativeLayout>
+
+
+
                 </LinearLayout>
 
             </RelativeLayout>
@@ -243,7 +258,7 @@
         </RelativeLayout>
 
         <FrameLayout
-            android:id="@+id/artist_container_detail_songs"
+            android:id="@+id/artist_container_song_to_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -254,17 +269,9 @@
 
         </FrameLayout>
 
-        <FrameLayout
-            android:id="@+id/library_home_artist_detail_songs"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:visibility="visible">
 
-        </FrameLayout>
+
+
 
         <com.wang.avi.AVLoadingIndicatorView
             android:id="@+id/aviProgress"

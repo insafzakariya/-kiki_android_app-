@@ -863,106 +863,6 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
         AppEventsLogger logger = AppEventsLogger.newLogger(this);
         logger.logEvent("Audio_Screen");
 
-        FirebaseDynamicLinks.getInstance().getDynamicLink(getIntent()).addOnSuccessListener(this, new OnSuccessListener<PendingDynamicLinkData>() {
-            @Override
-            public void onSuccess(PendingDynamicLinkData pendingDynamicLinkData) {
-
-                Uri deepLink = null;
-                if (pendingDynamicLinkData != null) {
-                    deepLink = pendingDynamicLinkData.getLink();
-                    System.out.println("deepLink " + deepLink);
-
-                    String query = deepLink.getQuery();
-
-                    System.out.println("deepLink 111 " + query);
-                }
-
-                if (deepLink != null){
-
-                    String artistId = deepLink.getQueryParameter("artist");
-
-                    String playlistId = deepLink.getQueryParameter("playlist");
-
-                    String type = deepLink.getQueryParameter("type");
-
-
-                    if (type != null && type.contains("0")) {
-                        int artistIdDeepLink = Integer.parseInt(artistId);
-                        tvManager.getArtistWithID(artistIdDeepLink, new APIListener <Artist>() {
-                            @Override
-                            public void onSuccess(Artist artist, List<Object> params) {
-
-                                Bundle bundle=new Bundle();
-                                bundle.putInt("artistID", artist.getId());
-                                bundle.putString("artistName", artist.getName());
-                                bundle.putString("artistImage", artist.getImage());
-                                bundle.putString("songCount", artist.getSongsCount());
-
-                                ArtistDetailFragment artistDetailFragment = new ArtistDetailFragment();
-                                artistDetailFragment.setArguments(bundle);
-
-                                getSupportFragmentManager().beginTransaction()
-                                        .replace(R.id.deeplink_artist_container, artistDetailFragment, "deepLinkArtistNav")
-                                        .addToBackStack(null)
-                                        .commit();
-
-                                System.out.println("jjbjbjbj 1111 ");
-
-                            }
-
-                            @Override
-                            public void onFailure(Throwable t) {
-                                System.out.println("jjbjbjbj 2222 ");
-                            }
-                        });
-
-                    } else if (type != null && type.contains("1")) {
-                        int playlistIdDeepLink = Integer.parseInt(playlistId);
-                        tvManager.getPlaylistWithID(playlistIdDeepLink, new APIListener <PlayList>() {
-                            @Override
-                            public void onSuccess(PlayList playList, List<Object> params) {
-
-                                Bundle bundle=new Bundle();
-                                bundle.putInt("playlistID", playList.getId());
-                                bundle.putString("playlistName", playList.getName());
-                                bundle.putString("songCount", playList.getSongCount());
-                                bundle.putString("playlistImage", playList.getImage());
-                                bundle.putString("playlistYear", playList.getDate());
-
-                                PlaylistDetailFragment playlistDetailFragment = new PlaylistDetailFragment();
-                                playlistDetailFragment.setArguments(bundle);
-                                getSupportFragmentManager().beginTransaction()
-                                        .replace(R.id.deeplink_playlist_container, playlistDetailFragment, "deepLinkPlaylistNav")
-                                        .addToBackStack(null)
-                                        .commit();
-                            }
-                            @Override
-                            public void onFailure(Throwable t) {
-
-                            }
-                        });
-
-                    }
-
-
-//                    Bundle bundleDeepLink = new Bundle();
-//                    bundleDeepLink.putInt("artistIdDeepLink", artistIdDeepLink);
-
-                    System.out.println("deepartist " + artistId);
-                }
-
-//                Intent intent = getIntent();
-//                String action = intent.getAction();
-//                Uri data = intent.getData();
-//                System.out.println("deepLink 111 " + data);
-//                System.out.println("deepLink 222 " + action);
-            }
-        }).addOnFailureListener(this, new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-
-            }
-        });
     }
 
     private void subscriptionDialog() {
@@ -1247,6 +1147,10 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
                 .replace(R.id.frame_container_search_toArtist, artistDetailFragment, "Search to nArtistDetail")
                 .addToBackStack(null)
                 .commit();
+
+        binding.searchImageview.setVisibility(View.INVISIBLE);
+        binding.includeDashboard.searchLayout.setVisibility(View.GONE);
+        binding.includeDashboard.searchview.setVisibility(View.GONE);
     }
 
     @Override
@@ -1271,6 +1175,10 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
                 .replace(R.id.frame_container_search_toPlaylist, playlistDetailFragment, "Search to nPlaylistDetail")
                 .addToBackStack(null)
                 .commit();
+
+        binding.searchImageview.setVisibility(View.INVISIBLE);
+        binding.includeDashboard.searchLayout.setVisibility(View.GONE);
+        binding.includeDashboard.searchview.setVisibility(View.GONE);
     }
 
     private void addArtistToLibrary(int artistID) {

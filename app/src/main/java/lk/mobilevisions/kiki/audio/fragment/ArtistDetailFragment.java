@@ -91,7 +91,7 @@ public class ArtistDetailFragment extends Fragment implements GenreSongsVertical
                 ArtistSongsListFragment artistSongsListFragment = new ArtistSongsListFragment();
                 artistSongsListFragment.setArguments(bundle);
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.artist_container_song_to_list, artistSongsListFragment, "popular songs")
+                        .replace(R.id.artist_container_detail_songs, artistSongsListFragment, "popular songs")
                         .addToBackStack(null)
                         .commit();
             }

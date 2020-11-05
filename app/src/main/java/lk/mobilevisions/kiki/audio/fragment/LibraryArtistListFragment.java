@@ -122,7 +122,7 @@ public class LibraryArtistListFragment extends Fragment implements LibraryArtist
         LibraryArtistDetailFragment libraryArtistDetailFragment = new LibraryArtistDetailFragment();
         libraryArtistDetailFragment.setArguments(bundle);
         getFragmentManager().beginTransaction()
-                .replace(R.id.library_artist_list_to_detail_container, libraryArtistDetailFragment, "artistID")
+                .replace(R.id.library_edit_artist_list_to_detail_container, libraryArtistDetailFragment, "artistID")
                 .addToBackStack(null)
                 .commit();
 

@@ -268,19 +268,6 @@
     </RelativeLayout>
 
     <FrameLayout
-        android:id="@+id/artist_container_song_to_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:visibility="visible">
-
-    </FrameLayout>
-
-
-    <FrameLayout
         android:id="@+id/artist_container_detail_songs"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

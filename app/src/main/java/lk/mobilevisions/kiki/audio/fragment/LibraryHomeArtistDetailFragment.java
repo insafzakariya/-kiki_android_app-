@@ -87,7 +87,7 @@ public class LibraryHomeArtistDetailFragment extends Fragment implements GenreSo
                 LibraryHomeArtistSongsFragment artistSongsListFragment = new LibraryHomeArtistSongsFragment();
                 artistSongsListFragment.setArguments(bundle);
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.artist_container_song_to_list, artistSongsListFragment, "popular songs")
+                        .replace(R.id.library_home_artist_detail_songs, artistSongsListFragment, "popular songs")
                         .addToBackStack(null)
                         .commit();
             }

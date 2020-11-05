@@ -29,8 +29,8 @@ android {
         applicationId "lk.mobilevisions.kiki"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 181
-        versionName "1.0.181"
+        versionCode 186
+        versionName "1.0.186"
         vectorDrawables.useSupportLibrary = true
         renderscriptTargetApi 20
         renderscriptSupportModeEnabled true
@@ -89,9 +89,9 @@ android {
     productFlavors {
 
         production {
-            buildConfigField "Integer", "MAIN_SERVER_API_VERSION", "3"
+            buildConfigField "Integer", "MAIN_SERVER_API_VERSION", "2"
             buildConfigField "String", "MAIN_SERVER_API_NAME", "\"MAIN_SERVER_API_V_\""
-            buildConfigField "String", "MOBILE_PAYMENT_GATEWAY_NAME", "\"MOBILE_PAYMENT_GATEWAY_URL_V3\""
+            buildConfigField "String", "MOBILE_PAYMENT_GATEWAY_NAME", "\"MOBILE_PAYMENT_GATEWAY_URL_V2\""
             buildConfigField "String", "ALL_USERS_TOPIC_NAME", "\"AllUsers\""
         }
 

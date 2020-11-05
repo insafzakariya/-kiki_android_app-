@@ -293,63 +293,6 @@ public class VideoDashboardActivity extends BaseActivity {
         AppEventsLogger logger = AppEventsLogger.newLogger(this);
         logger.logEvent("Video_Screen");
 
-        FirebaseDynamicLinks.getInstance().getDynamicLink(getIntent()).addOnSuccessListener(this, new OnSuccessListener<PendingDynamicLinkData>() {
-            @Override
-            public void onSuccess(PendingDynamicLinkData pendingDynamicLinkData) {
-
-                Uri deepLink = null;
-                if (pendingDynamicLinkData != null) {
-                    deepLink = pendingDynamicLinkData.getLink();
-                    System.out.println("deepLink " + deepLink);
-
-                    String query = deepLink.getQuery();
-
-                    System.out.println("deepLink 111 " + query);
-                }
-
-                if (deepLink != null) {
-
-                    String programId = deepLink.getQueryParameter("program");
-                    String type = deepLink.getQueryParameter("type");
-
-                    if (type != null && type.contains("0")) {
-                        int programIdDeepLink = Integer.parseInt(programId);
-                        tvManager.getProgramWithID(programIdDeepLink, new APIListener<Program>() {
-                            @Override
-                            public void onSuccess(Program program, List<Object> params) {
-
-                                Intent intentEpisodes = new Intent(VideoDashboardActivity.this, VideoEpisodeActivity.class);
-                                intentEpisodes.putExtra("program", program);
-                                startActivity(intentEpisodes);
-
-                                JSONObject props = new JSONObject();
-                                try {
-                                    props.put("ProgramName", program.getName());
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-
-//                            ((Application) this().getApplication()).getMixpanelAPI().track("Program Selected", props);
-                            }
-
-                            @Override
-                            public void onFailure(Throwable t) {
-
-                            }
-                        });
-                    }
-
-                }
-
-            }
-        }).addOnFailureListener(this, new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                System.out.println("fghfgdhgf 11111 " );
-            }
-        });
-
-
     }
 
     private MaterialDialog createProgressDialog() {

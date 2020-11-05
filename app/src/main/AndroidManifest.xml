@@ -105,7 +105,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:host="app.kiki.lk" android:scheme="http"/>
-                <data android:host="app.kiki.lk" android:scheme="https" android:pathPrefix="/redirect/launch"/>
+                <data android:host="app.kiki.lk" android:scheme="https" android:pathPrefix="/redirect"/>
             </intent-filter>
         </activity> <!-- <activity -->
         <!-- android:name=".audio.activity.AudioDashboardActivity" -->
@@ -123,7 +123,6 @@
             android:name=".audio.activity.AudioDashboardActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -136,14 +135,6 @@
                 <data android:mimeType="application/x-ogg" />
                 <data android:mimeType="application/itunes" />
             </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data android:host="app.kiki.lk" android:scheme="http"/>
-                <data android:host="app.kiki.lk" android:scheme="https" android:pathPrefix="/redirect/audio"/>
-            </intent-filter>
-
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -270,7 +261,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".video.activity.VideoDashboardActivity"
-            android:launchMode="singleTask"
             android:label=""
             android:screenOrientation="portrait">
         <intent-filter>

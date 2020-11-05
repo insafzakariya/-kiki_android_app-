@@ -216,14 +216,19 @@ public class AudioHomeFragment extends Fragment implements DailyMixAdapter.Daily
 
         String programType = getActivity().getIntent().getStringExtra("programType");
         String programid = getActivity().getIntent().getStringExtra("programId");
+        System.out.println("sfdfdsf " + programid);
+        System.out.println("sfdfdsf 111 " + programType);
+
         int contentId = 0;
         try {
             contentId = Integer.parseInt(programid);
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
+        System.out.println("sfdfdsf 666 " + contentId);
 
         String contentType = getActivity().getIntent().getStringExtra("contentType");
+        System.out.println("sfdfdsf 333 " + contentType);
 
         if (programType != null && contentType !=null){
             if (programType.equals("1") && contentType.equals("playlistid")){
@@ -252,11 +257,11 @@ public class AudioHomeFragment extends Fragment implements DailyMixAdapter.Daily
                     }
                 });
             } else if (programType.equals("1") && contentType.equals("artistid")){
-
+                System.out.println("sfdfdsf 444 ");
                 tvManager.getArtistWithID(contentId, new APIListener <Artist>() {
                     @Override
                     public void onSuccess(Artist artist, List<Object> params) {
-
+                        System.out.println("sfdfdsf 555 ");
                         Bundle bundle=new Bundle();
                         bundle.putInt("artistID", artist.getId());
                         bundle.putString("artistName", artist.getName());

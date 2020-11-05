@@ -176,14 +176,17 @@ public class SplashActivity extends AppCompatActivity {
                     System.out.println("deepLink 111 " + query);
                 }
 
+                if (deepLink != null) {
 
+                    contentType = deepLink.getQueryParameter("content");
 
-//                Intent intent = getIntent();
-//                String action = intent.getAction();
-//                Uri data = intent.getData();
-//                System.out.println("deepLink 111 " + data);
-//                System.out.println("deepLink 222 " + action);
-            }
+                    contentId = deepLink.getQueryParameter("id");
+
+                    type = deepLink.getQueryParameter("type");
+
+                }
+
+                }
         }).addOnFailureListener(this, new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
@@ -371,8 +374,14 @@ public class SplashActivity extends AppCompatActivity {
                 if (type !=null) {
                     if (type.equals("0")) {
                         intent = new Intent(SplashActivity.this, VideoDashboardActivity.class);
+                        intent.putExtra("programType",type);
+                        intent.putExtra("programId",contentId);
+                        intent.putExtra("contentType",contentType);
                     } else {
                         intent = new Intent(SplashActivity.this, AudioDashboardActivity.class);
+                        intent.putExtra("programType",type);
+                        intent.putExtra("programId",contentId);
+                        intent.putExtra("contentType",contentType);
                     }
                 }
                 else {
