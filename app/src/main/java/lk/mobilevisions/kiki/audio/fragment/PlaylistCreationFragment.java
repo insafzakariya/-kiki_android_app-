@@ -126,7 +126,7 @@ public class PlaylistCreationFragment extends Fragment implements PlaylistCreati
 
         channelsLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         binding.addedSongsRecycle.setLayoutManager(channelsLayoutManager);
-        playlistCreationAdapter = new PlaylistCreationAdapter(getActivity(), playlistSongsList, PlaylistCreationFragment.this);
+//        playlistCreationAdapter = new PlaylistCreationAdapter(getActivity(), playlistSongsList, PlaylistCreationFragment.this);
         binding.addedSongsRecycle.setHasFixedSize(true);
         binding.addedSongsRecycle.setItemViewCacheSize(50);
         binding.addedSongsRecycle.setDrawingCacheEnabled(true);
@@ -187,6 +187,7 @@ public class PlaylistCreationFragment extends Fragment implements PlaylistCreati
                     }
                     binding.confirmText.setEnabled(false);
                 } else {
+                    System.out.println("hgfjghfjghfjgh 1111111 " );
                     binding.confirmText.setEnabled(true);
                     binding.aviPlaylist.setVisibility(View.VISIBLE);
 
@@ -259,6 +260,7 @@ public class PlaylistCreationFragment extends Fragment implements PlaylistCreati
                 for (Song song : songs) {
                     songIdList.add(song.getId());
                 }
+                System.out.println("songcount get " + songIdList.size());
                 playlistSongsList = songs;
                 if (editPlaylist) {
                     for (Song song : playlistSongsList) {
@@ -301,7 +303,7 @@ public class PlaylistCreationFragment extends Fragment implements PlaylistCreati
             public void onSuccess(PlayList playList, List<Object> params) {
                 playlistId = playList.getId();
                 addSongsToPlaylist(playlistId, songIdList);
-                Toast.makeText(getActivity(), "Your playlist created.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getResources().getString(R.string.playlist_created), Toast.LENGTH_SHORT).show();
                 hideKeyboard();
 
                 binding.aviPlaylist.setVisibility(View.GONE);
@@ -319,7 +321,7 @@ public class PlaylistCreationFragment extends Fragment implements PlaylistCreati
     }
 
     private void addSongsToPlaylist(int playlistId, List<Integer> songIdList) {
-
+        System.out.println("songcount " + songIdList.size());
         tvManager.addSongsToPlaylist(playlistId, songIdList, new APIListener<Void>() {
             @Override
             public void onSuccess(Void result, List<Object> params) {
@@ -382,7 +384,7 @@ public class PlaylistCreationFragment extends Fragment implements PlaylistCreati
 
         songIdList.remove(position);
         songIdList.size();
-        Toast.makeText(getActivity(), "Removed.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(),  getResources().getString(R.string.audio_removed), Toast.LENGTH_SHORT).show();
 
     }
 
@@ -462,6 +464,7 @@ public class PlaylistCreationFragment extends Fragment implements PlaylistCreati
 
         if (Application.getInstance().getSessionId() != null) {
             getTempPlaylistSongs(Application.getInstance().getSessionId());
+            System.out.println("sdjfnsdjfndjfjdfjvn 111 ");
             binding.aviPlaylist.setVisibility(View.VISIBLE);
         }
 

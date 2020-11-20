@@ -254,6 +254,7 @@ public class LibraryPlaylistDetailFragment extends Fragment implements LibraryPl
         }
         addSongsToPlaylist(song.getId());
         libraryPlaylistSongAdapter.notifyDataSetChanged();
+        libraryPlaylistSongAdapter.setEnabled(false);
 
     }
 
@@ -272,6 +273,7 @@ public class LibraryPlaylistDetailFragment extends Fragment implements LibraryPl
             @Override
             public void onSuccess(Void result, List<Object> params) {
 
+                libraryPlaylistSongAdapter.setEnabled(true);
 
             }
 

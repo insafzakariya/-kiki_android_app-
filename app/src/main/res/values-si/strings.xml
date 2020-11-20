@@ -54,7 +54,7 @@
     <string name="play_now">දැන් ප්ලේ කරන්න</string>
     <string name="play_trailer">PLAY TRAILER</string>
     <string name="close">වසා දමන්න</string>
-    <string name="menu_chile_mode">චයිල්ඩ් මූඩ්</string>
+    <string name="menu_chile_mode">චයිල්ඩ් මෝඩ්</string>
     <string name="new_playlist">නව එකතුව</string>
     <string name="menu_notifications">දැනුම්දීම්</string>
     <string name="create_new_playlist">නව එකතුවක් සකස් \nකරන්න</string>
@@ -124,5 +124,8 @@
     <string name="clear_all">සියල්ල ඉවත් කරන්න</string>
     <string name="recent_search">මෑතක දී කල සෙවුම්</string>
     <string name="add_songs">ගීත එකතු කරන්න</string>
+    <string name="delete_notification">ඔබට මෙය ඉවත් කිරීමට අවශ්යද?</string>
+    <string name="audio_removed">ඉවත් කරන ලදී</string>
+    <string name="playlist_created">ඔබෙ ගීත එකතුව සකසන ලදී</string>
 
 </resources>

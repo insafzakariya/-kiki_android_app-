@@ -28,12 +28,17 @@ public class LibraryPlaylistSongAdapter extends
     private Context mContext;
     private List<Song> mArrayList;
     OnLibraryPlaylistItemClickListener itemClickListener;
+    public boolean enabled = true;
 
     public LibraryPlaylistSongAdapter(Context mContext, List<Song> mArrayList, OnLibraryPlaylistItemClickListener itemClickListener) {
         this.mContext = mContext;
         this.mArrayList = mArrayList;
         this.itemClickListener = itemClickListener;
 
+    }
+
+    public void setEnabled(boolean isEnable){
+        this.enabled = isEnable;
     }
 
     @Override
@@ -91,8 +96,10 @@ public class LibraryPlaylistSongAdapter extends
         holder.rvHorizontal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                itemClickListener.onPlaylistItemClick(mArrayList.get(holder.getAdapterPosition()),
-                        holder.getAdapterPosition(), mArrayList);
+                if (enabled) {
+                    itemClickListener.onPlaylistItemClick(mArrayList.get(holder.getAdapterPosition()),
+                            holder.getAdapterPosition(), mArrayList);
+                }
             }
         });
 

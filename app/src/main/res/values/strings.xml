@@ -193,6 +193,8 @@
     <string name="clear_all">Remove all</string>
     <string name="recent_search">Recent search</string>
     <string name="add_songs">Add Songs</string>
+    <string name="audio_removed">Removed</string>
+    <string name="playlist_created">Your playlist created</string>
 
     <string name="play_2">Play</string>
     <string name="play_random">Play Random</string>
@@ -213,6 +215,7 @@
     <string name="like_movie">Like this movie</string>
     <string name="unlike_movie">Already liked</string>
     <string name="remove_from_my_list">Remove from my list</string>
+    <string name="delete_notification">Are you sure you want to delete it?</string>
 
     <string name="count_song"><xliff:g id="count">%d</xliff:g> song</string>
     <string name="count_songs"><xliff:g id="count">%d</xliff:g> songs</string>

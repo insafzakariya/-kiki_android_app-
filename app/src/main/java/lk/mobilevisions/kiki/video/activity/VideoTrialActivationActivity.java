@@ -64,6 +64,7 @@ public class VideoTrialActivationActivity extends AppCompatActivity implements A
                 Intent intent = new Intent(VideoTrialActivationActivity.this, VideoDashboardActivity.class);
                 startActivity(intent);
                 finish();
+                binding.webViewPayment.clearCache(true);
             }
         });
         binding.webViewPayment.setListener(this, this);
@@ -100,6 +101,7 @@ public class VideoTrialActivationActivity extends AppCompatActivity implements A
             @Override
             public void onFailure(Throwable t) {
                 binding.aviProgress.setVisibility(View.GONE);
+                binding.webviewFramelayout.setVisibility(View.GONE);
                 Utils.Error.onServiceCallFail(VideoTrialActivationActivity.this, t);
             }
         });
@@ -156,6 +158,7 @@ public class VideoTrialActivationActivity extends AppCompatActivity implements A
     public void onPageFinished(String url) {
 
         binding.aviProgress.setVisibility(View.GONE);
+        binding.webviewFramelayout.setVisibility(View.GONE);
     }
 
     @Override
@@ -178,7 +181,7 @@ public class VideoTrialActivationActivity extends AppCompatActivity implements A
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             System.out.println("lffhfhfbvhh  111" + url);
-            if (url.contains("https://payv2.kiki.lk/susilawebpay/thanks/redirecthome")){
+            if (url.contains("/redirecthome")){
                 Intent intent = new Intent(VideoTrialActivationActivity.this, VideoDashboardActivity.class);
                 startActivity(intent);
                 finish();

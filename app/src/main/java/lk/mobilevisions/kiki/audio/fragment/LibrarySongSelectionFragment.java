@@ -415,8 +415,8 @@ public class LibrarySongSelectionFragment extends Fragment implements LibrarySon
         LibraryPlaylistDetailFragment libraryPlaylistDetailFragment = new LibraryPlaylistDetailFragment();
         libraryPlaylistDetailFragment.setArguments(bundle);
         getFragmentManager().beginTransaction()
-                .replace(R.id.library_container_playlist_toDetail, libraryPlaylistDetailFragment, "playlistID")
-                .addToBackStack(null)
+                .replace(R.id.library_container_playlist_toDetail, libraryPlaylistDetailFragment, "slectionToDetail")
+                .addToBackStack("getThis")
                 .commit();
     }
 

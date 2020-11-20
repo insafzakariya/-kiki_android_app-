@@ -203,6 +203,7 @@ public class LoginActivity extends BaseActivity implements
     public void onUserNavigateBack(MobileNumberFragment.UserNavigatesBack event) {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         finish();
+//        viewPager.setCurrentItem(1, false);
 
     }
 
@@ -829,7 +830,7 @@ public class LoginActivity extends BaseActivity implements
             viewPager.setCurrentItem(2, false);
         } else if (viewPager.getCurrentItem() == 5) {
             viewPager.setCurrentItem(4, false);
-        }else if (viewPager.getCurrentItem() == 6) {
+        } else if (viewPager.getCurrentItem() == 6) {
             viewPager.setCurrentItem(5, false);
         } else {
             Intent intent = new Intent(this, LanguageSelectionActivity.class);

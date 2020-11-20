@@ -61,6 +61,7 @@ public class AudioTrialActivationActivity extends AppCompatActivity implements A
                 Intent intent = new Intent(AudioTrialActivationActivity.this, AudioDashboardActivity.class);
                 startActivity(intent);
                 finish();
+                binding.webViewPayment.clearCache(true);
             }
         });
         binding.webViewPayment.setListener(this, this);
@@ -88,7 +89,7 @@ public class AudioTrialActivationActivity extends AppCompatActivity implements A
                     Timber.d("Loading URL from the WebView: %s", Utils.App.getConfig(getApplication()).getMobilePaymentGatewayURL() + "?token=" + packageToken.getTokenHash()  + "&isFreeTrial=true");
                     binding.webViewPayment.addHttpHeader("X-Requested-With", "");
                     binding.webViewPayment.loadUrl(Utils.App.getConfig(getApplication()).getMobilePaymentGatewayURL() + "?token=" + packageToken.getTokenHash() + "&isFreeTrial=true");
-//                            System.out.println("urlCheck " + Utils.App.getConfig(getApplication()).getMobilePaymentGatewayURL());
+                            System.out.println("urlCheck 222 " + Utils.App.getConfig(getApplication()).getMobilePaymentGatewayURL());
                     return;
                 }
 
@@ -143,6 +144,7 @@ public class AudioTrialActivationActivity extends AppCompatActivity implements A
             @Override
             public void onFailure(Throwable t) {
                 binding.aviProgress.setVisibility(View.GONE);
+                binding.webviewFramelayout.setVisibility(View.GONE);
                 Utils.Error.onServiceCallFail(AudioTrialActivationActivity.this, t);
             }
         });
@@ -199,6 +201,7 @@ public class AudioTrialActivationActivity extends AppCompatActivity implements A
     public void onPageFinished(String url) {
 
         binding.aviProgress.setVisibility(View.GONE);
+        binding.webviewFramelayout.setVisibility(View.GONE);
     }
 
     @Override
@@ -220,7 +223,8 @@ public class AudioTrialActivationActivity extends AppCompatActivity implements A
     private class PaymentsBrowser extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            if (url.contains("https://payv2.kiki.lk/susilawebpay/thanks/redirecthome")){
+            System.out.println("lffhfhfbvhhyyy  222" + url);
+            if (url.contains("/redirecthome")){
                 Intent intent = new Intent(AudioTrialActivationActivity.this, AudioDashboardActivity.class);
                 startActivity(intent);
                 finish();

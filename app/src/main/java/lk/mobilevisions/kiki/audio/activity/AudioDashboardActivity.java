@@ -4,7 +4,9 @@ import android.animation.Animator;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 
 import androidx.annotation.NonNull;
@@ -23,8 +25,10 @@ import android.speech.RecognizerIntent;
 import androidx.annotation.Nullable;
 
 import com.facebook.appevents.AppEventsLogger;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.fragment.app.Fragment;
@@ -63,6 +67,8 @@ import android.widget.Toast;
 
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
 import com.google.firebase.dynamiclinks.PendingDynamicLinkData;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import com.microsoft.appcenter.AppCenter;
 import com.microsoft.appcenter.analytics.Analytics;
 import com.microsoft.appcenter.crashes.Crashes;
@@ -81,10 +87,12 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import lk.mobilevisions.kiki.BuildConfig;
 import lk.mobilevisions.kiki.R;
 import lk.mobilevisions.kiki.app.Application;
 import lk.mobilevisions.kiki.app.Constants;
@@ -106,6 +114,8 @@ import lk.mobilevisions.kiki.audio.fragment.AudioHomeFragment;
 import lk.mobilevisions.kiki.audio.fragment.AudioSongsFragment;
 import lk.mobilevisions.kiki.audio.fragment.BrowseAllSongsFrangment;
 import lk.mobilevisions.kiki.audio.fragment.LibraryFragment;
+import lk.mobilevisions.kiki.audio.fragment.LibraryPlaylistDetailFragment;
+import lk.mobilevisions.kiki.audio.fragment.LibrarySongSelectionFragment;
 import lk.mobilevisions.kiki.audio.fragment.PlaylistDetailFragment;
 import lk.mobilevisions.kiki.audio.fragment.ProgrammesFragment;
 import lk.mobilevisions.kiki.audio.fragment.RecentlyPlayedFragment;
@@ -237,6 +247,11 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
     @Inject
     AnalyticsManager analyticsManager;
     private SongAdapter songAdapter;
+
+    private FirebaseRemoteConfig mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+    private HashMap<String, Object> firebaseDefaultMap;
+    public static final String VERSION_CODE_KEY = "force_update_current_version";
+    public static final String APP_UPDATE_URL = "force_update_store_url";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -823,19 +838,6 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
         binding.slidingLayout.setEnableDragViewTouchEvents(true);
 //        subscriptionDialog();
 
-//        TelemetryClient client = TelemetryClient.getInstance();
-//        client.trackTrace("example trace");
-//        client.trackEvent("example event");
-////        client.trackException(new Exception("example error"));
-//        client.trackMetric("example metric", 1);
-
-//        ApplicationInsights.setup(this.getApplicationContext(),this.getApplication());
-//        ApplicationInsights.start();
-//        ApplicationInsights.setDeveloperMode(true);
-//
-//        TelemetryClient client = TelemetryClient.getInstance();
-//        client.trackTrace("example trace");
-//        System.out.println("sdfvsdfv " + client);
         if (utils.getLastItemThumbnail().length() > 0) {
             binding.includeSlidingPanelChildtwo.slideBottomView.welcomeLayout.setVisibility(View.GONE);
             binding.includeSlidingPanelChildtwo.slideBottomView.youMightLayout.setVisibility(View.VISIBLE);
@@ -863,6 +865,60 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
         AppEventsLogger logger = AppEventsLogger.newLogger(this);
         logger.logEvent("Audio_Screen");
 
+        firebaseDefaultMap = new HashMap<>();
+        firebaseDefaultMap.put(VERSION_CODE_KEY, getCurrentVersionCode());
+        mFirebaseRemoteConfig.setDefaults(firebaseDefaultMap);
+
+        mFirebaseRemoteConfig.setConfigSettings(
+                new FirebaseRemoteConfigSettings.Builder().setDeveloperModeEnabled(BuildConfig.DEBUG)
+                        .build());
+
+        //Fetching the values here
+        mFirebaseRemoteConfig.fetch().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    mFirebaseRemoteConfig.activateFetched();
+
+                    //calling function to check if new version is available or not
+                    checkForUpdate();
+                } else {
+                    Toast.makeText(AudioDashboardActivity.this, "Something went wrong please try again",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+    }
+
+    private void checkForUpdate() {
+        int latestAppVersion = (int) mFirebaseRemoteConfig.getDouble(VERSION_CODE_KEY);
+        String updateStoreUrl = (String) mFirebaseRemoteConfig.getString(APP_UPDATE_URL);
+
+        if (latestAppVersion > getCurrentVersionCode()) {
+            new AlertDialog.Builder(this).setTitle("Please Update the App")
+                    .setMessage("Currently a new version of KiKi app is available.")
+                    .setIcon(R.mipmap.ic_launcher)
+                    .setPositiveButton("Update", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(updateStoreUrl));
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                            finish();
+                        }
+                    }).setCancelable(false).show();
+        }
+    }
+
+    private int getCurrentVersionCode() {
+        try {
+            return getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 
     private void subscriptionDialog() {
@@ -1821,7 +1877,20 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
 
     @Override
     public void onBackPressed() {
-        Application.BUS.post(new UserNavigateBackEvent());
+
+        FragmentManager nFragmentManager = getSupportFragmentManager();
+
+        LibrarySongSelectionFragment librarySongSelectionFragment = (LibrarySongSelectionFragment) nFragmentManager.findFragmentByTag("librarySongSelection");
+        LibraryPlaylistDetailFragment libraryPlaylistDetailFragment = (LibraryPlaylistDetailFragment) nFragmentManager.findFragmentByTag("slectionToDetail");
+
+        if (libraryPlaylistDetailFragment != null && libraryPlaylistDetailFragment.isVisible()) {
+            nFragmentManager.popBackStack("getThis", 0);
+            System.out.println("backCheck 111 ");
+        } else {
+            Application.BUS.post(new UserNavigateBackEvent());
+            System.out.println("backCheck 222 ");
+        }
+
         if (binding.includeDashboard.searchview.isSearching()) {
 
             FragmentManager fragmentManager = getSupportFragmentManager();

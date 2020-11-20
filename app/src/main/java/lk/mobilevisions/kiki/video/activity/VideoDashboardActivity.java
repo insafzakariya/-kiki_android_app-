@@ -2,7 +2,9 @@ package lk.mobilevisions.kiki.video.activity;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 
 import androidx.annotation.NonNull;
@@ -31,6 +33,7 @@ import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -46,14 +49,18 @@ import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
 import com.google.firebase.dynamiclinks.PendingDynamicLinkData;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import lk.mobilevisions.kiki.BuildConfig;
 import lk.mobilevisions.kiki.R;
 import lk.mobilevisions.kiki.app.Application;
 import lk.mobilevisions.kiki.app.Constants;
@@ -97,6 +104,11 @@ public class VideoDashboardActivity extends BaseActivity {
     private String alertTitle;
     private String messageBody;
     private boolean trialStatus;
+
+    private FirebaseRemoteConfig mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+    private HashMap<String, Object> firebaseDefaultMap;
+    public static final String VERSION_CODE_KEY = "force_update_current_version";
+    public static final String APP_UPDATE_URL = "force_update_store_url";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -293,6 +305,60 @@ public class VideoDashboardActivity extends BaseActivity {
         AppEventsLogger logger = AppEventsLogger.newLogger(this);
         logger.logEvent("Video_Screen");
 
+        firebaseDefaultMap = new HashMap<>();
+        firebaseDefaultMap.put(VERSION_CODE_KEY, getCurrentVersionCode());
+        mFirebaseRemoteConfig.setDefaults(firebaseDefaultMap);
+
+        mFirebaseRemoteConfig.setConfigSettings(
+                new FirebaseRemoteConfigSettings.Builder().setDeveloperModeEnabled(BuildConfig.DEBUG)
+                        .build());
+
+        //Fetching the values here
+        mFirebaseRemoteConfig.fetch().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    mFirebaseRemoteConfig.activateFetched();
+
+                    //calling function to check if new version is available or not
+                    checkForUpdate();
+                } else {
+                    Toast.makeText(VideoDashboardActivity.this, "Something went wrong please try again",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+    }
+
+    private void checkForUpdate() {
+        int latestAppVersion = (int) mFirebaseRemoteConfig.getDouble(VERSION_CODE_KEY);
+        String updateStoreUrl = (String) mFirebaseRemoteConfig.getString(APP_UPDATE_URL);
+
+        if (latestAppVersion > getCurrentVersionCode()) {
+            new AlertDialog.Builder(this).setTitle("Please Update the App")
+                    .setMessage("Currently a new version of KiKi app is available.")
+                    .setIcon(R.mipmap.ic_launcher)
+                    .setPositiveButton("Update", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(updateStoreUrl));
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                            finish();
+                        }
+                    }).setCancelable(false).show();
+        }
+    }
+
+    private int getCurrentVersionCode() {
+        try {
+            return getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 
     private MaterialDialog createProgressDialog() {

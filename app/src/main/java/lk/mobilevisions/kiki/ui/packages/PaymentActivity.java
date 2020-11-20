@@ -41,6 +41,7 @@ import lk.mobilevisions.kiki.modules.api.dto.Package;
 import lk.mobilevisions.kiki.modules.api.dto.PackageToken;
 import lk.mobilevisions.kiki.modules.subscriptions.SubscriptionsManager;
 import lk.mobilevisions.kiki.video.activity.VideoDashboardActivity;
+import lk.mobilevisions.kiki.video.activity.VideoTrialActivationActivity;
 import timber.log.Timber;
 
 public class PaymentActivity extends AppCompatActivity implements AdvancedWebView.Listener {
@@ -59,7 +60,10 @@ public class PaymentActivity extends AppCompatActivity implements AdvancedWebVie
         binding.includedToolbar.backImageview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(PaymentActivity.this, VideoDashboardActivity.class);
+                startActivity(intent);
                 finish();
+                binding.webViewPayment.clearCache(true);
             }
         });
         binding.webViewPayment.setListener(this, this);
@@ -131,6 +135,7 @@ public class PaymentActivity extends AppCompatActivity implements AdvancedWebVie
             @Override
             public void onFailure(Throwable t) {
                 binding.aviProgress.setVisibility(View.GONE);
+                binding.webviewFramelayout.setVisibility(View.GONE);
                 Utils.Error.onServiceCallFail(PaymentActivity.this, t);
             }
         });
@@ -198,6 +203,7 @@ public class PaymentActivity extends AppCompatActivity implements AdvancedWebVie
     public void onPageFinished(String url) {
 
         binding.aviProgress.setVisibility(View.GONE);
+        binding.webviewFramelayout.setVisibility(View.GONE);
     }
 
     @Override
@@ -219,7 +225,7 @@ public class PaymentActivity extends AppCompatActivity implements AdvancedWebVie
     private class PaymentsBrowser extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            if (url.contains("https://payv2.kiki.lk/susilawebpay/thanks/redirecthome")) {
+            if (url.contains("/redirecthome")) {
                 Intent intent = new Intent(PaymentActivity.this, VideoDashboardActivity.class);
                 startActivity(intent);
                 finish();

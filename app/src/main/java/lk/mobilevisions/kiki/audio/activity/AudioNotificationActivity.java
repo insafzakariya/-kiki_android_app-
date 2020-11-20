@@ -161,9 +161,9 @@ public class AudioNotificationActivity extends AppCompatActivity implements Noti
     public void onNotificationItemClick(final View view, final Notification notification, final int position) {
         new MaterialDialog.Builder(AudioNotificationActivity.this)
                 .title(getString(R.string.app_name))
-                .content("Are you sure you want to delete it?")
-                .positiveText("Yes")
-                .negativeText("No")
+                .content(R.string.delete_notification)
+                .positiveText(R.string.yes)
+                .negativeText(R.string.no)
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
