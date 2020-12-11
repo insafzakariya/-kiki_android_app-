@@ -41,6 +41,7 @@ import lk.mobilevisions.kiki.audio.adapter.LatestSongsVerticalAdapter;
 import lk.mobilevisions.kiki.audio.adapter.PlaylistVerticalAdapter;
 import lk.mobilevisions.kiki.audio.adapter.PopularSongsVerticalAdapter;
 import lk.mobilevisions.kiki.audio.adapter.RadioChannelVerticalAdapter;
+import lk.mobilevisions.kiki.audio.adapter.RadioDramaVerticalAdapter;
 import lk.mobilevisions.kiki.audio.adapter.RecentlyPlayedVerticalAdapter;
 import lk.mobilevisions.kiki.audio.adapter.YouAlsoMightLikeVerticalAdapter;
 import lk.mobilevisions.kiki.audio.event.SearchNavigationEvent;
@@ -56,7 +57,10 @@ import lk.mobilevisions.kiki.modules.api.dto.PackageV2;
 import lk.mobilevisions.kiki.modules.subscriptions.SubscriptionsManager;
 import lk.mobilevisions.kiki.modules.tv.TvManager;
 
-public class AudioHomeFragment extends Fragment implements DailyMixAdapter.DailyMixItemActionListener, GenreArtistVerticalAdapter.OnArtistsItemActionListener, PlaylistVerticalAdapter.OnPlaylistItemActionListener {
+public class AudioHomeFragment extends Fragment implements DailyMixAdapter.DailyMixItemActionListener,
+        GenreArtistVerticalAdapter.OnArtistsItemActionListener,
+        PlaylistVerticalAdapter.OnPlaylistItemActionListener,
+        RadioDramaVerticalAdapter.OnRadioDramaItemActionListener {
 
     @Inject
     TvManager tvManager;
@@ -73,6 +77,7 @@ public class AudioHomeFragment extends Fragment implements DailyMixAdapter.Daily
     List<Song> latestSongsArrayList = new ArrayList<>();
     List<Song> radioChannelsArrayList = new ArrayList<>();
     List<Artist> artistsArrayList = new ArrayList<>();
+    List<PlayList> radioDramaArrayList = new ArrayList<>();
     @Inject
     SubscriptionsManager subscriptionsManager;
     DailyMixAdapter dailyMixAdapter;
@@ -83,6 +88,7 @@ public class AudioHomeFragment extends Fragment implements DailyMixAdapter.Daily
     RadioChannelVerticalAdapter radioChannelVerticalAdapter;
     GenreArtistVerticalAdapter artistsVerticalAdapter;
     PlaylistVerticalAdapter playlistVerticalAdapter;
+    RadioDramaVerticalAdapter radioDramaVerticalAdapter;
     private DailyMixAdapter.DailyMixItemActionListener dailyMixItemActionListener;
     private RecentlyPlayedVerticalAdapter.RecentlyPlayedItemActionListener recentlyPlayedItemActionListener;
     private YouAlsoMightLikeVerticalAdapter.OnYouMightAlsoLikeItemActionListener youMightAlsoLikeItemActionListener;
@@ -123,6 +129,7 @@ public class AudioHomeFragment extends Fragment implements DailyMixAdapter.Daily
         setupLatestSongs();
         setupRadioChannel();
         setupArtists();
+        setupRadioDramas();
         setDataToDailyMix();
 //        setDataToRecentlyPlayed();
 //        setDataToYouAlsoMightLike();
@@ -130,7 +137,7 @@ public class AudioHomeFragment extends Fragment implements DailyMixAdapter.Daily
         setDataToLatestSongs();
         setDataToRadioChannel();
         setDataToArtists();
-
+        setDataRadioDrama();
 
         Application.BUS.register(this);
 
@@ -200,7 +207,17 @@ public class AudioHomeFragment extends Fragment implements DailyMixAdapter.Daily
                         .commit();
             }
         });
+        binding.seeAllRadioDrama.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RadioDramaFragment radioDramaFragment = new RadioDramaFragment();
 
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.frame_container_radio_dramas, radioDramaFragment, "Latest Playlist")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
 
         recentlyPlayedVerticalAdapter = RecentlyPlayedVerticalAdapter.getInstance(context);
         recentlyPlayedVerticalAdapter.setActionListener(recentlyPlayedItemActionListener);
@@ -371,6 +388,13 @@ public class AudioHomeFragment extends Fragment implements DailyMixAdapter.Daily
 
     }
 
+    private void setupRadioDramas() {
+        binding.radioDramaRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        binding.radioDramaRecyclerview.addItemDecoration(new SpacesItemDecoration(15));
+        binding.radioDramaRecyclerview.setHasFixedSize(true);
+        binding.radioDramaRecyclerview.setNestedScrollingEnabled(false);
+    }
+
     private void setDataToDailyMix() {
         tvManager.getDailyMixNew(0,10,new APIListener<List<PlayList>>() {
             @Override
@@ -383,6 +407,33 @@ public class AudioHomeFragment extends Fragment implements DailyMixAdapter.Daily
                     playlistArrayList = result;
                     playlistVerticalAdapter = new PlaylistVerticalAdapter(getActivity(), playlistArrayList,AudioHomeFragment.this);
                     binding.dailyMixRecyclerview.setAdapter(playlistVerticalAdapter);
+                }
+                binding.aviProgress.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
+
+            }
+        });
+
+
+    }
+
+    private void setDataRadioDrama() {
+        tvManager.getRadioDramas(0,10,new APIListener<List<PlayList>>() {
+            @Override
+            public void onSuccess(List<PlayList> result, List<Object> params) {
+                System.out.println("gdgdfdfgdf " + result.size());
+                if (result.size() == 0) {
+                    binding.radioDramaLayout.setVisibility(View.GONE);
+
+                } else {
+                    binding.radioDramaLayout.setVisibility(View.VISIBLE);
+                    radioDramaArrayList = result;
+                    radioDramaVerticalAdapter = new RadioDramaVerticalAdapter(getActivity(), radioDramaArrayList,AudioHomeFragment.this);
+                    binding.radioDramaRecyclerview.setAdapter(radioDramaVerticalAdapter);
                 }
                 binding.aviProgress.setVisibility(View.GONE);
             }
@@ -836,4 +887,22 @@ public class AudioHomeFragment extends Fragment implements DailyMixAdapter.Daily
 
 
     }
+
+    @Override
+    public void onRadioDramaAction(PlayList playList, int position, List<PlayList> playLists) {
+        Bundle bundle=new Bundle();
+        bundle.putInt("playlistID", playList.getId());
+        System.out.println("dbfjdbfd 1111111 " + playList.getId());
+        bundle.putString("playlistName", playList.getName());
+        bundle.putString("songCount", playList.getSongCount());
+        bundle.putString("playlistImage", playList.getImage());
+        bundle.putString("playlistYear", playList.getDate());
+
+        PlaylistDetailFragment playlistDetailFragment = new PlaylistDetailFragment();
+        playlistDetailFragment.setArguments(bundle);
+        getFragmentManager().beginTransaction()
+                .replace(R.id.frame_container_home_radio_dramas, playlistDetailFragment, "Home to PlaylistDetail")
+                .addToBackStack(null)
+                .commit();
     }
+}

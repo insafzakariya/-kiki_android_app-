@@ -1379,6 +1379,51 @@ public class TvManager {
         });
     }
 
+    public void getRadioDramas(int offset, int limit,final APIListener<List<PlayList>> listener) {
+        api.getRadioDramasData(Utils.Auth.getBasicAuthToken(application), Utils.Auth.getBearerToken(application), offset, limit, true).enqueue(new Callback<List<PlayList>>() {
+            @Override
+            public void onResponse(Call<List<PlayList>> call, Response<List<PlayList>> response) {
+
+                System.out.println("checking getAllAudioChannels 3333  " + response.code());
+
+                switch (response.code()) {
+                    case 200:
+                        if (response.body() != null) {
+                            listener.onSuccess(response.body(), null);
+                        } else {
+                            listener.onFailure(new InvalidResponseException());
+                        }
+                        break;
+                    case 401:
+                        try {
+                            listener.onFailure(Utils.Error.
+                                    getServerError(application, response,
+                                            AuthenticationFailedWithAccessTokenException.class));
+                        } catch (ErrorResponseException e) {
+                            listener.onFailure(e);
+                        }
+                        break;
+                    case 400:
+                        try {
+                            listener.onFailure(Utils.Error.
+                                    getServerError(application, response,
+                                            ApplicationException.class));
+                        } catch (ErrorResponseException e) {
+                            listener.onFailure(e);
+                        }
+                        break;
+                    default:
+                        listener.onFailure(new RemoteServerException());
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<PlayList>> call, Throwable t) {
+
+            }
+        });
+    }
 
     public void getAudioRecentlyPlayed(final APIListener<List<Song>> listener) {
 

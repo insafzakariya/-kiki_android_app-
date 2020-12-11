@@ -342,7 +342,7 @@ public class PlaylistCreationFragment extends Fragment implements PlaylistCreati
             @Override
             public void onSuccess(Void result, List<Object> params) {
                 songIdList.size();
-                Toast.makeText(getActivity(), "Your playlist edited successfully.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getResources().getString(R.string.playlist_edited), Toast.LENGTH_SHORT).show();
                 AudioDashboardActivity hhh = (AudioDashboardActivity) getActivity();
                 hhh.onBackPressed();
 

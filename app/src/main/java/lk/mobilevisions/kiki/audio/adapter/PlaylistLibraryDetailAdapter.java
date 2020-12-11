@@ -61,9 +61,10 @@ public class PlaylistLibraryDetailAdapter extends
     private void initLayoutOne(final PlaylistLibraryViewHolder holder, int pos) {
         final Song current = mArrayList.get(pos);
         holder.songTitleTextview.setText(current.getName());
-
         holder.artistTextView.setText(current.getArtistName());
-        holder.songDuration.setText(NavigationUtils.convertMinutesToFormat(current.getDuration()));
+
+        int duration = Integer.parseInt(current.getDuration());
+        holder.songDuration.setText(timeConversion(duration));
 
         try {
             Picasso.with(mContext).load(URLDecoder.decode(current.getImage(), "UTF-8")).fit().centerCrop()
@@ -79,6 +80,19 @@ public class PlaylistLibraryDetailAdapter extends
                         holder.getAdapterPosition(),mArrayList);
             }
         });
+    }
+
+    private static String timeConversion(int totalSeconds) {
+
+        int hr = totalSeconds/3600;
+        int rem = totalSeconds%3600;
+        int mn = rem/60;
+        int sec = rem%60;
+        String hrStr = (hr<10 ? "0" : "")+hr;
+        String mnStr = (mn<10 ? "0" : "")+mn;
+        String secStr = (sec<10 ? "0" : "")+sec;
+
+        return mnStr + " : " + secStr;
     }
 
     @Override

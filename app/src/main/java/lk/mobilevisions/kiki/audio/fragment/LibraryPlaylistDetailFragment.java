@@ -61,15 +61,15 @@ public class LibraryPlaylistDetailFragment extends Fragment implements LibraryPl
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_library_playlist_detail, container, false);
         ((Application) getActivity().getApplication()).getInjector().inject(this);
 
-        binding.playAllSongs.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                AudioDashboardActivity hhh = (AudioDashboardActivity) getActivity();
-                hhh.genreSongFragmentSongClickedEvent(song , 0,playlistSongsList);
-
-            }
-        });
+//        binding.playAllSongs.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                AudioDashboardActivity hhh = (AudioDashboardActivity) getActivity();
+//                hhh.genreSongFragmentSongClickedEvent(song , 0,playlistSongsList);
+//
+//            }
+//        });
 
         binding.addAllSongs.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -195,6 +195,8 @@
     <string name="add_songs">Add Songs</string>
     <string name="audio_removed">Removed</string>
     <string name="playlist_created">Your playlist created</string>
+    <string name="playlist_edited">Your playlist edited successfully.</string>
+    <string name="radio_drama">Radio Dramas</string>
 
     <string name="play_2">Play</string>
     <string name="play_random">Play Random</string>

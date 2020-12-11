@@ -85,6 +85,71 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
+                    android:id="@+id/radio_drama_layout"
+                    android:padding="@dimen/_1sdp"
+                    android:layout_below="@+id/daily_mix_layout"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?android:selectableItemBackground"
+                        android:orientation="vertical"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:visibility="visible"
+                        android:paddingBottom="1dp"
+                        android:paddingRight="5dp"
+                        android:paddingLeft="5dp">
+
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="16dp"
+                            >
+
+                            <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+                                android:id="@+id/rd_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentTop="true"
+                                android:layout_gravity="center_vertical"
+                                android:text="@string/radio_drama"
+                                android:textColor="@color/text_color"
+                                android:textSize="@dimen/_15sdp" />
+
+                            <TextView
+                                android:id="@+id/seeAllRadioDrama"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center_vertical"
+                                android:background="@drawable/viewall_background"
+                                android:text="@string/view_all"
+                                android:textColor="@color/see_all"
+                                android:textSize="@dimen/_8sdp" />
+
+                        </RelativeLayout>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/radio_drama_recyclerview"
+                            android:layout_width="match_parent"
+                            android:layout_height="190dp"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_gravity="center_vertical"
+                            android:orientation="horizontal" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:id="@+id/recently_played_layout"
                     android:layout_below="@+id/daily_mix_layout"
                     android:visibility="gone"
@@ -576,6 +641,19 @@
         </FrameLayout>
 
         <FrameLayout
+            android:id="@+id/frame_container_radio_dramas"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="visible">
+
+        </FrameLayout>
+
+
+        <FrameLayout
             android:id="@+id/frame_container_artist_detail_playlist"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -598,6 +676,19 @@
             android:visibility="visible">
 
         </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/frame_container_home_radio_dramas"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="visible">
+
+        </FrameLayout>
+
 
         <FrameLayout
             android:id="@+id/frame_container_search_toSeeAllSongs"

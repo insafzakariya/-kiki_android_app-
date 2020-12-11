@@ -168,11 +168,14 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
 
         if (programType != null) {
             if (programType.equals("0")) {
-
+                System.out.println("dhdhdhd 0000 ");
                 tvManager.getProgramWithID(programid, new APIListener<Program>() {
                     @Override
                     public void onSuccess(Program program, List<Object> params) {
 
+                        System.out.println("dhdhdhd 1111 ");
+
+                        System.out.println("dhdhdhd " + program);
                         Intent intentEpisodes = new Intent(getActivity(), VideoEpisodeActivity.class);
                         intentEpisodes.putExtra("program", program);
                         startActivity(intentEpisodes);
@@ -189,6 +192,7 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
 
                     @Override
                     public void onFailure(Throwable t) {
+                        System.out.println("dhdhdhd 2222 ");
                         Utils.Error.onServiceCallFail(getActivity(), t);
                     }
                 });

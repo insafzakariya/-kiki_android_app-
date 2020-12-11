@@ -1,21 +1,21 @@
 apply plugin: 'com.android.application'
 
-repositories {
-    maven { url 'https://maven.fabric.io/public' }
-}
+//repositories {
+//    maven { url 'https://maven.fabric.io/public' }
+//}
 
-apply plugin: 'io.fabric'
+apply plugin: 'com.google.firebase.crashlytics'
 
 buildscript {
     dependencies {
-        classpath 'io.fabric.tools:gradle:1.+'
+//        classpath 'io.fabric.tools:gradle:1.+'
     }
 
     repositories {
         mavenCentral()
         jcenter()
         google()
-        maven { url 'https://maven.fabric.io/public' }
+//        maven { url 'https://maven.fabric.io/public' }
 
     }
 }
@@ -29,8 +29,8 @@ android {
         applicationId "lk.mobilevisions.kiki"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 193
-        versionName "1.0.193"
+        versionCode 200
+        versionName "1.0.200"
         vectorDrawables.useSupportLibrary = true
         renderscriptTargetApi 20
         renderscriptSupportModeEnabled true
@@ -89,9 +89,9 @@ android {
     productFlavors {
 
         production {
-            buildConfigField "Integer", "MAIN_SERVER_API_VERSION", "2"
+            buildConfigField "Integer", "MAIN_SERVER_API_VERSION", "3"
             buildConfigField "String", "MAIN_SERVER_API_NAME", "\"MAIN_SERVER_API_V_\""
-            buildConfigField "String", "MOBILE_PAYMENT_GATEWAY_NAME", "\"MOBILE_PAYMENT_GATEWAY_URL_V2\""
+            buildConfigField "String", "MOBILE_PAYMENT_GATEWAY_NAME", "\"MOBILE_PAYMENT_GATEWAY_URL_V3\""
             buildConfigField "String", "ALL_USERS_TOPIC_NAME", "\"AllUsers\""
         }
 
@@ -191,7 +191,7 @@ dependencies {
     implementation 'de.Maxr1998:track-selector-lib:1.2'
     implementation 'org.cryse.widget:persistentsearchview:1.0.4@aar'
     implementation 'com.ms-square:expandableTextView:0.1.4'
-    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
+    implementation 'com.google.firebase:firebase-crashlytics:17.1.0'
     implementation 'com.github.ybq:Android-SpinKit:1.2.0'
     implementation 'com.github.ybq:Endless-RecyclerView:1.0.3'
     implementation 'androidx.annotation:annotation:1.1.0'
@@ -204,8 +204,9 @@ dependencies {
     implementation "com.microsoft.appcenter:appcenter-analytics:${appCenterSdkVersion}"
     implementation "com.microsoft.appcenter:appcenter-crashes:${appCenterSdkVersion}"
 
+    implementation 'com.google.firebase:firebase-analytics:16.0.6'
     implementation 'com.google.firebase:firebase-config:16.1.0'
-    implementation 'com.google.firebase:firebase-messaging:20.1.2'
+    implementation 'com.google.firebase:firebase-messaging:20.1.5'
     implementation 'com.google.firebase:firebase-core:16.0.6'
     implementation 'com.google.firebase:firebase-dynamic-links:19.1.1'
 

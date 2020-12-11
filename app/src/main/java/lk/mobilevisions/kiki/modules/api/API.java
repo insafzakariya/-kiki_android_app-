@@ -513,6 +513,13 @@ public interface API {
                                            @Query("g") boolean globle);
 
     @GET("audio/playlist")
+    Call<List<PlayList>> getRadioDramasData(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
+                                           @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
+                                           @Query("offset") int offset,
+                                           @Query("limit") int limit,
+                                           @Query("rd") boolean rd);
+
+    @GET("audio/playlist")
     Call<List<PlayList>> getAllPlaylist(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
                                         @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
                                         @Query("offset") int offset,

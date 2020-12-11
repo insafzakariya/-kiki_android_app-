@@ -205,7 +205,7 @@ public class LibraryHomePlaylistDetailFragment extends Fragment implements Playl
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
                     }
-                    System.out.println("sgsfgdfg " + updatedImage);
+
                 }
 
 

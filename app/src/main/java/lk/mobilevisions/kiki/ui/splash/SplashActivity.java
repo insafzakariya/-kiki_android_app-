@@ -1,8 +1,11 @@
 package lk.mobilevisions.kiki.ui.splash;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import androidx.databinding.DataBindingUtil;
 
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -36,6 +39,7 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import com.microsoft.applicationinsights.library.TelemetryClient;
 import com.uxcam.UXCam;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.Timer;
@@ -86,7 +90,9 @@ public class SplashActivity extends AppCompatActivity {
     String contentType;
     String contentId;
     Bundle bundle;
-
+    private FirebaseRemoteConfig mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+    private HashMap<String, Object> firebaseDefaultMap;
+    public static final String DYNAMIC_ICON_CHANGE = "apple_app_image";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,6 +165,60 @@ public class SplashActivity extends AppCompatActivity {
 //            startActivity(intent);
 //            finish();
 //        }
+
+//        firebaseDefaultMap = new HashMap<>();
+//        firebaseDefaultMap.put(DYNAMIC_ICON_CHANGE);
+//        mFirebaseRemoteConfig.setDefaults(firebaseDefaultMap);
+
+        mFirebaseRemoteConfig.setConfigSettings(
+                new FirebaseRemoteConfigSettings.Builder().setDeveloperModeEnabled(BuildConfig.DEBUG)
+                        .build());
+
+        //Fetching the values here
+        mFirebaseRemoteConfig.fetch().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    mFirebaseRemoteConfig.activateFetched();
+                    String iconChange = (String) mFirebaseRemoteConfig.getString(DYNAMIC_ICON_CHANGE);
+
+                    if (iconChange.contains("XMAS")){
+                        changeAppIconDynamically(SplashActivity.this, true);
+                    } else {
+                        changeAppIconDynamically(SplashActivity.this, false);
+                    }
+                }
+            }
+        });
+    }
+
+    public static void changeAppIconDynamically(Context context, boolean isNewIcon) {
+        PackageManager pm = context.getApplicationContext().getPackageManager();
+        if (isNewIcon) {
+            pm.setComponentEnabledSetting(
+                    new ComponentName(context,
+                            "lk.mobilevisions.kiki.MainActivityIcon"), //com.example.dummy will be your package
+                    PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                    PackageManager.DONT_KILL_APP);
+
+            pm.setComponentEnabledSetting(
+                    new ComponentName(context,
+                            "lk.mobilevisions.kiki.MainActivityIconX"),
+                    PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                    PackageManager.DONT_KILL_APP);
+        } else {
+            pm.setComponentEnabledSetting(
+                    new ComponentName(context,
+                            "lk.mobilevisions.kiki.MainActivityIcon"),
+                    PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                    PackageManager.DONT_KILL_APP);
+
+            pm.setComponentEnabledSetting(
+                    new ComponentName(context,
+                            "lk.mobilevisions.kiki.MainActivityIconX"),
+                    PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                    PackageManager.DONT_KILL_APP);
+        }
     }
 
     private void checkForDynamicLinks() {

@@ -7,7 +7,7 @@ import android.content.Context;
 
 import androidx.appcompat.app.AppCompatDelegate;
 
-import com.crashlytics.android.Crashlytics;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import io.fabric.sdk.android.Fabric;
+//import io.fabric.sdk.android.Fabric;
 
 import lk.mobilevisions.kiki.BuildConfig;
 import lk.mobilevisions.kiki.audio.model.dto.Song;
@@ -109,11 +109,11 @@ public class Application extends android.app.Application {
         StreamSharedPref.getInstance(this).resetStreamInfo();
         StreamSharedPref.getInstance(this).setStreamUrlFetchedStatus(false);
 
-        final Fabric fabric = new Fabric.Builder(this)
-                .kits(new Crashlytics())
-                .debuggable(true)  // Enables Crashlytics debugger
-                .build();
-        Fabric.with(this, new Crashlytics());
+//        final Fabric fabric = new Fabric.Builder(this)
+//                .kits(new Crashlytics())
+//                .debuggable(true)  // Enables Crashlytics debugger
+//                .build();
+//        Fabric.with(this, new Crashlytics());
         initImageLoader(getApplicationContext());
 
         mixpanel = MixpanelAPI.getInstance(this, MIXPANEL_TOKEN);
@@ -242,7 +242,7 @@ public class Application extends android.app.Application {
                     .build();
             return response.newBuilder()
                     .headers(strippedHeaders)
-                    .body(new RealResponseBody(strippedHeaders, Okio.buffer(responseBody)))
+//                    .body(new RealResponseBody(strippedHeaders, Okio.buffer(responseBody)))
                     .build();
         }
     }

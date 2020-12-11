@@ -126,5 +126,7 @@
     <string name="delete_notification">இதை நீக்க விரும்புகிறீர்களா?</string>
     <string name="audio_removed">நீக்கப்பட்டது</string>
     <string name="playlist_created">உங்கள் பாடல்வரிசை உருவாக்கப்பட்டது</string>
+    <string name="playlist_edited">உங்கள் பாடல்வரிசை திருத்தப்பட்டது.</string>
+    <string name="radio_drama">வானொலி நாடகங்கள்</string>
 
 </resources>

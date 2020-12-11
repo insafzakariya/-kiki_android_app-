@@ -115,17 +115,6 @@
                 android:layout_marginTop="@dimen/_3sdp"
                 android:layout_marginBottom="@dimen/_2sdp">
 
-                <TextView
-                    android:id="@+id/playAllSongs"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/_17sdp"
-                    android:background="@drawable/viewall_background"
-                    android:text="Play "
-                    android:drawableStart="@drawable/player_play"
-                    android:gravity="center"
-                    android:textColor="@color/see_all"
-                    android:textSize="@dimen/_10sdp"
-                    android:layout_marginEnd="@dimen/_3sdp"/>
 
                 <TextView
                     android:id="@+id/addAllSongs"
@@ -137,8 +126,7 @@
                     android:gravity="center"
                     android:drawablePadding="@dimen/_5sdp"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/_10sdp"
-                    android:layout_marginStart="@dimen/_3sdp"/>
+                    android:textSize="@dimen/_10sdp" />
 
 
             </LinearLayout>

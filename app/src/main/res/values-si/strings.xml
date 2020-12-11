@@ -127,5 +127,7 @@
     <string name="delete_notification">ඔබට මෙය ඉවත් කිරීමට අවශ්යද?</string>
     <string name="audio_removed">ඉවත් කරන ලදී</string>
     <string name="playlist_created">ඔබෙ ගීත එකතුව සකසන ලදී</string>
+    <string name="playlist_edited">ගීත එකතුව සාර්තකව සංස්කරණය කරන ලදී.</string>
+    <string name="radio_drama">ගුවන්විදුලි නාට්‍ය</string>
 
 </resources>

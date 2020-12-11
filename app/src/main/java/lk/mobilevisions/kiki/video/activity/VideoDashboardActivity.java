@@ -176,6 +176,7 @@ public class VideoDashboardActivity extends BaseActivity {
                 Intent intentPackages = new Intent(VideoDashboardActivity.this, VideoSettingsActivity.class);
                 startActivity(intentPackages);
                 binding.drawerLayout.closeDrawer(GravityCompat.START);
+
             }
         });
 
