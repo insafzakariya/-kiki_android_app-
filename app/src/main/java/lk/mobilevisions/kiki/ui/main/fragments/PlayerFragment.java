@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -127,10 +128,13 @@ public class PlayerFragment extends Fragment implements SurfaceHolder.Callback, 
     private Handler adHandler;
     private Runnable adThread;
     private List<Content> adContents;
+    private GestureDetector leftGesture;
+    private GestureDetector rightGesture;
 
 
     FragmentPlayerBinding binding;
-
+    private int forwardSecCount =0;
+    private int reverseSecCount =0;
 
     private BroadcastReceiver phoneStateReceiver = new BroadcastReceiver() {
         @Override
@@ -242,28 +246,28 @@ public class PlayerFragment extends Fragment implements SurfaceHolder.Callback, 
         audioCapabilitiesReceiver = new AudioCapabilitiesReceiver(getActivity(), this);
         audioCapabilitiesReceiver.register();
 
-        binding.getRoot().setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    toggleControlsVisibility();
-
-                } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    view.performClick();
-                }
-                return true;
-            }
-        });
-        binding.getRoot().setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK || keyCode == KeyEvent.KEYCODE_ESCAPE
-                        || keyCode == KeyEvent.KEYCODE_MENU) {
-                    return false;
-                }
-                return mediaController.dispatchKeyEvent(event) && playerTitleView.dispatchKeyEvent(event);
-            }
-        });
+//        binding.getRoot().setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+//                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+//                    toggleControlsVisibility();
+//
+//                } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+//                    view.performClick();
+//                }
+//                return true;
+//            }
+//        });
+//        binding.getRoot().setOnKeyListener(new View.OnKeyListener() {
+//            @Override
+//            public boolean onKey(View v, int keyCode, KeyEvent event) {
+//                if (keyCode == KeyEvent.KEYCODE_BACK || keyCode == KeyEvent.KEYCODE_ESCAPE
+//                        || keyCode == KeyEvent.KEYCODE_MENU) {
+//                    return false;
+//                }
+//                return mediaController.dispatchKeyEvent(event) && playerTitleView.dispatchKeyEvent(event);
+//            }
+//        });
 
         binding.layoutProgressVideo.setAlpha(0.5f);
 
@@ -288,6 +292,130 @@ public class PlayerFragment extends Fragment implements SurfaceHolder.Callback, 
 
         ((Application) getContext().getApplicationContext()).PLAYER.setSubtitles((int) Utils.App.getConfig((Application) getActivity().getApplicationContext())
                 .getDefaultSubtitle());
+
+        leftGesture = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener(){
+
+
+            //here is the method for double tap
+
+
+            @Override
+            public boolean onDoubleTap(MotionEvent e) {
+                System.out.println("djdjdhshjsjsjsjsnbd 222222");
+                //your action here for double tap e.g.
+                //Log.d("OnDoubleTapListener", "onDoubleTap");
+                reverseSecCount = Application.getInstance().getFastRewindValue()+10;
+
+                binding.fastRewindImageview.setVisibility(View.VISIBLE);
+                binding.fastRewindImageview.animate().alpha(1.0f);
+                binding.fastRewindImageview.postDelayed(new Runnable() {
+                    public void run() {
+                        binding.fastRewindImageview.setVisibility(View.GONE);
+                        binding.fastRewindImageview.animate().alpha(0.0f);
+                    }
+                }, 1000);
+
+                Application.getInstance().setFastRewindValue(reverseSecCount);
+                mediaController.doFastRewind(Application.getInstance().getFastRewindValue());
+                reverseSecCount =0;
+                return true;
+            }
+
+            @Override
+            public void onLongPress(MotionEvent e) {
+                super.onLongPress(e);
+
+            }
+
+            @Override
+            public boolean onDoubleTapEvent(MotionEvent e) {
+                return true;
+            }
+
+            @Override
+            public boolean onDown(MotionEvent e) {
+                System.out.println("djdjdhshjsjsjsjsnbd 33333");
+                if (e.getAction() == MotionEvent.ACTION_DOWN) {
+                    System.out.println("djdjdhshjsjsjsjsnbd 44444");
+                    toggleControlsVisibility();
+
+                } else if (e.getAction() == MotionEvent.ACTION_UP) {
+                }
+                return true;
+            }
+
+
+        });
+
+        rightGesture = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener(){
+            //here is the method for double tap
+            @Override
+            public boolean onDoubleTap(MotionEvent e) {
+                System.out.println("djdjdhshjsjsjsjsnbd 111111");
+                forwardSecCount = Application.getInstance().getFastForwarValue() +10;
+
+                binding.fastForwardImageview.setVisibility(View.VISIBLE);
+                binding.fastForwardImageview.animate().alpha(1.0f);
+                binding.fastForwardImageview.postDelayed(new Runnable() {
+                    public void run() {
+                        binding.fastForwardImageview.setVisibility(View.GONE);
+                        binding.fastForwardImageview.animate().alpha(0.0f);
+                    }
+                }, 1500);
+
+                Application.getInstance().setFastForwardValue(forwardSecCount);
+                mediaController.doFastForward(Application.getInstance().getFastForwarValue());
+                forwardSecCount = 0;
+
+                //your action here for double tap e.g.
+                //Log.d("OnDoubleTapListener", "onDoubleTap");
+
+                return true;
+            }
+
+            @Override
+            public void onLongPress(MotionEvent e) {
+                super.onLongPress(e);
+
+            }
+
+            @Override
+            public boolean onDoubleTapEvent(MotionEvent e) {
+                return true;
+            }
+
+            @Override
+            public boolean onDown(MotionEvent e) {
+                if (e.getAction() == MotionEvent.ACTION_DOWN) {
+                    System.out.println("djdjdhshjsjsjsjsnbd 5555555");
+                    toggleControlsVisibility();
+
+                } else if (e.getAction() == MotionEvent.ACTION_UP) {
+                    System.out.println("djdjdhshjsjsjsjsnbd 6666666");
+                }
+                return true;
+            }
+
+
+        });
+
+        binding.leftLayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                return leftGesture.onTouchEvent(event);
+            }
+        });
+
+        binding.rightLayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                return rightGesture.onTouchEvent(event);
+            }
+        });
+
+
 
         return binding.getRoot();
 

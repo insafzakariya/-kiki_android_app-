@@ -30,6 +30,9 @@ import java.util.Formatter;
 import java.util.Locale;
 
 import lk.mobilevisions.kiki.R;
+import lk.mobilevisions.kiki.app.Application;
+import lk.mobilevisions.kiki.app.Constants;
+import lk.mobilevisions.kiki.app.GlobalPlayer;
 
 public class MediaControllerView extends FrameLayout {
     private static final String TAG = "VideoControllerView";
@@ -39,7 +42,7 @@ public class MediaControllerView extends FrameLayout {
     private ViewGroup mAnchor;
     private View mRoot;
     private ProgressBar mProgress;
-    private TextView mEndTime, mCurrentTime,imageButtonMoreOptions;
+    private TextView mEndTime, mCurrentTime, imageButtonMoreOptions;
     private boolean mShowing;
     private boolean mDragging;
     private static final int sDefaultTimeout = 8000;
@@ -81,7 +84,7 @@ public class MediaControllerView extends FrameLayout {
         Log.i(TAG, TAG);
     }
 
-    public MediaControllerView(Context context, MediaControllerListener listener, MediaControllerListener playerListener){
+    public MediaControllerView(Context context, MediaControllerListener listener, MediaControllerListener playerListener) {
         this(context, true);
         this.mediaControllerListener = listener;
         this.playerControllerListener = playerListener;
@@ -107,7 +110,7 @@ public class MediaControllerView extends FrameLayout {
 
     }
 
-    public void setContentURI(Uri contentURI){
+    public void setContentURI(Uri contentURI) {
         this.contentURI = contentURI;
     }
 
@@ -150,11 +153,10 @@ public class MediaControllerView extends FrameLayout {
     private void initControllerView(View v) {
 
 
-
         mediaControllerRoot = (LinearLayout) v.findViewById(R.id.mediaControllerRoot);
-        if(enableFullScreen){
+        if (enableFullScreen) {
 //            textViewTitle.setVisibility(VISIBLE);
-        }else{
+        } else {
         }
 
         mPauseButton = (ImageView) v.findViewById(R.id.pause);
@@ -173,7 +175,7 @@ public class MediaControllerView extends FrameLayout {
         }
 
         imageButtonCC = (ImageButton) v.findViewById(R.id.buttonSubtitles);
-        if(imageButtonCC != null){
+        if (imageButtonCC != null) {
             imageButtonCC.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -184,7 +186,7 @@ public class MediaControllerView extends FrameLayout {
         }
 
         imageButtonMoreOptions = (TextView) v.findViewById(R.id.textViewResolution);
-        if(imageButtonMoreOptions != null){
+        if (imageButtonMoreOptions != null) {
             imageButtonMoreOptions.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -276,27 +278,28 @@ public class MediaControllerView extends FrameLayout {
     /**
      * Remove the controller from the screen.
      */
-    public String getCurrentVideoStreamingPosition(){
+    public String getCurrentVideoStreamingPosition() {
         int position = mPlayer.getCurrentPosition();
         return stringForTime(position);
     }
+
     public void hide() {
 
-            if (mAnchor == null) {
-                return;
-            }
+        if (mAnchor == null) {
+            return;
+        }
 
-            try {
-                mAnchor.removeView(this);
-                mHandler.removeMessages(SHOW_PROGRESS);
-            } catch (IllegalArgumentException ex) {
-                Log.w("MediaController", "already removed");
-            }
-            mShowing = false;
+        try {
+            mAnchor.removeView(this);
+            mHandler.removeMessages(SHOW_PROGRESS);
+        } catch (IllegalArgumentException ex) {
+            Log.w("MediaController", "already removed");
+        }
+        mShowing = false;
 
     }
 
-    public void setResolution(String resolution){
+    public void setResolution(String resolution) {
         imageButtonMoreOptions.setText(resolution);
     }
 
@@ -444,7 +447,7 @@ public class MediaControllerView extends FrameLayout {
         updatePausePlay();
     }
 
-    public void doPause(){
+    public void doPause() {
         System.out.println("dfhaeigiaegiuo 666 ");
         if (mPlayer == null) {
             System.out.println("dfhaeigiaegiuo 7777 ");
@@ -458,7 +461,55 @@ public class MediaControllerView extends FrameLayout {
         updatePausePlay();
     }
 
-    public void doStart(){
+    public void doFastForward(int sec) {
+        System.out.println("dfhaeigiaegiuo 666 ");
+        if (mPlayer == null) {
+            System.out.println("dfhaeigiaegiuo 7777 ");
+            return;
+        }
+        int milliSec = sec * 1000;
+        milliSec = (int) mPlayer.getCurrentPosition() + milliSec;
+        if (mPlayer.isPlaying()) {
+            System.out.println("dfhaeigiaegiuo 8888 ");
+            mPlayer.seekTo((int) milliSec);
+        }
+        mDragging = false;
+        setProgress();
+        updatePausePlay();
+        show(sDefaultTimeout);
+        System.out.println("djdjdjdjdj skks 3333 " );
+        // Ensure that progress is properly updated in the future,
+        // the call to show() does not guarantee this because it is a
+        // no-op if we are already showing.
+        mHandler.sendEmptyMessage(SHOW_PROGRESS);
+        Application.getInstance().setFastForwardValue(0);
+    }
+
+    public void doFastRewind(int sec) {
+        System.out.println("dfhaeigiaegiuo 666 ");
+        if (mPlayer == null) {
+            System.out.println("dfhaeigiaegiuo 7777 ");
+            return;
+        }
+        int milliSec = sec * 1000;
+        milliSec = mPlayer.getCurrentPosition() - milliSec;
+        if (mPlayer.isPlaying()) {
+            System.out.println("dfhaeigiaegiuo 8888 ");
+            mPlayer.seekTo((int) milliSec);
+        }
+        mDragging = false;
+        setProgress();
+        updatePausePlay();
+        show(sDefaultTimeout);
+        System.out.println("djdjdjdjdj skks 3333 " );
+        // Ensure that progress is properly updated in the future,
+        // the call to show() does not guarantee this because it is a
+        // no-op if we are already showing.
+        mHandler.sendEmptyMessage(SHOW_PROGRESS);
+        Application.getInstance().setFastRewindValue(0);
+    }
+
+    public void doStart() {
         if (mPlayer == null) {
             return;
         }
@@ -483,6 +534,7 @@ public class MediaControllerView extends FrameLayout {
     // we will simply apply the updated position without suspending regular updates.
     private OnSeekBarChangeListener mSeekListener = new OnSeekBarChangeListener() {
         public void onStartTrackingTouch(SeekBar bar) {
+            System.out.println("djdjdjdjdj skks 44444 " );
             show(3600000);
 
             mDragging = true;
@@ -507,9 +559,11 @@ public class MediaControllerView extends FrameLayout {
                 // the progress bar's position.
                 return;
             }
-
             long duration = mPlayer.getDuration();
             long newposition = (duration * progress) / 1000L;
+            System.out.println("djdjdjdjdj skks 0000 " + progress);
+            System.out.println("djdjdjdjdj skks 1111 " + duration);
+            System.out.println("djdjdjdjdj skks 2222 " + newposition);
             mPlayer.seekTo((int) newposition);
             if (mCurrentTime != null)
                 mCurrentTime.setText(stringForTime((int) newposition));
@@ -520,7 +574,7 @@ public class MediaControllerView extends FrameLayout {
             setProgress();
             updatePausePlay();
             show(sDefaultTimeout);
-
+            System.out.println("djdjdjdjdj skks 3333 " );
             // Ensure that progress is properly updated in the future,
             // the call to show() does not guarantee this because it is a
             // no-op if we are already showing.
@@ -539,8 +593,6 @@ public class MediaControllerView extends FrameLayout {
         disableUnsupportedButtons();
         super.setEnabled(enabled);
     }
-
-
 
 
     public interface MediaPlayerControl {
@@ -598,8 +650,6 @@ public class MediaControllerView extends FrameLayout {
             }
         }
     }
-
-
 
 
 }

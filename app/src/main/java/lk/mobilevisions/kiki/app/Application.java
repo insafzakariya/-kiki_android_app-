@@ -82,8 +82,10 @@ public class Application extends android.app.Application {
     private FirebaseAnalytics mFirebaseAnalytics;
     private MixpanelAPI mixpanel;
     private String sessionId;
-
+    private int fastForwardValue;
+    private int fastRewindValue;
     @Override
+
     public void onCreate() {
         super.onCreate();
 
@@ -142,6 +144,10 @@ public class Application extends android.app.Application {
         return null;
     }
 
+    public GlobalPlayer getPLAYER() {
+        return PLAYER;
+    }
+
     public FirebaseAnalytics getAnalytics() {
 
         if (mFirebaseAnalytics != null) {
@@ -150,38 +156,64 @@ public class Application extends android.app.Application {
         return null;
     }
 
-    public void addSessionId(String sessionId){
+
+
+    public void setFastForwardValue(int sec) {
+        this.fastForwardValue = sec;
+    }
+
+    public void setFastRewindValue(int sec) {
+        this.fastRewindValue = sec;
+    }
+
+    public void addSessionId(String sessionId) {
         this.sessionId = sessionId;
     }
 
-    public String getSessionId(){
+    public String getSessionId() {
         return sessionId;
     }
 
-    public void addSongToPlayList(Integer id){
+    public int getFastForwarValue() {
+        return fastForwardValue;
+    }
+
+    public int getFastRewindValue() {
+        return fastRewindValue;
+    }
+
+    public void addSongToPlayList(Integer id) {
         songsAddedToPlaylist.add(id);
     }
-    public void addPlayListId(Integer id){
+
+    public void addPlayListId(Integer id) {
         allSongsAddedPlaylistId.add(id);
     }
-    public void clearPlayList(){
+
+    public void clearPlayList() {
         songsAddedToPlaylist.clear();
     }
-    public void clearPlayListIds(){
+
+    public void clearPlayListIds() {
         allSongsAddedPlaylistId.clear();
     }
-    public void removeSongFromPlayList(Integer id){
+
+    public void removeSongFromPlayList(Integer id) {
         songsAddedToPlaylist.remove(id);
     }
-    public void removePlayListId(Integer id){
+
+    public void removePlayListId(Integer id) {
         allSongsAddedPlaylistId.remove(id);
     }
-    public List<Integer> getSongsAddedToPlaylist(){
+
+    public List<Integer> getSongsAddedToPlaylist() {
         return songsAddedToPlaylist;
     }
-    public List<Integer> getPlaylistIds(){
+
+    public List<Integer> getPlaylistIds() {
         return allSongsAddedPlaylistId;
     }
+
     public void initializeApp() {
 
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();

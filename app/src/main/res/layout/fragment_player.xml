@@ -64,6 +64,38 @@
                             app:indicatorColor="@color/colorWhite"/>
                     </RelativeLayout>
 
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:orientation="horizontal"
+                            android:layout_height="match_parent">
+
+                            <FrameLayout
+                                android:id="@+id/left_layout"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:animateLayoutChanges="true"
+                                android:layout_alignParentBottom="true">
+
+                            </FrameLayout>
+                            <FrameLayout
+                                android:id="@+id/right_layout"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:animateLayoutChanges="true"
+                                android:layout_alignParentTop="true">
+
+
+                            </FrameLayout>
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
 
                     <com.google.android.exoplayer.text.SubtitleLayout
                         android:id="@+id/subtitles"
@@ -97,6 +129,30 @@
                             android:visibility="gone">
 
                         </ImageView>
+
+                        <ImageView
+                            android:id="@+id/fast_forward_imageview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:animateLayoutChanges="true"
+                            android:src="@drawable/ic_fast_forward_player"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentTop="true"
+                            android:visibility="gone"
+                            android:layout_marginEnd="@dimen/_15sdp"/>
+
+                        <ImageView
+                            android:id="@+id/fast_rewind_imageview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:animateLayoutChanges="true"
+                            android:src="@drawable/ic_fast_rewind_player"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentTop="true"
+                            android:visibility="gone"
+                            android:layout_marginStart="@dimen/_15sdp"/>
 
                         <ImageView
                             android:layout_width="500dp"
@@ -216,6 +272,8 @@
                 android:layout_alignParentTop="true">
 
             </FrameLayout>
+
+
 
         </RelativeLayout>
 
