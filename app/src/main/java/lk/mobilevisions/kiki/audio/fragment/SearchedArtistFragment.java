@@ -26,6 +26,8 @@ import lk.mobilevisions.kiki.databinding.FragmentArtistListBinding;
 import lk.mobilevisions.kiki.modules.api.APIListener;
 import lk.mobilevisions.kiki.modules.tv.TvManager;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 public class SearchedArtistFragment extends Fragment implements ArtistListAdapter.OnArtistListItemActionListener {
     @Inject
     TvManager tvManager;
@@ -123,7 +125,7 @@ public class SearchedArtistFragment extends Fragment implements ArtistListAdapte
             @Override
             public void onSuccess(Void result, List<Object> params) {
 
-                Toast.makeText(getActivity(), "Added to library.", Toast.LENGTH_SHORT ).show();
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.added_to_library), Toast.LENGTH_SHORT).show();
             }
 
             @Override

@@ -2736,7 +2736,10 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
     public void onPlaylistDialogItemClick(PlayList playList, int position, List<PlayList> songs) {
 
         playlistId = playList.getId();
-        addSongToPlaylist(playlistId, songId);
+        Song currentSong = streamingManager.getCurrentAudio();
+        List<Integer> idList = new ArrayList<>();
+        idList.add(currentSong.getId());
+        addSongToPlaylist(playlistId, idList);
         alertDialog.dismiss();
 
     }

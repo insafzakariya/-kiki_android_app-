@@ -55,7 +55,7 @@ public class PaymentActivity extends AppCompatActivity implements AdvancedWebVie
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_payment);
         ((Application) getApplication()).getInjector().inject(this);
-        binding.includedToolbar.titleTextview.setText("Payments");
+        binding.includedToolbar.titleTextview.setText(getResources().getString(R.string.payments));
         binding.includedToolbar.backImageview.setBackgroundResource(R.drawable.ic_video_home_selected);
         binding.includedToolbar.backImageview.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,10 +87,6 @@ public class PaymentActivity extends AppCompatActivity implements AdvancedWebVie
             @Override
             public void onSuccess(final PackageToken packageToken, List<Object> params) {
 
-                subscriptionsManager.getActivatedPackage(new APIListener<Package>() {
-                    @Override
-                    public void onSuccess(Package thePackage, List<Object> params) {
-                        binding.aviProgress.setVisibility(View.GONE);
                         if (packageToken.getTokenHash() != null) {
                             Timber.d("Loading URL from the WebView: %s", Utils.App.getConfig(getApplication()).getMobilePaymentGatewayURL() + "?token=" + packageToken.getTokenHash());
                             binding.webViewPayment.addHttpHeader("X-Requested-With", "");
@@ -120,16 +116,6 @@ public class PaymentActivity extends AppCompatActivity implements AdvancedWebVie
 //
 //
 //                        }
-
-
-                    }
-
-                    @Override
-                    public void onFailure(Throwable t) {
-                        binding.aviProgress.setVisibility(View.GONE);
-                        Utils.Error.onServiceCallFail(PaymentActivity.this, t);
-                    }
-                });
             }
 
             @Override
@@ -139,18 +125,6 @@ public class PaymentActivity extends AppCompatActivity implements AdvancedWebVie
                 Utils.Error.onServiceCallFail(PaymentActivity.this, t);
             }
         });
-
-
-//
-//        String viewerToken = getIntent().getExtras().getString("viewerToken");
-//        if (viewerToken != null) {
-//            Timber.d("Loading URL from the WebView: %s", Utils.App.getConfig(getApplication()).getMobilePaymentGatewayURL() + "?viewerToken=" + viewerToken);
-//            binding.webViewPayment.addHttpHeader("X-Requested-With", "");
-//            binding.webViewPayment.loadUrl(Utils.App.getConfig(getApplication()).getMobilePaymentGatewayURL() + "?viewerToken=" + viewerToken);
-////            binding.webViewPayment.loadUrl("https://services.mobitel.lk/MCCPortal/service/?compId=SusilaTV&reqType=ACTIVE&servId=SUWS&bridgeID=SUWS");
-//            return;
-//        }
-
     }
 
     @Override

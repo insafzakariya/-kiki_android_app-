@@ -56,7 +56,7 @@ public class VideoTrialActivationActivity extends AppCompatActivity implements A
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.setStatusBarColor(ContextCompat.getColor(this, R.color.newUiBackground));
         }
-        binding.includedToolbar.titleTextview.setText("Payments");
+        binding.includedToolbar.titleTextview.setText(getResources().getString(R.string.payments));
 
         binding.includedToolbar.backImageview.setOnClickListener(new View.OnClickListener() {
             @Override

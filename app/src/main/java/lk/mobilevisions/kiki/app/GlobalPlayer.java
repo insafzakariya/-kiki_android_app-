@@ -156,9 +156,13 @@ public class GlobalPlayer {
 
     public boolean checkSubscription(){
 
-        Episode episode = episodes.get(currentVideo);
-        if(!episode.isTrailerOnly()){
-            return true;
+        int nextEp = currentVideo + 1;
+
+        if (nextEp < episodes.size()){
+            Episode episode = episodes.get(nextEp);
+            if(!episode.isTrailerOnly()){
+                return true;
+            }
         }
         return false;
     }
