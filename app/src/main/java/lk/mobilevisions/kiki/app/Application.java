@@ -30,6 +30,8 @@ import java.util.concurrent.TimeUnit;
 import lk.mobilevisions.kiki.BuildConfig;
 import lk.mobilevisions.kiki.audio.model.dto.Song;
 import lk.mobilevisions.kiki.audio.util.StreamSharedPref;
+import lk.mobilevisions.kiki.chat.ChatClientManager;
+import lk.mobilevisions.kiki.chat.module.ChatModule;
 import lk.mobilevisions.kiki.modules.analytics.AnalyticsModule;
 import lk.mobilevisions.kiki.modules.api.API;
 import lk.mobilevisions.kiki.modules.api.ComAPI;
@@ -84,6 +86,12 @@ public class Application extends android.app.Application {
     private String sessionId;
     private int fastForwardValue;
     private int fastRewindValue;
+    private ChatClientManager basicClient;
+
+
+    public ChatClientManager getChatClientManager() {
+        return this.basicClient;
+    }
     @Override
 
     public void onCreate() {
@@ -119,6 +127,9 @@ public class Application extends android.app.Application {
         initImageLoader(getApplicationContext());
 
         mixpanel = MixpanelAPI.getInstance(this, MIXPANEL_TOKEN);
+
+        Application.sInstance = this;
+        basicClient = new ChatClientManager(getApplicationContext(),getInstance());
     }
 
     public static Application getInstance() {
@@ -217,7 +228,7 @@ public class Application extends android.app.Application {
     public void initializeApp() {
 
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        logging.setLevel(lk.mobilevisions.kiki.app.Settings.RETROFIT_LOG_LEVEL);
+        logging.setLevel(Settings.RETROFIT_LOG_LEVEL);
         httpClient = new OkHttpClient.Builder();
         httpClient.readTimeout(20, TimeUnit.SECONDS);
         httpClient.connectTimeout(20, TimeUnit.SECONDS);
@@ -250,6 +261,7 @@ public class Application extends android.app.Application {
                 .subscriptionsModule(new SubscriptionsModule(this, api))
                 .analyticsModule(new AnalyticsModule(this, api))
                 .notificationModule(new NotificationModule(this, api))
+                .chatModule(new ChatModule(this, api))
                 .infoModule(new InfoModule(this, comAPI))
                 .build();
     }

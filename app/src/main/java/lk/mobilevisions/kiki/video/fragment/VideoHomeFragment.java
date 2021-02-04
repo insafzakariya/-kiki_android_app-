@@ -1,11 +1,14 @@
 package lk.mobilevisions.kiki.video.fragment;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 
+import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 
+import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,17 +25,28 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.otto.Subscribe;
+import com.twilio.chat.CallbackListener;
+import com.twilio.chat.ChatClient;
+import com.twilio.chat.ChatClientListener;
+import com.twilio.chat.ErrorInfo;
+import com.twilio.chat.Message;
+import com.twilio.chat.Messages;
+import com.twilio.chat.StatusListener;
+import com.twilio.chat.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -41,7 +55,22 @@ import javax.inject.Inject;
 import lk.mobilevisions.kiki.R;
 import lk.mobilevisions.kiki.app.Application;
 import lk.mobilevisions.kiki.app.Utils;
+import lk.mobilevisions.kiki.audio.activity.AudioDashboardActivity;
 import lk.mobilevisions.kiki.audio.activity.AudioTrialActivationActivity;
+import lk.mobilevisions.kiki.audio.adapter.RadioDramaVerticalAdapter;
+import lk.mobilevisions.kiki.audio.fragment.AudioHomeFragment;
+import lk.mobilevisions.kiki.audio.model.dto.PlayList;
+import lk.mobilevisions.kiki.audio.util.SpacesItemDecoration;
+import lk.mobilevisions.kiki.chat.ChatActivity;
+import lk.mobilevisions.kiki.chat.ChatClientManager;
+
+import lk.mobilevisions.kiki.chat.channels.ChannelManager;
+import lk.mobilevisions.kiki.chat.channels.ChannelVerticalAdapter;
+import lk.mobilevisions.kiki.chat.channels.LoadChannelListener;
+import lk.mobilevisions.kiki.chat.listeners.TaskCompletionListener;
+import lk.mobilevisions.kiki.chat.module.ChatManager;
+import lk.mobilevisions.kiki.chat.module.dto.Channels;
+import lk.mobilevisions.kiki.chat.module.dto.ChatToken;
 import lk.mobilevisions.kiki.databinding.FragmentHomeVideoBinding;
 import lk.mobilevisions.kiki.modules.api.APIListener;
 import lk.mobilevisions.kiki.modules.api.dto.Channel;
@@ -51,17 +80,24 @@ import lk.mobilevisions.kiki.modules.api.dto.Program;
 import lk.mobilevisions.kiki.modules.subscriptions.SubscriptionsManager;
 import lk.mobilevisions.kiki.modules.tv.TvManager;
 import lk.mobilevisions.kiki.video.activity.VideoChildModeActivity;
+import lk.mobilevisions.kiki.video.activity.VideoDashboardActivity;
 import lk.mobilevisions.kiki.video.activity.VideoEpisodeActivity;
 import lk.mobilevisions.kiki.video.activity.VideoTrialActivationActivity;
 import lk.mobilevisions.kiki.video.adapter.ChannelAdapter;
 import lk.mobilevisions.kiki.video.adapter.ProgramAdapter;
 import lk.mobilevisions.kiki.video.adapter.SlidingImageAdapter;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+import static com.microsoft.appcenter.utils.HandlerUtils.runOnUiThread;
 
-public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener, ProgramAdapter.OnProgramItemClickListener {
+
+public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener,
+        ProgramAdapter.OnProgramItemClickListener, ChannelVerticalAdapter.OnChannelItemActionListener, ChatClientListener {
 
     @Inject
     TvManager tvManager;
+    @Inject
+    ChatManager chatManager;
 
     @Inject
     SubscriptionsManager subscriptionsManager;
@@ -84,7 +120,15 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
 
     private String alertTitle;
     private String messageBody;
+    private String sSID;
 
+    private ChatClientManager chatClientManager;
+    private ProgressDialog progressDialog;
+    private ChannelManager channelManager;
+    private ChannelVerticalAdapter channelVerticalAdapter;
+    List<com.twilio.chat.Channel> chatChannelList;
+    List<Channels> channelsList;
+    HashMap<String, com.twilio.chat.Channel> channelHashMap = new HashMap<String, com.twilio.chat.Channel>();
     public VideoHomeFragment() {
         // Required empty public constructor
     }
@@ -104,10 +148,18 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
         selectedDate = Utils.DateUtil.getDateOnly(new Date());
         binding.recycleviewChannelsPrograms.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.recycleviewChannelsPrograms.setNestedScrollingEnabled(false);
+
+        binding.chatChannelsRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        binding.chatChannelsRecyclerview.addItemDecoration(new SpacesItemDecoration(15));
+        binding.chatChannelsRecyclerview.setHasFixedSize(true);
+        binding.chatChannelsRecyclerview.setNestedScrollingEnabled(false);
         setupSliderView();
         Application.BUS.register(this);
         loadChannelsAndPrograms();
         checkSubscription();
+        channelManager = ChannelManager.getInstance();
+        getChatToken();
+
 
         binding.indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -204,6 +256,130 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
         mFirebaseAnalytics.logEvent("video_tab", params);
 
         return binding.getRoot();
+    }
+
+    private void getChatToken(){
+        chatManager.getAccessToken(new APIListener<ChatToken>() {
+            @Override
+            public void onSuccess(ChatToken chatToken, List<Object> params) {
+                System.out.println("dydhdyhdhdhdh  66666 " + chatToken.getDataObject().getToken());
+                checkTwilioClient(chatToken.getDataObject().getToken());
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
+
+            }
+        });
+    }
+    private void checkTwilioClient(String token) {
+        chatClientManager = Application.getInstance().getChatClientManager();
+        if (chatClientManager.getChatClient() == null) {
+            System.out.println("dydhdyhdhdhdh  0000 " );
+            initializeClient(token);
+        } else {
+            System.out.println("dydhdyhdhdhdh  11111 " );
+            getChatChannels();
+            populateChannels();
+        }
+    }
+
+    private void initializeClient(String token) {
+        chatClientManager.connectClient(token,new TaskCompletionListener<Void, String>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                System.out.println("dydhdyhdhdhdh  33333 " );
+                getChatChannels();
+                populateChannels();
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                System.out.println("dydhdyhdhdhdh  4444 " + errorMessage);
+            }
+        });
+    }
+
+    private void stopActivityIndicator() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (progressDialog.isShowing()) {
+                    progressDialog.dismiss();
+                }
+            }
+        });
+    }
+
+    private void getChatChannels(){
+
+        chatManager.getChannels(new APIListener<List<Channels>>() {
+            @Override
+            public void onSuccess(List<Channels> result, List<Object> params) {
+                System.out.println("dydhdyhdhdhdh  55555 "  + result.size());
+                if (result.size() == 0) {
+//                    binding.radioDramaLayout.setVisibility(View.GONE);
+
+                } else {
+//                    binding.radioDramaLayout.setVisibility(View.VISIBLE);
+                    channelsList = result;
+                    channelVerticalAdapter = new ChannelVerticalAdapter(getActivity(), channelsList, VideoHomeFragment.this);
+                    binding.chatChannelsRecyclerview.setAdapter(channelVerticalAdapter);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
+
+            }
+        });
+
+    }
+
+    private void populateChannels() {
+        System.out.println("dydhdyhdhdhdh  010101010101010 "  );
+        channelManager.setChannelListener(this);
+        channelManager.populateChannels(new LoadChannelListener() {
+            @Override
+            public void onChannelsFinishedLoading(List<com.twilio.chat.Channel> channels) {
+                System.out.println("dydhdyhdhdhdh  222222 "  + channels.size());
+                chatChannelList = channels;
+                for (int i = 0; i < chatChannelList.size(); i++) {
+                    System.out.println("checking ss 44444 " +chatChannelList.get(i).getSid());
+                }
+//                channelVerticalAdapter = new ChannelVerticalAdapter(getActivity(),chatChannelList,VideoHomeFragment.this);
+//                binding.chatChannelsRecyclerview.setAdapter(channelVerticalAdapter);
+//                VideoHomeFragment.this.channelManager
+//                        .joinOrCreateGeneralChannelWithCompletion(new StatusListener() {
+//                            @Override
+//                            public void onSuccess() {
+//                                runOnUiThread(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//                                        channelVerticalAdapter.notifyDataSetChanged();
+//                                        stopActivityIndicator();
+//                                        setChannel(0);
+//                                    }
+//                                });
+//                            }
+//
+//                            @Override
+//                            public void onError(ErrorInfo errorInfo) {
+//
+//                            }
+//                        });
+            }
+        });
+    }
+
+
+
+    private String getStringResource(int id) {
+        Resources resources = getResources();
+        return resources.getString(id);
     }
 
     private void trialSubscriptionDialog() {
@@ -571,4 +747,217 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
         channelAdapter.notifyDataSetChanged();
 //        channelAdapter.notifyItemChanged(selectedProgramPosition,selectedProgram);
     }
+
+    @Override
+    public void onChannelJoined(com.twilio.chat.Channel channel) {
+
+    }
+
+    @Override
+    public void onChannelInvited(com.twilio.chat.Channel channel) {
+
+    }
+
+    @Override
+    public void onChannelAdded(com.twilio.chat.Channel channel) {
+
+    }
+
+    @Override
+    public void onChannelUpdated(com.twilio.chat.Channel channel, com.twilio.chat.Channel.UpdateReason updateReason) {
+
+    }
+
+    @Override
+    public void onChannelDeleted(com.twilio.chat.Channel channel) {
+
+    }
+
+    @Override
+    public void onChannelSynchronizationChange(com.twilio.chat.Channel channel) {
+
+    }
+
+    @Override
+    public void onError(ErrorInfo errorInfo) {
+
+    }
+
+    @Override
+    public void onUserUpdated(User user, User.UpdateReason updateReason) {
+
+    }
+
+    @Override
+    public void onUserSubscribed(User user) {
+
+    }
+
+    @Override
+    public void onUserUnsubscribed(User user) {
+
+    }
+
+    @Override
+    public void onClientSynchronization(ChatClient.SynchronizationStatus synchronizationStatus) {
+
+    }
+
+    @Override
+    public void onNewMessageNotification(String s, String s1, long l) {
+
+    }
+
+    @Override
+    public void onAddedToChannelNotification(String s) {
+
+    }
+
+    @Override
+    public void onInvitedToChannelNotification(String s) {
+
+    }
+
+    @Override
+    public void onRemovedFromChannelNotification(String s) {
+
+    }
+
+    @Override
+    public void onNotificationSubscribed() {
+
+    }
+
+    @Override
+    public void onNotificationFailed(ErrorInfo errorInfo) {
+
+    }
+
+    @Override
+    public void onConnectionStateChange(ChatClient.ConnectionState connectionState) {
+
+    }
+
+    @Override
+    public void onTokenExpired() {
+
+    }
+
+    @Override
+    public void onTokenAboutToExpire() {
+
+    }
+
+    @Override
+    public void onChannelAction(Channels channel, int position, List<Channels> playLists) {
+
+        if (!channel.isBlock() && channel.isMember()){
+            System.out.println("checking ss 1111111 " + channel.getSid());
+            com.twilio.chat.Channel selectedChatChannel = null;
+            Intent intent = new Intent(getActivity(), ChatActivity.class);
+            intent.putExtra("SSID","CH30ec07cb27ec4251951ff32c563f5bd3");
+            startActivity(intent);
+//            for(com.twilio.chat.Channel channel1 : chatChannelList) {
+//                if (channel.getSid().equals(channel1.getSid())) {
+//                    System.out.println("checking ss 33333");
+//                    selectedChatChannel = channel1;
+//                }
+//            }
+//            if(selectedChatChannel!=null) {
+//                System.out.println("checking ss 44444 " +selectedChatChannel.getSid());
+//                sSID = channel.getSid();
+//
+//            }
+
+
+        }else if (!channel.isBlock() && !channel.isMember()){
+            System.out.println("checking ss 22222");
+            com.twilio.chat.Channel selectedChatChannel = null;
+            for(com.twilio.chat.Channel channel1 : chatChannelList) {
+                if (channel.getSid().equals(channel1.getSid())) {
+                    System.out.println("checking ss 33333");
+                    selectedChatChannel = channel1;
+                }
+            }
+            if(selectedChatChannel!=null) {
+                System.out.println("checking ss 44444");
+                getRoleDetail(selectedChatChannel);
+            }
+        }else if (channel.isBlock()){
+            System.out.println("checking ss 5555555");
+            Toast.makeText(getApplicationContext(), "You're Blocked.", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    private void getRoleDetail(com.twilio.chat.Channel selctedChannel){
+        chatManager.getRoleDetail(new APIListener<Channels>() {
+            @Override
+            public void onSuccess(Channels channel, List<Object> params) {
+                System.out.println("checking ss 66666 ");
+                sSID = channel.getSid();
+                createMember(selctedChannel,channel.getSid(), channel.getAccountSid(), channel.getServiceSid(),channel.getId());
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
+                System.out.println("checking ss 77777 " + t.getLocalizedMessage());
+            }
+        });
+    }
+
+    private void createMember(com.twilio.chat.Channel channel,String sid, String accountSid, String serviceSid, int roleId){
+
+        chatManager.createChatMember(sid, accountSid, serviceSid, roleId, new APIListener<Void>() {
+            @Override
+            public void onSuccess(Void result, List<Object> params) {
+                System.out.println("checking ss 888888 ");
+                joinChannel(channel);
+
+
+
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                System.out.println("checking ss 99999 " + t.getLocalizedMessage());
+            }
+        });
+
+    }
+
+    private void joinChannel(final com.twilio.chat.Channel selectedChannel) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (selectedChannel.getStatus() == com.twilio.chat.Channel.ChannelStatus.JOINED) {
+                    System.out.println("checking ss 1010101 " );
+                    Intent intent = new Intent(getActivity(), ChatActivity.class);
+                    intent.putExtra("SSID",sSID);
+                    startActivity(intent);
+                }else{
+                    System.out.println("checking ss 12121212 " );
+                    selectedChannel.join(new StatusListener() {
+                        @Override
+                        public void onSuccess() {
+                            System.out.println("checking ss 1313131 " );
+                            Intent intent = new Intent(getActivity(), ChatActivity.class);
+                            intent.putExtra("SSID",sSID);
+                            startActivity(intent);
+                            Toast.makeText(getActivity(), "Member Created.", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onError(ErrorInfo errorInfo) {
+                            System.out.println("checking ss 14141414 " + errorInfo.getMessage() );
+                        }
+                    });
+                }
+
+
+            }
+        });
+    }
+
 }

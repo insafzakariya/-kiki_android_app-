@@ -22,6 +22,7 @@ import lk.mobilevisions.kiki.audio.model.dto.Song;
 import lk.mobilevisions.kiki.modules.api.dto.Channel;
 import lk.mobilevisions.kiki.modules.api.dto.Content;
 import lk.mobilevisions.kiki.modules.api.dto.Slider;
+import lk.mobilevisions.kiki.service.dto.ServiceModel;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -3125,6 +3126,52 @@ public class TvManager {
 
             @Override
             public void onFailure(Call<List<PlayList>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void getAllServices(final APIListener<List<ServiceModel>> listener) {
+        api.getSerivces(Utils.Auth.getBasicAuthToken(application), Utils.Auth.getBearerToken(application)).enqueue(new Callback<List<ServiceModel>>() {
+            @Override
+            public void onResponse(Call<List<ServiceModel>> call, Response<List<ServiceModel>> response) {
+
+                System.out.println("checking service 3333  " + response.code());
+
+                switch (response.code()) {
+                    case 200:
+                        if (response.body() != null) {
+                            listener.onSuccess(response.body(), null);
+                        } else {
+                            listener.onFailure(new InvalidResponseException());
+                        }
+                        break;
+                    case 401:
+                        try {
+                            listener.onFailure(Utils.Error.
+                                    getServerError(application, response,
+                                            AuthenticationFailedWithAccessTokenException.class));
+                        } catch (ErrorResponseException e) {
+                            listener.onFailure(e);
+                        }
+                        break;
+                    case 400:
+                        try {
+                            listener.onFailure(Utils.Error.
+                                    getServerError(application, response,
+                                            ApplicationException.class));
+                        } catch (ErrorResponseException e) {
+                            listener.onFailure(e);
+                        }
+                        break;
+                    default:
+                        listener.onFailure(new RemoteServerException());
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ServiceModel>> call, Throwable t) {
 
             }
         });

@@ -29,8 +29,8 @@ android {
         applicationId "lk.mobilevisions.kiki"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 205
-        versionName "1.0.205"
+        versionCode 208
+        versionName "1.0.208"
         vectorDrawables.useSupportLibrary = true
         renderscriptTargetApi 20
         renderscriptSupportModeEnabled true
@@ -93,6 +93,7 @@ android {
             buildConfigField "String", "MAIN_SERVER_API_NAME", "\"MAIN_SERVER_API_V_\""
             buildConfigField "String", "MOBILE_PAYMENT_GATEWAY_NAME", "\"MOBILE_PAYMENT_GATEWAY_URL_V3\""
             buildConfigField "String", "ALL_USERS_TOPIC_NAME", "\"AllUsers\""
+
         }
 
         staging {
@@ -209,7 +210,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:20.1.5'
     implementation 'com.google.firebase:firebase-core:16.0.6'
     implementation 'com.google.firebase:firebase-dynamic-links:19.1.1'
-
+    implementation 'com.makeramen:roundedimageview:2.3.0'
+//    implementation "com.twilio:sync-android:1.0.0"
+    implementation "com.twilio:chat-android:6.0.0"
+    implementation 'joda-time:joda-time:2.9.1'
 }
 apply plugin: 'com.google.gms.google-services'
 

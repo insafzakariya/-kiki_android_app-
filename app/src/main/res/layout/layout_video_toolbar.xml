@@ -47,9 +47,37 @@
                 android:layout_marginTop="8dp"
                 android:tint="#5B5B5B"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/servce_imageview"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_notification_toolbar" />
+
+            <ImageView
+                android:id="@+id/servce_imageview"
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_22sdp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="6dp"
+                android:tint="#5B5B5B"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/servce_tx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="14dp"
+                android:layout_marginTop="1dp"
+                android:text="Service"
+                android:visibility="gone"
+                android:textColor="@color/colorPrimary"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/servce_imageview" />
+
 
             <TextView
                 android:id="@+id/notication_count_textview"

@@ -332,10 +332,10 @@ public class AudioHomeFragment extends Fragment implements DailyMixAdapter.Daily
 
 
     private void setupDailyMix() {
-        binding.dailyMixRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        binding.dailyMixRecyclerview.addItemDecoration(new SpacesItemDecoration(15));
-        binding.dailyMixRecyclerview.setHasFixedSize(true);
-        binding.dailyMixRecyclerview.setNestedScrollingEnabled(false);
+            binding.dailyMixRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+            binding.dailyMixRecyclerview.addItemDecoration(new SpacesItemDecoration(15));
+            binding.dailyMixRecyclerview.setHasFixedSize(true);
+            binding.dailyMixRecyclerview.setNestedScrollingEnabled(false);
 
 
     }

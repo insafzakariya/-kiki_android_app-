@@ -17,23 +17,76 @@
 
             <include
                 android:id="@+id/includedToolbar"
-                layout="@layout/layout_video_toolbar"
+                layout="@layout/layout_chat_toolbar"
                 android:elevation="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
             <include
                 android:id="@+id/includedToggle"
-                layout="@layout/layout_video_audio_toggle"
+                layout="@layout/layout_chat_sub_bar"
                 android:elevation="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <include
-                android:id="@+id/include_video_dashboard"
-                layout="@layout/layout_video_content"
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/listViewMessages"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/relSendMessage"
+                    android:layout_alignParentTop="true"
+                    android:divider="@null"
+                    android:dividerHeight="0dp"
+                    android:padding="0dp"
+                    android:stackFromBottom="true"
+                    android:transcriptMode="alwaysScroll"
+                    tools:listitem="@layout/messages_list"/>
+
+
+                <LinearLayout
+                    android:id="@+id/relSendMessage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/customBlack1"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/_10sdp">
+
+
+                    <EditText
+                        android:id="@+id/editTextMessage"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight=".85"
+                        android:background="@drawable/service_ome_rounded"
+                        android:hint="Say Something!"
+                        android:maxHeight="100dp"
+                        android:maxLength="200"
+                        android:minHeight="40dp"
+                        android:padding="7dp"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp"
+                        android:imeOptions="actionSend"/>
+
+                    <ImageView
+                        android:id="@+id/buttonSend"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight=".15"
+                        android:src="@drawable/ic_sent_chat"
+                        android:background="@drawable/chat_send_background"
+                        android:gravity="center"
+                        />
+                </LinearLayout>
+            </RelativeLayout>
 
         </LinearLayout>
 
@@ -227,37 +280,9 @@
 
                 </RelativeLayout>
 
-
-
-
-
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <!--<include-->
-                <!--android:id="@+id/include_video_dashboard_navigation_menu"-->
-                <!--layout="@layout/layout_navigation_header_video"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent" />-->
-
         </com.google.android.material.navigation.NavigationView>
-
-        <!--<android.support.design.widget.NavigationView-->
-            <!--app:headerLayout="@layout/layout_navigation_header_video"-->
-            <!--android:id="@+id/navigationView"-->
-            <!--android:layout_width="@dimen/_200sdp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_gravity="start"-->
-            <!--android:theme="@style/NavigationView"-->
-            <!--app:itemTextColor="@color/colorWhite"-->
-            <!--app:itemIconTint="@color/navigationMenuIconColor"-->
-            <!--android:background="@color/backgroundColor"-->
-            <!--app:menu="@menu/video_drawer_view" />-->
-
-
-
-
-
 
     </androidx.drawerlayout.widget.DrawerLayout>
 </layout>

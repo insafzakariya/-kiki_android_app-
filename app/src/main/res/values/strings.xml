@@ -286,4 +286,6 @@
     <string name="invalid_password_server">Something went wrong while changing the password. Please try again later.</string>
     <string name="hi_user">%1$s</string>
 
+    <string name="default_channel_name">General Channel</string>
+
 </resources>

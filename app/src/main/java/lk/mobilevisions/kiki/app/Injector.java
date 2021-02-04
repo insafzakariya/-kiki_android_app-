@@ -58,6 +58,8 @@ import lk.mobilevisions.kiki.audio.fragment.SearchedSongsFragment;
 import lk.mobilevisions.kiki.audio.fragment.SeeAllGenreFragment;
 import lk.mobilevisions.kiki.audio.fragment.VideosFragment;
 import lk.mobilevisions.kiki.audio.fragment.YouMightAlsoLikeFragment;
+import lk.mobilevisions.kiki.chat.ChatClientManager;
+import lk.mobilevisions.kiki.chat.module.ChatModule;
 import lk.mobilevisions.kiki.modules.analytics.AnalyticsModule;
 import lk.mobilevisions.kiki.modules.auth.AuthModule;
 import lk.mobilevisions.kiki.modules.info.InfoModule;
@@ -65,6 +67,7 @@ import lk.mobilevisions.kiki.modules.notifications.NotificationModule;
 import lk.mobilevisions.kiki.modules.subscriptions.SubscriptionsModule;
 import lk.mobilevisions.kiki.modules.tv.TvModule;
 
+import lk.mobilevisions.kiki.service.activity.ServiceHomeActivity;
 import lk.mobilevisions.kiki.ui.auth.EditMobileNumberActivity;
 import lk.mobilevisions.kiki.ui.auth.LoginActivity;
 import lk.mobilevisions.kiki.ui.auth.UserFreeTrailFragment;
@@ -96,7 +99,7 @@ import lk.mobilevisions.kiki.video.fragment.VideoMylistFragment;
 
 @Singleton
 @Component(modules = {AuthModule.class, TvModule.class, SubscriptionsModule.class,
-        NotificationModule.class, AnalyticsModule.class, InfoModule.class})
+        NotificationModule.class, AnalyticsModule.class, InfoModule.class, ChatModule.class})
 public interface Injector {
     void inject(LoginActivity activity);
     void inject(ChannelsActivity activity);
@@ -176,4 +179,6 @@ public interface Injector {
     void inject(AudioTrialActivationActivity activity);
     void inject(VideoTrialActivationActivity activity);
     void inject(RadioDramaFragment fragment);
+    void inject(ServiceHomeActivity activity);
+    void inject(ChatClientManager manager);
 }

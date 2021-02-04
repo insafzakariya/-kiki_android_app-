@@ -1,6 +1,7 @@
 package lk.mobilevisions.kiki.video.activity;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.content.res.Configuration;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,6 +19,8 @@ import android.os.Handler;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.DrawableImageViewTarget;
 import com.facebook.appevents.AppEventsConstants;
 import com.facebook.appevents.AppEventsLogger;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -51,6 +55,9 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
+import com.twilio.chat.Channel;
+import com.twilio.chat.ErrorInfo;
+import com.twilio.chat.StatusListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -66,6 +73,11 @@ import lk.mobilevisions.kiki.app.Application;
 import lk.mobilevisions.kiki.app.Constants;
 import lk.mobilevisions.kiki.app.Utils;
 import lk.mobilevisions.kiki.audio.activity.AudioDashboardActivity;
+import lk.mobilevisions.kiki.chat.ChatClientManager;
+
+import lk.mobilevisions.kiki.chat.channels.ChannelManager;
+import lk.mobilevisions.kiki.chat.channels.LoadChannelListener;
+import lk.mobilevisions.kiki.chat.listeners.TaskCompletionListener;
 import lk.mobilevisions.kiki.databinding.ActivityVideoDashboardBinding;
 import lk.mobilevisions.kiki.modules.api.APIListener;
 import lk.mobilevisions.kiki.modules.api.dto.NotificationCountResponse;
@@ -76,6 +88,7 @@ import lk.mobilevisions.kiki.modules.auth.AuthManager;
 import lk.mobilevisions.kiki.modules.notifications.NotificationManager;
 import lk.mobilevisions.kiki.modules.subscriptions.SubscriptionsManager;
 import lk.mobilevisions.kiki.modules.tv.TvManager;
+import lk.mobilevisions.kiki.service.activity.ServiceHomeActivity;
 import lk.mobilevisions.kiki.ui.base.BaseActivity;
 import lk.mobilevisions.kiki.ui.notifications.NotificationsActivity;
 import lk.mobilevisions.kiki.ui.packages.PaymentActivity;
@@ -155,6 +168,23 @@ public class VideoDashboardActivity extends BaseActivity {
         bindWidgetsWithAnEvent();
         setupTabLayout();
         checkTrialStatus();
+
+
+        DrawableImageViewTarget target = new DrawableImageViewTarget(binding.includedToolbar.servceImageview);
+        Glide.with(this)
+                .load(R.raw.service_logo)
+                .into(target);
+
+        binding.includedToolbar.servceImageview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentPackages = new Intent(VideoDashboardActivity.this, ServiceHomeActivity.class);
+                startActivity(intentPackages);
+
+            }
+        });
+
+
         binding.subLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

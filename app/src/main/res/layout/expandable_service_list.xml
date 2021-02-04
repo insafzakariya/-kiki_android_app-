@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_marginStart="@dimen/_10sdp"
+    android:layout_marginEnd="@dimen/_10sdp"
+    android:layout_marginBottom="@dimen/_7sdp"
+    android:layout_marginTop="@dimen/_7sdp">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="10dip"
+        app:cardBackgroundColor="@color/md_grey_800"
+        app:cardElevation="2dp">
+
+        <RelativeLayout
+            android:id="@+id/service_list_linear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <com.joooonho.SelectableRoundedImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/service_image"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_75sdp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_havana"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:sriv_left_bottom_corner_radius="10dip"
+                app:sriv_left_top_corner_radius="10dip"
+                app:sriv_right_bottom_corner_radius="10dip"
+                app:sriv_right_top_corner_radius="10dip" />
+
+            <lk.mobilevisions.kiki.audio.util.KikiAudioMediumTextView
+                android:id="@+id/serv_head"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:paddingTop="30dp"
+                android:singleLine="true"
+                android:text="Havana"
+                android:textColor="@color/md_white_1000"
+                android:textSize="@dimen/_15sdp"
+                />
+
+            <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
+                android:id="@+id/serv_descrip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_below="@id/serv_head"
+                android:singleLine="true"
+                android:text="Camila Cabello"
+                android:textColor="#FFFFFF"
+                android:textSize="10sp" />
+
+
+            <LinearLayout
+                android:animateLayoutChanges="true"
+                android:layout_below="@id/service_image"
+                android:id="@+id/linearLayout_game"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/sub_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"/>
+
+            </LinearLayout>
+        </RelativeLayout>
+
+
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

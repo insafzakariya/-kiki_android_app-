@@ -16,6 +16,8 @@ import lk.mobilevisions.kiki.audio.model.dto.Genre;
 import lk.mobilevisions.kiki.audio.model.dto.PlayList;
 import lk.mobilevisions.kiki.audio.model.dto.SearchResponse;
 import lk.mobilevisions.kiki.audio.model.dto.Song;
+import lk.mobilevisions.kiki.chat.module.dto.Channels;
+import lk.mobilevisions.kiki.chat.module.dto.ChatToken;
 import lk.mobilevisions.kiki.modules.api.dto.AuthUser;
 import lk.mobilevisions.kiki.modules.api.dto.Channel;
 import lk.mobilevisions.kiki.modules.api.dto.Content;
@@ -28,6 +30,7 @@ import lk.mobilevisions.kiki.modules.api.dto.PackageToken;
 import lk.mobilevisions.kiki.modules.api.dto.PackageV2;
 import lk.mobilevisions.kiki.modules.api.dto.Program;
 import lk.mobilevisions.kiki.modules.api.dto.Slider;
+import lk.mobilevisions.kiki.service.dto.ServiceModel;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -650,6 +653,10 @@ public interface API {
                                                      @Query("viwer_id") int viwerId,
                                                      @Query("password") String password);
 
+    @GET("ui/service-ui")
+    Call<List<ServiceModel>> getSerivces (@Header(HEADER_AUTHORIZATION) String basicAuthToken,
+                                          @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken);
+
     @POST("deviceid/update")
     Call<Void> sendDeviceId(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
                             @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
@@ -662,6 +669,23 @@ public interface API {
                                    @Path("Screen_Id") int screenId,
                                    @Path("Screen_Action_Id") int actionId,
                                    @Path("Screen_Time") String screenTime);
+
+    @GET("chat/token-generate")
+    Call<ChatToken> getAccessToken(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
+                                   @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken);
+
+    @GET("chat/channels")
+    Call<List<Channels>>getChannels(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
+                               @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken);
+
+    @POST("chat/create-member")
+    Call<Void>createMember(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
+                                    @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
+                                     @Body HashMap<String, Object> request);
+
+    @GET("chat/get-role/channel_user")
+    Call<Channels>getRoleDetails(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
+                                       @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken);
 
 
 }

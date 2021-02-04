@@ -270,6 +270,13 @@
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".service.activity.ServiceHomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chat.ChatActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".video.activity.ContactActivity"
             android:screenOrientation="portrait" />
         <activity
