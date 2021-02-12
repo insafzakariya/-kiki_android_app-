@@ -6,12 +6,12 @@
         android:width="2dp"
         android:color="#90a4ae" />
     <size
-        android:height="50dp"
+        android:height="40dp"
         android:width="50dp" />
 
     <corners
-        android:bottomLeftRadius="50dp"
-        android:bottomRightRadius="50dp"
-        android:topLeftRadius="50dp"
-        android:topRightRadius="50dp"/>
+        android:bottomLeftRadius="25dp"
+        android:bottomRightRadius="25dp"
+        android:topLeftRadius="25dp"
+        android:topRightRadius="25dp"/>
 </shape>

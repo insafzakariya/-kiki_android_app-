@@ -118,18 +118,32 @@
 
     </RelativeLayout>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/chat_header"
+            android:text="KiKi Chats"
+            android:visibility="gone"
+            android:textStyle="bold"
+            android:textSize="@dimen/_14sdp"
+            android:textColor="@color/md_white_1000"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            app:layout_constraintTop_toBottomOf="@+id/overlay_layout"
+            app:layout_constraintStart_toStartOf="parent"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/chat_channels_recyclerview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:scrollbars="none"
-            android:visibility="visible"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/overlay_layout"
+            app:layout_constraintTop_toBottomOf="@+id/chat_header"
             app:layout_constraintVertical_bias="0.0" />
+
 
 
         <androidx.recyclerview.widget.RecyclerView

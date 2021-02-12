@@ -1,16 +1,13 @@
 package lk.mobilevisions.kiki.chat;
 
-import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.twilio.chat.CallbackListener;
 import com.twilio.chat.Channel;
 import com.twilio.chat.ChannelListener;
@@ -18,6 +15,9 @@ import com.twilio.chat.Member;
 import com.twilio.chat.Message;
 import com.twilio.chat.Messages;
 
+import java.io.FileInputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,32 +25,20 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import lk.mobilevisions.kiki.R;
 import lk.mobilevisions.kiki.app.Application;
-import lk.mobilevisions.kiki.audio.adapter.SearchSuggestionAdapter;
-import lk.mobilevisions.kiki.audio.adapter.YouMightAlsoLikeAdapter;
-import lk.mobilevisions.kiki.audio.fragment.YouMightAlsoLikeFragment;
-import lk.mobilevisions.kiki.audio.model.dto.Song;
-import lk.mobilevisions.kiki.chat.messages.JoinedStatusMessage;
-import lk.mobilevisions.kiki.chat.messages.LeftStatusMessage;
-import lk.mobilevisions.kiki.chat.messages.MessageAdapter;
-import lk.mobilevisions.kiki.chat.messages.StatusMessage;
+import lk.mobilevisions.kiki.chat.module.dto.ChatMember;
 import lk.mobilevisions.kiki.databinding.ActivityChatMainBinding;
 
-import static com.androidquery.util.AQUtility.getContext;
 
 public class ChatActivity extends AppCompatActivity implements ChannelListener, ChatAdapter.OnChatItemClickListener {
 
     ActivityChatMainBinding binding;
 
     Context context;
-
-
-
-//    MessageAdapter messageAdapter;
     ChatAdapter chatAdapter;
     List<Message> messageArrayList = new ArrayList<>();
+    List<ChatMember> chatMemberArrayList;
     LinearLayoutManager linearLayoutManager;
     Channel currentChannel;
     Messages messagesObject;
@@ -60,34 +48,79 @@ public class ChatActivity extends AppCompatActivity implements ChannelListener, 
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_chat_main);
 
-
-//        messageAdapter = new MessageAdapter(mainActivity);
-//        messagesListView.setAdapter(messageAdapter);
-        setupMessages();
-        setUpListeners();
         setMessageInputEnabled(false);
-        String sSID = getIntent().getStringExtra("SSID");
-        System.out.println("checking ss 1515151 " + sSID);
-        loadMessages(sSID);
+        setUpListeners();
+        setCurrentChannel();
+
+        String chatImage = getIntent().getStringExtra("chatImage");
+        binding.includedChatSub.onlineCountSize.setText(getIntent().getStringExtra("memberCount"));
+
+        if (chatImage != null) {
+            try {
+                Picasso.with(getApplication()).load(URLDecoder.decode(chatImage, "UTF-8"))
+                        .placeholder(R.drawable.program)
+                        .into(binding.includedChatSub.inboxImageview);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        binding.includedChatSub.infoInboxToolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ChatActivity.this, ChatInfoActivity.class);
+                startActivity(intent);
+            }
+        });
+        binding.includedChatSub.mainChatBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        binding.includedChatSub.backImageview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
     }
 
-    private void setupMessages(){
+    private void setCurrentChannel() {
+        currentChannel = Application.getInstance().getCurrentChannel();
+        setupMessages();
+        if (currentChannel != null) {
+            currentChannel.addListener(this);
+            loadMessages();
+        }
+
+    }
+
+    private void setupMessages() {
 
         linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        linearLayoutManager.setStackFromEnd(true);
         binding.listViewMessages.setLayoutManager(linearLayoutManager);
         binding.listViewMessages.setHasFixedSize(true);
 //        binding.listViewMessages.(true);
         binding.listViewMessages.setItemViewCacheSize(1000);
         binding.listViewMessages.setDrawingCacheEnabled(true);
-        chatAdapter = new ChatAdapter(this, messageArrayList, ChatActivity.this);
+        chatAdapter = new ChatAdapter(this, messageArrayList, chatMemberArrayList = (ArrayList<ChatMember>) getIntent().getSerializableExtra("memberList"), ChatActivity.this);
         binding.listViewMessages.setAdapter(chatAdapter);
     }
 
     @Override
     public void onMessageAdded(Message message) {
-        System.out.println("checking ss 212121 " );
+        System.out.println("checking ss 212121 ");
         this.chatAdapter.addMessage(message);
+        if (message.getAuthor().equals(String.valueOf(Application.getInstance().getAuthUser().getId()))) {
+            System.out.println("hghghgh 22" + message.getAuthor());
+            // If the current user is the sender of the message
+            binding.listViewMessages.smoothScrollToPosition(chatAdapter.getItemCount());
+        }
+
     }
 
     @Override
@@ -102,15 +135,12 @@ public class ChatActivity extends AppCompatActivity implements ChannelListener, 
 
     @Override
     public void onMemberAdded(Member member) {
-        System.out.println("checking ss 2323232 " );
-//        StatusMessage statusMessage = new JoinedStatusMessage(member.getIdentity());
-//        this.chatAdapter.addMessage(statusMessage);
+
     }
 
     @Override
     public void onMemberUpdated(Member member, Member.UpdateReason updateReason) {
-//        StatusMessage statusMessage = new LeftStatusMessage(member.getIdentity());
-//        this.messageAdapter.addStatusMessage(statusMessage);
+
     }
 
     @Override
@@ -130,6 +160,7 @@ public class ChatActivity extends AppCompatActivity implements ChannelListener, 
 
     @Override
     public void onSynchronizationChanged(Channel channel) {
+//        channel.getMembers().getMembersList().size();
 
     }
 
@@ -159,7 +190,7 @@ public class ChatActivity extends AppCompatActivity implements ChannelListener, 
     }
 
     private void setMessageInputEnabled(final boolean enabled) {
-     runOnUiThread(new Runnable() {
+        runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 binding.buttonSend.setEnabled(enabled);
@@ -176,38 +207,55 @@ public class ChatActivity extends AppCompatActivity implements ChannelListener, 
         binding.editTextMessage.setText("");
     }
 
-    private void loadMessages(String ssId){
-        ChatClientManager chatClientManager = Application.getInstance().getChatClientManager();
-        if(chatClientManager!=null){
-            System.out.println("checking ss 16161616 " );
-            com.twilio.chat.Channels channels = chatClientManager.getChatClient().getChannels();
-            if(channels!=null){
-                System.out.println("checking ss 17171717 " );
-                channels.getChannel(ssId, new CallbackListener<Channel>() {
-                    @Override
-                    public void onSuccess(com.twilio.chat.Channel channel) {
-                        System.out.println("checking ss 18181818 " );
-                        channel.addListener(ChatActivity.this);
-                        Messages messages = channel.getMessages();
-                        messagesObject = messages;
-                        if(messages!=null){
-                            System.out.println("checking ss 1919191 " );
-                            setMessageInputEnabled(true);
-                            binding.editTextMessage.requestFocus();
-                            messages.getLastMessages(100, new CallbackListener<List<Message>>() {
-                                @Override
-                                public void onSuccess(List<Message> messages) {
-                                    System.out.println("checking ss 20202020 " + messages.size());
-                                    messageArrayList = messages;
-                                    chatAdapter.setList(messageArrayList);
-                                }
-                            });
-                        }
+    private void loadMessages() {
 
-                    }
-                });
-            }
+        this.messagesObject = this.currentChannel.getMessages();
+
+        if (messagesObject != null) {
+            setMessageInputEnabled(true);
+//            binding.editTextMessage.requestFocus();
+            System.out.println("checking ss 1919191 ");
+            messagesObject.getLastMessages(150, new CallbackListener<List<Message>>() {
+                @Override
+                public void onSuccess(List<Message> messageList) {
+                    System.out.println("checking ss 20202020 " + messageList.size());
+                    messageArrayList = messageList;
+                    chatAdapter.setList(messageArrayList);
+                    binding.listViewMessages.smoothScrollToPosition(chatAdapter.getItemCount());
+                }
+            });
         }
+//        ChatClientManager chatClientManager = Application.getInstance().getChatClientManager();
+//        if(chatClientManager!=null){
+//            System.out.println("checking ss 16161616 " );
+//            com.twilio.chat.Channels channels = chatClientManager.getChatClient().getChannels();
+//            if(channels!=null){
+//                System.out.println("checking ss 17171717 " );
+//                channels.getChannel(ssId, new CallbackListener<Channel>() {
+//                    @Override
+//                    public void onSuccess(com.twilio.chat.Channel channel) {
+//                        System.out.println("checking ss 18181818 " );
+//                        channel.addListener(ChatActivity.this);
+//                        Messages messages = channel.getMessages();
+//                        messagesObject = messages;
+//                        if(messages!=null){
+//                            System.out.println("checking ss 1919191 " );
+//                            setMessageInputEnabled(true);
+//                            binding.editTextMessage.requestFocus();
+//                            messages.getLastMessages(100, new CallbackListener<List<Message>>() {
+//                                @Override
+//                                public void onSuccess(List<Message> messages) {
+//                                    System.out.println("checking ss 20202020 " + messages.size());
+//                                    messageArrayList = messages;
+//                                    chatAdapter.setList(messageArrayList);
+//                                }
+//                            });
+//                        }
+//
+//                    }
+//                });
+//            }
+//        }
     }
 
     @Override

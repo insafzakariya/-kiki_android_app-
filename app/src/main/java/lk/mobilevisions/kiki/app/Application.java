@@ -19,6 +19,9 @@ import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;
 import com.squareup.otto.Bus;
 import com.squareup.otto.ThreadEnforcer;
+import com.twilio.chat.Channel;
+import com.twilio.chat.ErrorInfo;
+import com.twilio.chat.StatusListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -87,6 +90,7 @@ public class Application extends android.app.Application {
     private int fastForwardValue;
     private int fastRewindValue;
     private ChatClientManager basicClient;
+    public Channel chatChannel;
 
 
     public ChatClientManager getChatClientManager() {
@@ -344,5 +348,14 @@ public class Application extends android.app.Application {
         ImageLoader.getInstance().init(config.build());
     }
 
+    public Channel getCurrentChannel() {
+        return chatChannel;
+    }
+
+    public void setCurrentChannel(Channel currentChannel) {
+
+            this.chatChannel = currentChannel;
+
+    }
 
 }

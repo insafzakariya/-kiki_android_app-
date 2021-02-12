@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
@@ -18,19 +17,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import lk.mobilevisions.kiki.R;
-import lk.mobilevisions.kiki.audio.model.dto.PlayList;
-import lk.mobilevisions.kiki.audio.model.dto.Song;
-import lk.mobilevisions.kiki.chat.module.dto.Channels;
+import lk.mobilevisions.kiki.chat.module.dto.ChannelDto;
 
 public class ChannelVerticalAdapter extends
         RecyclerView.Adapter <RecyclerView.ViewHolder> {
     private static Context context;
     private static ChannelVerticalAdapter mInstance;
-    private List<Channels> playlistList;
+    private List<ChannelDto> playlistList;
     private ChannelVerticalAdapter.OnChannelItemActionListener onChannelItemActionListener;
 
     public ChannelVerticalAdapter (Context mContext,
-                                      List<Channels> playlistList, ChannelVerticalAdapter.OnChannelItemActionListener onChannelItemActionListener) {
+                                   List<ChannelDto> playlistList, ChannelVerticalAdapter.OnChannelItemActionListener onChannelItemActionListener) {
 
         this.context = mContext;
         this.playlistList = playlistList;
@@ -57,7 +54,7 @@ public class ChannelVerticalAdapter extends
 
 
     private void initLayoutTwo(final ChannelVerticalAdapter.ChannelRecyclerViewHolder holder, int pos) {
-        final Channels current = playlistList.get(pos);
+        final ChannelDto current = playlistList.get(pos);
 
         if(current.getImagePath()!=null && !current.getImagePath().isEmpty()){
             try {
@@ -89,12 +86,12 @@ public class ChannelVerticalAdapter extends
         return playlistList.size();
     }
 
-    public void setData(List<Channels> songs) {
+    public void setData(List<ChannelDto> songs) {
         this.playlistList = songs;
         notifyDataSetChanged();
     }
 
-    public void addData(List<Channels> songs) {
+    public void addData(List<ChannelDto> songs) {
         this.playlistList.addAll(songs);
         notifyDataSetChanged();
     }
@@ -115,6 +112,6 @@ public class ChannelVerticalAdapter extends
 
     public interface OnChannelItemActionListener{
 
-        void onChannelAction(Channels playList,int position,List<Channels> playLists);
+        void onChannelAction(ChannelDto playList, int position, List<ChannelDto> playLists);
     }
 }

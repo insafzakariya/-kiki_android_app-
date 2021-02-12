@@ -59,6 +59,7 @@ import lk.mobilevisions.kiki.audio.fragment.SeeAllGenreFragment;
 import lk.mobilevisions.kiki.audio.fragment.VideosFragment;
 import lk.mobilevisions.kiki.audio.fragment.YouMightAlsoLikeFragment;
 import lk.mobilevisions.kiki.chat.ChatClientManager;
+import lk.mobilevisions.kiki.chat.ChatInfoActivity;
 import lk.mobilevisions.kiki.chat.module.ChatModule;
 import lk.mobilevisions.kiki.modules.analytics.AnalyticsModule;
 import lk.mobilevisions.kiki.modules.auth.AuthModule;
@@ -181,4 +182,5 @@ public interface Injector {
     void inject(RadioDramaFragment fragment);
     void inject(ServiceHomeActivity activity);
     void inject(ChatClientManager manager);
+    void inject(ChatInfoActivity activity);
 }

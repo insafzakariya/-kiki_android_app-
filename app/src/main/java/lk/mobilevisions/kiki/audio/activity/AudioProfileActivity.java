@@ -118,6 +118,7 @@ public class AudioProfileActivity extends AppCompatActivity implements View.OnCl
         authManager.getUserDetails(new APIListener<AuthUser>() {
             @Override
             public void onSuccess(AuthUser user, List<Object> params) {
+                System.out.println("asasasas ");
                 binding.phoneNumberEdittext.setText(user.getMobileNumber());
                 binding.nameEdittext.setText(user.getName());
                 binding.usernameField.setText(user.getUsername());

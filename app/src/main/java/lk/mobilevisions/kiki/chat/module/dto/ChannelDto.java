@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class Channels implements Serializable {
+public class ChannelDto implements Serializable {
 
     @SerializedName("id")
     @Expose

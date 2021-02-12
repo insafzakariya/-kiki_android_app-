@@ -124,9 +124,6 @@ public class ArtistDetailFragment extends Fragment implements GenreSongsVertical
                 e.printStackTrace();
             }
         }
-
-
-
         return binding.getRoot();
     }
 

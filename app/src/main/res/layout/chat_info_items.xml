@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/contstrain_artistlist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_5sdp">
+
+            <com.joooonho.SelectableRoundedImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/chatinfo_image"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:src="@drawable/ic_havana"
+                android:scaleType="centerCrop"
+                app:sriv_left_top_corner_radius="50dip"
+                app:sriv_right_top_corner_radius="50dip"
+                app:sriv_left_bottom_corner_radius="50dip"
+                app:sriv_right_bottom_corner_radius="50dip"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="@dimen/_7sdp"
+                app:layout_constraintBottom_toTopOf="@+id/view_line2"/>
+
+
+            <lk.mobilevisions.kiki.audio.util.KikiAudioMediumTextView
+                android:id="@+id/chatinfo_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:text="Havana"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/_12sdp"
+                android:gravity="center|start"
+                android:singleLine="true"
+                app:layout_constraintStart_toEndOf="@+id/chatinfo_image"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </RelativeLayout>

@@ -75,11 +75,13 @@ import lk.mobilevisions.kiki.app.Utils;
 import lk.mobilevisions.kiki.audio.activity.AudioDashboardActivity;
 import lk.mobilevisions.kiki.chat.ChatClientManager;
 
+import lk.mobilevisions.kiki.chat.ChatInfoActivity;
 import lk.mobilevisions.kiki.chat.channels.ChannelManager;
 import lk.mobilevisions.kiki.chat.channels.LoadChannelListener;
 import lk.mobilevisions.kiki.chat.listeners.TaskCompletionListener;
 import lk.mobilevisions.kiki.databinding.ActivityVideoDashboardBinding;
 import lk.mobilevisions.kiki.modules.api.APIListener;
+import lk.mobilevisions.kiki.modules.api.dto.AuthUser;
 import lk.mobilevisions.kiki.modules.api.dto.NotificationCountResponse;
 import lk.mobilevisions.kiki.modules.api.dto.PackageToken;
 import lk.mobilevisions.kiki.modules.api.dto.PackageV2;
@@ -104,7 +106,8 @@ public class VideoDashboardActivity extends BaseActivity {
     SubscriptionsManager subscriptionsManager;
     @Inject
     TvManager tvManager;
-
+    @Inject
+    AuthManager authManager;
     ActivityVideoDashboardBinding binding;
 
     private VideoHomeFragment fragmentOne;
@@ -359,7 +362,6 @@ public class VideoDashboardActivity extends BaseActivity {
                 }
             }
         });
-
     }
 
     private void checkForUpdate() {

@@ -20,10 +20,11 @@
             <com.joooonho.SelectableRoundedImageView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/channel_image"
-                android:layout_width="@dimen/_80sdp"
-                android:layout_height="@dimen/_80sdp"
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_60sdp"
                 android:src="@drawable/ic_havana"
                 android:scaleType="centerCrop"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
                 app:sriv_left_top_corner_radius="100dip"
                 app:sriv_right_top_corner_radius="100dip"
                 app:sriv_left_bottom_corner_radius="100dip"
