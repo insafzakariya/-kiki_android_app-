@@ -49,7 +49,7 @@ import lk.mobilevisions.kiki.modules.tv.TvManager;
 
 import static androidx.viewpager.widget.PagerAdapter.POSITION_NONE;
 
-public class LibraryFragment extends Fragment implements PlaylistAdapter.OnUserPlaylistItemActionListener,PopularSongsVerticalAdapter.OnPopularSongsItemActionListener , PlaylistVerticalAdapter.OnPlaylistItemActionListener , GenreArtistVerticalAdapter.OnArtistsItemActionListener {
+public class LibraryFragment extends Fragment implements PlaylistAdapter.OnUserPlaylistItemActionListener, PopularSongsVerticalAdapter.OnPopularSongsItemActionListener, PlaylistVerticalAdapter.OnPlaylistItemActionListener, GenreArtistVerticalAdapter.OnArtistsItemActionListener {
 
     @Inject
     TvManager tvManager;
@@ -189,36 +189,36 @@ public class LibraryFragment extends Fragment implements PlaylistAdapter.OnUserP
     private void setDataToPlaylist() {
         playlistArrayList.clear();
 
-            tvManager.getAllPlaylist(new APIListener<List<PlayList>>() {
-                @Override
-                public void onSuccess(List<PlayList> playLists, List<Object> params) {
-                    PlayList playList = new PlayList();
-                    playList.setId(0);
-                    playList.setArtistName("");
-                    playList.setDate("");
-                    playList.setImage("");
-                    playList.setName("");
-                    playList.setSongCount("");
-                    playList.setSongsList(null);
-                    playList.setDefault(true);
-                    playlistArrayList.add(playList);
-                    playlistArrayList.addAll(playLists);
-                    playListAdapter = new PlaylistAdapter(getActivity(), playlistArrayList, LibraryFragment.this);
-                    binding.libraryPlaylistRecyclerview.setAdapter(playListAdapter);
-                    playListAdapter.notifyDataSetChanged();
+        tvManager.getAllPlaylist(new APIListener<List<PlayList>>() {
+            @Override
+            public void onSuccess(List<PlayList> playLists, List<Object> params) {
+                PlayList playList = new PlayList();
+                playList.setId(0);
+                playList.setArtistName("");
+                playList.setDate("");
+                playList.setImage("");
+                playList.setName("");
+                playList.setSongCount("");
+                playList.setSongsList(null);
+                playList.setDefault(true);
+                playlistArrayList.add(playList);
+                playlistArrayList.addAll(playLists);
+                playListAdapter = new PlaylistAdapter(getActivity(), playlistArrayList, LibraryFragment.this);
+                binding.libraryPlaylistRecyclerview.setAdapter(playListAdapter);
+                playListAdapter.notifyDataSetChanged();
 
-                }
+            }
 
-                @Override
-                public void onFailure(Throwable t) {
-                    Utils.Error.onServiceCallFail(getActivity(), t);
-                }
-            });
+            @Override
+            public void onFailure(Throwable t) {
+                Utils.Error.onServiceCallFail(getActivity(), t);
+            }
+        });
 
     }
 
     private void setDataToKikiPlaylist() {
-        tvManager.getLibraryPlaylists(10,1,new APIListener<List<PlayList>>() {
+        tvManager.getLibraryPlaylists(10, 1, new APIListener<List<PlayList>>() {
             @Override
             public void onSuccess(List<PlayList> result, List<Object> params) {
                 System.out.println("Check playlist  " + result.size());
@@ -228,7 +228,7 @@ public class LibraryFragment extends Fragment implements PlaylistAdapter.OnUserP
                 } else {
                     binding.libraryKikiPlaylistLayout.setVisibility(View.VISIBLE);
                     kikiPlaylistArrayList = result;
-                    playlistVerticalAdapter = new PlaylistVerticalAdapter(getActivity(), kikiPlaylistArrayList,LibraryFragment.this);
+                    playlistVerticalAdapter = new PlaylistVerticalAdapter(getActivity(), kikiPlaylistArrayList, LibraryFragment.this);
                     binding.libraryKikiPlaylistRecyclerview.setAdapter(playlistVerticalAdapter);
                 }
                 binding.aviProgress.setVisibility(View.GONE);
@@ -247,7 +247,7 @@ public class LibraryFragment extends Fragment implements PlaylistAdapter.OnUserP
 
     private void setDataLibrarySongs() {
 
-        tvManager.getLibrarySongs(10,1, new APIListener<List<Song>>() {
+        tvManager.getLibrarySongs(10, 1, new APIListener<List<Song>>() {
             @Override
             public void onSuccess(List<Song> result, List<Object> params) {
                 if (result.size() == 0) {
@@ -271,9 +271,9 @@ public class LibraryFragment extends Fragment implements PlaylistAdapter.OnUserP
 
     }
 
-    private void  setDataLibraryArtists() {
+    private void setDataLibraryArtists() {
 
-        tvManager.getLibraryArtists(10,1, new APIListener<List<Artist>>() {
+        tvManager.getLibraryArtists(10, 1, new APIListener<List<Artist>>() {
             @Override
             public void onSuccess(List<Artist> result, List<Object> params) {
                 if (result.size() == 0) {
@@ -282,7 +282,7 @@ public class LibraryFragment extends Fragment implements PlaylistAdapter.OnUserP
                 } else {
                     binding.libraryArtistLayout.setVisibility(View.VISIBLE);
                     genreArtistsArrayList = result;
-                    genreArtistVerticalAdapter = new GenreArtistVerticalAdapter(getActivity(), genreArtistsArrayList,LibraryFragment.this);
+                    genreArtistVerticalAdapter = new GenreArtistVerticalAdapter(getActivity(), genreArtistsArrayList, LibraryFragment.this);
                     binding.libraryArtistRecyclerview.setAdapter(genreArtistVerticalAdapter);
                 }
                 binding.aviProgress.setVisibility(View.GONE);
@@ -296,7 +296,6 @@ public class LibraryFragment extends Fragment implements PlaylistAdapter.OnUserP
         });
 
     }
-
 
 
     @Override
@@ -316,17 +315,17 @@ public class LibraryFragment extends Fragment implements PlaylistAdapter.OnUserP
     @Override
     public void onUserPlaylistPlayAction(PlayList playList, int position, List<PlayList> playLists) {
 
-        if(position==0){
-            Bundle bundle=new Bundle();
-            bundle.putBoolean("editPlaylist",false);
+        if (position == 0) {
+            Bundle bundle = new Bundle();
+            bundle.putBoolean("editPlaylist", false);
             PlaylistCreationFragment playlistCreationFragment = new PlaylistCreationFragment();
             playlistCreationFragment.setArguments(bundle);
             getFragmentManager().beginTransaction()
                     .replace(R.id.frame_container_library_playlist_creation, playlistCreationFragment, "Library to Playlist")
                     .addToBackStack(null)
                     .commit();
-        }else{
-            Bundle bundle=new Bundle();
+        } else {
+            Bundle bundle = new Bundle();
             bundle.putInt("playlistID", playList.getId());
             bundle.putString("playlistName", playList.getName());
             bundle.putString("songCount", playList.getSongCount());
@@ -345,7 +344,7 @@ public class LibraryFragment extends Fragment implements PlaylistAdapter.OnUserP
     @Override
     public void onPlaylistPlayAction(PlayList playList, int position, List<PlayList> playLists) {
 
-        Bundle bundle=new Bundle();
+        Bundle bundle = new Bundle();
         bundle.putInt("playlistID", playList.getId());
         bundle.putString("playlistName", playList.getName());
         bundle.putString("songCount", playList.getSongCount());
@@ -361,7 +360,7 @@ public class LibraryFragment extends Fragment implements PlaylistAdapter.OnUserP
 
     @Override
     public void onArtistsPlayAction(Artist artist, int position, List<Artist> artistList) {
-        Bundle bundle=new Bundle();
+        Bundle bundle = new Bundle();
         bundle.putInt("artistID", artist.getId());
         bundle.putString("artistName", artist.getName());
         bundle.putString("artistImage", artist.getImage());

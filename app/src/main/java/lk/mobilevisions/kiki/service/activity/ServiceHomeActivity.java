@@ -40,6 +40,7 @@ import lk.mobilevisions.kiki.modules.tv.TvManager;
 import lk.mobilevisions.kiki.service.adapter.EntertainmentAdapter;
 import lk.mobilevisions.kiki.service.dto.ServiceModel;
 import lk.mobilevisions.kiki.service.dto.ServiceSub;
+import lk.mobilevisions.kiki.service.webview.InsuranceActivity;
 import lk.mobilevisions.kiki.ui.packages.PaymentActivity;
 import lk.mobilevisions.kiki.ui.splash.SplashActivity;
 import lk.mobilevisions.kiki.video.activity.ContactActivity;
@@ -278,14 +279,25 @@ public class ServiceHomeActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onEntertainmentItemClick(ServiceModel serviceModel, int position, List<ServiceModel> list) {
 
-        if (serviceModel.getName().equals("Video")){
+        if (serviceModel.getName().equals("Video")) {
             Intent intent = new Intent(ServiceHomeActivity.this, VideoDashboardActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 //                        progressDialog.dismiss();
             startActivity(intent);
             finish();
+        } else if (serviceModel.getName().equals("Insurance")) {
+            Intent intent = new Intent(ServiceHomeActivity.this, InsuranceActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent.putExtra("insuranceUrl", serviceModel.getUrl());
+            intent.putExtra("referanceCode", serviceModel.getReferanceCode());
+            intent.putExtra("landingUrl", serviceModel.getLandingUrl());
+//                        progressDialog.dismiss();
+            startActivity(intent);
+            finish();
         }
+
     }
 
     private void getUserDetails() {

@@ -33,6 +33,7 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.otto.Subscribe;
+import com.squareup.picasso.Picasso;
 import com.twilio.chat.ChatClient;
 import com.twilio.chat.ChatClientListener;
 import com.twilio.chat.ErrorInfo;
@@ -59,6 +60,7 @@ import lk.mobilevisions.kiki.audio.util.SpacesItemDecoration;
 import lk.mobilevisions.kiki.chat.ChatActivity;
 import lk.mobilevisions.kiki.chat.ChatClientManager;
 
+import lk.mobilevisions.kiki.chat.ChatProfileActivity;
 import lk.mobilevisions.kiki.chat.channels.ChannelManager;
 import lk.mobilevisions.kiki.chat.channels.ChannelVerticalAdapter;
 import lk.mobilevisions.kiki.chat.channels.LoadChannelListener;
@@ -127,6 +129,7 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
     List<ChatMember> chatMemberArrayList;
     String memberOnlineCount;
     private boolean isTiwilioChannelLoaded;
+    private boolean isUserImageAvailable;
     HashMap<String, com.twilio.chat.Channel> channelHashMap = new HashMap<String, com.twilio.chat.Channel>();
 
     public VideoHomeFragment() {
@@ -252,11 +255,36 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
             }
         }
 
+        checkUserImageAvailability();
+
         Bundle params = new Bundle();
         params.putString("user_actions", "videoHome");
         mFirebaseAnalytics.logEvent("video_tab", params);
 
         return binding.getRoot();
+    }
+
+    private void checkUserImageAvailability(){
+
+        try {
+            Picasso.with(getActivity()).load("https://storage.googleapis.com/kiki_images/live/viewer/1x/" + Application.getInstance().getAuthUser().getId() + ".jpeg")
+            .into(binding.testImageview, new com.squareup.picasso.Callback() {
+                @Override
+                public void onSuccess() {
+                    isUserImageAvailable = true;
+
+                }
+
+                @Override
+                public void onError() {
+                    isUserImageAvailable = false;
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void getChatToken() {
@@ -321,7 +349,7 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
             public void onSuccess(List<ChannelDto> result, List<Object> params) {
                 System.out.println("dydhdyhdhdhdh  55555 " + result.size());
                 if (result.size() == 0) {
-//                    binding.radioDramaLayout.setVisibility(View.GONE);
+                    binding.aviProgressRecycler.setVisibility(View.GONE);
 
                 } else {
 //                    binding.radioDramaLayout.setVisibility(View.VISIBLE);
@@ -646,6 +674,7 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
         selectedProgram = program;
         selectedProgramPosition = position;
         System.out.println("checking subscriped 4444 " + program.isSubscribed());
+        System.out.println("dscsd 111 " + program.getId());
 
         Intent intentEpisodes = new Intent(getActivity(), VideoEpisodeActivity.class);
         intentEpisodes.putExtra("program", program);
@@ -717,7 +746,7 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
                 }
             }
 
-
+//            binding.aviProgressRecycler.setVisibility(View.GONE);
         }
     }
 
@@ -748,6 +777,7 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
                         binding.recycleviewChannelsPrograms.setAdapter(channelAdapter);
                         ViewCompat.setNestedScrollingEnabled(binding.recycleviewChannelsPrograms, false);
                         channelAdapter.notifyDataSetChanged();
+//                        binding.aviProgressRecycler.setVisibility(View.GONE);
                     }
 
                 }
@@ -881,6 +911,15 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
             vibe.vibrate(50);
         }
 
+        if (!isUserImageAvailable) {
+            Intent intent = new Intent(getActivity(), ChatProfileActivity.class);
+            intent.putExtra("memberList", (Serializable) chatMemberArrayList);
+            intent.putExtra("chatImage", chatImage);
+            intent.putExtra("memberCount", memberOnlineCount);
+            intent.putExtra("channelDTO", channelDto);
+            startActivity(intent);
+        }
+
         chatImage = channelDto.getImagePath();
         if (chatChannelList != null) {
             if (channelDto.isBlock() && !channelDto.isMember()) {
@@ -936,10 +975,10 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
                     System.out.println("checking ss 44444");
                     getRoleDetail(selectedChatChannel);
                 }
-//                Toast.makeText(getApplicationContext(), "You're In.", Toast.LENGTH_SHORT).show();
             } else if (channelDto.isBlock()) {
 
                 Toast.makeText(getApplicationContext(), "You're Blocked.", Toast.LENGTH_SHORT).show();
+
             }
         }
     }

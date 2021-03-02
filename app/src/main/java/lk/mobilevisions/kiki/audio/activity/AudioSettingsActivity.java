@@ -16,6 +16,7 @@ import lk.mobilevisions.kiki.R;
 import lk.mobilevisions.kiki.app.Application;
 import lk.mobilevisions.kiki.app.Utils;
 import lk.mobilevisions.kiki.databinding.ActivityAudioSettingsBinding;
+import lk.mobilevisions.kiki.video.activity.VideoProfileActivity;
 
 public class AudioSettingsActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -48,7 +49,7 @@ public class AudioSettingsActivity extends AppCompatActivity implements View.OnC
                 finish();
                 break;
             case R.id.profile_text_view:
-                Intent profileIntent = new Intent(this, AudioProfileActivity.class);
+                Intent profileIntent = new Intent(this, VideoProfileActivity.class);
                 startActivity(profileIntent);
                 finish();
                 break;

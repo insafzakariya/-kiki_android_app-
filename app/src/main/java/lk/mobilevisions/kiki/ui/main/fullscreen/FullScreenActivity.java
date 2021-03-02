@@ -100,27 +100,33 @@ public class FullScreenActivity extends AppCompatActivity implements PlayerListe
     public void onVideoEnded() {
 
         if (Application.PLAYER.getEpisodes().size() > 1) {
+            System.out.println("dscsd 111 " + Application.PLAYER.getCurrentEpisodeItem().isUserSubscribed());
             if (Application.PLAYER.checkSubscription()) {
                 binding.subscribeLayout.setVisibility(View.GONE);
                 binding.frameLayoutFullScreenPlayer.setVisibility(View.VISIBLE);
                 Application.PLAYER.prepareForNextVideo();
                 startVideo();
+
             } else {
-                binding.textViewTitle.setText(Application.PLAYER.getCurrentEpisodeItem().getName());
-                try {
-                    Picasso.with(FullScreenActivity.this).load(URLDecoder.decode(Application.PLAYER.getCurrentEpisodeItem().getImage(), "UTF-8"))
-                            .fit()
-                            .placeholder(R.drawable.program)
-                            .into(binding.episodeImageView);
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
+                if (!Application.PLAYER.getCurrentEpisodeItem().isTrailerOnly()){
+                    finish();
+                } else {
+                    binding.textViewTitle.setText(Application.PLAYER.getCurrentEpisodeItem().getName());
+                    try {
+                        Picasso.with(FullScreenActivity.this).load(URLDecoder.decode(Application.PLAYER.getCurrentEpisodeItem().getImage(), "UTF-8"))
+                                .fit()
+                                .placeholder(R.drawable.program)
+                                .into(binding.episodeImageView);
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                    binding.frameLayoutFullScreenPlayer.setVisibility(View.GONE);
+                    binding.subscribeLayout.setVisibility(View.VISIBLE);
                 }
-                binding.frameLayoutFullScreenPlayer.setVisibility(View.GONE);
-                binding.subscribeLayout.setVisibility(View.VISIBLE);
+
             }
 
         }
-
     }
 
     @Override

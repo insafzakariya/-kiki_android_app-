@@ -67,18 +67,6 @@ public class LatestPlaylistAdapter extends
         holder.dateTextView.setText(current.getDate().substring(0, 4));
 
 
-
-
-
-//        String time = "07:02";
-//
-//        long min = Integer.parseInt(time.substring(0, 2));
-//        long sec = Integer.parseInt(time.substring(3));
-//
-//        long t = (min * 60L) + sec;
-//
-//        long result = TimeUnit.SECONDS.toMillis(t);
-
         try {
             Picasso.with(mContext).load(URLDecoder.decode(current.getImage(), "UTF-8")).fit().centerCrop()
                     .placeholder(R.drawable.program)

@@ -184,7 +184,9 @@
         <item name="android:scaleY">0.7</item>
     </style>
 
-
+    <style name="CustomAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/avatar_background</item>
+    </style>
 
     <!--<style name="Base.Widget.Design.TabLayout" parent="android:Widget">-->
         <!--<item name="tabBackground">@drawable/tab_background</item>-->

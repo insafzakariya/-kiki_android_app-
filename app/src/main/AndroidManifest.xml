@@ -258,6 +258,11 @@
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".service.webview.InsuranceActivity"
+            android:label="Insurance"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".audio.activity.AudioPaymentActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
@@ -319,6 +324,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".video.activity.VideoProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chat.ChatProfileActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".audio.activity.AudioProfileActivity"

@@ -16,6 +16,7 @@ import lk.mobilevisions.kiki.audio.model.dto.Genre;
 import lk.mobilevisions.kiki.audio.model.dto.PlayList;
 import lk.mobilevisions.kiki.audio.model.dto.SearchResponse;
 import lk.mobilevisions.kiki.audio.model.dto.Song;
+import lk.mobilevisions.kiki.chat.module.dto.Avatar;
 import lk.mobilevisions.kiki.chat.module.dto.ChannelDto;
 import lk.mobilevisions.kiki.chat.module.dto.ChatMember;
 import lk.mobilevisions.kiki.chat.module.dto.ChatToken;
@@ -516,10 +517,10 @@ public interface API {
 
     @GET("audio/playlist")
     Call<List<PlayList>> getRadioDramasData(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
-                                           @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
-                                           @Query("offset") int offset,
-                                           @Query("limit") int limit,
-                                           @Query("rd") boolean rd);
+                                            @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
+                                            @Query("offset") int offset,
+                                            @Query("limit") int limit,
+                                            @Query("rd") boolean rd);
 
     @GET("audio/playlist")
     Call<List<PlayList>> getAllPlaylist(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
@@ -653,8 +654,8 @@ public interface API {
                                                      @Query("password") String password);
 
     @GET("ui/service-ui")
-    Call<List<ServiceModel>> getSerivces (@Header(HEADER_AUTHORIZATION) String basicAuthToken,
-                                          @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken);
+    Call<List<ServiceModel>> getSerivces(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
+                                         @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken);
 
     @POST("deviceid/update")
     Call<Void> sendDeviceId(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
@@ -674,23 +675,32 @@ public interface API {
                                    @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken);
 
     @GET("chat/channels")
-    Call<List<ChannelDto>>getChannels(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
-                                      @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken);
+    Call<List<ChannelDto>> getChannels(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
+                                       @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken);
 
     @POST("chat/create-member")
-    Call<Void>createMember(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
-                                    @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
-                                     @Body HashMap<String, Object> request);
+    Call<Void> createMember(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
+                            @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
+                            @Body HashMap<String, Object> request);
 
     @GET("chat/get-role/channel_user")
-    Call<ChannelDto>getRoleDetails(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
-                                   @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken);
+    Call<ChannelDto> getRoleDetails(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
+                                    @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken);
 
     @GET("chat/get-chat-members/{chat-id}/{chat-role-type}")
-    Call<List<ChatMember>>getChatMembers(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
-                                         @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
-                                         @Path("chat-id") int id,
-                                         @Path("chat-role-type") String type);
+    Call<List<ChatMember>> getChatMembers(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
+                                          @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
+                                          @Path("chat-id") int id,
+                                          @Path("chat-role-type") String type);
 
+    @GET("viewer/avatar")
+    Call<List<Avatar>> getAvatarImages(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
+                                       @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken);
+
+    @POST("viewer/upload-profile-picture")
+    Call<Void> uploadUserImage(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
+                               @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
+                               @Header("Content-Type") String content_type,
+                               @Body HashMap<String, Object> request);
 
 }

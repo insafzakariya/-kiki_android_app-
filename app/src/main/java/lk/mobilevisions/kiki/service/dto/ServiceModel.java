@@ -24,12 +24,34 @@ public class ServiceModel {
     @SerializedName("url")
     @Expose
     private String url;
+    @SerializedName("landingUrl")
+    @Expose
+    private String landingUrl;
     @SerializedName("hasChild")
     @Expose
     private boolean hasChild;
     @SerializedName("childs")
     @Expose
     private List<ServiceModel> childList;
+    @SerializedName("referanceCode")
+    @Expose
+    private String referanceCode;
+
+    public String getLandingUrl() {
+        return landingUrl;
+    }
+
+    public void setLandingUrl(String landingUrl) {
+        this.landingUrl = landingUrl;
+    }
+
+    public String getReferanceCode() {
+        return referanceCode;
+    }
+
+    public void setReferanceCode(String referanceCode) {
+        this.referanceCode = referanceCode;
+    }
 
     public int getId() {
         return id;

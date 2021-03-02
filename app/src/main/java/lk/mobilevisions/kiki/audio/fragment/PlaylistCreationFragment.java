@@ -296,7 +296,7 @@ public class PlaylistCreationFragment extends Fragment implements PlaylistCreati
 
 
     private void createPlayList(String name, String imageUrl) {
-
+        System.out.println("sfsdfsf " + imageUrl);
         tvManager.createPlaylist(name, imageUrl, new APIListener<PlayList>() {
 
             @Override

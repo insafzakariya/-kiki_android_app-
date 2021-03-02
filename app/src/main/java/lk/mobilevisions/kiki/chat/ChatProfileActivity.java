@@ -1,13 +1,9 @@
-package lk.mobilevisions.kiki.video.activity;
-
+package lk.mobilevisions.kiki.chat;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-
-import androidx.databinding.DataBindingUtil;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -15,10 +11,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,7 +19,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
-
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
@@ -47,19 +38,21 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import lk.mobilevisions.kiki.R;
 import lk.mobilevisions.kiki.app.Application;
 import lk.mobilevisions.kiki.app.Constants;
 import lk.mobilevisions.kiki.app.Utils;
-import lk.mobilevisions.kiki.audio.activity.AudioDashboardActivity;
-import lk.mobilevisions.kiki.audio.activity.AudioProfileActivity;
-import lk.mobilevisions.kiki.chat.ChatProfileActivity;
-import lk.mobilevisions.kiki.chat.ChatUserImageAdapter;
+import lk.mobilevisions.kiki.audio.model.dto.PlayList;
+import lk.mobilevisions.kiki.audio.util.SpacesItemDecoration;
 import lk.mobilevisions.kiki.chat.module.ChatManager;
 import lk.mobilevisions.kiki.chat.module.dto.Avatar;
-import lk.mobilevisions.kiki.databinding.ActivityVideoProfileBinding;
+import lk.mobilevisions.kiki.databinding.ActivityChatProfileBinding;
 import lk.mobilevisions.kiki.modules.api.APIListener;
 import lk.mobilevisions.kiki.modules.api.dto.AuthUser;
 import lk.mobilevisions.kiki.modules.auth.AuthManager;
@@ -67,13 +60,12 @@ import lk.mobilevisions.kiki.modules.auth.AuthOptions;
 import lk.mobilevisions.kiki.modules.auth.User;
 import lk.mobilevisions.kiki.ui.auth.EditMobileNumberActivity;
 
-
-public class VideoProfileActivity extends AppCompatActivity implements View.OnClickListener, ChatUserImageAdapter.OnImageItemActionListener {
+public class ChatProfileActivity extends AppCompatActivity implements View.OnClickListener, ChatUserImageAdapter.OnImageItemActionListener {
     @Inject
     AuthManager authManager;
     @Inject
     ChatManager chatManager;
-    ActivityVideoProfileBinding binding;
+    ActivityChatProfileBinding binding;
     private String selectedLanguage = "English";
     AlertDialog alertDialog;
     private Context context;
@@ -82,12 +74,11 @@ public class VideoProfileActivity extends AppCompatActivity implements View.OnCl
     private String encodedImage = "";
     private int selectedAvatarId = 0;
     private String imageType;
-    private String selectedGender = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_video_profile);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_chat_profile);
         ((Application) getApplication()).getInjector().inject(this);
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -95,17 +86,15 @@ public class VideoProfileActivity extends AppCompatActivity implements View.OnCl
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.setStatusBarColor(ContextCompat.getColor(this, R.color.newUiBackground));
         }
-        ((Application) getApplication()).getAnalytics().setCurrentScreen(this, "VideoProfileActivity", null);
+        ((Application) getApplication()).getAnalytics().setCurrentScreen(this, "ChatProfileActivity", null);
         binding.includedToolbar.backImageview.setOnClickListener(this);
         binding.sinhalaTextView.setOnClickListener(this);
         binding.tamilTextView.setOnClickListener(this);
         binding.englishTextView.setOnClickListener(this);
         binding.phoneNumberEdittext.setOnClickListener(this);
         binding.updateLayout.setOnClickListener(this);
+        binding.chatUserImage.setOnClickListener(this);
         binding.updateLayout.setEnabled(false);
-        binding.userImage.setOnClickListener(this);
-        binding.maleSelectImageview.setOnClickListener(this);
-        binding.femaleSelectImageview.setOnClickListener(this);
 
         getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
@@ -118,8 +107,8 @@ public class VideoProfileActivity extends AppCompatActivity implements View.OnCl
                 .skipMemoryCache(true);
 
         Glide.with(this).load("https://storage.googleapis.com/kiki_images/live/viewer/1x/" + Application.getInstance().getAuthUser().getId() + ".jpeg")
-                .apply(options).into(binding.userImage);
-        System.out.println("fhfhfh " + Application.getInstance().getAuthUser().getId());
+                .apply(options)
+                .into(binding.chatUserImage);
 
     }
 
@@ -145,21 +134,8 @@ public class VideoProfileActivity extends AppCompatActivity implements View.OnCl
             case R.id.update_layout:
                 updateProfileDetails();
                 break;
-            case R.id.user_image:
+            case R.id.chat_user_image:
                 getAvatarImages();
-                break;
-            case R.id.male_select_imageview:
-                if (binding.maleSelectImageview.isChecked()) {
-                    selectedGender = "MALE";
-                    binding.femaleSelectImageview.setChecked(false);
-                }
-                break;
-            case R.id.female_select_imageview:
-                if (binding.femaleSelectImageview.isChecked()) {
-                    selectedGender = "FEMALE";
-                    binding.maleSelectImageview.setChecked(false);
-                }
-
                 break;
             default:
         }
@@ -201,16 +177,6 @@ public class VideoProfileActivity extends AppCompatActivity implements View.OnCl
             public void onSuccess(AuthUser user, List<Object> params) {
                 binding.phoneNumberEdittext.setText(user.getMobileNumber());
                 binding.nameEdittext.setText(user.getName());
-//                if (user.getGender() != null) {
-//                    System.out.println("djfbdjbf " + user.getGender());
-//                    if (user.getGender().equals("M")){
-//                        binding.maleSelectImageview.setChecked(true);
-//                    } else if (user.getGender().equals("F")){
-//                        binding.femaleSelectImageview.setChecked(true);
-//                    }
-//
-//                }
-//                System.out.println("sdsdsd " + user.getGender().toUpperCase());
                 binding.usernameField.setText(user.getUsername());
                 changeLanguageSelectStates(user.getLanguage().toLowerCase());
                 binding.updateLayout.setEnabled(true);
@@ -220,40 +186,37 @@ public class VideoProfileActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void onFailure(Throwable t) {
 
-                Utils.Error.onServiceCallFail(VideoProfileActivity.this, t);
+                Utils.Error.onServiceCallFail(ChatProfileActivity.this, t);
             }
         });
     }
 
     private void updateProfileDetails() {
         final MaterialDialog progressDialog = createProgressDialog();
-        if (((Activity) VideoProfileActivity.this).hasWindowFocus()) {
+        if (((Activity) ChatProfileActivity.this).hasWindowFocus()) {
             progressDialog.show();
         }
         final User user = new User();
         user.setName(binding.nameEdittext.getText().toString());
         user.setLanguage(AuthOptions.Language.valueOf
                 (selectedLanguage.toUpperCase()));
-//        user.setGender(AuthOptions.Gender.valueOf
-//                (selectedGender.toUpperCase()));
-        System.out.println("nfdjnfjd " + selectedGender);
         authManager.updateUserDetails(user, new APIListener<AuthUser>() {
             @Override
             public void onSuccess(AuthUser result, List<Object> params) {
                 ((Application) getApplication()).setAuthUser(result);
                 progressDialog.dismiss();
                 setUpAppLanguage();
-                Intent intent = new Intent(VideoProfileActivity.this, VideoDashboardActivity.class);
-                startActivity(intent);
-                finish();
-                Toast.makeText(getApplicationContext(), "Updated Successfully", Toast.LENGTH_SHORT).show();
+//                Intent intent = new Intent(ChatProfileActivity.this, VideoDashboardActivity.class);
+//                startActivity(intent);
+//                finish();
+                Toast.makeText(getApplicationContext(), "Updated Successfully", Toast.LENGTH_SHORT);
 
             }
 
             @Override
             public void onFailure(Throwable t) {
                 progressDialog.dismiss();
-                Utils.Error.onServiceCallFail(VideoProfileActivity.this, t);
+                Utils.Error.onServiceCallFail(ChatProfileActivity.this, t);
             }
         });
     }
@@ -284,7 +247,7 @@ public class VideoProfileActivity extends AppCompatActivity implements View.OnCl
 
 
         }
-        finish();
+//        finish();
     }
 
     private void getAvatarImages() {
@@ -298,7 +261,7 @@ public class VideoProfileActivity extends AppCompatActivity implements View.OnCl
                 avatar.setUrl("");
                 avatarList.add(avatar);
                 avatarList.addAll(avatars);
-                selectUserImageDialog(avatarList);
+                selecttUserImageDialog(avatarList);
 
 
             }
@@ -311,11 +274,12 @@ public class VideoProfileActivity extends AppCompatActivity implements View.OnCl
     }
 
 
-    private void selectUserImageDialog(List<Avatar> avatars) {
+    private void selecttUserImageDialog(List<Avatar> avatars) {
 
         LayoutInflater myLayout = LayoutInflater.from(this);
         final View dialogView = myLayout.inflate(R.layout.alert_profile_image_select, null);
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(VideoProfileActivity.this, R.style.CustomAlertDialog);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                this, R.style.CustomAlertDialog);
         alertDialogBuilder.setView(dialogView);
         alertDialog = alertDialogBuilder.create();
         alertDialog.setCanceledOnTouchOutside(true);
@@ -324,7 +288,7 @@ public class VideoProfileActivity extends AppCompatActivity implements View.OnCl
         RecyclerView recyclerView = (RecyclerView) alertDialog.findViewById(R.id.userImagesRecyclerView);
         recyclerView.setLayoutManager(new GridLayoutManager(context, 4));
 
-        ChatUserImageAdapter adapter = new ChatUserImageAdapter(this, avatars, VideoProfileActivity.this);
+        ChatUserImageAdapter adapter = new ChatUserImageAdapter(this, avatars, ChatProfileActivity.this);
         recyclerView.setAdapter(adapter);
 
 
@@ -346,7 +310,6 @@ public class VideoProfileActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onImagePlayAction(Avatar avatar, int position, List<Avatar> avatars) {
-
         if (position == 0) {
             imageType = "CUSTOM";
             Intent pickPhoto = new Intent(Intent.ACTION_PICK,
@@ -360,15 +323,10 @@ public class VideoProfileActivity extends AppCompatActivity implements View.OnCl
                         .placeholder(R.drawable.program)
                         .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
                         .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
-                        .into(binding.userImage);
+                        .into(binding.chatUserImage);
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-//            RequestOptions options = new RequestOptions()
-//                    .centerCrop()
-//                    .placeholder(R.drawable.program);
-//
-//            Glide.with(this).load(avatar.getUrl()).apply(options).into(binding.userImage);
 
         }
     }
@@ -379,7 +337,7 @@ public class VideoProfileActivity extends AppCompatActivity implements View.OnCl
             case 1:
                 if (resultCode == RESULT_OK) {
                     selectedImageUri = imageReturnedIntent.getData();
-                    binding.userImage.setImageURI(selectedImageUri);
+                    binding.chatUserImage.setImageURI(selectedImageUri);
 
                     final InputStream imageStream;
                     try {
@@ -397,12 +355,6 @@ public class VideoProfileActivity extends AppCompatActivity implements View.OnCl
     }
 
     private String encodeImage(Bitmap bm) {
-//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//        bm.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-//        byte[] b = baos.toByteArray();
-//        String encImage = Base64.encodeToString(b, Base64.DEFAULT);
-//
-//        return encImage;
 
         Bitmap immagex = bm;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

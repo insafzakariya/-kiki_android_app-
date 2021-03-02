@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:id="@+id/avatar_layout_root"
+    android:layout_marginBottom="@dimen/_8sdp"
+    android:layout_marginTop="@dimen/_5sdp"
+    android:layout_marginStart="@dimen/_2sdp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+
+            <com.joooonho.SelectableRoundedImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/userImage"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:src="@drawable/playlist_plus_backgroud_drawable"
+                android:scaleType="centerCrop"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:sriv_left_top_corner_radius="25dip"
+                app:sriv_right_top_corner_radius="25dip"
+                app:sriv_left_bottom_corner_radius="25dip"
+                app:sriv_right_bottom_corner_radius="25dip"
+                />
+
+            <com.joooonho.SelectableRoundedImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/overlay_drawable"
+                android:layout_width="@dimen/_55sdp"
+                android:layout_height="@dimen/_55sdp"
+                android:src="@drawable/avatar_select_background"
+                android:scaleType="centerCrop"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:sriv_left_top_corner_radius="25dip"
+                app:sriv_right_top_corner_radius="25dip"
+                app:sriv_left_bottom_corner_radius="25dip"
+                app:sriv_right_bottom_corner_radius="25dip"
+                />
+
+            <TextView
+                android:id="@+id/plus_textview"
+                android:layout_width="wrap_content"
+                app:layout_constraintStart_toStartOf="@+id/userImage"
+                app:layout_constraintEnd_toEndOf="@+id/userImage"
+                app:layout_constraintTop_toTopOf="@+id/userImage"
+                android:text="+"
+                android:visibility="visible"
+                android:textColor="@color/colorPrimary"
+                android:textSize="40sp"
+                app:layout_constraintBottom_toBottomOf="@+id/userImage"
+                android:layout_height="wrap_content">
+
+            </TextView>
+
+
+
+            <com.wang.avi.AVLoadingIndicatorView
+                android:id="@+id/aviProgress"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:indicatorName="BallSpinFadeLoaderIndicator"
+                app:indicatorColor="@color/md_white_1000"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </RelativeLayout>

@@ -1,25 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/_15sdp"
+        android:background="@color/backgroundColor">
 
 
         <include
             android:id="@+id/includedToolbar"
             layout="@layout/layout_video_profile_toolbar"
-            android:elevation="4dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/linearLayout8"
-            android:background="@color/backgroundColor"
+            android:layout_height="wrap_content"
+            android:elevation="4dp" />
+
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearLayout8"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/backgroundColor">
 
             <View
                 android:id="@+id/view"
@@ -31,71 +38,86 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <lk.mobilevisions.kiki.audio.util.KikiAudioMediumTextView
-                android:id="@+id/username_text_view"
-                android:layout_width="0dp"
+                android:id="@+id/username_field"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
                 android:layout_marginStart="@dimen/_16sdp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:layout_marginBottom="@dimen/_6sdp"
                 android:text="Username"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/_12sdp"
+                android:gravity="center"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view" />
 
-            <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
-                android:id="@+id/username_field"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_16sdp"
-                android:layout_marginStart="@dimen/_16sdp"
-                android:background="@null"
-                android:text=""
-                android:singleLine="true"
-                android:textCursorDrawable="@null"
-                android:textColor="@color/colorPrimary"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
+            <RelativeLayout
+                android:id="@+id/user_imageview"
+                app:layout_constraintTop_toBottomOf="@id/username_field"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/username_text_view" />
-
-            <View
-                android:id="@+id/username_line_view"
+                app:layout_constraintEnd_toEndOf="parent"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_2sdp"
-                android:layout_marginEnd="@dimen/_16sdp"
-                android:layout_marginStart="@dimen/_16sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:background="@color/audioSettingsLineColor"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/username_field" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp">
+
+                <com.joooonho.SelectableRoundedImageView
+
+                    android:id="@+id/user_image"
+                    android:layout_width="@dimen/_120sdp"
+                    android:layout_height="@dimen/_120sdp"
+                    android:layout_marginStart="@dimen/_7sdp"
+                    android:src="@drawable/ic_user_avatar"
+                    android:scaleType="centerCrop"
+                    android:layout_centerInParent="true"
+                    app:sriv_left_top_corner_radius="100dip"
+                    app:sriv_right_top_corner_radius="100dip"
+                    app:sriv_left_bottom_corner_radius="100dip"
+                    app:sriv_right_bottom_corner_radius="100dip" />
+
+                <ImageView
+                    android:id="@+id/camera_icon"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignEnd="@id/user_image"
+                    android:layout_alignBottom="@id/user_image"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:background="@drawable/chat_send_background"
+                    android:backgroundTint="@color/md_grey_500"
+                    android:src="@drawable/ic_image_camera" />
+
+            </RelativeLayout>
 
             <lk.mobilevisions.kiki.audio.util.KikiAudioMediumTextView
                 android:id="@+id/name_text_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
                 android:layout_marginStart="@dimen/_16sdp"
                 android:layout_marginTop="20dp"
+                android:layout_marginEnd="8dp"
                 android:text="Name"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/_12sdp"
+                android:drawableStart="@drawable/ic_user_icon"
+                android:drawablePadding="@dimen/_10sdp"
+                android:drawableTint="@color/colorPrimary"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/username_line_view" />
+                app:layout_constraintTop_toBottomOf="@+id/user_imageview" />
 
             <lk.mobilevisions.kiki.audio.util.KikiBoldEditText
                 android:id="@+id/name_edittext"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_46sdp"
                 android:layout_marginEnd="@dimen/_16sdp"
-                android:layout_marginStart="@dimen/_16sdp"
                 android:background="@null"
-                android:text=""
-                android:singleLine="true"
                 android:textCursorDrawable="@null"
+                android:singleLine="true"
+                android:text=""
                 android:textColor="@color/videoSettingsTextColor"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -106,26 +128,28 @@
                 android:id="@+id/name_line_view"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_2sdp"
-                android:layout_marginEnd="@dimen/_16sdp"
-                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginStart="@dimen/_46sdp"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
                 android:background="@color/videoSettingsLineColor"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/name_edittext" />
 
 
-
             <lk.mobilevisions.kiki.audio.util.KikiAudioMediumTextView
                 android:id="@+id/phone_number_text_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
                 android:layout_marginStart="@dimen/_16sdp"
                 android:layout_marginTop="20dp"
+                android:layout_marginEnd="8dp"
                 android:text="Phone Number"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/_12sdp"
+                android:drawableStart="@drawable/ic_baseline_phone"
+                android:drawablePadding="@dimen/_10sdp"
+                android:drawableTint="@color/colorPrimary"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/name_line_view" />
@@ -135,15 +159,14 @@
                 android:id="@+id/phone_number_edittext"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_46sdp"
                 android:layout_marginEnd="@dimen/_16sdp"
-                android:layout_marginStart="@dimen/_16sdp"
                 android:background="@null"
-                android:text=""
                 android:focusableInTouchMode="false"
-                android:editable="false"
                 android:singleLine="true"
-                android:textCursorDrawable="@null"
+                android:text=""
                 android:textColor="@color/videoSettingsTextColor"
+                android:textCursorDrawable="@null"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -153,80 +176,121 @@
                 android:id="@+id/phone_number_line_view"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_2sdp"
-                android:layout_marginEnd="@dimen/_16sdp"
-                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginStart="@dimen/_46sdp"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
                 android:background="@color/videoSettingsLineColor"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/phone_number_edittext" />
 
 
-            <!--<lk.mobilevisions.kiki.audio.util.KikiAudioMediumTextView-->
-                <!--android:id="@+id/email_text_view"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginEnd="8dp"-->
-                <!--android:layout_marginStart="@dimen/_16sdp"-->
-                <!--android:layout_marginTop="20dp"-->
-                <!--android:text="Email"-->
-                <!--android:textColor="@color/colorPrimary"-->
-                <!--android:textSize="@dimen/_12sdp"-->
-                <!--app:layout_constraintHorizontal_bias="0.0"-->
-                <!--app:layout_constraintStart_toStartOf="parent"-->
-                <!--app:layout_constraintTop_toBottomOf="@+id/phone_number_line_view" />-->
+            <lk.mobilevisions.kiki.audio.util.KikiAudioMediumTextView
+                android:id="@+id/gender_text_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="8dp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:text="Gender"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/_12sdp"
+                android:drawableStart="@drawable/ic_baseline_gender"
+                android:drawablePadding="@dimen/_10sdp"
+                android:drawableTint="@color/colorPrimary"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/phone_number_line_view" />
 
 
-            <!--<lk.mobilevisions.kiki.audio.util.KikiBoldEditText-->
-                <!--android:id="@+id/email_edittext"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginEnd="@dimen/_16sdp"-->
-                <!--android:layout_marginStart="@dimen/_16sdp"-->
-                <!--android:background="@null"-->
-                <!--android:textCursorDrawable="@null"-->
-                <!--android:singleLine="true"-->
-                <!--android:textColor="@color/videoSettingsTextColor"-->
-                <!--app:layout_constraintEnd_toEndOf="parent"-->
-                <!--app:layout_constraintHorizontal_bias="0.0"-->
-                <!--app:layout_constraintStart_toStartOf="parent"-->
-                <!--app:layout_constraintTop_toBottomOf="@+id/email_text_view" />-->
+            <lk.mobilevisions.kiki.audio.util.KikiAudioMediumTextView
+                android:id="@+id/gender_edittext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_46sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:text="Male"
+                android:textColor="@color/videoSettingsTextColor"
+                android:textSize="@dimen/_15sdp"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/gender_text_view" />
 
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/male_select_imageview"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:tint="@color/colorPrimary"
+                android:buttonTint="@color/colorPrimary"
+                android:layout_marginStart="@dimen/_10sdp"
+                app:layout_constraintBottom_toBottomOf="@+id/gender_edittext"
+                app:layout_constraintStart_toEndOf="@id/gender_edittext"
+                app:layout_constraintTop_toTopOf="@+id/gender_edittext" />
 
-            <!--<View-->
-                <!--android:id="@+id/email_line_view"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="@dimen/_2sdp"-->
-                <!--android:layout_marginEnd="@dimen/_16sdp"-->
-                <!--android:layout_marginStart="@dimen/_16sdp"-->
-                <!--android:layout_marginTop="@dimen/_10sdp"-->
-                <!--android:background="@color/videoSettingsLineColor"-->
-                <!--app:layout_constraintEnd_toEndOf="parent"-->
-                <!--app:layout_constraintStart_toStartOf="parent"-->
-                <!--app:layout_constraintTop_toBottomOf="@+id/email_edittext" />-->
+            <lk.mobilevisions.kiki.audio.util.KikiAudioMediumTextView
+                android:id="@+id/gender_edittext2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:text="Female"
+                android:textColor="@color/videoSettingsTextColor"
+                android:textSize="@dimen/_15sdp"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@id/male_select_imageview"
+                app:layout_constraintTop_toBottomOf="@+id/gender_text_view" />
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/female_select_imageview"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:tint="@color/colorPrimary"
+                android:buttonTint="@color/colorPrimary"
+                android:layout_marginStart="@dimen/_10sdp"
+                app:layout_constraintBottom_toBottomOf="@+id/gender_edittext2"
+                app:layout_constraintStart_toEndOf="@id/gender_edittext2"
+                app:layout_constraintTop_toTopOf="@+id/gender_edittext2"/>
+
+            <View
+                android:id="@+id/gender_line_view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_2sdp"
+                android:layout_marginStart="@dimen/_46sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:background="@color/videoSettingsLineColor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/gender_edittext" />
 
 
             <lk.mobilevisions.kiki.audio.util.KikiAudioMediumTextView
                 android:id="@+id/language_text_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
                 android:layout_marginStart="@dimen/_16sdp"
                 android:layout_marginTop="20dp"
+                android:layout_marginEnd="8dp"
                 android:text="Language"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/_13sdp"
+                android:drawableStart="@drawable/ic_baseline_language"
+                android:drawablePadding="@dimen/_10sdp"
+                android:drawableTint="@color/colorPrimary"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/phone_number_line_view" />
+                app:layout_constraintTop_toBottomOf="@+id/gender_line_view" />
 
             <lk.mobilevisions.kiki.audio.util.KikiAudioMediumTextView
                 android:id="@+id/english_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginStart="@dimen/_46sdp"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="8dp"
                 android:text="@string/english"
                 android:textColor="@color/videoSettingsTextColor"
                 android:textSize="@dimen/_15sdp"
@@ -238,9 +302,9 @@
                 android:id="@+id/sinhala_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginStart="@dimen/_46sdp"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="8dp"
                 android:text="@string/sinhala"
                 android:textColor="@color/videoSettingsTextColor"
                 android:textSize="@dimen/_15sdp"
@@ -253,9 +317,9 @@
                 android:id="@+id/tamil_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginStart="@dimen/_46sdp"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="8dp"
                 android:text="@string/tamil"
                 android:textColor="@color/videoSettingsTextColor"
                 android:textSize="@dimen/_15sdp"
@@ -268,9 +332,9 @@
                 android:id="@+id/language_line_view"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_2sdp"
-                android:layout_marginEnd="@dimen/_16sdp"
-                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginStart="@dimen/_46sdp"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
                 android:background="@color/videoSettingsLineColor"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -280,14 +344,14 @@
                 android:id="@+id/update_layout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="42dp"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginEnd="42dp"
-                android:gravity="center"
-                android:layout_marginStart="42dp"
                 android:background="@drawable/round_corner_background_settings_update_button"
-                app:layout_constraintTop_toBottomOf="@+id/language_line_view"
+                android:gravity="center"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/language_line_view">
 
 
                 <lk.mobilevisions.kiki.audio.util.KikiAudioBoldTextView
@@ -314,6 +378,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/english_text_view"
                 app:srcCompat="@drawable/select" />
+
             <ImageView
                 android:id="@+id/sinhala_select_imageview"
                 android:layout_width="@dimen/_20sdp"
@@ -325,6 +390,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/sinhala_text_view"
                 app:srcCompat="@drawable/select" />
+
             <ImageView
                 android:id="@+id/tamil_select_imageview"
                 android:layout_width="@dimen/_20sdp"
@@ -339,21 +405,21 @@
 
             <com.wang.avi.AVLoadingIndicatorView
                 android:id="@+id/aviProgress"
-                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
+                android:visibility="gone"
+                app:indicatorColor="@color/colorPrimary"
+                app:indicatorName="BallSpinFadeLoaderIndicator"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:indicatorName="BallSpinFadeLoaderIndicator"
-                app:indicatorColor="@color/colorPrimary"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
+        </ScrollView>
     </LinearLayout>
 </layout>

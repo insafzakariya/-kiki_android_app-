@@ -60,6 +60,7 @@ import lk.mobilevisions.kiki.audio.fragment.VideosFragment;
 import lk.mobilevisions.kiki.audio.fragment.YouMightAlsoLikeFragment;
 import lk.mobilevisions.kiki.chat.ChatClientManager;
 import lk.mobilevisions.kiki.chat.ChatInfoActivity;
+import lk.mobilevisions.kiki.chat.ChatProfileActivity;
 import lk.mobilevisions.kiki.chat.module.ChatModule;
 import lk.mobilevisions.kiki.modules.analytics.AnalyticsModule;
 import lk.mobilevisions.kiki.modules.auth.AuthModule;
@@ -69,6 +70,7 @@ import lk.mobilevisions.kiki.modules.subscriptions.SubscriptionsModule;
 import lk.mobilevisions.kiki.modules.tv.TvModule;
 
 import lk.mobilevisions.kiki.service.activity.ServiceHomeActivity;
+import lk.mobilevisions.kiki.service.webview.InsuranceActivity;
 import lk.mobilevisions.kiki.ui.auth.EditMobileNumberActivity;
 import lk.mobilevisions.kiki.ui.auth.LoginActivity;
 import lk.mobilevisions.kiki.ui.auth.UserFreeTrailFragment;
@@ -183,4 +185,6 @@ public interface Injector {
     void inject(ServiceHomeActivity activity);
     void inject(ChatClientManager manager);
     void inject(ChatInfoActivity activity);
+    void inject(ChatProfileActivity activity);
+    void inject(InsuranceActivity activity);
 }

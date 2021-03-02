@@ -29,8 +29,8 @@ android {
         applicationId "lk.mobilevisions.kiki"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 213
-        versionName "1.0.213"
+        versionCode 214
+        versionName "1.0.214"
         vectorDrawables.useSupportLibrary = true
         renderscriptTargetApi 20
         renderscriptSupportModeEnabled true
@@ -42,7 +42,8 @@ android {
         javaMaxHeapSize "4g"
     }
 
-    signingConfigs {git
+    signingConfigs {
+        git
 
         debug {
             storeFile file(System.properties['user.home'] + '/susilatv/susila_debug.keystore')
