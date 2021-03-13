@@ -19,7 +19,7 @@
 
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_120sdp"
-                android:background="@drawable/scenerysam"
+                android:background="@drawable/service_cover"
                 android:scaleType="centerCrop"
                 app:riv_mutate_background="true"
                 app:riv_corner_radius_bottom_left="35dip"
@@ -32,7 +32,7 @@
                 android:layout_centerInParent="true"
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="@dimen/_15sdp"
-                android:text="Good Morning"
+                android:text="Greeting"
                 android:textSize="22sp"
                 android:textColor="@color/md_white_1000"
                 android:textStyle="bold"/>
@@ -55,10 +55,11 @@
                 android:id="@+id/drawer_btn"
                 android:layout_width="@dimen/_25sdp"
                 android:layout_height="@dimen/_25sdp"
-                android:background="@drawable/ic_user_icon"
+                android:src="@drawable/ic_navigation_icon"
+                android:tint="#FFFFFF"
                 android:layout_alignParentEnd="true"
                 android:layout_centerInParent="true"
-                android:layout_marginEnd="@dimen/_20sdp"/>
+                android:layout_marginEnd="@dimen/_20sdp" />
 
         </RelativeLayout>
 

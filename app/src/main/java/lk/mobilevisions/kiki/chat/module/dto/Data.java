@@ -11,6 +11,7 @@ public class Data implements Serializable {
     @Expose
     private String token;
 
+
     public String getToken() {
         return token;
     }

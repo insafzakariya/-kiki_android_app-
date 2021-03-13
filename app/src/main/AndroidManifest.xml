@@ -263,6 +263,17 @@
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".service.webview.GamesActivity"
+            android:label="Games"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatweb.ChatWebActivity"
+            android:label="Chat"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".audio.activity.AudioPaymentActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />

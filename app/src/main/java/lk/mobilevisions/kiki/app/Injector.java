@@ -62,14 +62,17 @@ import lk.mobilevisions.kiki.chat.ChatClientManager;
 import lk.mobilevisions.kiki.chat.ChatInfoActivity;
 import lk.mobilevisions.kiki.chat.ChatProfileActivity;
 import lk.mobilevisions.kiki.chat.module.ChatModule;
+import lk.mobilevisions.kiki.chatweb.ChatWebActivity;
 import lk.mobilevisions.kiki.modules.analytics.AnalyticsModule;
 import lk.mobilevisions.kiki.modules.auth.AuthModule;
+import lk.mobilevisions.kiki.modules.chat.ChatWebModule;
 import lk.mobilevisions.kiki.modules.info.InfoModule;
 import lk.mobilevisions.kiki.modules.notifications.NotificationModule;
 import lk.mobilevisions.kiki.modules.subscriptions.SubscriptionsModule;
 import lk.mobilevisions.kiki.modules.tv.TvModule;
 
 import lk.mobilevisions.kiki.service.activity.ServiceHomeActivity;
+import lk.mobilevisions.kiki.service.webview.GamesActivity;
 import lk.mobilevisions.kiki.service.webview.InsuranceActivity;
 import lk.mobilevisions.kiki.ui.auth.EditMobileNumberActivity;
 import lk.mobilevisions.kiki.ui.auth.LoginActivity;
@@ -102,7 +105,7 @@ import lk.mobilevisions.kiki.video.fragment.VideoMylistFragment;
 
 @Singleton
 @Component(modules = {AuthModule.class, TvModule.class, SubscriptionsModule.class,
-        NotificationModule.class, AnalyticsModule.class, InfoModule.class, ChatModule.class})
+        NotificationModule.class, AnalyticsModule.class, InfoModule.class, ChatModule.class, ChatWebModule.class})
 public interface Injector {
     void inject(LoginActivity activity);
     void inject(ChannelsActivity activity);
@@ -187,4 +190,6 @@ public interface Injector {
     void inject(ChatInfoActivity activity);
     void inject(ChatProfileActivity activity);
     void inject(InsuranceActivity activity);
+    void inject(GamesActivity activity);
+    void inject(ChatWebActivity activity);
 }

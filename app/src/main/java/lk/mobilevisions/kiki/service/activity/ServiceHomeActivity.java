@@ -14,6 +14,8 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -38,8 +40,10 @@ import lk.mobilevisions.kiki.modules.auth.AuthManager;
 import lk.mobilevisions.kiki.modules.subscriptions.SubscriptionsManager;
 import lk.mobilevisions.kiki.modules.tv.TvManager;
 import lk.mobilevisions.kiki.service.adapter.EntertainmentAdapter;
+import lk.mobilevisions.kiki.service.adapter.GamesAdapter;
 import lk.mobilevisions.kiki.service.dto.ServiceModel;
 import lk.mobilevisions.kiki.service.dto.ServiceSub;
+import lk.mobilevisions.kiki.service.webview.GamesActivity;
 import lk.mobilevisions.kiki.service.webview.InsuranceActivity;
 import lk.mobilevisions.kiki.ui.packages.PaymentActivity;
 import lk.mobilevisions.kiki.ui.splash.SplashActivity;
@@ -83,7 +87,7 @@ public class ServiceHomeActivity extends AppCompatActivity implements View.OnCli
 
         getServices();
         checkTrialStatus();
-        getUserDetails();
+        currentTime();
 
         channelsLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         binding.includedComponents.servicesRecyclerview.setLayoutManager(channelsLayoutManager);
@@ -92,6 +96,8 @@ public class ServiceHomeActivity extends AppCompatActivity implements View.OnCli
         binding.includedComponents.servicesRecyclerview.setItemViewCacheSize(50);
         binding.includedComponents.servicesRecyclerview.setDrawingCacheEnabled(true);
         binding.includedComponents.servicesRecyclerview.setAdapter(mAdapter);
+
+        binding.includedComponents.userText.setText(Application.getInstance().getAuthUser().getName());
 
         drawerToggle = new ActionBarDrawerToggle(this, binding.drawerLayout,
                 R.string.drawer_open, R.string.drawer_close) {
@@ -174,6 +180,27 @@ public class ServiceHomeActivity extends AppCompatActivity implements View.OnCli
                 binding.drawerLayout.closeDrawer(GravityCompat.START);
             }
         });
+    }
+
+    private void currentTime() {
+
+        Date date = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+
+        String greeting = null;
+        if (hour >= 6 && hour < 12) {
+            greeting = "Good Morning";
+        } else if (hour >= 12 && hour < 17) {
+            greeting = "Good Afternoon";
+        } else if (hour >= 17 && hour < 21) {
+            greeting = "Good Evening";
+        } else if (hour >= 21) {
+            greeting = "Good Night";
+        }
+
+        binding.includedComponents.greetingText.setText(greeting);
     }
 
     @Override
@@ -282,38 +309,25 @@ public class ServiceHomeActivity extends AppCompatActivity implements View.OnCli
         if (serviceModel.getName().equals("Video")) {
             Intent intent = new Intent(ServiceHomeActivity.this, VideoDashboardActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                        progressDialog.dismiss();
+//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
-            finish();
+//            finish();
+        } else if (serviceModel.getName().equals("Music")) {
+            Intent intent = new Intent(ServiceHomeActivity.this, AudioDashboardActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+//            finish();
         } else if (serviceModel.getName().equals("Insurance")) {
             Intent intent = new Intent(ServiceHomeActivity.this, InsuranceActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             intent.putExtra("insuranceUrl", serviceModel.getUrl());
             intent.putExtra("referanceCode", serviceModel.getReferanceCode());
             intent.putExtra("landingUrl", serviceModel.getLandingUrl());
-//                        progressDialog.dismiss();
             startActivity(intent);
-            finish();
+//            finish();
         }
 
     }
-
-    private void getUserDetails() {
-
-        authManager.getUserDetails(new APIListener<AuthUser>() {
-            @Override
-            public void onSuccess(AuthUser user, List<Object> params) {
-
-                binding.includedComponents.userText.setText(user.getName());
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-
-            }
-        });
-    }
-
 }

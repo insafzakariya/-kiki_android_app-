@@ -1,6 +1,9 @@
 package lk.mobilevisions.kiki.service.adapter;
 
+import android.animation.LayoutTransition;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +19,8 @@ import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.cardview.widget.CardView;
+import androidx.palette.graphics.Palette;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -79,7 +84,9 @@ public class EntertainmentAdapter extends
 
         holder.descriptionTextView.setText(current.getDescription());
 
-
+        LayoutTransition lt = new LayoutTransition();
+        lt.disableTransitionType(LayoutTransition.CHANGING);
+        holder.linearLayoutGame.setLayoutTransition(lt);
 
         try {
             Picasso.with(mContext).load(URLDecoder.decode(current.getImage(), "UTF-8")).fit().centerCrop()
@@ -92,12 +99,17 @@ public class EntertainmentAdapter extends
             @Override
             public void onClick(View v) {
 
-
                 if (current.getChildList() != null && current.getChildList().size() > 0 && holder.linearLayoutGame.getVisibility() == View.GONE) {
 
-                    System.out.println("hfghfhfhfhf 111 ");
-                    holder.linearLayoutGame.setVisibility(View.VISIBLE);
+                    Bitmap bitmap = BitmapFactory.decodeResource(v.getContext().getResources(),
+                            R.drawable.expand_games);
 
+                    Palette palette = Palette.generate(bitmap);
+                    Palette.Swatch swatch = palette.getVibrantSwatch();
+                    holder.linearLayoutGame.setBackgroundColor(swatch.getRgb());
+                    holder.cardview.setCardBackgroundColor(swatch.getRgb());
+
+                    holder.linearLayoutGame.setVisibility(View.VISIBLE);
                     holder.recyclerView.setLayoutManager(new GridLayoutManager(mContext, 5));
                     GamesAdapter mAdapter = new GamesAdapter(mContext, current.getChildList());
                     holder.recyclerView.setHasFixedSize(true);
@@ -106,7 +118,7 @@ public class EntertainmentAdapter extends
                     holder.recyclerView.setAdapter(mAdapter);
 
                 }else if (current.getChildList() != null && current.getChildList().size() > 0 && holder.linearLayoutGame.getVisibility() == View.VISIBLE){
-                    System.out.println("hfghfhfhfhf 222 ");
+
                     holder.linearLayoutGame.setVisibility(View.GONE);
                 }
                 itemClickListener.onEntertainmentItemClick(mArrayList.get(holder.getAdapterPosition()),
@@ -140,6 +152,10 @@ public class EntertainmentAdapter extends
 
         @BindView(R.id.linearLayout_game)
         LinearLayout linearLayoutGame;
+
+        @BindView(R.id.expandable_cardview)
+        CardView cardview;
+
 
 
         public EntertainmentViewHolder(View itemView) {

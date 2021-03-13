@@ -54,6 +54,8 @@ public class ChatActivity extends AppCompatActivity implements ChannelListener, 
 
         String chatImage = getIntent().getStringExtra("chatImage");
         binding.includedChatSub.onlineCountSize.setText(getIntent().getStringExtra("memberCount"));
+        binding.includedChatSub.inboxTextview.setText(getIntent().getStringExtra("chatName"));
+        int chatID = getIntent().getIntExtra("chatID",0);
 
         if (chatImage != null) {
             try {
@@ -70,6 +72,7 @@ public class ChatActivity extends AppCompatActivity implements ChannelListener, 
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ChatActivity.this, ChatInfoActivity.class);
+                intent.putExtra("chatId",chatID);
                 startActivity(intent);
             }
         });

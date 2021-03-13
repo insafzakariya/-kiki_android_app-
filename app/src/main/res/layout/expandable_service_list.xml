@@ -10,11 +10,12 @@
     android:layout_marginTop="@dimen/_7sdp">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/expandable_cardview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="10dip"
-        app:cardBackgroundColor="@color/md_grey_800"
-        app:cardElevation="2dp">
+        app:cardBackgroundColor="@color/transparent"
+        app:cardElevation="4dp">
 
         <RelativeLayout
             android:id="@+id/service_list_linear"
@@ -42,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_15sdp"
-                android:paddingTop="30dp"
+                android:paddingTop="35dp"
                 android:singleLine="true"
                 android:text="Havana"
                 android:textColor="@color/md_white_1000"
@@ -56,6 +57,7 @@
                 android:layout_marginStart="@dimen/_15sdp"
                 android:layout_below="@id/serv_head"
                 android:singleLine="true"
+                android:visibility="gone"
                 android:text="Camila Cabello"
                 android:textColor="#FFFFFF"
                 android:textSize="10sp" />
@@ -70,6 +72,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+<!--                <View-->
+<!--                    android:id="@+id/card_view_line"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="@dimen/_2sdp"-->
+<!--                    android:background="@color/videoSettingsLineColor" />-->
+
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/sub_recyclerview"
                     android:layout_width="match_parent"
@@ -79,9 +88,8 @@
                     android:layout_marginEnd="@dimen/_5sdp"/>
 
             </LinearLayout>
+
         </RelativeLayout>
-
-
 
     </androidx.cardview.widget.CardView>
 

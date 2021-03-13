@@ -113,7 +113,7 @@ public class VideoProfileActivity extends AppCompatActivity implements View.OnCl
         RequestOptions options = new RequestOptions()
                 .fitCenter()
                 .centerCrop()
-                .placeholder(R.drawable.program)
+                .placeholder(R.drawable.ic_user_avatar)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true);
 

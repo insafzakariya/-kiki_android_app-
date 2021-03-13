@@ -7,7 +7,6 @@ import android.content.Context;
 
 import androidx.appcompat.app.AppCompatDelegate;
 
-import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
@@ -20,8 +19,6 @@ import com.raizlabs.android.dbflow.config.FlowManager;
 import com.squareup.otto.Bus;
 import com.squareup.otto.ThreadEnforcer;
 import com.twilio.chat.Channel;
-import com.twilio.chat.ErrorInfo;
-import com.twilio.chat.StatusListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,7 +28,6 @@ import java.util.concurrent.TimeUnit;
 //import io.fabric.sdk.android.Fabric;
 
 import lk.mobilevisions.kiki.BuildConfig;
-import lk.mobilevisions.kiki.audio.model.dto.Song;
 import lk.mobilevisions.kiki.audio.util.StreamSharedPref;
 import lk.mobilevisions.kiki.chat.ChatClientManager;
 import lk.mobilevisions.kiki.chat.module.ChatModule;
@@ -40,7 +36,9 @@ import lk.mobilevisions.kiki.modules.api.API;
 import lk.mobilevisions.kiki.modules.api.ComAPI;
 import lk.mobilevisions.kiki.modules.api.dto.AuthUser;
 import lk.mobilevisions.kiki.modules.api.dto.ForgotPasswordUser;
+import lk.mobilevisions.kiki.modules.api.ChatAPI;
 import lk.mobilevisions.kiki.modules.auth.AuthModule;
+import lk.mobilevisions.kiki.modules.chat.ChatWebModule;
 import lk.mobilevisions.kiki.modules.info.InfoModule;
 import lk.mobilevisions.kiki.modules.notifications.NotificationModule;
 import lk.mobilevisions.kiki.modules.subscriptions.SubscriptionsModule;
@@ -49,10 +47,8 @@ import okhttp3.Headers;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Response;
-import okhttp3.internal.http.RealResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import okio.GzipSource;
-import okio.Okio;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import timber.log.Timber;
@@ -69,12 +65,12 @@ public class Application extends android.app.Application {
     private ForgotPasswordUser forgotPasswordUser;
 
     private OkHttpClient.Builder httpClient;
-
     private OkHttpClient.Builder httpClientCom;
+    private OkHttpClient.Builder httpClientChat;
 
     private Retrofit retrofit;
-
     private Retrofit retrofitCom;
+    private Retrofit retrofitChat;
 
     private Session session;
     private List<Integer> songsAddedToPlaylist = new ArrayList<>();
@@ -236,11 +232,15 @@ public class Application extends android.app.Application {
         httpClient = new OkHttpClient.Builder();
         httpClient.readTimeout(20, TimeUnit.SECONDS);
         httpClient.connectTimeout(20, TimeUnit.SECONDS);
-        httpClientCom = new OkHttpClient.Builder();
         httpClient.addInterceptor(logging);
+        httpClientCom = new OkHttpClient.Builder();
         httpClientCom.readTimeout(10, TimeUnit.SECONDS);
         httpClientCom.connectTimeout(10, TimeUnit.SECONDS);
         httpClientCom.addInterceptor(logging);
+        httpClientChat = new OkHttpClient.Builder();
+        httpClientChat.readTimeout(20, TimeUnit.SECONDS);
+        httpClientChat.connectTimeout(20, TimeUnit.SECONDS);
+        httpClientChat.addInterceptor(logging);
         //httpClientCom.addInterceptor(new UnzippingInterceptor());
 
         retrofit = new Retrofit.Builder()
@@ -259,6 +259,13 @@ public class Application extends android.app.Application {
 
         ComAPI comAPI = retrofitCom.create(ComAPI.class);
 
+        retrofitChat = new Retrofit.Builder()
+                .baseUrl("http://35.200.142.38:8082/kiki-chat/api/v1/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(httpClientChat.build())
+                .build();
+        ChatAPI chatAPI = retrofitChat.create(ChatAPI.class);
+
         injector = DaggerInjector.builder()
                 .authModule(new AuthModule(this, api))
                 .tvModule(new TvModule(this, api))
@@ -267,6 +274,7 @@ public class Application extends android.app.Application {
                 .notificationModule(new NotificationModule(this, api))
                 .chatModule(new ChatModule(this, api))
                 .infoModule(new InfoModule(this, comAPI))
+                .chatWebModule(new ChatWebModule(this,chatAPI))
                 .build();
     }
 

@@ -12,22 +12,17 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import javax.inject.Inject;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import im.delight.android.webview.AdvancedWebView;
 import lk.mobilevisions.kiki.R;
 import lk.mobilevisions.kiki.app.Application;
 import lk.mobilevisions.kiki.databinding.ActivityInsuranceBinding;
-import lk.mobilevisions.kiki.modules.subscriptions.SubscriptionsManager;
 import lk.mobilevisions.kiki.service.activity.ServiceHomeActivity;
 
 public class InsuranceActivity extends AppCompatActivity implements AdvancedWebView.Listener {
 
     ActivityInsuranceBinding binding;
-    @Inject
-    SubscriptionsManager subscriptionsManager;
     private boolean navigateToHome = false;
 
     @Override
@@ -35,6 +30,7 @@ public class InsuranceActivity extends AppCompatActivity implements AdvancedWebV
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_insurance);
         ((Application) getApplication()).getInjector().inject(this);
+        ((Application) getApplication()).getAnalytics().setCurrentScreen(this, "InsuranceActivity", null);
 
         String insuranceUrl = getIntent().getStringExtra("insuranceUrl");
         String referanceCode = getIntent().getStringExtra("referanceCode");
@@ -43,13 +39,17 @@ public class InsuranceActivity extends AppCompatActivity implements AdvancedWebV
         binding.includedToolbar.backImageview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (navigateToHome){
+                if (navigateToHome) {
                     Intent intent = new Intent(InsuranceActivity.this, ServiceHomeActivity.class);
                     startActivity(intent);
                     finish();
                     binding.webViewInsurance.clearCache(true);
                 }
-                binding.webViewInsurance.goBack();
+                if (!binding.webViewInsurance.canGoBack()){
+                    finish();
+                }
+
+                binding.webViewInsurance.onBackPressed();
             }
         });
         binding.webViewInsurance.setListener(this, this);
@@ -71,8 +71,8 @@ public class InsuranceActivity extends AppCompatActivity implements AdvancedWebV
 
         binding.webViewInsurance.addHttpHeader("X-Requested-With", "");
         binding.webViewInsurance.loadUrl("http://dev.v4.janashakthi-digital.echonlabs.com/app/plans/health#quickstart" + "?referralcode=" + referanceCode + "&lang=" +
-                Application.getInstance().getAuthUser().getLanguage().toLowerCase().substring(0,2) + "&bridge_id=" + Application.getInstance().getAuthUser().getId());
-
+                Application.getInstance().getAuthUser().getLanguage().toLowerCase().substring(0, 2) + "&bridge_id=" + Application.getInstance().getAuthUser().getId());
+        
     }
 
     @Override

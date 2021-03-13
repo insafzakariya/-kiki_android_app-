@@ -33,7 +33,6 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.otto.Subscribe;
-import com.squareup.picasso.Picasso;
 import com.twilio.chat.ChatClient;
 import com.twilio.chat.ChatClientListener;
 import com.twilio.chat.ErrorInfo;
@@ -53,6 +52,9 @@ import java.util.TimerTask;
 
 import javax.inject.Inject;
 
+import lk.mobilevisions.kiki.chatweb.ChatVerticalAdapter;
+import lk.mobilevisions.kiki.chatweb.ChatWebActivity;
+import lk.mobilevisions.kiki.chatweb.dto.ChatWebToken;
 import lk.mobilevisions.kiki.R;
 import lk.mobilevisions.kiki.app.Application;
 import lk.mobilevisions.kiki.app.Utils;
@@ -60,7 +62,6 @@ import lk.mobilevisions.kiki.audio.util.SpacesItemDecoration;
 import lk.mobilevisions.kiki.chat.ChatActivity;
 import lk.mobilevisions.kiki.chat.ChatClientManager;
 
-import lk.mobilevisions.kiki.chat.ChatProfileActivity;
 import lk.mobilevisions.kiki.chat.channels.ChannelManager;
 import lk.mobilevisions.kiki.chat.channels.ChannelVerticalAdapter;
 import lk.mobilevisions.kiki.chat.channels.LoadChannelListener;
@@ -75,6 +76,8 @@ import lk.mobilevisions.kiki.modules.api.dto.Channel;
 import lk.mobilevisions.kiki.modules.api.dto.PackageToken;
 import lk.mobilevisions.kiki.modules.api.dto.PackageV2;
 import lk.mobilevisions.kiki.modules.api.dto.Program;
+import lk.mobilevisions.kiki.modules.chat.ChatWebDTO;
+import lk.mobilevisions.kiki.modules.chat.ChatWebManager;
 import lk.mobilevisions.kiki.modules.subscriptions.SubscriptionsManager;
 import lk.mobilevisions.kiki.modules.tv.TvManager;
 import lk.mobilevisions.kiki.video.activity.VideoChildModeActivity;
@@ -89,12 +92,14 @@ import static com.microsoft.appcenter.utils.HandlerUtils.runOnUiThread;
 
 
 public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener,
-        ProgramAdapter.OnProgramItemClickListener, ChannelVerticalAdapter.OnChannelItemActionListener, ChatClientListener {
+        ProgramAdapter.OnProgramItemClickListener, ChannelVerticalAdapter.OnChannelItemActionListener, ChatClientListener, ChatVerticalAdapter.OnChatItemActionListener {
 
     @Inject
     TvManager tvManager;
     @Inject
     ChatManager chatManager;
+    @Inject
+    ChatWebManager chatWebManager;
 
     @Inject
     SubscriptionsManager subscriptionsManager;
@@ -119,6 +124,8 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
     private String messageBody;
     private String sSID;
     private String chatImage;
+    private int chatID;
+    private String  chatName;
 
     private ChatClientManager chatClientManager;
     private ProgressDialog progressDialog;
@@ -129,8 +136,10 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
     List<ChatMember> chatMemberArrayList;
     String memberOnlineCount;
     private boolean isTiwilioChannelLoaded;
-    private boolean isUserImageAvailable;
     HashMap<String, com.twilio.chat.Channel> channelHashMap = new HashMap<String, com.twilio.chat.Channel>();
+
+    private ChatVerticalAdapter chatVerticalAdapter;
+    List<ChatWebDTO> chatList = new ArrayList<>();
 
     public VideoHomeFragment() {
         // Required empty public constructor
@@ -156,14 +165,17 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
         binding.chatChannelsRecyclerview.addItemDecoration(new SpacesItemDecoration(15));
         binding.chatChannelsRecyclerview.setHasFixedSize(true);
         binding.chatChannelsRecyclerview.setNestedScrollingEnabled(false);
+
+        binding.chatWebRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        binding.chatWebRecyclerview.addItemDecoration(new SpacesItemDecoration(15));
+        binding.chatWebRecyclerview.setHasFixedSize(true);
+        binding.chatWebRecyclerview.setNestedScrollingEnabled(false);
         setupSliderView();
         Application.BUS.register(this);
         loadChannelsAndPrograms();
         checkSubscription();
         channelManager = ChannelManager.getInstance();
         getChatToken();
-        getChatMembers();
-
 
         binding.indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -187,7 +199,7 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
         binding.playLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (programs != null && programs.isEmpty() != true) {
+                if (programs != null && !programs.isEmpty()) {
                     Program program = programs.get(binding.pager.getCurrentItem());
                     Intent intentEpisodes = new Intent(getActivity(), VideoEpisodeActivity.class);
                     intentEpisodes.putExtra("program", program);
@@ -224,14 +236,11 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
 
         if (programType != null) {
             if (programType.equals("0")) {
-                System.out.println("dhdhdhd 0000 ");
+
                 tvManager.getProgramWithID(programid, new APIListener<Program>() {
                     @Override
                     public void onSuccess(Program program, List<Object> params) {
 
-                        System.out.println("dhdhdhd 1111 ");
-
-                        System.out.println("dhdhdhd " + program);
                         Intent intentEpisodes = new Intent(getActivity(), VideoEpisodeActivity.class);
                         intentEpisodes.putExtra("program", program);
                         startActivity(intentEpisodes);
@@ -248,14 +257,14 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
 
                     @Override
                     public void onFailure(Throwable t) {
-                        System.out.println("dhdhdhd 2222 ");
+
                         Utils.Error.onServiceCallFail(getActivity(), t);
                     }
                 });
             }
         }
-
-        checkUserImageAvailability();
+        getChats();
+        getChatMembers();
 
         Bundle params = new Bundle();
         params.putString("user_actions", "videoHome");
@@ -264,34 +273,39 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
         return binding.getRoot();
     }
 
-    private void checkUserImageAvailability(){
+    private void getChats() {
 
-        try {
-            Picasso.with(getActivity()).load("https://storage.googleapis.com/kiki_images/live/viewer/1x/" + Application.getInstance().getAuthUser().getId() + ".jpeg")
-            .into(binding.testImageview, new com.squareup.picasso.Callback() {
-                @Override
-                public void onSuccess() {
-                    isUserImageAvailable = true;
+        chatWebManager.getChatChannels("kiki", "123456", new APIListener<List<ChatWebDTO>>() {
+            @Override
+            public void onSuccess(List<ChatWebDTO> result, List<Object> params) {
 
+                if (result.size() == 0) {
+                    binding.aviProgressRecycler.setVisibility(View.GONE);
+
+                } else {
+//                    binding.radioDramaLayout.setVisibility(View.VISIBLE);
+                    chatList = result;
+
+                    chatVerticalAdapter = new ChatVerticalAdapter(getActivity(), chatList, VideoHomeFragment.this);
+                    binding.chatWebRecyclerview.setAdapter(chatVerticalAdapter);
                 }
 
-                @Override
-                public void onError() {
-                    isUserImageAvailable = false;
+            }
 
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+        });
     }
+
 
     private void getChatToken() {
         chatManager.getAccessToken(new APIListener<ChatToken>() {
             @Override
             public void onSuccess(ChatToken chatToken, List<Object> params) {
-                System.out.println("dydhdyhdhdhdh  66666 " + chatToken.getDataObject().getToken());
+
                 checkTwilioClient(chatToken.getDataObject().getToken());
             }
 
@@ -746,7 +760,7 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
                 }
             }
 
-//            binding.aviProgressRecycler.setVisibility(View.GONE);
+            binding.aviProgressRecycler.setVisibility(View.GONE);
         }
     }
 
@@ -903,21 +917,16 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
     @Override
     public void onChannelAction(ChannelDto channelDto, int position, List<ChannelDto> playLists) {
 
+//        getChatMembers(channelDto.getId());
+        chatID = channelDto.getId();
+        chatName = channelDto.getFriendlyName();
+        System.out.println("jbdjfbsjfb " + channelDto.getFriendlyName());
         Vibrator vibe = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             vibe.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE));
         } else {
             //deprecated in API 26
             vibe.vibrate(50);
-        }
-
-        if (!isUserImageAvailable) {
-            Intent intent = new Intent(getActivity(), ChatProfileActivity.class);
-            intent.putExtra("memberList", (Serializable) chatMemberArrayList);
-            intent.putExtra("chatImage", chatImage);
-            intent.putExtra("memberCount", memberOnlineCount);
-            intent.putExtra("channelDTO", channelDto);
-            startActivity(intent);
         }
 
         chatImage = channelDto.getImagePath();
@@ -939,6 +948,8 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
                     intent.putExtra("memberList", (Serializable) chatMemberArrayList);
                     intent.putExtra("chatImage", chatImage);
                     intent.putExtra("memberCount", memberOnlineCount);
+                    intent.putExtra("chatID", channelDto.getId());
+                    intent.putExtra("chatName", channelDto.getFriendlyName());
                     startActivity(intent);
 
                 }
@@ -1033,6 +1044,8 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
                     intent.putExtra("memberList", (Serializable) chatMemberArrayList);
                     intent.putExtra("chatImage", chatImage);
                     intent.putExtra("memberCount", memberOnlineCount);
+                    intent.putExtra("chatID", chatID);
+                    intent.putExtra("chatName", chatName);
                     startActivity(intent);
                 } else {
                     System.out.println("checking ss 12121212 ");
@@ -1045,6 +1058,8 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
                             intent.putExtra("memberList", (Serializable) chatMemberArrayList);
                             intent.putExtra("chatImage", chatImage);
                             intent.putExtra("memberCount", memberOnlineCount);
+                            intent.putExtra("chatID", chatID);
+                            intent.putExtra("chatName", chatName);
                             startActivity(intent);
 //                            Toast.makeText(getActivity(), "Member Created.", Toast.LENGTH_SHORT).show();
                         }
@@ -1061,4 +1076,33 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
         });
     }
 
+    private void loginToChatWeb(int id) {
+
+        chatWebManager.logintoChatWeb(Application.getInstance().getAuthUser().getName(),
+                Application.getInstance().getAuthUser().getId(), "kiki", "123456",
+                new APIListener<ChatWebToken>() {
+                    @Override
+                    public void onSuccess(ChatWebToken chatToken, List<Object> params) {
+
+                        Intent intent = new Intent(getActivity(), ChatWebActivity.class);
+                        intent.putExtra("token", chatToken.getDataObject().getChatToken());
+                        intent.putExtra("id", id);
+                        startActivity(intent);
+
+                    }
+
+                    @Override
+                    public void onFailure(Throwable t) {
+
+
+                    }
+                });
+    }
+
+
+    @Override
+    public void onChatAction(ChatWebDTO chatlist, int position, List<ChatWebDTO> chatWebDTOList) {
+
+        loginToChatWeb(chatlist.getChatId());
+    }
 }

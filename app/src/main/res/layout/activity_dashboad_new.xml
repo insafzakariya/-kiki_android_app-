@@ -47,11 +47,11 @@
                     android:id="@+id/search_imageview"
                     android:layout_width="@dimen/_20sdp"
                     android:layout_height="@dimen/_20sdp"
-                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="16dp"
                     android:tint="#5B5B5B"
-                    app:srcCompat="@drawable/ic_search" />
+                    app:srcCompat="@drawable/ic_search"
+                    android:layout_alignParentEnd="true"/>
 
                 <ImageView
                     android:id="@+id/notification_imageview"
@@ -59,7 +59,7 @@
                     android:layout_height="@dimen/_20sdp"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="16dp"
-                    android:layout_toLeftOf="@+id/search_imageview"
+                    android:layout_toStartOf="@+id/search_imageview"
                     android:tint="#5B5B5B"
                     app:srcCompat="@drawable/ic_notification_toolbar" />
 
@@ -72,6 +72,29 @@
                     android:text=""
                     android:textColor="@color/audioSettingsTextColor"
                     android:textSize="@dimen/_10sdp" />
+
+                <ImageView
+                    android:id="@+id/servce_imageview"
+                    android:layout_width="@dimen/_22sdp"
+                    android:layout_height="@dimen/_22sdp"
+                    android:layout_marginEnd="16dp"
+                    android:tint="#5B5B5B"
+                    android:visibility="gone"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"/>
+
+                <TextView
+                    android:id="@+id/servce_tx"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="14dp"
+                    android:layout_marginTop="1dp"
+                    android:text="Service"
+                    android:visibility="gone"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="10sp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"/>
 
 
             </RelativeLayout>

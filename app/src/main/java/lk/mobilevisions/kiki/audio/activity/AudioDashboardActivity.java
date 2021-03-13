@@ -24,6 +24,8 @@ import android.speech.RecognizerIntent;
 
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.DrawableImageViewTarget;
 import com.facebook.appevents.AppEventsLogger;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -147,6 +149,7 @@ import lk.mobilevisions.kiki.modules.auth.AuthManager;
 import lk.mobilevisions.kiki.modules.notifications.NotificationManager;
 import lk.mobilevisions.kiki.modules.subscriptions.SubscriptionsManager;
 import lk.mobilevisions.kiki.modules.tv.TvManager;
+import lk.mobilevisions.kiki.service.activity.ServiceHomeActivity;
 import lk.mobilevisions.kiki.ui.base.BaseActivity;
 import lk.mobilevisions.kiki.ui.splash.SplashActivity;
 import lk.mobilevisions.kiki.video.activity.VideoChildModeActivity;
@@ -354,6 +357,20 @@ public class AudioDashboardActivity extends BaseActivity implements CurrentSessi
             @Override
             public void onClick(View v) {
                 binding.drawerLayout.openDrawer(Gravity.LEFT);
+            }
+        });
+
+        DrawableImageViewTarget target = new DrawableImageViewTarget(binding.servceImageview);
+        Glide.with(this)
+                .load(R.raw.service_logo)
+                .into(target);
+
+        binding.servceImageview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentPackages = new Intent(AudioDashboardActivity.this, ServiceHomeActivity.class);
+                startActivity(intentPackages);
+
             }
         });
 

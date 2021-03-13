@@ -51,13 +51,15 @@ public class ChatInfoActivity extends AppCompatActivity implements View.OnClickL
         }
         });
 
-        setChatMembers();
+        int chatId = getIntent().getIntExtra("chatId",0);
+
+        setChatMembers(chatId);
     }
 
-    private void setChatMembers() {
+    private void setChatMembers(int chatID) {
 
 
-        chatManager.getChatMembers(8, "channel_admin", new APIListener<List<ChatMember>>() {
+        chatManager.getChatMembers(chatID, "channel_admin", new APIListener<List<ChatMember>>() {
             @Override
             public void onSuccess(List<ChatMember> result, List<Object> params) {
                 chatMemberArrayList = result;

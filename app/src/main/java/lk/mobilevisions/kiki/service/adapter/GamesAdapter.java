@@ -1,6 +1,7 @@
 package lk.mobilevisions.kiki.service.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,8 @@ import butterknife.ButterKnife;
 import lk.mobilevisions.kiki.R;
 import lk.mobilevisions.kiki.service.dto.ServiceModel;
 import lk.mobilevisions.kiki.service.dto.ServiceSub;
+import lk.mobilevisions.kiki.service.webview.GamesActivity;
+
 
 public class GamesAdapter extends
         RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -88,6 +91,10 @@ public class GamesAdapter extends
         holder.rvHorizontal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), GamesActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("gameUrl", current.getUrl());
+                v.getContext().startActivity(intent);
 
             }
         });
