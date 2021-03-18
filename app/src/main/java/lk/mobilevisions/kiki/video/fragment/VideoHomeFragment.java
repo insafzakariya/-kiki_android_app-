@@ -80,10 +80,13 @@ import lk.mobilevisions.kiki.modules.chat.ChatWebDTO;
 import lk.mobilevisions.kiki.modules.chat.ChatWebManager;
 import lk.mobilevisions.kiki.modules.subscriptions.SubscriptionsManager;
 import lk.mobilevisions.kiki.modules.tv.TvManager;
+import lk.mobilevisions.kiki.service.activity.ServiceHomeActivity;
 import lk.mobilevisions.kiki.video.activity.VideoChildModeActivity;
+import lk.mobilevisions.kiki.video.activity.VideoDashboardActivity;
 import lk.mobilevisions.kiki.video.activity.VideoEpisodeActivity;
 import lk.mobilevisions.kiki.video.activity.VideoTrialActivationActivity;
 import lk.mobilevisions.kiki.video.adapter.ChannelAdapter;
+import lk.mobilevisions.kiki.video.adapter.ContinueWatchAdapter;
 import lk.mobilevisions.kiki.video.adapter.ProgramAdapter;
 import lk.mobilevisions.kiki.video.adapter.SlidingImageAdapter;
 
@@ -92,7 +95,8 @@ import static com.microsoft.appcenter.utils.HandlerUtils.runOnUiThread;
 
 
 public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener,
-        ProgramAdapter.OnProgramItemClickListener, ChannelVerticalAdapter.OnChannelItemActionListener, ChatClientListener, ChatVerticalAdapter.OnChatItemActionListener {
+        ProgramAdapter.OnProgramItemClickListener, ChannelVerticalAdapter.OnChannelItemActionListener, ChatClientListener, ChatVerticalAdapter.OnChatItemActionListener,
+        ContinueWatchAdapter.OnContinueWatchItemClickListener {
 
     @Inject
     TvManager tvManager;
@@ -100,13 +104,14 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
     ChatManager chatManager;
     @Inject
     ChatWebManager chatWebManager;
-
     @Inject
     SubscriptionsManager subscriptionsManager;
+
+    FragmentHomeVideoBinding binding;
+
     List<Program> programs;
     private static int currentPage = 0;
     private static int NUM_PAGES = 0;
-    FragmentHomeVideoBinding binding;
     private Date selectedDate;
     private ChannelAdapter channelAdapter;
     private boolean isChannelLoaded;
@@ -125,7 +130,7 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
     private String sSID;
     private String chatImage;
     private int chatID;
-    private String  chatName;
+    private String chatName;
 
     private ChatClientManager chatClientManager;
     private ProgressDialog progressDialog;
@@ -140,6 +145,7 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
 
     private ChatVerticalAdapter chatVerticalAdapter;
     List<ChatWebDTO> chatList = new ArrayList<>();
+    private ContinueWatchAdapter continueWatchAdapter;
 
     public VideoHomeFragment() {
         // Required empty public constructor
@@ -170,9 +176,16 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
         binding.chatWebRecyclerview.addItemDecoration(new SpacesItemDecoration(15));
         binding.chatWebRecyclerview.setHasFixedSize(true);
         binding.chatWebRecyclerview.setNestedScrollingEnabled(false);
+
+        binding.continueWatchingRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+
+        binding.continueWatchingRecyclerview.setNestedScrollingEnabled(false);
+
         setupSliderView();
         Application.BUS.register(this);
         loadChannelsAndPrograms();
+        getContinueWatchPrograms();
+        getChats();
         checkSubscription();
         channelManager = ChannelManager.getInstance();
         getChatToken();
@@ -223,21 +236,21 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
             }
         });
 
-        String programId = getActivity().getIntent().getStringExtra("programId");
-        int programid = 0;
+        String contentId = getActivity().getIntent().getStringExtra("programId");
+        int contentid = 0;
         try {
-            programid = Integer.parseInt(programId);
+            contentid = Integer.parseInt(contentId);
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
-        System.out.println("afsdfsdfsdv " + programid);
 
         String programType = getActivity().getIntent().getStringExtra("programType");
+        String contentType = getActivity().getIntent().getStringExtra("contentType");
 
-        if (programType != null) {
-            if (programType.equals("0")) {
+        if (programType != null && contentType != null) {
+            if (programType.equals("0") && contentType.equals("programid")) {
 
-                tvManager.getProgramWithID(programid, new APIListener<Program>() {
+                tvManager.getProgramWithID(contentid, new APIListener<Program>() {
                     @Override
                     public void onSuccess(Program program, List<Object> params) {
 
@@ -261,10 +274,17 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
                         Utils.Error.onServiceCallFail(getActivity(), t);
                     }
                 });
+            } else if (programType.equals("2") && contentType.equals("serviceid")) {
+
+                Intent intentPackages = new Intent(getActivity(), ServiceHomeActivity.class);
+                intentPackages.putExtra("serviceid", contentid);
+                startActivity(intentPackages);
+
+            } else if (programType.equals("0") && contentType.equals("chatid")) {
+
+                loginToChatWeb(contentid);
             }
         }
-        getChats();
-        getChatMembers();
 
         Bundle params = new Bundle();
         params.putString("user_actions", "videoHome");
@@ -283,9 +303,7 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
                     binding.aviProgressRecycler.setVisibility(View.GONE);
 
                 } else {
-//                    binding.radioDramaLayout.setVisibility(View.VISIBLE);
                     chatList = result;
-
                     chatVerticalAdapter = new ChatVerticalAdapter(getActivity(), chatList, VideoHomeFragment.this);
                     binding.chatWebRecyclerview.setAdapter(chatVerticalAdapter);
                 }
@@ -917,81 +935,101 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
     @Override
     public void onChannelAction(ChannelDto channelDto, int position, List<ChannelDto> playLists) {
 
-//        getChatMembers(channelDto.getId());
-        chatID = channelDto.getId();
-        chatName = channelDto.getFriendlyName();
-        System.out.println("jbdjfbsjfb " + channelDto.getFriendlyName());
-        Vibrator vibe = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            vibe.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE));
-        } else {
-            //deprecated in API 26
-            vibe.vibrate(50);
-        }
 
-        chatImage = channelDto.getImagePath();
-        if (chatChannelList != null) {
-            if (channelDto.isBlock() && !channelDto.isMember()) {
-                System.out.println("checking ss 1111111 " + channelDto.getSid());
-                com.twilio.chat.Channel selectedChatChannel = null;
+            chatManager.getChatMembers(channelDto.getId(), "all", new APIListener<List<ChatMember>>() {
+                @Override
+                public void onSuccess(List<ChatMember> result, List<Object> params) {
 
-                for (com.twilio.chat.Channel channel1 : chatChannelList) {
-                    if (channelDto.getSid().equals(channel1.getSid())) {
-                        System.out.println("checking ss 33333");
-                        selectedChatChannel = channel1;
+                    chatMemberArrayList = result;
+                    memberOnlineCount = Integer.toString(result.size());
+
+                    chatID = channelDto.getId();
+                    chatName = channelDto.getFriendlyName();
+                    System.out.println("jbdjfbsjfb " + channelDto.getFriendlyName());
+                    Vibrator vibe = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        vibe.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE));
+                    } else {
+                        //deprecated in API 26
+                        vibe.vibrate(50);
+                    }
+
+                    chatImage = channelDto.getImagePath();
+                    if (chatChannelList != null) {
+                        if (channelDto.isBlock() && !channelDto.isMember()) {
+                            System.out.println("checking ss 1111111 " + channelDto.getSid());
+                            com.twilio.chat.Channel selectedChatChannel = null;
+
+                            for (com.twilio.chat.Channel channel1 : chatChannelList) {
+                                if (channelDto.getSid().equals(channel1.getSid())) {
+                                    System.out.println("checking ss 33333");
+                                    selectedChatChannel = channel1;
+                                }
+                            }
+                            if (selectedChatChannel != null) {
+                                System.out.println("checking ss 44444 " + selectedChatChannel.getSid());
+                                Application.getInstance().setCurrentChannel(selectedChatChannel);
+                                Intent intent = new Intent(getActivity(), ChatActivity.class);
+                                intent.putExtra("memberList", (Serializable) chatMemberArrayList);
+                                intent.putExtra("chatImage", chatImage);
+                                intent.putExtra("memberCount", memberOnlineCount);
+                                intent.putExtra("chatID", channelDto.getId());
+                                intent.putExtra("chatName", channelDto.getFriendlyName());
+                                startActivity(intent);
+
+                            }
+
+
+                        } else if (!channelDto.isBlock() && !channelDto.isMember()) {
+
+                            System.out.println("checking ss 3333 " + channelDto.getSid());
+                            sSID = channelDto.getSid();
+                            com.twilio.chat.Channel selectedChatChannel = null;
+                            for (com.twilio.chat.Channel channel1 : chatChannelList) {
+
+                                if (channelDto.getSid().equals(channel1.getSid())) {
+                                    System.out.println("checking ss 33333");
+                                    selectedChatChannel = channel1;
+                                }
+                            }
+                            if (selectedChatChannel != null) {
+                                System.out.println("checking ss 44444");
+                                getRoleDetail(selectedChatChannel);
+                            }
+                        } else if (!channelDto.isBlock()) {
+                            System.out.println("checking ss 5555555");
+                            sSID = channelDto.getSid();
+                            com.twilio.chat.Channel selectedChatChannel = null;
+                            for (com.twilio.chat.Channel channel1 : chatChannelList) {
+
+                                if (channelDto.getSid().equals(channel1.getSid())) {
+                                    System.out.println("checking ss 33333");
+                                    selectedChatChannel = channel1;
+                                }
+                            }
+                            if (selectedChatChannel != null) {
+                                System.out.println("checking ss 44444");
+                                getRoleDetail(selectedChatChannel);
+                            }
+                        } else if (channelDto.isBlock()) {
+
+                            Toast.makeText(getApplicationContext(), "You're Blocked.", Toast.LENGTH_SHORT).show();
+
+                        }
                     }
                 }
-                if (selectedChatChannel != null) {
-                    System.out.println("checking ss 44444 " + selectedChatChannel.getSid());
-                    Application.getInstance().setCurrentChannel(selectedChatChannel);
-                    Intent intent = new Intent(getActivity(), ChatActivity.class);
-                    intent.putExtra("memberList", (Serializable) chatMemberArrayList);
-                    intent.putExtra("chatImage", chatImage);
-                    intent.putExtra("memberCount", memberOnlineCount);
-                    intent.putExtra("chatID", channelDto.getId());
-                    intent.putExtra("chatName", channelDto.getFriendlyName());
-                    startActivity(intent);
+
+                @Override
+                public void onFailure(Throwable t) {
+
 
                 }
+            });
 
 
-            } else if (!channelDto.isBlock() && !channelDto.isMember()) {
 
-                System.out.println("checking ss 3333 " + channelDto.getSid());
-                sSID = channelDto.getSid();
-                com.twilio.chat.Channel selectedChatChannel = null;
-                for (com.twilio.chat.Channel channel1 : chatChannelList) {
 
-                    if (channelDto.getSid().equals(channel1.getSid())) {
-                        System.out.println("checking ss 33333");
-                        selectedChatChannel = channel1;
-                    }
-                }
-                if (selectedChatChannel != null) {
-                    System.out.println("checking ss 44444");
-                    getRoleDetail(selectedChatChannel);
-                }
-            } else if (!channelDto.isBlock()) {
-                System.out.println("checking ss 5555555");
-                sSID = channelDto.getSid();
-                com.twilio.chat.Channel selectedChatChannel = null;
-                for (com.twilio.chat.Channel channel1 : chatChannelList) {
 
-                    if (channelDto.getSid().equals(channel1.getSid())) {
-                        System.out.println("checking ss 33333");
-                        selectedChatChannel = channel1;
-                    }
-                }
-                if (selectedChatChannel != null) {
-                    System.out.println("checking ss 44444");
-                    getRoleDetail(selectedChatChannel);
-                }
-            } else if (channelDto.isBlock()) {
-
-                Toast.makeText(getApplicationContext(), "You're Blocked.", Toast.LENGTH_SHORT).show();
-
-            }
-        }
     }
 
     private void getRoleDetail(com.twilio.chat.Channel selctedChannel) {
@@ -1099,10 +1137,52 @@ public class VideoHomeFragment extends Fragment implements BaseSliderView.OnSlid
                 });
     }
 
+    private void getContinueWatchPrograms() {
+
+        tvManager.getWatchedPrograms(new APIListener<List<Program>>() {
+            @Override
+            public void onSuccess(List<Program> result, List<Object> params) {
+
+                if (result.size() == 0) {
+                    binding.continueWatchingLayout.setVisibility(View.GONE);
+
+                } else {
+                    continueWatchAdapter = new ContinueWatchAdapter(getActivity(), result, VideoHomeFragment.this);
+                    binding.continueWatchingRecyclerview.setAdapter(continueWatchAdapter);
+                }
+
+            }
+
+
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+        });
+    }
 
     @Override
     public void onChatAction(ChatWebDTO chatlist, int position, List<ChatWebDTO> chatWebDTOList) {
 
         loginToChatWeb(chatlist.getChatId());
+    }
+
+    @Override
+    public void onContinueWatch(View view, Program program, int position) {
+
+        selectedProgram = program;
+        selectedProgramPosition = position;
+
+        Intent intentEpisodes = new Intent(getActivity(), VideoEpisodeActivity.class);
+        intentEpisodes.putExtra("program", program);
+        startActivity(intentEpisodes);
+        JSONObject props = new JSONObject();
+        try {
+            props.put("ProgramName", program.getName());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        ((Application) getActivity().getApplication()).getMixpanelAPI().track("Program Selected", props);
     }
 }

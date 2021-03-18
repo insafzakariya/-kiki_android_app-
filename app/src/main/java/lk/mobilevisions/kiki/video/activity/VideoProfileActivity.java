@@ -111,16 +111,13 @@ public class VideoProfileActivity extends AppCompatActivity implements View.OnCl
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         RequestOptions options = new RequestOptions()
-                .fitCenter()
                 .centerCrop()
                 .placeholder(R.drawable.ic_user_avatar)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true);
 
-        Glide.with(this).load("https://storage.googleapis.com/kiki_images/live/viewer/1x/" + Application.getInstance().getAuthUser().getId() + ".jpeg")
+        Glide.with(this).load("https://storage.googleapis.com/kiki_images/live/viewer/3x/" + Application.getInstance().getAuthUser().getId() + ".jpeg")
                 .apply(options).into(binding.userImage);
-        System.out.println("fhfhfh " + Application.getInstance().getAuthUser().getId());
-
     }
 
     @Override
@@ -293,13 +290,13 @@ public class VideoProfileActivity extends AppCompatActivity implements View.OnCl
         chatManager.getAvatarImages(new APIListener<List<Avatar>>() {
             @Override
             public void onSuccess(List<Avatar> avatars, List<Object> params) {
+
                 Avatar avatar = new Avatar();
                 avatar.setId(0);
                 avatar.setUrl("");
                 avatarList.add(avatar);
                 avatarList.addAll(avatars);
                 selectUserImageDialog(avatarList);
-
 
             }
 

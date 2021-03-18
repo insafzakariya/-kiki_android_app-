@@ -71,6 +71,7 @@ import lk.mobilevisions.kiki.modules.notifications.NotificationModule;
 import lk.mobilevisions.kiki.modules.subscriptions.SubscriptionsModule;
 import lk.mobilevisions.kiki.modules.tv.TvModule;
 
+import lk.mobilevisions.kiki.service.activity.AllGamesActivity;
 import lk.mobilevisions.kiki.service.activity.ServiceHomeActivity;
 import lk.mobilevisions.kiki.service.webview.GamesActivity;
 import lk.mobilevisions.kiki.service.webview.InsuranceActivity;
@@ -192,4 +193,5 @@ public interface Injector {
     void inject(InsuranceActivity activity);
     void inject(GamesActivity activity);
     void inject(ChatWebActivity activity);
+    void inject(AllGamesActivity activity);
 }

@@ -289,6 +289,9 @@
             android:name=".service.activity.ServiceHomeActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".service.activity.AllGamesActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".chat.ChatActivity"
             android:screenOrientation="portrait" />
         <activity

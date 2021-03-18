@@ -1,44 +1,47 @@
 package lk.mobilevisions.kiki.service.adapter;
 
+import android.animation.LayoutTransition;
 import android.content.Context;
-import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.palette.graphics.Palette;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import lk.mobilevisions.kiki.R;
-import lk.mobilevisions.kiki.service.activity.AllGamesActivity;
 import lk.mobilevisions.kiki.service.dto.ServiceModel;
 import lk.mobilevisions.kiki.service.dto.ServiceSub;
-import lk.mobilevisions.kiki.service.webview.GamesActivity;
 
-
-public class GamesAdapter extends
+public class AllGAmesAdapter extends
         RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
     private List<ServiceModel> mArrayList = new ArrayList<>();
-    GamesAdapter itemClickListener;
+    AllGAmesAdapter.OnAllGamesItemClickListener itemClickListener;
 
-    public GamesAdapter(Context mContext, List<ServiceModel> mArrayList) {
+    public AllGAmesAdapter(Context mContext, List<ServiceModel> mArrayList, AllGAmesAdapter.OnAllGamesItemClickListener itemClickListener) {
         this.mContext = mContext;
         this.mArrayList = mArrayList;
 
+        this.itemClickListener = itemClickListener;
 
     }
 
@@ -47,9 +50,10 @@ public class GamesAdapter extends
 
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.game_items_list, parent, false);
-        return new GamesAdapter.EntertainmentViewHolder(view);
+        return new AllGAmesAdapter.AllGamesViewHolder(view);
 
     }
+
 
 
     public void setData(List<ServiceModel> data, List<ServiceSub> subData) {
@@ -66,50 +70,28 @@ public class GamesAdapter extends
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        initLayoutOne((GamesAdapter.EntertainmentViewHolder) holder, position);
+        initLayoutOne((AllGAmesAdapter.AllGamesViewHolder) holder, position);
 
 
     }
 
-    private void initLayoutOne(final GamesAdapter.EntertainmentViewHolder holder, int pos) {
+    private void initLayoutOne(final AllGAmesAdapter.AllGamesViewHolder holder, int pos) {
 
         final ServiceModel current = mArrayList.get(pos);
 
-//        holder.headerTextView.setText(current.getName());
-//        holder.descriptionTextView.setText(current.getDescription());
-        System.out.println("hdjfgdhg " + current.getImage());
-
-        if (pos == 8) {
-            Picasso.with(mContext).load(R.drawable.playlist_plus_backgroud_drawable).fit().centerCrop()
+        try {
+            Picasso.with(mContext).load(URLDecoder.decode(current.getImage(), "UTF-8")).fit().centerCrop()
                     .placeholder(R.drawable.program)
                     .into(holder.serviceImageView);
-        } else {
-            try {
-                Picasso.with(mContext).load(URLDecoder.decode(current.getImage(), "UTF-8")).fit().centerCrop()
-                        .placeholder(R.drawable.program)
-                        .into(holder.serviceImageView);
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
-
-
         holder.rvHorizontal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (current.getName().equals("More")) {
-                    Intent intent = new Intent(v.getContext(), AllGamesActivity.class);
-                    intent.putExtra("gameList", (Serializable) mArrayList);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    v.getContext().startActivity(intent);
-                }
-
-                Intent intent = new Intent(v.getContext(), GamesActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("gameUrl", current.getUrl());
-                v.getContext().startActivity(intent);
-
+                itemClickListener.onAllGamesItemClick(mArrayList.get(holder.getAdapterPosition()),
+                        holder.getAdapterPosition(),mArrayList);
             }
         });
 
@@ -120,7 +102,7 @@ public class GamesAdapter extends
         return mArrayList.size();
     }
 
-    class EntertainmentViewHolder extends RecyclerView.ViewHolder {
+    class AllGamesViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.layout_click)
         ConstraintLayout rvHorizontal;
@@ -129,15 +111,16 @@ public class GamesAdapter extends
         ImageView serviceImageView;
 
 
-        public EntertainmentViewHolder(View itemView) {
+
+        public AllGamesViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
     }
 
-    public interface OnEntertainmentItemClickListener {
+    public interface OnAllGamesItemClickListener {
 
-        public void onEntertainmentItemClick(ServiceModel serviceModel, int position, List<ServiceModel> songs);
+        public void onAllGamesItemClick(ServiceModel serviceModel, int position,List<ServiceModel> songs);
 
     }
 

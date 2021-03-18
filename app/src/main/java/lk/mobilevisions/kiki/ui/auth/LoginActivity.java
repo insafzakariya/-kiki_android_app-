@@ -163,11 +163,9 @@ public class LoginActivity extends BaseActivity implements
         });
 
         type = getIntent().getStringExtra("type");
-        System.out.println("fsdvsdvsddssss " + type);
         contentType = getIntent().getStringExtra("content_type");
-        System.out.println("fsdvsdvsdd 11111" + contentType);
         contentId = getIntent().getStringExtra("content_id");
-        System.out.println("fsdvsdvsdd 22222" + contentId);
+
 
 //        typeB = getIntent().getStringExtra("typeB");
 //        System.out.println("sdhkfbsdjhfbsdh " + typeB);

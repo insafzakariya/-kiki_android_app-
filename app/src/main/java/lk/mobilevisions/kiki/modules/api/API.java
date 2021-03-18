@@ -705,7 +705,7 @@ public interface API {
 
     @GET("content/programs/latestwatch")
     Call<List<Program>> getContinueWatchingPrograms(@Header(HEADER_AUTHORIZATION) String basicAuthToken,
-                                    @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
+                                                    @Header(HEADER_TOKEN_AUTHENTICATION) String accessToken,
                                                     @Header("Content-Type") String content_type);
 
 }

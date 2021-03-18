@@ -9,7 +9,7 @@
 
     <RelativeLayout
         android:id="@+id/channel_relativeLayoutRoot"
-        android:layout_width="@dimen/_80sdp"
+        android:layout_width="@dimen/_67sdp"
         android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,7 +24,9 @@
                 android:layout_height="@dimen/_60sdp"
                 android:src="@drawable/ic_havana"
                 android:scaleType="centerCrop"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
                 app:sriv_left_top_corner_radius="100dip"
                 app:sriv_right_top_corner_radius="100dip"
                 app:sriv_left_bottom_corner_radius="100dip"

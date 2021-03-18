@@ -36,6 +36,7 @@ public class EntertainmentAdapter extends
 
     private Context mContext;
     private List<ServiceModel> mArrayList = new ArrayList<>();
+    private List<ServiceModel> gamesArrayList = new ArrayList<>();
     EntertainmentAdapter.OnEntertainmentItemClickListener itemClickListener;
 
     public EntertainmentAdapter(Context mContext, List<ServiceModel> mArrayList, EntertainmentAdapter.OnEntertainmentItemClickListener itemClickListener) {
@@ -101,6 +102,7 @@ public class EntertainmentAdapter extends
 
                 if (current.getChildList() != null && current.getChildList().size() > 0 && holder.linearLayoutGame.getVisibility() == View.GONE) {
 
+                    gamesArrayList.clear();
                     Bitmap bitmap = BitmapFactory.decodeResource(v.getContext().getResources(),
                             R.drawable.expand_games);
 
@@ -108,10 +110,27 @@ public class EntertainmentAdapter extends
                     Palette.Swatch swatch = palette.getVibrantSwatch();
                     holder.linearLayoutGame.setBackgroundColor(swatch.getRgb());
                     holder.cardview.setCardBackgroundColor(swatch.getRgb());
-
                     holder.linearLayoutGame.setVisibility(View.VISIBLE);
+
+                    if (current.getChildList().size() >= 7) {
+                        ServiceModel serviceModelX = new ServiceModel();
+                        serviceModelX.setId(8);
+                        serviceModelX.setName("More");
+                        serviceModelX.setImage("");
+                        serviceModelX.setLandingUrl("");
+                        serviceModelX.setUrl("");
+                        serviceModelX.setHasChild(false);
+                        serviceModelX.setReferanceCode("");
+                        serviceModelX.setDescription("");
+
+                        gamesArrayList.addAll(current.getChildList());
+                        gamesArrayList.add(serviceModelX);
+
+                    } else {
+                        gamesArrayList.addAll(current.getChildList());
+                    }
                     holder.recyclerView.setLayoutManager(new GridLayoutManager(mContext, 5));
-                    GamesAdapter mAdapter = new GamesAdapter(mContext, current.getChildList());
+                    GamesAdapter mAdapter = new GamesAdapter(mContext, gamesArrayList);
                     holder.recyclerView.setHasFixedSize(true);
                     holder.recyclerView.setItemViewCacheSize(50);
                     holder.recyclerView.setDrawingCacheEnabled(true);

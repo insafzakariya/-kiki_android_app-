@@ -29,8 +29,8 @@ android {
         applicationId "lk.mobilevisions.kiki"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 219
-        versionName "1.0.219"
+        versionCode 220
+        versionName "1.0.220"
         vectorDrawables.useSupportLibrary = true
         renderscriptTargetApi 20
         renderscriptSupportModeEnabled true

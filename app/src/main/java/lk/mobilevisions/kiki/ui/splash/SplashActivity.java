@@ -146,11 +146,9 @@ public class SplashActivity extends AppCompatActivity {
 //        }
 
         type = getIntent().getStringExtra("type");
-        System.out.println("fsdvsdvsdd " + type);
         contentType = getIntent().getStringExtra("content_type");
-        System.out.println("fsdvsdvsdd 11111" + contentType);
         contentId = getIntent().getStringExtra("content_id");
-        System.out.println("fsdvsdvsdd 22222" + contentId);
+
 
         checkForDynamicLinks();
 
@@ -434,15 +432,12 @@ public class SplashActivity extends AppCompatActivity {
                 if (type !=null) {
                     if (type.equals("0")) {
                         intent = new Intent(SplashActivity.this, VideoDashboardActivity.class);
-                        intent.putExtra("programType",type);
-                        intent.putExtra("programId",contentId);
-                        intent.putExtra("contentType",contentType);
                     } else {
                         intent = new Intent(SplashActivity.this, AudioDashboardActivity.class);
-                        intent.putExtra("programType",type);
-                        intent.putExtra("programId",contentId);
-                        intent.putExtra("contentType",contentType);
                     }
+                    intent.putExtra("programType",type);
+                    intent.putExtra("programId",contentId);
+                    intent.putExtra("contentType",contentType);
                 }
                 else {
                     if (currentApp != null && currentApp.equals("audio")) {

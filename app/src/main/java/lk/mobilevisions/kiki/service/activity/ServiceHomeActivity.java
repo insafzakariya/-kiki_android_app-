@@ -306,27 +306,35 @@ public class ServiceHomeActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onEntertainmentItemClick(ServiceModel serviceModel, int position, List<ServiceModel> list) {
 
-        if (serviceModel.getName().equals("Video")) {
-            Intent intent = new Intent(ServiceHomeActivity.this, VideoDashboardActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-//            finish();
-        } else if (serviceModel.getName().equals("Music")) {
-            Intent intent = new Intent(ServiceHomeActivity.this, AudioDashboardActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-//            finish();
-        } else if (serviceModel.getName().equals("Insurance")) {
+        switch (serviceModel.getName()) {
+            case "Video": {
+                Intent intent = new Intent(ServiceHomeActivity.this, VideoDashboardActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                break;
+            }
+            case "Music": {
+                Intent intent = new Intent(ServiceHomeActivity.this, AudioDashboardActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                break;
+            }
+            case "Insurance": {
+                Intent intent = new Intent(ServiceHomeActivity.this, InsuranceActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("Url", serviceModel.getUrl());
+                intent.putExtra("referanceCode", serviceModel.getReferanceCode());
+                intent.putExtra("landingUrl", serviceModel.getLandingUrl());
+                startActivity(intent);
+                break;
+            }
+            case "News":
             Intent intent = new Intent(ServiceHomeActivity.this, InsuranceActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            intent.putExtra("insuranceUrl", serviceModel.getUrl());
-            intent.putExtra("referanceCode", serviceModel.getReferanceCode());
-            intent.putExtra("landingUrl", serviceModel.getLandingUrl());
+            intent.putExtra("Url", serviceModel.getUrl());
+            intent.putExtra("isNews", true);
             startActivity(intent);
-//            finish();
+                break;
         }
 
     }

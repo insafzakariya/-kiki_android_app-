@@ -125,7 +125,6 @@ public class VideoDashboardActivity extends BaseActivity {
     private boolean trialStatus;
 
     private FirebaseRemoteConfig mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
-    private HashMap<String, Object> firebaseDefaultMap;
     public static final String VERSION_CODE_KEY = "force_update_current_version";
     public static final String APP_UPDATE_URL = "force_update_store_url";
 
@@ -342,7 +341,7 @@ public class VideoDashboardActivity extends BaseActivity {
         AppEventsLogger logger = AppEventsLogger.newLogger(this);
         logger.logEvent("Video_Screen");
 
-        firebaseDefaultMap = new HashMap<>();
+        HashMap<String, Object> firebaseDefaultMap = new HashMap<>();
         firebaseDefaultMap.put(VERSION_CODE_KEY, getCurrentVersionCode());
         mFirebaseRemoteConfig.setDefaults(firebaseDefaultMap);
 

@@ -32,9 +32,10 @@ public class InsuranceActivity extends AppCompatActivity implements AdvancedWebV
         ((Application) getApplication()).getInjector().inject(this);
         ((Application) getApplication()).getAnalytics().setCurrentScreen(this, "InsuranceActivity", null);
 
-        String insuranceUrl = getIntent().getStringExtra("insuranceUrl");
+        String newsUrl = getIntent().getStringExtra("Url");
         String referanceCode = getIntent().getStringExtra("referanceCode");
         String landingUrl = getIntent().getStringExtra("landingUrl");
+        boolean isNews = getIntent().getBooleanExtra("isNews", false);
 
         binding.includedToolbar.backImageview.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,8 +71,14 @@ public class InsuranceActivity extends AppCompatActivity implements AdvancedWebV
         }
 
         binding.webViewInsurance.addHttpHeader("X-Requested-With", "");
-        binding.webViewInsurance.loadUrl("http://dev.v4.janashakthi-digital.echonlabs.com/app/plans/health#quickstart" + "?referralcode=" + referanceCode + "&lang=" +
-                Application.getInstance().getAuthUser().getLanguage().toLowerCase().substring(0, 2) + "&bridge_id=" + Application.getInstance().getAuthUser().getId());
+        if (isNews) {
+            binding.includedToolbar.titleTextview.setText("News");
+            binding.webViewInsurance.loadUrl(newsUrl);
+        } else {
+            binding.webViewInsurance.loadUrl("http://dev.v4.janashakthi-digital.echonlabs.com/app/plans/health#quickstart" + "?referralcode=" + referanceCode + "&lang=" +
+                    Application.getInstance().getAuthUser().getLanguage().toLowerCase().substring(0, 2) + "&bridge_id=" + Application.getInstance().getAuthUser().getId());
+        }
+
         
     }
 
